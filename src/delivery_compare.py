@@ -28,6 +28,10 @@ COMPANY_SNAPSHOTS: dict[str, tuple[Path, Path]] = {
         _DATA_DIR / "nandos_menu_snapshot.csv",
         _DATA_DIR / "deliveroo_nandos_snapshot.csv",
     ),
+    "Pizza Express": (
+        _DATA_DIR / "pizza_express_menu_snapshot.csv",
+        _DATA_DIR / "deliveroo_pizza_express_snapshot.csv",
+    ),
 }
 
 

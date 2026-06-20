@@ -8,11 +8,15 @@ from __future__ import annotations
 
 from .base import BaseScraper
 from .deliveroo import DeliverooScraper
+from .deliveroo_pizza_express import DeliverooPizzaExpressScraper
 from .nandos import NandosScraper
+from .pizza_express import PizzaExpressScraper
 
 SCRAPERS: dict[str, type[BaseScraper]] = {
     NandosScraper.site_name: NandosScraper,
     DeliverooScraper.site_name: DeliverooScraper,
+    PizzaExpressScraper.site_name: PizzaExpressScraper,
+    DeliverooPizzaExpressScraper.site_name: DeliverooPizzaExpressScraper,
 }
 
 

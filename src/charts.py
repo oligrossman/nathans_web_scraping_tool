@@ -11,18 +11,15 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 from . import analytics
+from .branding import DELIVEROO_TEAL, OWN_BRAND, SOURCE_COLOURS, WAGAMAMA_RED
 from .synthetic import TOTAL_LABEL
 
 _TEMPLATE = "plotly_white"
-# Consistent colours for the three sources across every comparison chart.
-_SOURCE_COLOURS = {
-    "Nando's": "#D71920",
-    "WagaNath": "#E03997",
-    "Market": "#6C757D",
-}
-# Channel colours for the collection-vs-delivery view (brand-ish).
-_COLLECTION_COLOUR = "#D71920"  # Nando's red
-_DELIVERY_COLOUR = "#00CCBC"  # Deliveroo teal
+# Source colours imported from branding — Wagamama red is the hero series.
+_SOURCE_COLOURS = SOURCE_COLOURS
+# Channel colours for collection vs delivery views.
+_COLLECTION_COLOUR = WAGAMAMA_RED
+_DELIVERY_COLOUR = DELIVEROO_TEAL
 _LOW_COLOUR = "#2563EB"  # blue
 _HIGH_COLOUR = "#DC2626"  # red
 _AVG_COLOUR = "#111827"  # near-black
@@ -32,6 +29,12 @@ _CHANNEL_COLOURS = {
     _CHANNEL_LABELS["collection"]: _COLLECTION_COLOUR,
     _CHANNEL_LABELS["delivery"]: _DELIVERY_COLOUR,
 }
+
+
+def _competitor_label(sources: list[str]) -> str:
+    """Human-readable label for the competitor source(s) in a comparison."""
+    others = [s for s in sources if s not in (OWN_BRAND, "Market")]
+    return ", ".join(others) if others else "competitors"
 
 
 def _style_total_trace(fig: go.Figure, color_col: str = "bucket") -> go.Figure:
@@ -124,20 +127,19 @@ def comparison_facets(
     history,
     *,
     sources: list[str] | None = None,
-    competitor: str = "Nando's",
     include_total: bool = False,
 ) -> go.Figure:
-    """Small-multiple line charts: WagaNath vs selected competitor vs Market."""
+    """Small-multiple line charts: Wagamama vs selected competitor(s) vs Market."""
     means = analytics.bucket_means(history, include_total=include_total)
     if sources is None:
-        sources = ["WagaNath", competitor, "Market"]
+        sources = [OWN_BRAND, "Nando's", "Market"]
     means = means[means["source"].isin(sources)]
     bucket_order = (
         [TOTAL_LABEL, "Starters", "Mains", "Sides", "Drinks", "Desserts"]
         if include_total
         else None
     )
-    title = f"Price trends by bucket - WagaNath vs {competitor} vs Market"
+    title = f"Price trends by bucket - Wagamama vs {_competitor_label(sources)} vs Market"
     fig = px.line(
         means,
         x="date",
@@ -163,20 +165,19 @@ def single_bucket_comparison(
     bucket: str,
     *,
     sources: list[str] | None = None,
-    competitor: str = "Nando's",
     indexed: bool = False,
 ) -> go.Figure:
     """Focused comparison of one bucket (or Total) across selected sources."""
     means = analytics.bucket_means(history, include_total=True)
     if sources is None:
-        sources = ["WagaNath", competitor, "Market"]
+        sources = [OWN_BRAND, "Nando's", "Market"]
     frame = means[(means["bucket"] == bucket) & (means["source"].isin(sources))]
     if indexed:
         frame = analytics.rebase_to_100(frame, ["source"])
         y, y_label, prefix, suffix = "index", "Price index (Q1 = 100)", "", " (indexed)"
     else:
         y, y_label, prefix, suffix = "price", "Avg price (GBP)", "£", ""
-    title = f"{bucket}: WagaNath vs {competitor} vs Market{suffix}"
+    title = f"{bucket}: Wagamama vs {_competitor_label(sources)} vs Market{suffix}"
     fig = px.line(
         frame,
         x="date",
@@ -196,12 +197,11 @@ def latest_price_bars(
     history,
     *,
     sources: list[str] | None = None,
-    competitor: str = "Nando's",
 ) -> go.Figure:
     """Grouped bar of the latest average price by bucket across sources."""
     latest = analytics.latest_bucket_prices(history)
     if sources is None:
-        sources = ["WagaNath", competitor, "Market"]
+        sources = [OWN_BRAND, "Nando's", "Market"]
     latest = latest[latest["source"].isin(sources)]
     fig = px.bar(
         latest,

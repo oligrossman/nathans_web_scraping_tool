@@ -11,33 +11,29 @@ from pathlib import Path
 import streamlit as st
 
 from src import analytics, charts, delivery_compare, high_low
-from src.synthetic import BUCKETS, OWN_BRAND, TOTAL_LABEL
-
-st.set_page_config(page_title="Price Analytics", page_icon=":bar_chart:", layout="wide")
-
-# Pointer cursor on drilldown charts so users know rows are clickable.
-st.markdown(
-    """
-    <style>
-    [data-testid="stPlotlyChart"] svg .scatterpoints path,
-    [data-testid="stPlotlyChart"] svg .points path,
-    [data-testid="stPlotlyChart"] svg .scatterlayer path {
-        cursor: pointer !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
+from src.branding import (
+    ANALYTICS_TAGLINE,
+    ANALYTICS_TITLE,
+    APP_TITLE,
+    OWN_BRAND,
+    apply_sidebar_branding,
+    brand_css,
 )
+from src.synthetic import BUCKETS, TOTAL_LABEL
+
+st.set_page_config(
+    page_title=f"{ANALYTICS_TITLE} | {APP_TITLE}",
+    page_icon="📊",
+    layout="wide",
+)
+
+apply_sidebar_branding()
+st.markdown(brand_css(), unsafe_allow_html=True)
 
 HISTORY_PATH = analytics.DEFAULT_HISTORY_PATH
 
-st.title("Price Analytics")
-st.caption(
-    "Synthetic quarterly price history (5 years) for Nando's, WagaNath "
-    "(Nathan's restaurant) and the wider market. Market is a restaurant-count-"
-    "weighted average of competitor companies (see `data/company_weights.csv`). "
-    "Synthetic data is for demonstration."
-)
+st.title(ANALYTICS_TITLE)
+st.caption(ANALYTICS_TAGLINE)
 
 if not Path(HISTORY_PATH).exists():
     st.warning(
@@ -48,14 +44,39 @@ if not Path(HISTORY_PATH).exists():
 
 
 @st.cache_data
-def _load(path: str):
+def _load(path: str, _mtime: float):
     raw = analytics.load_history(path)
     return analytics.with_derived_market(raw)
 
 
-history = _load(str(HISTORY_PATH))
+history = _load(str(HISTORY_PATH), HISTORY_PATH.stat().st_mtime)
+if OWN_BRAND not in history["source"].unique():
+    st.error(
+        f"No price history rows for **{OWN_BRAND}**. "
+        f"Found sources: {sorted(history['source'].unique())}. "
+        "Re-run `python -m scripts.generate_data` to regenerate the dataset."
+    )
+    st.stop()
 competitors = analytics.competitor_sources(history)
 focus_options = [TOTAL_LABEL, *BUCKETS]
+
+if not competitors:
+    st.warning("No competitor companies in the price history yet.")
+    st.stop()
+
+# Single source of truth: every chart compares Wagamama against the companies
+# picked here. Wagamama is always shown.
+selected_companies = st.multiselect(
+    "Comparison companies",
+    competitors,
+    default=competitors,
+    help=f"Drives every chart below. {OWN_BRAND} is always shown; pick one or more "
+    "companies to compare against.",
+)
+if not selected_companies:
+    st.info("Select at least one company to compare.")
+    st.stop()
+compare_sources = [OWN_BRAND, *selected_companies, "Market"]
 
 
 # --- Drilldown helpers (click a chart row to drill down) -------------------
@@ -144,12 +165,14 @@ col3.metric(
     kpis.fastest_bucket,
     f"{kpis.fastest_bucket_change_pct}%",
 )
-nandos_latest = kpis.latest_avg_by_source.get("Nando's", 0.0)
-waganath_latest = kpis.latest_avg_by_source.get(OWN_BRAND, 0.0)
+own_brand_latest = kpis.latest_avg_by_source.get(OWN_BRAND, 0.0)
+selected_latest = [kpis.latest_avg_by_source.get(c, 0.0) for c in selected_companies]
+competitor_avg = sum(selected_latest) / len(selected_latest)
+peer_label = selected_companies[0] if len(selected_companies) == 1 else "selected peers"
 col4.metric(
-    "WagaNath avg vs Nando's",
-    f"£{waganath_latest:.2f}",
-    f"{waganath_latest - nandos_latest:+.2f} vs Nando's",
+    f"{OWN_BRAND} avg vs {peer_label}",
+    f"£{own_brand_latest:.2f}",
+    f"{own_brand_latest - competitor_avg:+.2f} vs {peer_label}",
 )
 
 st.divider()
@@ -157,7 +180,7 @@ st.divider()
 tab_buckets, tab_compare, tab_delivery, tab_high_low = st.tabs(
     [
         "By bucket",
-        "WagaNath vs market",
+        f"{OWN_BRAND} vs market",
         "Collection vs delivery",
         "High vs low",
     ]
@@ -165,60 +188,61 @@ tab_buckets, tab_compare, tab_delivery, tab_high_low = st.tabs(
 
 # --- By bucket -------------------------------------------------------------
 with tab_buckets:
+    st.caption(f"One panel per selected company. {OWN_BRAND} shown separately below.")
+    for company in [*selected_companies, OWN_BRAND]:
+        st.markdown(f"#### {company}")
+        left, right = st.columns(2)
+        with left:
+            st.plotly_chart(
+                charts.bucket_line(
+                    history, company, indexed=False, include_total=True
+                ),
+                use_container_width=True,
+                key=f"bucket_abs_{company}",
+            )
+        with right:
+            st.plotly_chart(
+                charts.bucket_line(
+                    history, company, indexed=True, include_total=True
+                ),
+                use_container_width=True,
+                key=f"bucket_idx_{company}",
+            )
+        st.plotly_chart(
+            charts.pct_change_heatmap(history, company, include_total=True),
+            use_container_width=True,
+            key=f"bucket_heat_{company}",
+        )
+
+# --- Wagamama vs market ----------------------------------------------------
+with tab_compare:
+    st.caption(f"{OWN_BRAND} vs the selected companies vs Market (set above).")
+    st.subheader("Breakdown by bucket")
+    st.plotly_chart(
+        charts.comparison_facets(
+            history,
+            sources=compare_sources,
+            include_total=True,
+        ),
+        use_container_width=True,
+    )
+
     left, right = st.columns(2)
     with left:
+        focus_bucket = st.selectbox("Focus bucket", focus_options, index=0)
         st.plotly_chart(
-            charts.bucket_line(history, "Nando's", indexed=False, include_total=True),
+            charts.single_bucket_comparison(
+                history,
+                focus_bucket,
+                sources=compare_sources,
+            ),
             use_container_width=True,
         )
     with right:
         st.plotly_chart(
-            charts.bucket_line(history, "Nando's", indexed=True, include_total=True),
+            charts.latest_price_bars(history, sources=compare_sources),
             use_container_width=True,
         )
-    st.plotly_chart(
-        charts.pct_change_heatmap(history, "Nando's", include_total=True),
-        use_container_width=True,
-    )
-
-# --- WagaNath vs market ----------------------------------------------------
-with tab_compare:
-    if not competitors:
-        st.warning("No competitor companies in the price history yet.")
-    else:
-        competitor = st.selectbox("Compare against", competitors, index=0)
-        compare_sources = [OWN_BRAND, competitor, "Market"]
-
-        st.subheader("Breakdown by bucket")
-        st.plotly_chart(
-            charts.comparison_facets(
-                history,
-                sources=compare_sources,
-                competitor=competitor,
-                include_total=True,
-            ),
-            use_container_width=True,
-        )
-
-        left, right = st.columns(2)
-        with left:
-            focus_bucket = st.selectbox("Focus bucket", focus_options, index=0)
-            st.plotly_chart(
-                charts.single_bucket_comparison(
-                    history,
-                    focus_bucket,
-                    sources=compare_sources,
-                    competitor=competitor,
-                ),
-                use_container_width=True,
-            )
-        with right:
-            st.plotly_chart(
-                charts.latest_price_bars(
-                    history, sources=compare_sources, competitor=competitor
-                ),
-                use_container_width=True,
-            )
 
 # --- Collection vs delivery ------------------------------------------------
 with tab_delivery:
@@ -245,8 +269,13 @@ with tab_delivery:
             return delivery_compare.build_comparison()
 
         comparison = _comparison()
+        comparison = comparison[
+            comparison["company"].isin(selected_companies)
+        ].reset_index(drop=True)
         if comparison.empty:
-            st.warning("No matched collection vs delivery items found.")
+            st.warning(
+                "No matched collection vs delivery items for the selected companies."
+            )
         else:
             company_totals = delivery_compare.company_summary(comparison)
             summary = delivery_compare.bucket_summary(comparison)
@@ -351,8 +380,9 @@ with tab_high_low:
             return high_low.build_menu_prices()
 
         menu = _menu_prices()
+        menu = menu[menu["company"].isin(selected_companies)].reset_index(drop=True)
         if menu.empty:
-            st.warning("No menu price data available.")
+            st.warning("No menu price data for the selected companies.")
         else:
             hl_companies = high_low.company_summary(menu)
             widest = hl_companies.iloc[0]

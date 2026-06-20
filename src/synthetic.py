@@ -5,7 +5,7 @@ scraped Nando's prices and back-cast 5 years of quarterly prices so that
 older quarters are cheaper (prices rise over time). Alongside Nando's we
 synthesise:
 
-- WagaNath: Nathan's own (pan-Asian) restaurant, a distinct bespoke menu.
+- Wagamama: our own brand, a distinct bespoke menu.
 
 Market is *not* generated here; it is derived at load time in ``analytics.py``
 as a restaurant-count-weighted average of competitor companies.
@@ -30,13 +30,15 @@ N_QUARTERS = 20  # 5 years of quarterly observations.
 # The five board-level buckets every menu category collapses into.
 BUCKETS = ("Starters", "Mains", "Sides", "Drinks", "Desserts")
 
+from .branding import OWN_BRAND
+
 # Shared labels used across analytics and charts.
-OWN_BRAND = "WagaNath"
 MARKET_LABEL = "Market"
 TOTAL_LABEL = "Total"
 
-# Maps each Nando's menu category to a board-level bucket.
+# Maps menu category labels to board-level buckets (Nando's + Pizza Express).
 CATEGORY_TO_BUCKET: dict[str, str] = {
+    # Nando's
     "Starters": "Starters",
     "PERi-PERi Chicken": "Mains",
     "Burgers, Pittas, Wraps": "Mains",
@@ -48,6 +50,24 @@ CATEGORY_TO_BUCKET: dict[str, str] = {
     "Dips & Extras": "Sides",
     "Drinks": "Drinks",
     "Desserts": "Desserts",
+    # Pizza Express
+    "Starters & Sides": "Starters",
+    "Dough Balls": "Starters",
+    "Meal Deals": "Mains",
+    "🏆 Matchday Winners 🏆": "Mains",
+    "PIZZA": "Mains",
+    "ROMANA PIZZA": "Mains",
+    "CLASSIC PIZZA": "Mains",
+    "LEGGERA": "Mains",
+    "GLUTEN-FREE": "Mains",
+    "Pasta": "Mains",
+    "Salads": "Mains",
+    "Mains": "Mains",
+    "Kids": "Mains",
+    "Dips": "Sides",
+    "Soft Drinks": "Drinks",
+    "Pizza": "Mains",
+    "Gluten-Free": "Mains",
 }
 
 # Nominal annual price growth per bucket - the headline market trend that the
@@ -60,8 +80,8 @@ BUCKET_ANNUAL_GROWTH: dict[str, float] = {
     "Desserts": 0.045,
 }
 
-# WagaNath: Nathan's pan-Asian restaurant. (item, bucket, current price).
-WAGANATH_MENU: tuple[tuple[str, str, float], ...] = (
+# Wagamama menu items. (item, bucket, current price).
+WAGAMAMA_MENU: tuple[tuple[str, str, float], ...] = (
     ("Edamame", "Starters", 5.50),
     ("Chicken Gyoza", "Starters", 7.25),
     ("Duck Spring Rolls", "Starters", 7.95),
@@ -79,9 +99,9 @@ WAGANATH_MENU: tuple[tuple[str, str, float], ...] = (
     ("Mochi Ice Cream", "Desserts", 5.95),
 )
 
-# WagaNath positions premium on mains/desserts, keener on sides/drinks. Its own
+# Wagamama positions premium on mains/desserts, keener on sides/drinks. Its own
 # growth path runs a touch hotter than the market on food.
-WAGANATH_ANNUAL_GROWTH: dict[str, float] = {
+WAGAMAMA_ANNUAL_GROWTH: dict[str, float] = {
     "Starters": 0.055,
     "Mains": 0.070,
     "Sides": 0.035,
@@ -171,39 +191,58 @@ def _generate_for_menu(
     return pd.concat(frames, ignore_index=True)
 
 
-def generate_price_history(menu_df: pd.DataFrame, seed: int = SEED) -> pd.DataFrame:
-    """Generate the tidy price-history dataset for Nando's and WagaNath.
+def _menu_df_to_history(
+    source: str,
+    menu_df: pd.DataFrame,
+    *,
+    dates: list[date],
+    rng: np.random.Generator,
+    growth_by_bucket: dict[str, float] | None = None,
+) -> pd.DataFrame:
+    growth = growth_by_bucket or BUCKET_ANNUAL_GROWTH
+    priced = menu_df.dropna(subset=["price"]).copy()
+    priced["bucket"] = priced["category"].map(CATEGORY_TO_BUCKET)
+    priced = priced.dropna(subset=["bucket"])
+    menu = list(zip(priced["name"], priced["bucket"], priced["price"].astype(float)))
+    return _generate_for_menu(
+        source=source,
+        menu=menu,
+        growth_by_bucket=growth,
+        dates=dates,
+        rng=rng,
+    )
 
-    ``menu_df`` is the scraped Nando's menu with ``name``, ``price`` and
-    ``category`` columns; it anchors Nando's most recent quarter. Market is
-    derived at load time from competitor companies and ``company_weights.csv``.
+
+def generate_price_history(
+    menu_df: pd.DataFrame,
+    *,
+    pizza_express_df: pd.DataFrame | None = None,
+    seed: int = SEED,
+) -> pd.DataFrame:
+    """Generate the tidy price-history dataset for competitor companies + Wagamama.
+
+    ``menu_df`` anchors Nando's. Optional ``pizza_express_df`` anchors Pizza Express.
+    Market is derived at load time from ``company_weights.csv``.
     """
     rng = np.random.default_rng(seed)
     dates = quarter_end_dates(N_QUARTERS)
 
-    priced = menu_df.dropna(subset=["price"]).copy()
-    priced["bucket"] = priced["category"].map(CATEGORY_TO_BUCKET)
-    priced = priced.dropna(subset=["bucket"])
-    nandos_menu = list(
-        zip(priced["name"], priced["bucket"], priced["price"].astype(float))
-    )
-
-    nandos = _generate_for_menu(
-        source="Nando's",
-        menu=nandos_menu,
-        growth_by_bucket=BUCKET_ANNUAL_GROWTH,
-        dates=dates,
-        rng=rng,
-    )
-    waganath = _generate_for_menu(
+    nandos = _menu_df_to_history("Nando's", menu_df, dates=dates, rng=rng)
+    own_brand = _generate_for_menu(
         source=OWN_BRAND,
-        menu=list(WAGANATH_MENU),
-        growth_by_bucket=WAGANATH_ANNUAL_GROWTH,
+        menu=list(WAGAMAMA_MENU),
+        growth_by_bucket=WAGAMAMA_ANNUAL_GROWTH,
         dates=dates,
         rng=rng,
     )
 
-    history = pd.concat([nandos, waganath], ignore_index=True)
+    frames = [nandos, own_brand]
+    if pizza_express_df is not None and not pizza_express_df.empty:
+        frames.append(
+            _menu_df_to_history("Pizza Express", pizza_express_df, dates=dates, rng=rng)
+        )
+
+    history = pd.concat(frames, ignore_index=True)
     return history.sort_values(["source", "bucket", "item", "date"]).reset_index(
         drop=True
     )

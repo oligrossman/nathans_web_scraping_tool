@@ -16,3 +16,7 @@ env/
 # Ad-hoc scraper exports (the curated synthetic datasets in data/ are tracked)
 exports/
 /*.csv
+
+# Runtime scrape artifacts (regenerated on demand from the home page)
+data/scrapes/
+data/scrape_log.json

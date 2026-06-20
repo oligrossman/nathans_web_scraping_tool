@@ -1,11 +1,15 @@
-# Nathan's Menu Scraper
+# Wagamama Menu Intelligence
 
-A Streamlit prototype that scrapes a food chain's online menu (item names + prices)
-using Selenium, previews the result in a table, and lets you download it as a CSV.
+A Streamlit platform for Wagamama's competitive pricing team. It scrapes
+competitor food-chain menus (item names + prices) using Selenium, previews
+results in a table, and lets you download them as CSVs. A dedicated **Price
+Analytics** page benchmarks Wagamama against the market with synthetic
+historical trends and real collection-vs-delivery comparisons.
 
-The first supported site is **Nando's** (UK collection menu). The architecture is
-built so additional chains (e.g. Wagamama) can be added by writing a single new
-scraper class.
+The first supported competitor sites are **Nando's** (Camden) and **Pizza
+Express** (Birmingham Bullring), each with collection and Deliveroo delivery
+scrapers. The architecture is built so additional chains can be added by
+writing a scraper class and registering it.
 
 ## How it works
 
@@ -38,11 +42,16 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-Then in the browser:
+Then in the browser, use the sidebar to switch between **Data** (menu scraping)
+and **Price Analysis** (analytics dashboard):
 
-1. Pick a chain from the dropdown.
-2. Click **Scrape menu**.
-3. Review the table and click **Download CSV**.
+1. Check the **Scrape status** table for when each site was last scraped.
+2. Select one or more chains (or **Select all sites**).
+3. Click **Scrape selected** — the chosen sites are scraped concurrently.
+4. Expand each result to review the table and **Download CSV**.
+
+Each successful scrape is cached to `data/scrapes/` and its time recorded in
+`data/scrape_log.json`, so you can see what is already fresh before re-running.
 
 ## Adding a new chain
 
@@ -57,22 +66,25 @@ That's it - the UI updates automatically from the registry.
 The **Price Analytics** page (in the sidebar) explores 5 years of *synthetic*
 quarterly price history for:
 
-- **Nando's** - anchored on the live scraped menu, back-cast over time.
-- **WagaNath** - Nathan's own pan-Asian restaurant (a distinct bespoke menu).
-- **Market** - derived at load time as a restaurant-count-weighted average of
+- **Wagamama** — our brand, with a distinct bespoke menu.
+- **Nando's / Pizza Express** — competitor companies anchored on live scraped menus.
+- **Market** — derived at load time as a restaurant-count-weighted average of
   competitor companies (weights in `data/company_weights.csv`).
 
-All 11 Nando's categories collapse into five board-level buckets (Starters,
-Mains, Sides, Drinks, Desserts), plus a **Total** series (equal-weighted mean
-across buckets). The page shows four views:
+All menu categories collapse into five board-level buckets (Starters, Mains,
+Sides, Drinks, Desserts), plus a **Total** series (equal-weighted mean across
+buckets). The page shows four views:
 
 - **By bucket** — bucket breakdown (absolute, indexed, heatmap with Total row).
-- **WagaNath vs market** — breakdown by bucket (including **Total** as a facet
+- **Wagamama vs market** — breakdown by bucket (including **Total** as a facet
   panel alongside Starters, Mains, etc.), focus chart, and latest-price bars.
 - **Collection vs delivery (real data)** — click-through drilldown with
-  **← Back**, breadcrumb, dropdown, or chart click: Company → Bucket → Item.
+  **← Back**, breadcrumb, or chart click: Company → Bucket → Item.
 - **High vs low** — lowest, average and highest menu prices with the same
   drilldown pattern (item level shows each price within its bucket range).
+
+Charts use Wagamama brand red (`#D11317`) for our brand and Deliveroo teal
+(`#00CCBC`) for delivery channel comparisons.
 
 ### Generating / refreshing the data
 
@@ -81,16 +93,18 @@ regenerate them (deterministic - uses a fixed random seed):
 
 ```bash
 python -m scripts.generate_data            # reuse the cached menu snapshot
-python -m scripts.generate_data --rescrape # force a fresh Nando's scrape first
+python -m scripts.generate_data --rescrape # force a fresh scrape first
 ```
 
-This writes `data/nandos_menu_snapshot.csv` (anchor prices),
-`data/price_history.csv` (Nando's + WagaNath; Market is derived at load time),
-`data/deliveroo_nandos_snapshot.csv` (Deliveroo delivery prices), and reads
+This writes `data/nandos_menu_snapshot.csv`, `data/pizza_express_menu_snapshot.csv`,
+`data/deliveroo_nandos_snapshot.csv`, `data/deliveroo_pizza_express_snapshot.csv`,
+`data/price_history.csv` (Nando's + Pizza Express + Wagamama), and reads
 `data/company_weights.csv` for the Market benchmark weights.
+
+Brand constants (colours, copy, own-brand label) live in `src/branding.py`.
 
 ## A note on respectful scraping
 
 This prototype scrapes only when you click the button. Please use it
-considerately: avoid hammering the site with rapid repeated requests. Automated,
+considerately: avoid hammering sites with rapid repeated requests. Automated,
 timed scraping is intentionally **out of scope** for this proof of concept.

@@ -12,7 +12,8 @@ from pathlib import Path
 
 import pandas as pd
 
-from .synthetic import BUCKETS, MARKET_LABEL, OWN_BRAND, TOTAL_LABEL
+from .branding import LEGACY_OWN_BRAND, OWN_BRAND
+from .synthetic import BUCKETS, MARKET_LABEL, TOTAL_LABEL
 
 DEFAULT_HISTORY_PATH = Path(__file__).resolve().parent.parent / "data" / "price_history.csv"
 DEFAULT_WEIGHTS_PATH = Path(__file__).resolve().parent.parent / "data" / "company_weights.csv"
@@ -22,6 +23,8 @@ def load_history(path: str | Path = DEFAULT_HISTORY_PATH) -> pd.DataFrame:
     """Load the tidy price history with ``date`` parsed to datetime."""
     frame = pd.read_csv(path, parse_dates=["date"])
     frame["item"] = frame["item"].fillna("")
+    # Keep in sync with branding renames (WagaNath → Wagamama).
+    frame["source"] = frame["source"].replace({LEGACY_OWN_BRAND: OWN_BRAND})
     return frame
 
 
@@ -32,7 +35,7 @@ def load_company_weights(path: str | Path = DEFAULT_WEIGHTS_PATH) -> dict[str, f
 
 
 def competitor_sources(history: pd.DataFrame) -> list[str]:
-    """Companies that feed the derived Market benchmark (excludes WagaNath/Market)."""
+    """Companies that feed the derived Market benchmark (excludes Wagamama/Market)."""
     return sorted(
         s
         for s in history["source"].unique()
