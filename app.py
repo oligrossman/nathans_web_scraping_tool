@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import streamlit as st
 
+from src import auth
 from src.branding import (
     ANALYTICS_TITLE,
     APP_TITLE,
@@ -12,6 +13,10 @@ from src.branding import (
 )
 
 st.set_page_config(page_title=APP_TITLE, page_icon="🍜", layout="wide")
+
+# Central auth gate: this entrypoint runs on every interaction and every page is
+# dispatched through ``pg.run()`` below, so one check here protects the whole app.
+auth.require_login()
 
 data_page = st.Page("pages/data.py", title=DATA_PAGE_TITLE, default=True, icon="🗂️")
 analytics_page = st.Page(
@@ -26,4 +31,5 @@ config_page = st.Page(
 )
 
 pg = st.navigation([data_page, analytics_page, config_page])
+auth.logout_button()
 pg.run()
