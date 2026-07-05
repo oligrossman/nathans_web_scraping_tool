@@ -19,9 +19,9 @@ import streamlit as st
 
 # Default credentials. The hash below is PBKDF2-HMAC-SHA256 of the password with
 # the salt and iteration count shown — the password itself is not recoverable.
-# _DEFAULT_USERNAME = "wagahq"
-# _DEFAULT_SALT_HEX = "e54fe68e8cd05f4e4e9afa0764d7a526"
-# _DEFAULT_HASH_HEX = "a80b5bd98d8b36a1f5867d2d801b506ea7f7967b50d039a86dd8e0adb113496b"
+_DEFAULT_USERNAME = "wagahq"
+_DEFAULT_SALT_HEX = "e54fe68e8cd05f4e4e9afa0764d7a526"
+_DEFAULT_HASH_HEX = "a80b5bd98d8b36a1f5867d2d801b506ea7f7967b50d039a86dd8e0adb113496b"
 _ITERATIONS = 200_000
 
 _AUTH_FLAG = "authenticated"
