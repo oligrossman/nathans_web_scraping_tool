@@ -114,8 +114,23 @@ def build_comparison(
     )
 
 
-def company_summary(comparison: pd.DataFrame) -> pd.DataFrame:
-    """Average collection vs delivery price (and markup) per company."""
+def company_summary(
+    comparison: pd.DataFrame,
+    *,
+    overall_label: str | None = None,
+    overall_exclude: str | None = None,
+    sort_by: str = "markup_pct",
+) -> pd.DataFrame:
+    """Average collection vs delivery price (and markup) per company.
+
+    When ``overall_label`` is set, an extra top row aggregates *every* item in
+    the frame (the market average, not an average of per-restaurant averages).
+    ``overall_exclude`` drops one company (e.g. the own brand) from that overall
+    row only, keeping the market competitor-only while the brand still gets a row.
+    ``sort_by`` picks the ranking column (``"markup_pct"`` or ``"markup_abs"``)
+    so the chart order can follow the caller's £/% toggle. The overall row is
+    always pinned on top regardless of the sort.
+    """
     summary = (
         comparison.groupby("company", as_index=False)
         .agg(
@@ -125,17 +140,50 @@ def company_summary(comparison: pd.DataFrame) -> pd.DataFrame:
         )
         .round(2)
     )
+    summary["markup_abs"] = (summary["delivery"] - summary["collection"]).round(2)
     summary["markup_pct"] = (
         (summary["delivery"] / summary["collection"] - 1.0) * 100.0
     ).round(1)
-    return summary.sort_values("markup_pct", ascending=False).reset_index(drop=True)
+    out = summary.sort_values(sort_by, ascending=False).reset_index(drop=True)
+    base = (
+        comparison
+        if not overall_exclude
+        else comparison[comparison["company"] != overall_exclude]
+    )
+    if overall_label and not base.empty:
+        collection = round(float(base["collection"].mean()), 2)
+        delivery = round(float(base["delivery"].mean()), 2)
+        overall = pd.DataFrame(
+            [
+                {
+                    "company": overall_label,
+                    "items": len(base),
+                    "collection": collection,
+                    "delivery": delivery,
+                    "markup_abs": round(delivery - collection, 2),
+                    "markup_pct": round((delivery / collection - 1.0) * 100.0, 1),
+                }
+            ]
+        )
+        out = pd.concat([overall, out], ignore_index=True)
+    return out
 
 
-def bucket_summary(comparison: pd.DataFrame, company: str | None = None) -> pd.DataFrame:
-    """Average collection vs delivery price (and markup) per bucket."""
+def bucket_summary(
+    comparison: pd.DataFrame,
+    company: str | None = None,
+    *,
+    dim: str = "bucket",
+    sort_by: str = "markup_pct",
+) -> pd.DataFrame:
+    """Average collection vs delivery price (and markup) per group (``dim``).
+
+    ``sort_by`` picks the ranking column (``"markup_pct"`` or ``"markup_abs"``)
+    so the chart order can follow the caller's £/% toggle.
+    """
     frame = comparison if company is None else comparison[comparison["company"] == company]
     summary = (
-        frame.groupby("bucket", as_index=False)
+        frame.groupby(dim, as_index=False)
         .agg(
             items=("item", "count"),
             collection=("collection", "mean"),
@@ -143,7 +191,8 @@ def bucket_summary(comparison: pd.DataFrame, company: str | None = None) -> pd.D
         )
         .round(2)
     )
+    summary["markup_abs"] = (summary["delivery"] - summary["collection"]).round(2)
     summary["markup_pct"] = (
         (summary["delivery"] / summary["collection"] - 1.0) * 100.0
     ).round(1)
-    return summary.sort_values("markup_pct", ascending=False).reset_index(drop=True)
+    return summary.sort_values(sort_by, ascending=False).reset_index(drop=True)

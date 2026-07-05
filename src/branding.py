@@ -6,7 +6,12 @@ from pathlib import Path
 
 import streamlit as st
 
+from .enrichment.schema import GroupingDimension
+
 OWN_BRAND = "Wagamama"
+
+# Shared session key so every page/tab reads and writes the same grouping choice.
+GROUPING_STATE_KEY = "grouping_dimension"
 
 # Previous prototype label — normalised to OWN_BRAND when loading history.
 LEGACY_OWN_BRAND = "WagaNath"
@@ -30,6 +35,7 @@ SURFACE_GREY = "#F5F5F5"
 
 APP_TITLE = "Wagamama Market Analysis"
 DATA_PAGE_TITLE = "Data"
+CONFIG_PAGE_TITLE = "Comparison Configuration"
 APP_TAGLINE = (
     "Competitive menu pricing intelligence — scrape live competitor menus, "
     "track price trends, and benchmark Wagamama against the market."
@@ -38,16 +44,17 @@ SCRAPE_SECTION = "Menu data collection"
 ANALYTICS_TITLE = "Price Analysis"
 ANALYTICS_TAGLINE = (
     "Synthetic quarterly price history (5 years) for Wagamama, competitor "
-    "companies and the wider market. Market is a restaurant-count-weighted "
-    "average of competitor companies (see `data/company_weights.csv`). "
-    "Synthetic data is for demonstration."
+    "companies and the wider market. 'Market whole' is a restaurant-count-weighted "
+    "average of competitor companies (see `data/company_weights.csv`) and never "
+    "includes Wagamama dishes. Synthetic data is for demonstration."
 )
 
 # Chart source colours — Wagamama red is always the hero; competitors stay distinct.
 SOURCE_COLOURS: dict[str, str] = {
     OWN_BRAND: WAGAMAMA_RED,
     LEGACY_OWN_BRAND: WAGAMAMA_RED,
-    "Market": MARKET_GREY,
+    # Must match synthetic.MARKET_LABEL (branding can't import synthetic — cycle).
+    "Market whole": MARKET_GREY,
     "Nando's": "#B8860B",
     "Pizza Express": "#0E7C61",
 }
@@ -69,6 +76,27 @@ def apply_sidebar_branding() -> None:
     """Apply all sidebar branding (top wordmark + footer logo)."""
     apply_sidebar_logo()
     apply_sidebar_footer_logo()
+
+
+def render_grouping_selectbox(
+    *,
+    label: str = "Group charts by",
+    help: str | None = None,
+) -> GroupingDimension:
+    """Render the shared grouping-dimension selector.
+
+    Bound to a single ``st.session_state`` key so the choice stays in sync across
+    every page and tab (change it anywhere, it applies everywhere).
+    """
+    st.session_state.setdefault(GROUPING_STATE_KEY, GroupingDimension.BUCKET.value)
+    st.selectbox(
+        label,
+        options=[dimension.value for dimension in GroupingDimension],
+        format_func=lambda value: GroupingDimension(value).label,
+        key=GROUPING_STATE_KEY,
+        help=help,
+    )
+    return GroupingDimension(st.session_state[GROUPING_STATE_KEY])
 
 
 def brand_css() -> str:

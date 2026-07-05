@@ -73,15 +73,51 @@ quarterly price history for:
 
 All menu categories collapse into five board-level buckets (Starters, Mains,
 Sides, Drinks, Desserts), plus a **Total** series (equal-weighted mean across
-buckets). The page shows four views:
+buckets). The page shows five views:
 
 - **By bucket** — bucket breakdown (absolute, indexed, heatmap with Total row).
 - **Wagamama vs market** — breakdown by bucket (including **Total** as a facet
   panel alongside Starters, Mains, etc.), focus chart, and latest-price bars.
+  Pick which market benchmark(s) to compare against — **Market whole** (a
+  restaurant-count-weighted average of all selected competitors) and any custom
+  markets. All market benchmarks exclude Wagamama dishes.
 - **Collection vs delivery (real data)** — click-through drilldown with
   **← Back**, breadcrumb, or chart click: Company → Bucket → Item.
 - **High vs low** — lowest, average and highest menu prices with the same
   drilldown pattern (item level shows each price within its bucket range).
+
+The **Comparison Configuration** page holds the settings that shape the
+analytics charts: LLM-generated dish attributes (cuisine, dish type such as
+Noodles / Pizza / Curry / Soup, and dietary flags) stored in SQLite with user
+overrides, the grouping dimension (course, cuisine, dish type), and custom
+market benchmarks (e.g. Asian noodle dishes, all pizzas).
+
+  Each dish is keyed by a **`dish_id`** unique per `(restaurant, item)` — so the
+  same name at two chains (e.g. "Mac & Cheese") maps and overrides independently.
+  The id is deterministic (`src/enrichment/identity.py`) and materialised into
+  both `data/price_history.csv` and `data/menu_mappings.db`, which is how
+  mappings join back to each restaurant and its price history.
+
+  Offline enrichment (API key never exposed in the app):
+
+  ```bash
+  export OPENAI_API_KEY=sk-...
+  python -m scripts.enrich_menus                  # classify new dishes only
+  python -m scripts.enrich_menus --limit 10       # cost control while testing
+  python -m scripts.enrich_menus --concurrency 16 # parallel async calls
+  python -m scripts.enrich_menus --remap          # reclassify everything
+  ```
+
+  Optional: `OPENAI_MODEL` (default `gpt-5-nano`). Mappings persist in
+  `data/menu_mappings.db`.
+
+  Upgrading an older, name-keyed database to the per-restaurant `dish_id`
+  schema (preserves existing classifications, no re-spend):
+
+  ```bash
+  python -m scripts.generate_data      # rewrite price_history.csv with dish_id
+  python -m scripts.migrate_dish_ids   # backfill mappings into the new schema
+  ```
 
 Charts use Wagamama brand red (`#D11317`) for our brand and Deliveroo teal
 (`#00CCBC`) for delivery channel comparisons.

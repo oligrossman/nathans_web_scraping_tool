@@ -12,6 +12,7 @@ from pathlib import Path
 
 import pandas as pd
 
+from .branding import OWN_BRAND
 from .delivery_compare import COMPANY_SNAPSHOTS
 from .synthetic import CATEGORY_TO_BUCKET
 
@@ -44,8 +45,32 @@ def build_menu_prices(
     return pd.concat(frames, ignore_index=True)
 
 
-def company_summary(menu: pd.DataFrame) -> pd.DataFrame:
-    """Min, max and average menu price per company."""
+def _spread_pct(frame: pd.DataFrame) -> pd.Series:
+    """Spread as a percentage of the low price (0 where low is missing/zero)."""
+    return (
+        (frame["spread"] / frame["low"].replace(0, pd.NA) * 100.0)
+        .fillna(0.0)
+        .round(1)
+    )
+
+
+def company_summary(
+    menu: pd.DataFrame,
+    *,
+    overall_label: str | None = None,
+    overall_exclude: str | None = None,
+    sort_by: str = "spread",
+) -> pd.DataFrame:
+    """Min, max and average menu price per company.
+
+    When ``overall_label`` is set, an extra top row aggregates *every* item in
+    the frame (the market average across items, not of per-restaurant averages).
+    ``overall_exclude`` drops one company (e.g. the own brand) from that overall
+    row only, so the market stays competitor-only while the brand still gets its
+    own per-company row. ``sort_by`` picks the ranking column (``"spread"`` or
+    ``"spread_pct"``) so the chart order follows the caller's £/% toggle; the
+    overall row is always pinned on top.
+    """
     rows = []
     for company, group in menu.groupby("company"):
         rows.append(
@@ -59,17 +84,41 @@ def company_summary(menu: pd.DataFrame) -> pd.DataFrame:
         )
     out = pd.DataFrame(rows).round(2)
     out["spread"] = (out["high"] - out["low"]).round(2)
-    return out.sort_values("spread", ascending=False).reset_index(drop=True)
+    out["spread_pct"] = _spread_pct(out)
+    out = out.sort_values(sort_by, ascending=False).reset_index(drop=True)
+    base = menu if not overall_exclude else menu[menu["company"] != overall_exclude]
+    if overall_label and not base.empty:
+        overall = pd.DataFrame(
+            [
+                {
+                    "company": overall_label,
+                    "items": len(base),
+                    "low": round(float(base["price"].min()), 2),
+                    "high": round(float(base["price"].max()), 2),
+                    "average": round(float(base["price"].mean()), 2),
+                }
+            ]
+        )
+        overall["spread"] = (overall["high"] - overall["low"]).round(2)
+        overall["spread_pct"] = _spread_pct(overall)
+        out = pd.concat([overall, out], ignore_index=True)
+    return out
 
 
-def bucket_summary(menu: pd.DataFrame, company: str) -> pd.DataFrame:
-    """Min, max and average price per bucket within a company."""
+def bucket_summary(
+    menu: pd.DataFrame, company: str, *, dim: str = "bucket", sort_by: str = "spread"
+) -> pd.DataFrame:
+    """Min, max and average price per group (``dim``) within a company.
+
+    ``sort_by`` picks the ranking column (``"spread"`` or ``"spread_pct"``) so
+    the chart order follows the caller's £/% toggle.
+    """
     frame = menu[menu["company"] == company]
     rows = []
-    for bucket, group in frame.groupby("bucket"):
+    for group_value, group in frame.groupby(dim):
         rows.append(
             {
-                "bucket": bucket,
+                dim: group_value,
                 "items": len(group),
                 "low": group["price"].min(),
                 "high": group["price"].max(),
@@ -78,17 +127,35 @@ def bucket_summary(menu: pd.DataFrame, company: str) -> pd.DataFrame:
         )
     out = pd.DataFrame(rows).round(2)
     out["spread"] = (out["high"] - out["low"]).round(2)
-    return out.sort_values("spread", ascending=False).reset_index(drop=True)
+    out["spread_pct"] = _spread_pct(out)
+    return out.sort_values(sort_by, ascending=False).reset_index(drop=True)
 
 
-def item_detail(menu: pd.DataFrame, company: str, bucket: str) -> pd.DataFrame:
-    """Each item plotted against its bucket's min–max range."""
-    bucket_menu = menu[(menu["company"] == company) & (menu["bucket"] == bucket)]
-    bucket_low = bucket_menu["price"].min()
-    bucket_high = bucket_menu["price"].max()
-    out = bucket_menu[["item", "price"]].copy()
-    out["low"] = bucket_low
-    out["high"] = bucket_high
+def item_detail(
+    menu: pd.DataFrame,
+    company: str | None,
+    group_value: str,
+    *,
+    dim: str = "bucket",
+) -> pd.DataFrame:
+    """Each item plotted against its group's (``dim``) min–max range.
+
+    ``company=None`` pools every company, so the min–max range spans the whole
+    market for that group rather than a single restaurant.
+    """
+    frame = menu if company is None else menu[menu["company"] == company]
+    group_menu = frame[frame[dim] == group_value]
+    group_low = group_menu["price"].min()
+    group_high = group_menu["price"].max()
+    out = group_menu[["item", "price"]].copy()
+    if company is None:
+        # Pooled across companies: qualify names so identical dishes stay distinct.
+        out["item"] = group_menu["item"] + " (" + group_menu["company"] + ")"
+    out["low"] = group_low
+    out["high"] = group_high
     out["average"] = out["price"]
+    out["group_avg"] = round(group_menu["price"].mean(), 2)
     out["spread"] = (out["high"] - out["low"]).round(2)
+    # Flag own-brand rows so charts can highlight Wagamama against the field.
+    out["is_benchmark"] = (group_menu["company"] == OWN_BRAND).to_numpy()
     return out.sort_values("price", ascending=False).reset_index(drop=True)

@@ -12,7 +12,8 @@ import plotly.graph_objects as go
 
 from . import analytics
 from .branding import DELIVEROO_TEAL, OWN_BRAND, SOURCE_COLOURS, WAGAMAMA_RED
-from .synthetic import TOTAL_LABEL
+from .enrichment.schema import GroupingDimension
+from .synthetic import MARKET_LABEL, TOTAL_LABEL
 
 _TEMPLATE = "plotly_white"
 # Source colours imported from branding — Wagamama red is the hero series.
@@ -25,15 +26,14 @@ _HIGH_COLOUR = "#DC2626"  # red
 _AVG_COLOUR = "#111827"  # near-black
 _CHANNEL_LABELS = {"collection": "Collection", "delivery": "Delivery (Deliveroo)"}
 _HIGH_LOW_LABELS = {"low": "Lowest", "average": "Average", "high": "Highest"}
-_CHANNEL_COLOURS = {
-    _CHANNEL_LABELS["collection"]: _COLLECTION_COLOUR,
-    _CHANNEL_LABELS["delivery"]: _DELIVERY_COLOUR,
-}
 
 
 def _competitor_label(sources: list[str]) -> str:
-    """Human-readable label for the competitor source(s) in a comparison."""
-    others = [s for s in sources if s not in (OWN_BRAND, "Market")]
+    """Human-readable label for the competitor source(s) in a comparison.
+
+    Excludes our own brand and any market series ("Market whole", "Market: X").
+    """
+    others = [s for s in sources if s != OWN_BRAND and not s.startswith("Market")]
     return ", ".join(others) if others else "competitors"
 
 
@@ -87,20 +87,25 @@ def total_line(history, source: str = "Nando's", *, indexed: bool = False) -> go
     return fig
 
 
+def _dimension_label(dimension: GroupingDimension | str) -> str:
+    if isinstance(dimension, GroupingDimension):
+        return dimension.label
+    return str(dimension)
+
+
 def bucket_line(
     history,
     source: str = "Nando's",
     *,
     indexed: bool = False,
     include_total: bool = False,
+    dimension: GroupingDimension | str = GroupingDimension.BUCKET,
 ) -> go.Figure:
-    """Average price by bucket over time for one source.
-
-    When ``indexed`` is True the series are rebased to 100 at the first quarter,
-    which compares the *rate* of change rather than absolute price levels.
-    When ``include_total`` is True, an equal-weighted across-bucket mean is added.
-    """
-    means = analytics.bucket_means(history, source, include_total=include_total)
+    """Average price by grouping dimension over time for one source."""
+    means = analytics.bucket_means(
+        history, source, include_total=include_total, dimension=dimension
+    )
+    dim_label = _dimension_label(dimension)
     if indexed:
         means = analytics.rebase_to_100(means, ["bucket"])
         y, y_label, prefix, title = "index", "Price index (Q1 = 100)", "", " (indexed)"
@@ -113,8 +118,8 @@ def bucket_line(
         color="bucket",
         markers=True,
         template=_TEMPLATE,
-        labels={y: y_label, "date": "Quarter", "bucket": "Bucket"},
-        title=f"Average price by bucket{title} - {source}",
+        labels={y: y_label, "date": "Quarter", "bucket": dim_label},
+        title=f"Average price by {dim_label.lower()}{title} - {source}",
         category_orders={"bucket": list(means["bucket"].unique())},
     )
     if include_total:
@@ -128,25 +133,31 @@ def comparison_facets(
     *,
     sources: list[str] | None = None,
     include_total: bool = False,
+    dimension: GroupingDimension | str = GroupingDimension.BUCKET,
 ) -> go.Figure:
-    """Small-multiple line charts: Wagamama vs selected competitor(s) vs Market."""
-    means = analytics.bucket_means(history, include_total=include_total)
+    """Small-multiple line charts: Wagamama vs competitor(s) vs market (excl. Wagamama)."""
+    means = analytics.bucket_means(history, include_total=include_total, dimension=dimension)
     if sources is None:
-        sources = [OWN_BRAND, "Nando's", "Market"]
+        sources = [OWN_BRAND, "Nando's", MARKET_LABEL]
     means = means[means["source"].isin(sources)]
+    dim_label = _dimension_label(dimension)
     bucket_order = (
-        [TOTAL_LABEL, "Starters", "Mains", "Sides", "Drinks", "Desserts"]
+        [TOTAL_LABEL, *sorted(b for b in means["bucket"].unique() if b != TOTAL_LABEL)]
         if include_total
         else None
     )
-    title = f"Price trends by bucket - Wagamama vs {_competitor_label(sources)} vs Market"
+    title = (
+        f"Price trends by {dim_label.lower()} - Wagamama vs "
+        f"{_competitor_label(sources)} vs market (market excl. Wagamama)"
+    )
+    facet_col_wrap = 3
     fig = px.line(
         means,
         x="date",
         y="price",
         color="source",
         facet_col="bucket",
-        facet_col_wrap=3,
+        facet_col_wrap=facet_col_wrap,
         markers=True,
         template=_TEMPLATE,
         color_discrete_map=_SOURCE_COLOURS,
@@ -156,7 +167,14 @@ def comparison_facets(
     )
     fig.update_yaxes(matches=None, tickprefix="£")
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
-    fig.update_layout(legend_title_text="")
+    # Grow the figure with the number of facet rows so a 3x3 grid isn't squished.
+    n_facets = means["bucket"].nunique()
+    n_rows = -(-n_facets // facet_col_wrap)  # ceil division
+    fig.update_layout(
+        legend_title_text="",
+        height=max(420, 300 * n_rows),
+        margin=dict(t=90),
+    )
     return fig
 
 
@@ -166,18 +184,23 @@ def single_bucket_comparison(
     *,
     sources: list[str] | None = None,
     indexed: bool = False,
+    dimension: GroupingDimension | str = GroupingDimension.BUCKET,
 ) -> go.Figure:
-    """Focused comparison of one bucket (or Total) across selected sources."""
-    means = analytics.bucket_means(history, include_total=True)
+    """Focused comparison of one grouping value across selected sources."""
+    means = analytics.bucket_means(history, include_total=True, dimension=dimension)
     if sources is None:
-        sources = [OWN_BRAND, "Nando's", "Market"]
+        sources = [OWN_BRAND, "Nando's", MARKET_LABEL]
     frame = means[(means["bucket"] == bucket) & (means["source"].isin(sources))]
+    dim_label = _dimension_label(dimension)
     if indexed:
         frame = analytics.rebase_to_100(frame, ["source"])
         y, y_label, prefix, suffix = "index", "Price index (Q1 = 100)", "", " (indexed)"
     else:
         y, y_label, prefix, suffix = "price", "Avg price (GBP)", "£", ""
-    title = f"{bucket}: Wagamama vs {_competitor_label(sources)} vs Market{suffix}"
+    title = (
+        f"{bucket}: Wagamama vs {_competitor_label(sources)} "
+        f"vs market (excl. Wagamama){suffix}"
+    )
     fig = px.line(
         frame,
         x="date",
@@ -197,12 +220,14 @@ def latest_price_bars(
     history,
     *,
     sources: list[str] | None = None,
+    dimension: GroupingDimension | str = GroupingDimension.BUCKET,
 ) -> go.Figure:
-    """Grouped bar of the latest average price by bucket across sources."""
-    latest = analytics.latest_bucket_prices(history)
+    """Grouped bar of the latest average price by grouping dimension across sources."""
+    latest = analytics.latest_bucket_prices(history, dimension=dimension)
     if sources is None:
-        sources = [OWN_BRAND, "Nando's", "Market"]
+        sources = [OWN_BRAND, "Nando's", MARKET_LABEL]
     latest = latest[latest["source"].isin(sources)]
+    dim_label = _dimension_label(dimension)
     fig = px.bar(
         latest,
         x="bucket",
@@ -211,8 +236,8 @@ def latest_price_bars(
         barmode="group",
         template=_TEMPLATE,
         color_discrete_map=_SOURCE_COLOURS,
-        labels={"price": "Avg price (GBP)", "bucket": "Bucket", "source": "Source"},
-        title="Latest average price by bucket",
+        labels={"price": "Avg price (GBP)", "bucket": dim_label, "source": "Source"},
+        title=f"Latest average price by {dim_label.lower()}",
     )
     fig.update_layout(yaxis_tickprefix="£", legend_title_text="")
     return fig
@@ -223,11 +248,15 @@ def pct_change_heatmap(
     source: str = "Nando's",
     *,
     include_total: bool = False,
+    dimension: GroupingDimension | str = GroupingDimension.BUCKET,
 ) -> go.Figure:
-    """Heatmap of quarter-on-quarter % price change by bucket."""
-    pct = analytics.bucket_pct_change(history, source, include_total=include_total)
+    """Heatmap of quarter-on-quarter % price change by grouping dimension."""
+    pct = analytics.bucket_pct_change(
+        history, source, include_total=include_total, dimension=dimension
+    )
     pct = pct.iloc[:, 1:]  # drop the first all-NaN quarter
     quarter_labels = [f"{d.year} Q{(d.month - 1) // 3 + 1}" for d in pct.columns]
+    dim_label = _dimension_label(dimension)
     fig = px.imshow(
         pct,
         x=quarter_labels,
@@ -236,7 +265,7 @@ def pct_change_heatmap(
         color_continuous_midpoint=0,
         aspect="auto",
         template=_TEMPLATE,
-        labels={"x": "Quarter", "y": "Bucket", "color": "% change"},
+        labels={"x": "Quarter", "y": dim_label, "color": "% change"},
         title=f"Quarter-on-quarter % price change - {source}",
     )
     return fig
@@ -245,46 +274,69 @@ def pct_change_heatmap(
 # --- Collection vs delivery (real scraped snapshot) ------------------------
 
 
-def delivery_bucket_bars(summary) -> go.Figure:
-    """Grouped bars of average collection vs delivery price per bucket."""
-    long = summary.melt(
-        id_vars="bucket",
-        value_vars=["collection", "delivery"],
-        var_name="channel",
-        value_name="price",
-    )
-    long["channel"] = long["channel"].map(_CHANNEL_LABELS)
-    fig = px.bar(
-        long,
-        x="bucket",
-        y="price",
-        color="channel",
-        barmode="group",
-        template=_TEMPLATE,
-        color_discrete_map=_CHANNEL_COLOURS,
-        labels={"price": "Avg price (GBP)", "bucket": "Bucket", "channel": ""},
-        title="Average price by bucket: collection vs delivery",
-    )
-    fig.update_layout(yaxis_tickprefix="£", legend_title_text="")
-    return fig
+def delivery_scatter(
+    comparison, *, dim: str = "bucket", dim_label: str = "Bucket"
+) -> go.Figure:
+    """Per-item scatter; points above the parity line carry a delivery premium.
 
+    One colour per ``dim`` value (a single legend entry each), every point a
+    plain circle. A separate ``Wagamama`` legend entry — hidden until clicked —
+    overlays a brand-red ring on the own-brand dots, so the chart stays clean by
+    default but you can reveal exactly which points are Wagamama on demand.
+    """
+    palette = px.colors.qualitative.Plotly
+    dim_values = sorted(str(v) for v in comparison[dim].dropna().unique())
+    colour_map = {v: palette[i % len(palette)] for i, v in enumerate(dim_values)}
+    has_company = "company" in comparison.columns
 
-def delivery_scatter(comparison) -> go.Figure:
-    """Per-item scatter; points above the parity line carry a delivery premium."""
-    fig = px.scatter(
-        comparison,
-        x="collection",
-        y="delivery",
-        color="bucket",
-        hover_name="item",
-        template=_TEMPLATE,
-        labels={
-            "collection": "Collection price (GBP)",
-            "delivery": "Delivery price (GBP)",
-            "bucket": "Bucket",
-        },
-        title="Per-item price: delivery vs collection (above dashed line = premium)",
-    )
+    fig = go.Figure()
+    for value in dim_values:
+        sub = comparison[comparison[dim].astype(str) == value]
+        if sub.empty:
+            continue
+        fig.add_trace(
+            go.Scatter(
+                x=sub["collection"],
+                y=sub["delivery"],
+                mode="markers",
+                name=value,
+                marker=dict(
+                    color=colour_map[value],
+                    size=9,
+                    line=dict(width=1, color="white"),
+                ),
+                text=sub["item"],
+                hovertemplate=(
+                    "%{text}<br>Collection £%{x:.2f}<br>Delivery £%{y:.2f}"
+                    f"<extra>{value}</extra>"
+                ),
+            )
+        )
+
+    # Toggleable highlight: click the "Wagamama" legend entry to ring its dots.
+    if has_company:
+        own = comparison[comparison["company"] == OWN_BRAND]
+        if not own.empty:
+            fig.add_trace(
+                go.Scatter(
+                    x=own["collection"],
+                    y=own["delivery"],
+                    mode="markers",
+                    name=OWN_BRAND,
+                    visible="legendonly",
+                    marker=dict(
+                        color="rgba(0,0,0,0)",
+                        size=16,
+                        line=dict(width=3, color=WAGAMAMA_RED),
+                    ),
+                    text=own["item"],
+                    hovertemplate=(
+                        "%{text}<br>Collection £%{x:.2f}<br>Delivery £%{y:.2f}"
+                        f"<extra>{OWN_BRAND}</extra>"
+                    ),
+                )
+            )
+
     hi = float(max(comparison["collection"].max(), comparison["delivery"].max())) * 1.05
     fig.add_trace(
         go.Scatter(
@@ -296,7 +348,96 @@ def delivery_scatter(comparison) -> go.Figure:
             hoverinfo="skip",
         )
     )
-    fig.update_layout(xaxis_tickprefix="£", yaxis_tickprefix="£")
+    fig.update_layout(
+        template=_TEMPLATE,
+        title="Per-item price: delivery vs collection (above dashed line = premium)",
+        xaxis_title="Collection price (GBP)",
+        yaxis_title="Delivery price (GBP)",
+        legend_title_text=dim_label,
+        xaxis_tickprefix="£",
+        yaxis_tickprefix="£",
+    )
+    return fig
+
+
+def _price_curve_trace(frame, price_col, cols, *, name, color, showlegend):
+    """One sorted-price line for :func:`price_curve`."""
+    plot = frame.sort_values(price_col).reset_index(drop=True)
+    detail = len(cols) > 1
+    head = f"<b>{name}</b><br>" if name else ""
+    if detail:
+        hovertemplate = head + "%{customdata[0]} (%{customdata[1]})<br>£%{y:.2f}<extra></extra>"
+    else:
+        hovertemplate = head + "%{customdata[0]}<br>£%{y:.2f}<extra></extra>"
+    return go.Scatter(
+        x=list(range(1, len(plot) + 1)),
+        y=plot[price_col],
+        mode="lines+markers",
+        name=name or "",
+        line=dict(color=color, width=2),
+        marker=dict(color=color, size=9),
+        customdata=plot[cols].to_numpy(),
+        hovertemplate=hovertemplate,
+        showlegend=showlegend,
+    )
+
+
+def price_curve(
+    frame,
+    *,
+    title: str,
+    price_col: str = "price",
+    label_col: str = "item",
+    detail_col: str | None = None,
+    series_col: str | None = None,
+) -> go.Figure:
+    """Items sorted low→high as a price curve.
+
+    The high/low analogue of ``delivery_scatter``: it shows the shape of the
+    price distribution for whatever subset is currently drilled into, so a steep
+    tail flags a few premium items. With ``series_col`` each series is sorted and
+    drawn independently (e.g. the market vs the Wagamama benchmark), so their
+    curves can be compared directly; the own-brand series is drawn in brand red.
+    """
+    cols = [label_col] + ([detail_col] if detail_col else [])
+    fig = go.Figure()
+
+    if series_col and series_col in frame.columns:
+        for name, group in frame.groupby(series_col):
+            if group.empty:
+                continue
+            color = WAGAMAMA_RED if name == OWN_BRAND else _LOW_COLOUR
+            fig.add_trace(
+                _price_curve_trace(
+                    group, price_col, cols, name=str(name), color=color,
+                    showlegend=True,
+                )
+            )
+        fig.update_layout(legend_title_text="")
+    else:
+        fig.add_trace(
+            _price_curve_trace(
+                frame, price_col, cols, name="", color=_LOW_COLOUR,
+                showlegend=False,
+            )
+        )
+        if not frame.empty:
+            avg = float(frame[price_col].mean())
+            fig.add_hline(
+                y=avg,
+                line=dict(color=_AVG_COLOUR, dash="dash"),
+                annotation_text=f"Avg £{avg:.2f}",
+                annotation_position="top left",
+            )
+
+    fig.update_layout(
+        template=_TEMPLATE,
+        title=title,
+        xaxis_title="Item (sorted by price)",
+        yaxis_title="Price (GBP)",
+        yaxis_tickprefix="£",
+        height=420,
+    )
     return fig
 
 
@@ -311,18 +452,34 @@ def drilldown_dumbbell(
     left_label: str | None = None,
     right_label: str | None = None,
     mid_label: str | None = None,
+    annotate_col: str | None = None,
+    highlight_col: str | None = None,
+    highlight_label: str = OWN_BRAND,
 ) -> go.Figure:
-    """Generic dumbbell chart with optional middle marker (e.g. average price)."""
-    plot = frame.iloc[::-1].copy()
+    """Generic dumbbell chart with optional middle marker (e.g. average price).
+
+    Rows are drawn in the frame's given order (top row = first row), so callers
+    sort before plotting. Each row is pinned to an explicit numeric y-position
+    (rather than a categorical axis), so ordering is preserved exactly and
+    duplicate labels never collapse into a single slot. ``annotate_col`` names a
+    column of ready-made text labels (e.g. ``"+£1.20"``) drawn to the right of
+    each dumbbell. ``highlight_col`` (a bool column) splits the middle marker
+    into a second, brand-red series so a benchmark like Wagamama reads
+    separately in the legend, and bolds that row's axis label.
+    """
+    # Reverse so the first frame row ends up at the top; index becomes the
+    # y-position (0 = bottom). Numeric y avoids categorical re-ordering and
+    # duplicate-label collapsing entirely.
+    plot = frame.iloc[::-1].reset_index(drop=True)
+    ypos = plot.index.tolist()
     labels = plot[label_col].astype(str).tolist()
     fig = go.Figure()
 
-    for _, row in plot.iterrows():
-        label = row[label_col]
+    for y, row in plot.iterrows():
         fig.add_trace(
             go.Scatter(
                 x=[row[left_col], row[right_col]],
-                y=[label, label],
+                y=[y, y],
                 mode="lines",
                 line=dict(color="#CBD5E1", width=3),
                 showlegend=False,
@@ -336,7 +493,7 @@ def drilldown_dumbbell(
     fig.add_trace(
         go.Scatter(
             x=plot[left_col],
-            y=plot[label_col],
+            y=ypos,
             mode="markers",
             name=left_name,
             marker=dict(
@@ -349,21 +506,33 @@ def drilldown_dumbbell(
     )
     if mid_col and mid_col in plot.columns:
         mid_name = mid_label or _HIGH_LOW_LABELS.get(mid_col, mid_col.title())
-        fig.add_trace(
-            go.Scatter(
-                x=plot[mid_col],
-                y=plot[label_col],
-                mode="markers",
-                name=mid_name,
-                marker=dict(color=_AVG_COLOUR, size=10, symbol="diamond"),
-                customdata=[[lbl] for lbl in labels],
-                hovertemplate=f"{mid_name}: %{{x:.2f}}<extra></extra>",
+        if highlight_col and highlight_col in plot.columns:
+            flag = plot[highlight_col].astype(bool)
+            groups = [
+                (~flag, mid_name, _AVG_COLOUR, "diamond"),
+                (flag, highlight_label, WAGAMAMA_RED, "star"),
+            ]
+        else:
+            groups = [(plot[label_col].notna(), mid_name, _AVG_COLOUR, "diamond")]
+        for sel, name, colour, symbol in groups:
+            part = plot[sel]
+            if part.empty:
+                continue
+            fig.add_trace(
+                go.Scatter(
+                    x=part[mid_col],
+                    y=part.index.tolist(),
+                    mode="markers",
+                    name=name,
+                    marker=dict(color=colour, size=12, symbol=symbol),
+                    customdata=[[lbl] for lbl in part[label_col].astype(str)],
+                    hovertemplate=f"{name}: %{{x:.2f}}<extra></extra>",
+                )
             )
-        )
     fig.add_trace(
         go.Scatter(
             x=plot[right_col],
-            y=plot[label_col],
+            y=ypos,
             mode="markers",
             name=right_name,
             marker=dict(
@@ -375,6 +544,44 @@ def drilldown_dumbbell(
         )
     )
 
+    if annotate_col and annotate_col in plot.columns:
+        x_cols = [c for c in (left_col, right_col, mid_col) if c and c in plot.columns]
+        row_max = plot[x_cols].max(axis=1)
+        lo = float(plot[x_cols].min(axis=1).min())
+        hi = float(row_max.max())
+        span = (hi - lo) or hi or 1.0
+        # Nudge labels clear of the marker so they don't overlap the dots.
+        offset = span * 0.04
+        fig.add_trace(
+            go.Scatter(
+                x=row_max + offset,
+                y=ypos,
+                mode="text",
+                text=["<i>" + str(t) + "</i>" for t in plot[annotate_col]],
+                textposition="middle right",
+                textfont=dict(size=12, color="#374151"),
+                showlegend=False,
+                hoverinfo="skip",
+                cliponaxis=False,
+            )
+        )
+        fig.update_xaxes(range=[max(0.0, lo - 0.05 * span), hi + 0.34 * span])
+
+    # Make the benchmark (e.g. Wagamama) row's tick label pop: bold + brand red.
+    if highlight_col and highlight_col in plot.columns:
+        flags = plot[highlight_col].astype(bool).tolist()
+        ticktext = [
+            f"<b><span style='color:{WAGAMAMA_RED}'>{lbl}</span></b>" if flag else lbl
+            for lbl, flag in zip(labels, flags)
+        ]
+    else:
+        ticktext = labels
+    fig.update_yaxes(
+        tickmode="array",
+        tickvals=ypos,
+        ticktext=ticktext,
+        range=[-0.5, len(plot) - 0.5],
+    )
     height = max(400, 40 * len(plot) + 120)
     fig.update_layout(
         template=_TEMPLATE,
@@ -388,7 +595,14 @@ def drilldown_dumbbell(
     return fig
 
 
-def high_low_dumbbell(frame, label_col: str, *, title: str) -> go.Figure:
+def high_low_dumbbell(
+    frame,
+    label_col: str,
+    *,
+    title: str,
+    annotate_col: str | None = None,
+    highlight_col: str | None = None,
+) -> go.Figure:
     """Dumbbell chart for low / average / high price spread."""
     return drilldown_dumbbell(
         frame,
@@ -400,6 +614,8 @@ def high_low_dumbbell(frame, label_col: str, *, title: str) -> go.Figure:
         left_label=_HIGH_LOW_LABELS["low"],
         right_label=_HIGH_LOW_LABELS["high"],
         mid_label=_HIGH_LOW_LABELS["average"],
+        annotate_col=annotate_col,
+        highlight_col=highlight_col,
     )
 
 
@@ -411,3 +627,4 @@ def delivery_dumbbell(comparison, top_n: int = 15) -> go.Figure:
         "item",
         title=f"Biggest delivery markups (top {top_n} matched items)",
     )
+

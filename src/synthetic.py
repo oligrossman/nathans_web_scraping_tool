@@ -31,9 +31,10 @@ N_QUARTERS = 20  # 5 years of quarterly observations.
 BUCKETS = ("Starters", "Mains", "Sides", "Drinks", "Desserts")
 
 from .branding import OWN_BRAND
+from .enrichment.identity import make_dish_id
 
 # Shared labels used across analytics and charts.
-MARKET_LABEL = "Market"
+MARKET_LABEL = "Market whole"
 TOTAL_LABEL = "Total"
 
 # Maps menu category labels to board-level buckets (Nando's + Pizza Express).
@@ -162,6 +163,7 @@ def _series_rows(
             "date": dates,
             "source": source,
             "item": item,
+            "dish_id": make_dish_id(source, item),
             "bucket": bucket,
             "price": prices,
         }
