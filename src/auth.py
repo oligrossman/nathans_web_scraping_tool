@@ -79,8 +79,8 @@ def _render_login() -> None:
 
 def require_login() -> None:
     """Gate the app: show the login form and halt unless already signed in."""
-    if st.session_state.get(_AUTH_FLAG):
-        return
+    # if st.session_state.get(_AUTH_FLAG):
+    #     return
     _render_login()
     st.stop()
 
