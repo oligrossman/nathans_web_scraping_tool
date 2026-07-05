@@ -21,11 +21,33 @@ _SOURCE_COLOURS = SOURCE_COLOURS
 # Channel colours for collection vs delivery views.
 _COLLECTION_COLOUR = WAGAMAMA_RED
 _DELIVERY_COLOUR = DELIVEROO_TEAL
-_LOW_COLOUR = "#2563EB"  # blue
-_HIGH_COLOUR = "#DC2626"  # red
+# Pastel low/high tones drawn from the default qualitative palette (the "By
+# group" scheme) — teal for low, warm orange for high; avoids clashing with the
+# brand-red Wagamama marker and the near-black average.
+_LOW_COLOUR = "#00CC96"  # pastel teal
+_HIGH_COLOUR = "#FFA15A"  # pastel orange
 _AVG_COLOUR = "#111827"  # near-black
 _CHANNEL_LABELS = {"collection": "Collection", "delivery": "Delivery (Deliveroo)"}
 _HIGH_LOW_LABELS = {"low": "Lowest", "average": "Average", "high": "Highest"}
+
+
+def _source_colour_map(sources: list[str]) -> dict[str, str]:
+    """Colour map keeping Wagamama brand-red while others use the pastel palette.
+
+    Wagamama is always the hero red in every chart; the remaining sources cycle
+    through the default (pastel) qualitative palette so competitors and markets
+    read as a soft, distinct set rather than the fixed brand colours.
+    """
+    palette = [c for c in px.colors.qualitative.Plotly if c.lower() != WAGAMAMA_RED.lower()]
+    mapping: dict[str, str] = {}
+    i = 0
+    for source in sources:
+        if source == OWN_BRAND:
+            mapping[source] = WAGAMAMA_RED
+        else:
+            mapping[source] = palette[i % len(palette)]
+            i += 1
+    return mapping
 
 
 def _competitor_label(sources: list[str]) -> str:
@@ -97,20 +119,32 @@ def bucket_line(
     history,
     source: str = "Nando's",
     *,
-    indexed: bool = False,
+    as_pct_change: bool = False,
     include_total: bool = False,
+    show_title: bool = True,
     dimension: GroupingDimension | str = GroupingDimension.BUCKET,
 ) -> go.Figure:
-    """Average price by grouping dimension over time for one source."""
+    """Average price by grouping dimension over time for one source.
+
+    With ``as_pct_change`` the y-axis shows cumulative % change from each series'
+    first quarter (compounded growth) instead of absolute pounds. Set
+    ``show_title=False`` to drop the per-chart title (e.g. when a shared caption
+    already describes a column of these charts).
+    """
     means = analytics.bucket_means(
         history, source, include_total=include_total, dimension=dimension
     )
     dim_label = _dimension_label(dimension)
-    if indexed:
-        means = analytics.rebase_to_100(means, ["bucket"])
-        y, y_label, prefix, title = "index", "Price index (Q1 = 100)", "", " (indexed)"
+    if as_pct_change:
+        means = analytics.add_pct_change(means, ["source", "bucket"])
+        y, y_label, title = "pct_change", "Cumulative price change (%)", " (% change)"
     else:
-        y, y_label, prefix, title = "price", "Avg price (GBP)", "£", ""
+        y, y_label, title = "price", "Avg price (GBP)", ""
+    # Legend order mirrors the heatmap's y-axis: Total first, then the rest
+    # alphabetically.
+    uniques = list(means["bucket"].unique())
+    rest = sorted(b for b in uniques if b != TOTAL_LABEL)
+    bucket_order = ([TOTAL_LABEL] if TOTAL_LABEL in uniques else []) + rest
     fig = px.line(
         means,
         x="date",
@@ -119,12 +153,19 @@ def bucket_line(
         markers=True,
         template=_TEMPLATE,
         labels={y: y_label, "date": "Quarter", "bucket": dim_label},
-        title=f"Average price by {dim_label.lower()}{title} - {source}",
-        category_orders={"bucket": list(means["bucket"].unique())},
+        title=f"Average price by {dim_label.lower()}{title} - {source}" if show_title else None,
+        category_orders={"bucket": bucket_order},
     )
     if include_total:
         _style_total_trace(fig)
-    fig.update_layout(yaxis_tickprefix=prefix, legend_title_text="")
+    if as_pct_change:
+        fig.update_layout(yaxis_ticksuffix="%", legend_title_text="")
+    else:
+        fig.update_layout(yaxis_tickprefix="£", legend_title_text="")
+    if not show_title:
+        # No title means the default ~100px top margin is just dead space; shrink
+        # it so the chart sits snugly under its (external) heading.
+        fig.update_layout(margin=dict(t=30))
     return fig
 
 
@@ -133,9 +174,14 @@ def comparison_facets(
     *,
     sources: list[str] | None = None,
     include_total: bool = False,
+    as_pct_change: bool = False,
     dimension: GroupingDimension | str = GroupingDimension.BUCKET,
 ) -> go.Figure:
-    """Small-multiple line charts: Wagamama vs competitor(s) vs market (excl. Wagamama)."""
+    """Small-multiple line charts: Wagamama vs competitor(s) vs market (excl. Wagamama).
+
+    With ``as_pct_change`` each panel shows cumulative % change from the first
+    quarter (compounded growth) rather than absolute pounds.
+    """
     means = analytics.bucket_means(history, include_total=include_total, dimension=dimension)
     if sources is None:
         sources = [OWN_BRAND, "Nando's", MARKET_LABEL]
@@ -146,26 +192,34 @@ def comparison_facets(
         if include_total
         else None
     )
+    if as_pct_change:
+        means = analytics.add_pct_change(means, ["source", "bucket"])
+        y, y_label, suffix = "pct_change", "Cumulative price change (%)", " (% change)"
+    else:
+        y, y_label, suffix = "price", "Avg price (GBP)", ""
     title = (
-        f"Price trends by {dim_label.lower()} - Wagamama vs "
+        f"Price trends by {dim_label.lower()}{suffix} - Wagamama vs "
         f"{_competitor_label(sources)} vs market (market excl. Wagamama)"
     )
     facet_col_wrap = 3
     fig = px.line(
         means,
         x="date",
-        y="price",
+        y=y,
         color="source",
         facet_col="bucket",
         facet_col_wrap=facet_col_wrap,
         markers=True,
         template=_TEMPLATE,
         color_discrete_map=_SOURCE_COLOURS,
-        labels={"price": "Avg price (GBP)", "date": "Quarter", "source": "Source"},
+        labels={y: y_label, "date": "Quarter", "source": "Source"},
         title=title,
         category_orders={"bucket": bucket_order} if bucket_order else None,
     )
-    fig.update_yaxes(matches=None, tickprefix="£")
+    if as_pct_change:
+        fig.update_yaxes(matches=None, ticksuffix="%")
+    else:
+        fig.update_yaxes(matches=None, tickprefix="£")
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
     # Grow the figure with the number of facet rows so a 3x3 grid isn't squished.
     n_facets = means["bucket"].nunique()
@@ -183,20 +237,24 @@ def single_bucket_comparison(
     bucket: str,
     *,
     sources: list[str] | None = None,
-    indexed: bool = False,
+    as_pct_change: bool = False,
     dimension: GroupingDimension | str = GroupingDimension.BUCKET,
 ) -> go.Figure:
-    """Focused comparison of one grouping value across selected sources."""
+    """Focused comparison of one grouping value across selected sources.
+
+    With ``as_pct_change`` the y-axis shows cumulative % change from each
+    source's first quarter (compounded growth) instead of absolute pounds.
+    """
     means = analytics.bucket_means(history, include_total=True, dimension=dimension)
     if sources is None:
         sources = [OWN_BRAND, "Nando's", MARKET_LABEL]
     frame = means[(means["bucket"] == bucket) & (means["source"].isin(sources))]
     dim_label = _dimension_label(dimension)
-    if indexed:
-        frame = analytics.rebase_to_100(frame, ["source"])
-        y, y_label, prefix, suffix = "index", "Price index (Q1 = 100)", "", " (indexed)"
+    if as_pct_change:
+        frame = analytics.add_pct_change(frame, ["source", "bucket"])
+        y, y_label, suffix = "pct_change", "Cumulative price change (%)", " (% change)"
     else:
-        y, y_label, prefix, suffix = "price", "Avg price (GBP)", "£", ""
+        y, y_label, suffix = "price", "Avg price (GBP)", ""
     title = (
         f"{bucket}: Wagamama vs {_competitor_label(sources)} "
         f"vs market (excl. Wagamama){suffix}"
@@ -212,7 +270,10 @@ def single_bucket_comparison(
         labels={y: y_label, "date": "Quarter", "source": "Source"},
         title=title,
     )
-    fig.update_layout(yaxis_tickprefix=prefix, legend_title_text="")
+    if as_pct_change:
+        fig.update_layout(yaxis_ticksuffix="%", legend_title_text="")
+    else:
+        fig.update_layout(yaxis_tickprefix="£", legend_title_text="")
     return fig
 
 
@@ -220,26 +281,47 @@ def latest_price_bars(
     history,
     *,
     sources: list[str] | None = None,
+    as_pct_change: bool = False,
     dimension: GroupingDimension | str = GroupingDimension.BUCKET,
 ) -> go.Figure:
-    """Grouped bar of the latest average price by grouping dimension across sources."""
-    latest = analytics.latest_bucket_prices(history, dimension=dimension)
+    """Grouped bar of the latest average price by grouping dimension across sources.
+
+    With ``as_pct_change`` the bars show each series' total % change over the
+    whole window (compounded growth from first to latest quarter) instead of the
+    latest absolute price.
+    """
     if sources is None:
         sources = [OWN_BRAND, "Nando's", MARKET_LABEL]
-    latest = latest[latest["source"].isin(sources)]
     dim_label = _dimension_label(dimension)
+    if as_pct_change:
+        means = analytics.dimension_means(history, dimension=dimension)
+        means = analytics.add_pct_change(means, ["source", "bucket"])
+        latest = means[means["date"] == means["date"].max()]
+        y, y_label, title = "pct_change", "Total price change (%)", (
+            f"Total price change by {dim_label.lower()} (full period)"
+        )
+    else:
+        latest = analytics.latest_bucket_prices(history, dimension=dimension)
+        y, y_label, title = "price", "Avg price (GBP)", (
+            f"Latest average price by {dim_label.lower()}"
+        )
+    latest = latest[latest["source"].isin(sources)]
+    # Pastel palette for competitors/markets, but Wagamama stays brand-red.
     fig = px.bar(
         latest,
         x="bucket",
-        y="price",
+        y=y,
         color="source",
         barmode="group",
         template=_TEMPLATE,
-        color_discrete_map=_SOURCE_COLOURS,
-        labels={"price": "Avg price (GBP)", "bucket": dim_label, "source": "Source"},
-        title=f"Latest average price by {dim_label.lower()}",
+        color_discrete_map=_source_colour_map(sources),
+        labels={y: y_label, "bucket": dim_label, "source": "Source"},
+        title=title,
     )
-    fig.update_layout(yaxis_tickprefix="£", legend_title_text="")
+    if as_pct_change:
+        fig.update_layout(yaxis_ticksuffix="%", legend_title_text="")
+    else:
+        fig.update_layout(yaxis_tickprefix="£", legend_title_text="")
     return fig
 
 
@@ -248,26 +330,42 @@ def pct_change_heatmap(
     source: str = "Nando's",
     *,
     include_total: bool = False,
+    show_title: bool = True,
     dimension: GroupingDimension | str = GroupingDimension.BUCKET,
 ) -> go.Figure:
-    """Heatmap of quarter-on-quarter % price change by grouping dimension."""
+    """Heatmap of quarter-on-quarter % price change by grouping dimension.
+
+    Set ``show_title=False`` to drop the per-chart title when a shared caption
+    already describes the column.
+    """
     pct = analytics.bucket_pct_change(
         history, source, include_total=include_total, dimension=dimension
     )
     pct = pct.iloc[:, 1:]  # drop the first all-NaN quarter
+    # Pin Total to the top row (imshow draws row 0 at the top), then the rest
+    # alphabetically. Bold the Total label below.
+    rest = sorted(b for b in pct.index if b != TOTAL_LABEL)
+    ordered = ([TOTAL_LABEL] if TOTAL_LABEL in pct.index else []) + rest
+    pct = pct.loc[ordered]
     quarter_labels = [f"{d.year} Q{(d.month - 1) // 3 + 1}" for d in pct.columns]
+    y_labels = [f"<b>{b}</b>" if b == TOTAL_LABEL else str(b) for b in pct.index]
     dim_label = _dimension_label(dimension)
     fig = px.imshow(
         pct,
         x=quarter_labels,
-        y=pct.index,
+        y=y_labels,
         color_continuous_scale="RdBu_r",
         color_continuous_midpoint=0,
         aspect="auto",
         template=_TEMPLATE,
         labels={"x": "Quarter", "y": dim_label, "color": "% change"},
-        title=f"Quarter-on-quarter % price change - {source}",
+        title=f"Quarter-on-quarter % price change - {source}" if show_title else None,
     )
+    # Force a consistent diagonal, italic quarter axis. Plotly only auto-rotates
+    # the labels when they'd collide, so short series would otherwise sit flat.
+    fig.update_xaxes(tickangle=-45, tickfont=dict(style="italic"))
+    if not show_title:
+        fig.update_layout(margin=dict(t=30))
     return fig
 
 

@@ -19,7 +19,8 @@ from src.branding import (
     APP_TITLE,
     CONFIG_PAGE_TITLE,
     OWN_BRAND,
-    apply_sidebar_branding,
+    apply_sidebar_footer_logo,
+    apply_sidebar_logo,
     brand_css,
     render_grouping_selectbox,
 )
@@ -36,7 +37,9 @@ st.set_page_config(
 # Gate the page directly (Cloud serves pages/ files by URL without app.py).
 auth.require_login()
 
-apply_sidebar_branding()
+# Wordmark pinned at the top of the sidebar; the bowl image is rendered lower
+# down (between the shared controls and the headline metrics).
+apply_sidebar_logo()
 st.markdown(brand_css(), unsafe_allow_html=True)
 
 HISTORY_PATH = analytics.DEFAULT_HISTORY_PATH
@@ -171,21 +174,19 @@ st.session_state["price_range"] = (
     min(slider_max, float(stored_hi)),
 )
 
-controls_companies, controls_group, controls_price = st.columns([2, 1, 2])
-with controls_companies:
+# Shared controls live in the sidebar (they drive every tab).
+with st.sidebar:
     selected_companies = st.multiselect(
         "Comparison companies",
         competitors,
         default=competitors,
-        help=f"Drives every chart below. {OWN_BRAND} is always shown; pick one or "
+        help=f"Drives every chart. {OWN_BRAND} is always shown; pick one or "
         "more companies to compare against.",
     )
-with controls_group:
     grouping_dimension = render_grouping_selectbox(
         help="Group every chart and drilldown by course (bucket), cuisine or dish "
         f"type. Shared with the {CONFIG_PAGE_TITLE} page.",
     )
-with controls_price:
     price_lo, price_hi = st.slider(
         "Price range (£)",
         min_value=0.0,
@@ -196,6 +197,10 @@ with controls_price:
         "chart, so a few very expensive dishes can't distort the comparison. "
         "The ceiling is the priciest item in the whole market.",
     )
+
+# Bowl image sits between the shared controls (above) and the headline metrics.
+apply_sidebar_footer_logo()
+
 dim = analytics.dimension_column(grouping_dimension)
 dim_label = grouping_dimension.label
 
@@ -388,36 +393,38 @@ def _market_filter(prefix: str, frame, markets):
 
 
 # --- Headline KPIs ---------------------------------------------------------
-# KPIs follow the price-range slider: drop aggregated market rows (item-level
-# metric) and keep only items inside the selected band.
+# Rendered in the sidebar (beneath the logo) since they apply across every tab
+# and free up space in the main area. They still follow the price-range slider:
+# drop aggregated market rows (item-level metric) and keep only in-band items.
 kpi_history = history[~history["source"].astype(str).str.startswith("Market")]
 kpi_history = _in_price_range(kpi_history)
 kpis = analytics.compute_kpis(kpi_history if not kpi_history.empty else history)
-st.subheader("Headline metrics")
-col1, col2, col3, col4 = st.columns(4)
-col1.metric("Overall CAGR", f"{kpis.overall_cagr_pct}%")
-col2.metric("Total price change (5y)", f"{kpis.total_change_pct}%")
-col3.metric(
-    "Fastest-rising bucket",
-    kpis.fastest_bucket,
-    f"{kpis.fastest_bucket_change_pct}%",
-)
 own_brand_latest = kpis.latest_avg_by_source.get(OWN_BRAND, 0.0)
-if selected_companies:
-    selected_latest = [kpis.latest_avg_by_source.get(c, 0.0) for c in selected_companies]
-    competitor_avg = sum(selected_latest) / len(selected_latest)
-    peer_label = (
-        selected_companies[0] if len(selected_companies) == 1 else "selected peers"
+with st.sidebar:
+    st.divider()
+    st.subheader("Headline metrics")
+    st.metric("Overall CAGR", f"{kpis.overall_cagr_pct}%")
+    st.metric("Total price change (5y)", f"{kpis.total_change_pct}%")
+    st.metric(
+        "Fastest-rising bucket",
+        kpis.fastest_bucket,
+        f"{kpis.fastest_bucket_change_pct}%",
     )
-    col4.metric(
-        f"{OWN_BRAND} avg vs {peer_label}",
-        f"£{own_brand_latest:.2f}",
-        f"{own_brand_latest - competitor_avg:+.2f} vs {peer_label}",
-    )
-else:
-    col4.metric(f"{OWN_BRAND} latest avg", f"£{own_brand_latest:.2f}")
-
-st.divider()
+    if selected_companies:
+        selected_latest = [
+            kpis.latest_avg_by_source.get(c, 0.0) for c in selected_companies
+        ]
+        competitor_avg = sum(selected_latest) / len(selected_latest)
+        peer_label = (
+            selected_companies[0] if len(selected_companies) == 1 else "selected peers"
+        )
+        st.metric(
+            f"{OWN_BRAND} avg vs {peer_label}",
+            f"£{own_brand_latest:.2f}",
+            f"{own_brand_latest - competitor_avg:+.2f} vs {peer_label}",
+        )
+    else:
+        st.metric(f"{OWN_BRAND} latest avg", f"£{own_brand_latest:.2f}")
 
 # Tab labels are kept static (no ``dim_label`` interpolation) so that changing
 # the grouping dimension — or any other top-level control — doesn't rebuild the
@@ -436,9 +443,19 @@ tab_buckets, tab_compare, tab_delivery, tab_high_low = st.tabs(
 with tab_buckets:
     st.caption(
         f"Grouped by **{dim_label}** (change it with 'Group charts by' above). "
-        f"{OWN_BRAND} shown separately below."
+        f"{OWN_BRAND} is shown first as the benchmark. For each company: "
+        "**left** — average price trend; **right** — quarter-on-quarter % change."
     )
-    for company in [*selected_companies, OWN_BRAND]:
+    bygroup_pct = st.toggle(
+        "Show as % change",
+        key="bygroup_pct",
+        help="Switch the trend line from absolute £ to cumulative (compounded) % "
+        "change since the first quarter — the natural view for projecting inflation.",
+    )
+    # Wagamama always leads the list, then the selected competitors. Per-chart
+    # titles are suppressed (show_title=False) — the caption above and the company
+    # heading below already say what each chart is, so the titles were dead space.
+    for company in [OWN_BRAND, *selected_companies]:
         st.markdown(f"#### {company}")
         left, right = st.columns(2)
         with left:
@@ -446,35 +463,26 @@ with tab_buckets:
                 charts.bucket_line(
                     chart_history,
                     company,
-                    indexed=False,
+                    as_pct_change=bygroup_pct,
                     include_total=True,
+                    show_title=False,
                     dimension=grouping_dimension,
                 ),
                 use_container_width=True,
-                key=f"bucket_abs_{company}",
+                key=f"bucket_line_{company}",
             )
         with right:
             st.plotly_chart(
-                charts.bucket_line(
+                charts.pct_change_heatmap(
                     chart_history,
                     company,
-                    indexed=True,
                     include_total=True,
+                    show_title=False,
                     dimension=grouping_dimension,
                 ),
                 use_container_width=True,
-                key=f"bucket_idx_{company}",
+                key=f"bucket_heat_{company}",
             )
-        st.plotly_chart(
-            charts.pct_change_heatmap(
-                chart_history,
-                company,
-                include_total=True,
-                dimension=grouping_dimension,
-            ),
-            use_container_width=True,
-            key=f"bucket_heat_{company}",
-        )
 
 # --- Wagamama vs market ----------------------------------------------------
 with tab_compare:
@@ -496,16 +504,27 @@ with tab_compare:
     if not show_generic_market and not selected_custom_names:
         st.info("Pick at least one market benchmark to compare against.")
 
+    compare_pct = st.toggle(
+        "Show as % change",
+        key="compare_pct",
+        help="Switch every chart on this tab from absolute £ to cumulative "
+        "(compounded) % change since the first quarter — the natural view for "
+        "projecting inflation. Bars then show the total change over the period.",
+    )
+
     # Top-level comparison first, then the more granular per-value breakdown below.
     st.subheader("Latest prices and focus trend")
+    # Keep the focus selector above the columns so the two charts stay top-aligned
+    # (a widget inside one column would push only that chart down).
+    focus_bucket = st.selectbox("Focus value", focus_options, index=0)
     left, right = st.columns(2)
     with left:
-        focus_bucket = st.selectbox("Focus value", focus_options, index=0)
         st.plotly_chart(
             charts.single_bucket_comparison(
                 chart_history,
                 focus_bucket,
                 sources=compare_sources,
+                as_pct_change=compare_pct,
                 dimension=grouping_dimension,
             ),
             use_container_width=True,
@@ -515,6 +534,7 @@ with tab_compare:
             charts.latest_price_bars(
                 chart_history,
                 sources=compare_sources,
+                as_pct_change=compare_pct,
                 dimension=grouping_dimension,
             ),
             use_container_width=True,
@@ -526,6 +546,7 @@ with tab_compare:
             chart_history,
             sources=compare_sources,
             include_total=True,
+            as_pct_change=compare_pct,
             dimension=grouping_dimension,
         ),
         use_container_width=True,
@@ -609,14 +630,11 @@ with tab_delivery:
                     f"{dearest['markup_pct']}%",
                 )
 
-            by_abs = (
-                st.radio(
-                    "Show delivery markup labels in",
-                    ["£ (absolute)", "% (increase)"],
-                    horizontal=True,
-                    key="delivery_metric",
-                )
-                == "£ (absolute)"
+            by_abs = not st.toggle(
+                "Show markups as %",
+                key="delivery_pct",
+                help="Off: absolute £ markup. On: % increase. Drives both the "
+                "labels and the sort order.",
             )
             sort_col = "markup_abs" if by_abs else "markup_pct"
             delivery_highlight: str | None = None
@@ -766,14 +784,11 @@ with tab_high_low:
                     f"£{dearest['price']:.2f}",
                 )
 
-            by_abs = (
-                st.radio(
-                    "Show price-difference labels in",
-                    ["£ (absolute)", "% (relative)"],
-                    horizontal=True,
-                    key="highlow_metric",
-                )
-                == "£ (absolute)"
+            by_abs = not st.toggle(
+                "Show differences as %",
+                key="highlow_pct",
+                help="Off: absolute £ difference. On: % difference. Drives both "
+                "the labels and the sort order.",
             )
             spread_sort = "spread" if by_abs else "spread_pct"
             highlight_col: str | None = None

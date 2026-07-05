@@ -395,6 +395,22 @@ def rebase_to_100(frame: pd.DataFrame, group_cols: list[str]) -> pd.DataFrame:
     return out
 
 
+def add_pct_change(
+    frame: pd.DataFrame, group_cols: list[str] | tuple[str, ...] = ("source", "bucket")
+) -> pd.DataFrame:
+    """Add a ``pct_change`` column: cumulative % change from each group's first quarter.
+
+    This is the compounded price growth since the start of the series (e.g. a
+    value of 18.0 means prices are 18% above their first-quarter level), which is
+    the natural shape for reasoning about — and projecting — inflation. The value
+    at the latest quarter is therefore the total change across the whole window.
+    """
+    out = frame.sort_values("date").copy()
+    first = out.groupby(list(group_cols))["price"].transform("first")
+    out["pct_change"] = (((out["price"] / first) - 1.0) * 100.0).round(1)
+    return out
+
+
 def latest_bucket_prices(
     history: pd.DataFrame,
     *,

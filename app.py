@@ -31,5 +31,7 @@ config_page = st.Page(
 )
 
 pg = st.navigation([data_page, analytics_page, config_page])
-auth.logout_button()
 pg.run()
+# Rendered after the page body so it sits at the very bottom of the sidebar,
+# beneath any per-page sidebar content (branding, headline metrics, footer logo).
+auth.logout_button()
