@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import streamlit as st
 
-from src import analytics
+from src import analytics, auth
 from src.branding import (
     APP_TITLE,
     CONFIG_PAGE_TITLE,
@@ -36,6 +36,9 @@ st.set_page_config(
     page_icon="⚙️",
     layout="wide",
 )
+
+# Gate the page directly (Cloud serves pages/ files by URL without app.py).
+auth.require_login()
 
 apply_sidebar_branding()
 st.markdown(brand_css(), unsafe_allow_html=True)

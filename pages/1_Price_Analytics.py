@@ -12,7 +12,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from src import analytics, charts, delivery_compare, high_low
+from src import analytics, auth, charts, delivery_compare, high_low
 from src.branding import (
     ANALYTICS_TAGLINE,
     ANALYTICS_TITLE,
@@ -32,6 +32,9 @@ st.set_page_config(
     page_icon="📊",
     layout="wide",
 )
+
+# Gate the page directly (Cloud serves pages/ files by URL without app.py).
+auth.require_login()
 
 apply_sidebar_branding()
 st.markdown(brand_css(), unsafe_allow_html=True)

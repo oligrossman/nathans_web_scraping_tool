@@ -7,13 +7,18 @@ from pathlib import Path
 
 import streamlit as st
 
-from src import scrape_log
+from src import auth, scrape_log
 from src.branding import APP_TAGLINE, APP_TITLE, SCRAPE_SECTION, apply_sidebar_branding, brand_css
 from src.export import dataframe_to_csv_bytes, items_to_dataframe
 from src.scrapers.registry import SCRAPERS, get_scraper
 
 SCRAPES_DIR = Path(__file__).resolve().parent.parent / "data" / "scrapes"
 _MAX_WORKERS = 4
+
+# Gate this page directly too: on Streamlit Cloud each file under ``pages/`` is
+# reachable by URL without passing through ``app.py``, so the entrypoint check
+# alone isn't enough. ``require_login`` returns immediately once authenticated.
+auth.require_login()
 
 apply_sidebar_branding()
 st.markdown(brand_css(), unsafe_allow_html=True)
