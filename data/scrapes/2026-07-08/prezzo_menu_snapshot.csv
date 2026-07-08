@@ -1,0 +1,115 @@
+name,price,category,description
+Olives,3.95,Cambridge,House mix of green and black olives
+Warm Focaccia Bread,4.25,Cambridge,Toasted focaccia bread served with olive oil and balsamic vinegar
+Garlic Bread,6.95,Cambridge,Hand stretched pizza dough baked with plenty of garlic and parsley
+Garlic Bread with Mozzarella,8.25,Cambridge,Hand stretched pizza dough baked with plenty of garlic and parsley
+Garlic Bread with Balsamic Onions & Mozzarella,8.75,Cambridge,Hand stretched pizza dough baked with plenty of garlic and parsley
+Tomato Bruschetta,8.5,Cambridge,"Crisp toasted ciabatta topped with cherry tomatoes, red onion, balsamic glaze & basil pesto"
+Hummus & Flatbread,8.5,Cambridge,"Smooth and rich hummus, finished with freshly chopped parsley and served with warm flatbread"
+Calamari,9.5,Cambridge,Crispy calamari served with our tangy pestonnaise dip
+Oven-baked King Prawns,9.5,Cambridge,"Oven-baked spicy king prawns in chilli butter, served with toasted focaccia bread and garnished with parsley"
+Italian Meatballs,9.5,Cambridge,"Classic pork and beef meatballs, served in a generous tomato pomodoro sauce, a drizzle of chive oil and toasted focaccia bread"
+Tomato & Burrata Salad,9.5,Cambridge,"A whole creamy Burrata, served with cherry tomatoes and our Prezzo pesto"
+Prezzo's Sharing Board,16.95,Cambridge,"Italian cured meats (Prosciutto and pepperoni), creamy mozzarella, roasted peppers, sun-dried tomatoes, rocket, olives and toasted focaccia bread"
+Oven-Baked Creamy Mushrooms,9.25,Cambridge,"Roasted mushrooms baked in a rich and creamy cacio e pepe cheesy sauce, bubbling hot from the oven, served with toasted focaccia bread"
+Hot Honey Glazed Giant Mozzarella Sticks,9.25,Cambridge,with marinara sauce & basil pesto
+Garlic Chicken Pastacini,9.5,Cambridge,"Our twist on arancini - macaroni pasta baked in a creamy garlic béchamel with shredded chicken and mozzarella, coated in golden breadcrumbs. Served with our signature tangy pestonnaise dip and topped with parmesan"
+Ham and Mozzarella Pastacini,9.5,Cambridge,"Our twist on arancini - macaroni pasta baked with gooey mozzarella and shredded ham, coated in golden breadcrumbs. Served with a creamy chilli sauce and topped with parmesan"
+"Nduja, Mascarpone and Honey Pate",9.0,Cambridge,"Spicy Nduja blended with creamy mascarpone and a touch of honey, toasted pine nuts on top, served with warm toasted garlic ciabatta"
+Margherita,15.45,Cambridge,"Rich tomato sauce, topped with creamy mozzarella and fresh, fragrant basil"
+Pepperoni,17.75,Cambridge,"Rich tomato sauce, mozzarella and a generous covering of pepperoni"
+Double Pepperoni,19.25,Cambridge,"Rich tomato sauce, mozzarella and a generous covering of pepperoni"
+Tuscan BBQ Chicken,19.0,Cambridge,"Tomato base topped with mozzarella, tender chicken, pork sausage crumb, red onion, and rosemary, finished with a drizzle of honey for a perfect sweet and smoky balance"
+Chicken & Roasted Peppers,19.0,Cambridge,"Herby marinated chicken breast, roasted peppers, balsamic onions, rosemary, mozzarella and rich tomato sauce, finished with a drizzle of honey"
+Ham & Mushroom,19.0,Cambridge,"Italian ham, butter-roasted mushrooms, mozzarella and rich tomato sauce"
+The Spicy One,19.0,Cambridge,"Spicy ‘nduja, pepperoni, rich tomato sauce and mozzarella, finished with red chillies and drizzled with honey"
+Meat Lovers,20.0,Cambridge,"Prezzo three meat special, spicy pepperoni, chicken, smoked pancetta, mozzarella and rich tomato sauce"
+Four Cheese Pizza,18.0,Cambridge,"A generous blend of mozzarella, Monterey Jack and cheddar, finished with a generous grating of parmesan on our rich tomato base"
+The Veggie One Pizza,19.0,Cambridge,"A medley of roasted red peppers, mushrooms, spinach and red onion, layered with creamy mozzarella on a rich tomato base"
+Garlic Prawn and Pesto Pizza,20.0,Cambridge,"Juicy king prawns with a garlic and parsley blend, topped with mozzarella, finished with fragrant pesto and fresh rocket"
+Vegan Margherita,15.45,Cambridge,"Rich tomato sauce, topped with vegan mozzarella and fresh, fragrant basil"
+Vegan Pepperoni,17.75,Cambridge,"Rich tomato sauce, vegan mozzarella and a generous covering of vegan pepperoni"
+Vegan Lovers,20.0,Cambridge,"Vegan pepperoni, vegan chicken, vegan cheese with rich tomato sauce"
+Vegan Double Pepperoni,19.25,Cambridge,"Rich tomato sauce, mozzarella and a generous covering of vegan pepperoni"
+Very Meaty Calzone,20.5,Cambridge,"Generously filled with spicy pepperoni, chicken, pancetta, roasted peppers, mozzarella and rich tomato sauce"
+Calabrese Calzone,20.5,Cambridge,"Calzone filled with crumbled pork sausage, spicy ‘nduja, mozzarella and Calabrese tomato sauce"
+Very Veggie Calzone,19.95,Cambridge,"Earthy, butter roasted mushrooms, spinach and sun-dried tomatoes with mascarpone"
+Spaghetti Carbonara,18.5,Cambridge,"Spaghetti in a creamy sauce with pancetta, crispy prosciutto and Italian cheese"
+Rigatoni Arrabbiata,15.95,Cambridge,Rigatoni pasta in our sweet and spicy pomodoro sauce with a generous helping of garlic and red chilli
+Spaghetti Bolognese,18.5,Cambridge,"Spaghetti topped with succulent beef ragu Bolognese sauce, a true Italian classic"
+"Chicken, Mushroom & Garlic Rigatoni",19.5,Cambridge,Rigatoni pasta in creamy roasted garlic and wild mushrooms with chicken and parsley
+Spaghetti with King Prawns,20.95,Cambridge,Juicy king prawns in a sweet tomato sauce with a generous helping of garlic and red chilli
+Creamy King Prawn & Salmon Rigatoni,21.95,Cambridge,"Rigatoni in a creamy mascarpone, garlic and white wine sauce with juicy king prawns, smoked salmon and spinach, finished with rocket"
+Marry Me Chicken Rigatoni,18.5,Cambridge,"Roast chicken breast in a rich garlic, sun-dried tomato, chilli & cream sauce, tossed with rigatoni."
+Plant Based Spaghetti Bolognese,18.5,Cambridge,"Spaghetti topped with succulent meat free Bolognese sauce, a true Italian classic"
+Crab & Lobster Ravioli,20.95,Cambridge,Handmade ravioli filled with crab and lobster. Served in a velvety rich lobster bisque with prawns and cherry tomatoes. Finished with a handful of peppery rocket and a drizzle of chive oil
+Italian Sausage Ravioli,19.75,Cambridge,Salsiccia sausage ravioli in a roast pepper and chilli ragù
+Wild Mushroom Ravioli,19.75,Cambridge,"Wild mushroom ravioli with spinach in a creamy mushroom sauce, topped with toasted pine nuts"
+Lasagne,19.45,Cambridge,"Tender braised beef in a rich ragu, layered with pasta sheets, béchamel, cheddar and creamy mozzarella"
+Spinach & Ricotta Cannelloni,19.45,Cambridge,"Fresh pasta tubes, filled with creamed spinach and ricotta in a rich tomato and béchamel sauce"
+Rigatoni Arrabbiata Al Forno,17.95,Cambridge,Rigatoni pasta in our sweet and spicy pomodoro sauce with garlic and red chilli. with a generous layer of mozzarella
+Chicken Spaghetti Carbonara Al Forno,22.5,Cambridge,"Spaghetti in a creamy sauce with chicken, pancetta and crispy prosciutto. Finished with a generous layer of melted Mozzarella and Italian cheese"
+The Prezzo Burger,14.75,Cambridge,"Two beef patties, layered with spicy Calabrese ketchup, crispy prosciutto, cheddar, baby gem lettuce and mayonnaise"
+The Grande Cheese Burger,15.75,Cambridge,Two beef patties topped with rich and creamy cacio e pepe cheesy sauce and sweet baby gem lettuce
+Chicken Milanese Burger,15.75,Cambridge,"A lightly breaded chicken breast, fried until golden and crispy, with cheddar, baby gem lettuce and mayonnaise"
+Vegetarian Milanese Burger,14.75,Cambridge,"Hearty Quorn burger with cheddar, baby gem lettuce and mayonnaise"
+Chicken Milanese with Spaghetti Pomodoro,20.95,Cambridge,"A lightly breaded chicken breast, fried until golden and crispy, with grilled lemon, finished with Italian cheese"
+Chicken Milanese with Fries,20.95,Cambridge,"A lightly breaded chicken breast, fried until golden and crispy, with grilled lemon, finished with Italian cheese"
+NEW,22.95,Cambridge,Signature Nduja Roasted Chicken
+"Roast Salmon, Potatoes and Broccoli",20.95,Cambridge,
+Tuscan Beef and Mash,22.95,Cambridge,"Slow-braised featherblade of beef in a rich gravy, served with creamy mashed potatoes and tenderstem broccoli"
+Goat's Cheese & Roasted Peppers,18.25,Cambridge,"Creamy goat cheese, roasted peppers, cucumber, mixed leaves dressed in balsamic glaze, finished with toasted pine nuts and fresh chives"
+Crispy Chicken Caesar Salad,18.25,Cambridge,"Golden and crispy chicken and prosciutto tossed with crunchy baby gem lettuce dressed in a rich creamy Caesar dressing, grated Italian cheese and croutons"
+"Chicken, Bacon & Avocado Salad",18.25,Cambridge,"Crispy prosciutto, chicken, mixed leaves, cucumber and avocado in a sweet honey mustard dressing"
+House Fries,4.95,Cambridge,
+Chilli Garlic Cheese Fries,5.95,Cambridge,
+Truffle Fries,5.95,Cambridge,
+Garlic Roast Potatoes,4.95,Cambridge,
+Baby Caesar Salad,4.5,Cambridge,
+Tenderstem Broccoli,4.95,Cambridge,with Italian cheese and parsley
+Mixed Leaf Salad,4.5,Cambridge,
+Sticky Toffee Pudding,8.75,Cambridge,Luxurious sponge in warm caramel butterscotch sauce served with a scoop of vanilla ice cream
+Lotus Biscoff Cheesecake,8.45,Cambridge,"Our twist on the classic banoffee pie. Light cheesecake, topped with a Biscoff biscuit crumb, served with fresh banana and drizzled with chocolate sauce"
+Sicilian Lemon Meringue Pie,8.45,Cambridge,"A lemon custard tart topped with a delicate baked meringue, finished with fresh raspberries"
+Tiramisu,8.25,Cambridge,"A classic Italian tiramisu made of ladyfinger biscuits soaked in coffee, layered with rich mascarpone cream and dusted with cocoa"
+Tiramisu for 2,2.0,Cambridge,"A classic Italian tiramisu made of ladyfinger biscuits soaked in coffee, layered with rich mascarpone cream and dusted with cocoa"
+Hot Chocolate Fudge Cake,8.5,Cambridge,"Rich warm chocolate fudge cake, topped with salted caramel and chocolate sauce and a crumbled Cadbury Flake. Served with a scoop of vanilla ice cream"
+Billionaire Banoffee Sundae,8.25,Cambridge,"Indulgent honeycomb chocolate and vanilla swirl ice cream topped with fresh banana, white and milk chocolate chunks, rich toffee sauce, fresh cream and a cherry on top"
+Affogato,7.25,Cambridge,The classic Italian coffee dessert. A scoop of vanilla ice cream covered in a shot of coffee
+Vanilla Ice Cream,6.0,Cambridge,Two scoops of Vanilla Ice Cream
+Strawberry Ice Cream,6.0,Cambridge,
+Chocolate Ice Cream,6.0,Cambridge,Two scoops of Chocolate Ice Cream
+Mango Sorbet,6.0,Cambridge,Two scoops of Mango Sorbet
+Chocolate Honeycomb Ice Cream,6.0,Cambridge,
+Calabrese Ketchup,1.5,Cambridge,
+Calabrese Mayo,1.5,Cambridge,
+Pestonnaise,1.5,Cambridge,
+Truffle Mayo,1.5,Cambridge,
+Garlic Butter,1.5,Cambridge,
+Garlic Mayo,1.5,Cambridge,
+Chilli & Garlic Mayo,1.5,Cambridge,
+Gluten Free Garlic Bread with Mozzarella,8.75,Cambridge,"Gluten Free base, with plenty of garlic and parsley"
+Gluten Free Garlic Bread with Balsamic Onions & Mozzarella,9.25,Cambridge,"Gluten Free base, with plenty of garlic and parsley"
+Gluten Free Garlic Bread,7.45,Cambridge,Hand stretched pizza dough baked with plenty of garlic and parsley
+Gluten Free Tomato Bruschetta,9.0,Cambridge,"Gluten Free base topped with marinated tomato and red onion mix, finished with Prezzo pesto and fresh basil"
+Gluten Free Fusilli Chicken Carbonara Al Forno,23.5,Cambridge,"Fusilli in a creamy sauce with chicken, pancetta and crispy prosciutto. Finished with a generous layer of melted mozzarella and Italian cheese"
+Gluten Free Fusilli Arrabbiata Al Forno,18.95,Cambridge,Fusilli pasta in our sweet and spicy pomodoro sauce with garlic and red chilli. With a generous layer of mozzarella
+Gluten Free Fusilli Arrabbiata,16.95,Cambridge,Fusilli pasta in our sweet and spicy pomodoro sauce with a generous helping of garlic and red chilli
+Gluten Free Fusilli King Prawns,21.95,Cambridge,Juicy king prawns in a sweet tomato sauce with a generous helping of garlic and red chilli
+Gluten Free Fusilli Creamy King Prawn & Salmon,22.95,Cambridge,"Rigatoni in a creamy mascarpone, garlic and white wine sauce with juicy king prawns, smoked salmon and spinach, finished with rocket"
+Gluten Free Fusilli Chicken and Mushroom,20.5,Cambridge,Fusilli pasta in creamy roasted garlic and wild mushrooms with chicken and parsley
+Gluten Free Fusilli Bolognese,19.5,Cambridge,"Fusilli topped with succulent beef ragu Bolognese sauce, a true Italian classic"
+Gluten Free Fusilli Carbonara,19.5,Cambridge,"Fusilli in a creamy sauce with pancetta, crispy prosciutto and Italian cheese"
+Vegan Fusilli Bolognese Gluten Free,19.5,Cambridge,"Fusilli topped with succulent vegan Bolognese sauce, a true Italian classic"
+Gluten Free The Spicy One,20.0,Cambridge,"Spicy ‘nduja, pepperoni, rich tomato sauce and mozzarella, finished with red chillies and drizzled with honey"
+Gluten Free Margherita,16.45,Cambridge,"Rich tomato sauce, topped with creamy mozzarella and fresh, fragrant basil"
+Gluten Free Ham & Mushroom,20.0,Cambridge,"Italian ham, butter-roasted mushrooms, mozzarella and rich tomato sauce"
+Gluten Free Pepperoni,18.75,Cambridge,"Rich tomato sauce, mozzarella and a generous covering of pepperoni"
+Gluten Free Meat Lovers,20.0,Cambridge,"Prezzo three meat special, spicy pepperoni, chicken, smoked pancetta, mozzarella and rich tomato sauce"
+Gluten Free Chicken & Roasted Peppers,20.0,Cambridge,"Herby marinated chicken breast, roasted peppers, balsamic onions, rosemary, mozzarella and rich tomato sauce, finished with a drizzle of honey"
+Gluten Free Double Pepperoni,20.25,Cambridge,"Rich tomato sauce, mozzarella and a generous covering of pepperoni"
+Gluten Free Tuscan BBQ Chicken,20.0,Cambridge,"Tomato base topped with mozzarella, tender chicken, pork sausage crumb, red onion, and rosemary, finished with a drizzle of honey for a perfect sweet and smoky balance"
+Garlic Prawn and Pesto Pizza Gluten Free,21.0,Cambridge,"Juicy king prawns with a garlic and parsley blend, topped with mozzarella, finished with fragrant pesto and fresh rocket"
+The Veggie One Gluten Free,20.0,Cambridge,"A medley of roasted red peppers, mushrooms, spinach and red onion, layered with creamy mozzarella on a rich tomato base"
+Four Cheese Pizza Gluten Free,19.0,Cambridge,"A generous blend of mozzarella, Monterey Jack and cheddar, finished with a generous grating of parmesan on our rich tomato base"
+Marry Me Chicken Fusilli,19.5,Cambridge,"Roast chicken breast in a rich garlic, sun-dried tomato, chilli & cream sauce, tossed with fusilli."
