@@ -1,7 +1,7 @@
 """Shared analytics-build steps used by both the CLI scripts and the app.
 
-The scrape step writes canonical ``data/*_snapshot.csv`` files. This module turns
-those snapshots into the downstream artifacts the dashboard reads:
+The scrape step writes dated snapshots under ``data/scrapes/<YYYY-MM-DD>/``. This
+module turns those snapshots into the downstream artifacts the dashboard reads:
 
 - The synthetic *prior base* (``data/scrapes/prior/price_history.csv``) via
   :func:`rebuild_price_history`, which then recomposes the live
@@ -27,6 +27,7 @@ from src.branding import OWN_BRAND
 from src.history_archive import (
     ALL_COMPANY_PRICES_PATH,
     PRIOR_HISTORY_PATH,
+    resolve_snapshot_path,
     update_all_company_prices,
 )
 from src.restaurants.config import load_restaurants
@@ -46,7 +47,9 @@ def load_menu_snapshots(data_dir: Path | None = None) -> dict[str, pd.DataFrame]
     for restaurant in load_restaurants():
         if restaurant.brand == OWN_BRAND:
             continue
-        snapshot = restaurant.restaurant_snapshot_path(root)
+        snapshot = resolve_snapshot_path(
+            restaurant.restaurant_snapshot_path(root).name, root
+        )
         if not snapshot.exists():
             continue
         menus[restaurant.brand] = pd.read_csv(snapshot)

@@ -54,18 +54,15 @@ def restaurant_snapshot_filenames() -> dict[str, str]:
 def resolve_snapshot_path(filename: str, data_dir: Path | None = None) -> Path:
     """Return the on-disk path for a snapshot file.
 
-    Prefers the canonical ``data/<filename>`` location, then falls back to the
-    newest dated archive under ``data/scrapes/<YYYY-MM-DD>/``.
+    Prefers the newest dated archive under ``data/scrapes/<YYYY-MM-DD>/``. A
+    legacy ``data/<filename>`` copy is only used when no archive exists yet.
     """
     root = data_dir or DATA_DIR
-    canonical = root / filename
-    if canonical.exists():
-        return canonical
     for archive_date in reversed(list_archive_dates()):
         candidate = archive_dir_for(archive_date) / filename
         if candidate.exists():
             return candidate
-    return canonical
+    return root / filename
 
 
 def resolve_company_snapshots(
@@ -85,12 +82,22 @@ def resolve_company_snapshots(
 def archive_snapshot(
     frame: pd.DataFrame, filename: str, *, when: date | None = None
 ) -> Path:
-    """Write one scraped snapshot into the dated archive folder."""
+    """Write one scraped snapshot into the dated archive folder.
+
+    Re-scraping on the same day overwrites the existing file for that date.
+    """
     target_dir = archive_dir_for(when)
     target_dir.mkdir(parents=True, exist_ok=True)
     path = target_dir / filename
     frame.to_csv(path, index=False)
     return path
+
+
+def persist_scrape_snapshot(
+    frame: pd.DataFrame, filename: str, *, when: date | None = None
+) -> Path:
+    """Persist a scrape to the dated archive (the only supported write path)."""
+    return archive_snapshot(frame, filename, when=when)
 
 
 def ensure_prior_seed() -> None:
@@ -152,14 +159,19 @@ def _snapshot_to_history(
 
 
 def _frames_from_latest_snapshots(when: date | None = None) -> list[pd.DataFrame]:
-    """Convert every current ``data/*_menu_snapshot.csv`` into history rows."""
+    """Convert legacy canonical snapshots in ``data/`` into history rows.
+
+    Snapshots stored under ``data/scrapes/<date>/`` are handled by the archive
+    pass in :func:`build_source_of_truth`; this only picks up older copies that
+    were left directly in ``data/``.
+    """
     observed = when or date.today()
     frames: list[pd.DataFrame] = []
     for filename, brand in restaurant_snapshot_filenames().items():
         if brand == OWN_BRAND:
             continue
-        path = DATA_DIR / filename
-        if not path.exists():
+        path = resolve_snapshot_path(filename)
+        if ARCHIVE_DIR in path.parents or not path.exists():
             continue
         rows = _snapshot_to_history(pd.read_csv(path), brand, observed)
         if not rows.empty:

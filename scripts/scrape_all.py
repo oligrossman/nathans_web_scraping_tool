@@ -6,18 +6,21 @@ Usage (from the project root)::
     python -m scripts.scrape_all --rescrape # force fresh scrapes
 
 Each restaurant is scraped sequentially with per-site error isolation so one
-failure does not abort the batch.
+failure does not abort the batch. Snapshots are written only to
+``data/scrapes/<YYYY-MM-DD>/`` (re-scraping the same day replaces that file).
 """
 
 from __future__ import annotations
 
 import argparse
 import traceback
+from datetime import date
 from pathlib import Path
 
 import pandas as pd
 
 from src.export import items_to_dataframe
+from src.history_archive import persist_scrape_snapshot, resolve_snapshot_path
 from src.restaurants.config import Restaurant, load_restaurants
 from src.scrapers.registry import build_scrapers, restaurant_scraper_for
 
@@ -25,20 +28,21 @@ DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
 
 def _load_or_scrape(
-    path: Path,
+    filename: str,
     label: str,
     scraper,
     *,
     rescrape: bool,
+    when: date | None = None,
 ) -> pd.DataFrame | None:
-    if path.exists() and not rescrape:
-        print(f"Using cached {label}: {path}")
-        return pd.read_csv(path)
+    cached = resolve_snapshot_path(filename, DATA_DIR)
+    if cached.exists() and not rescrape:
+        print(f"Using cached {label}: {cached}")
+        return pd.read_csv(cached)
     print(f"Scraping {label}...")
     frame = items_to_dataframe(scraper.scrape())
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
-    frame.to_csv(path, index=False)
-    print(f"Saved {len(frame)} items to {path}")
+    saved = persist_scrape_snapshot(frame, filename, when=when)
+    print(f"Saved {len(frame)} items to {saved}")
     return frame
 
 
@@ -47,6 +51,7 @@ def scrape_restaurant(
     scrapers: dict,
     *,
     rescrape: bool,
+    when: date | None = None,
 ) -> dict[str, str | int | None]:
     """Scrape restaurant-menu and delivery snapshots for one restaurant."""
     result: dict[str, str | int | None] = {
@@ -61,10 +66,11 @@ def scrape_restaurant(
     if restaurant_cls is not None:
         try:
             frame = _load_or_scrape(
-                restaurant.restaurant_snapshot_path(DATA_DIR),
+                restaurant.restaurant_snapshot_path(DATA_DIR).name,
                 restaurant.restaurant_label,
                 restaurant_cls(),
                 rescrape=rescrape,
+                when=when,
             )
             result["restaurant_items"] = len(frame) if frame is not None else 0
         except Exception as exc:
@@ -76,10 +82,11 @@ def scrape_restaurant(
     if delivery_cls is not None:
         try:
             frame = _load_or_scrape(
-                restaurant.delivery_snapshot_path(DATA_DIR),
+                restaurant.delivery_snapshot_path(DATA_DIR).name,
                 restaurant.delivery_label,
                 delivery_cls(),
                 rescrape=rescrape,
+                when=when,
             )
             result["delivery_items"] = len(frame) if frame is not None else 0
         except Exception as exc:
@@ -100,11 +107,12 @@ def main() -> None:
 
     restaurants = load_restaurants()
     scrapers = build_scrapers(restaurants)
+    when = date.today()
     results: list[dict] = []
     for restaurant in restaurants:
         print(f"\n--- {restaurant.brand} ({restaurant.location}) ---")
         results.append(
-            scrape_restaurant(restaurant, scrapers, rescrape=args.rescrape)
+            scrape_restaurant(restaurant, scrapers, rescrape=args.rescrape, when=when)
         )
 
     print("\n=== Scrape summary ===")

@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from src.history_archive import resolve_snapshot_path
 from src.restaurants.config import Restaurant, load_restaurants
 
 from .banana_tree import BananaTreeScraper
@@ -107,24 +108,28 @@ def snapshot_paths_by_site(
     restaurants: list[Restaurant] | None = None,
     data_dir: Path | None = None,
 ) -> dict[str, Path]:
-    """Map each scraper ``site_name`` to its canonical ``*_snapshot.csv`` path.
+    """Map each scraper ``site_name`` to its latest on-disk snapshot path.
 
     Built with the exact class-selection logic ``build_scrapers`` uses, so every
-    key here matches a key in ``SCRAPERS``. This is the bridge that lets a scrape
-    (UI or CLI) land in the file the analytics pipeline actually reads.
+    key here matches a key in ``SCRAPERS``. Paths resolve to the newest dated
+    archive under ``data/scrapes/<YYYY-MM-DD>/``.
     """
     paths: dict[str, Path] = {}
     for restaurant in restaurants or load_restaurants():
         restaurant_cls = _RESTAURANT_BY_SLUG.get(restaurant.slug)
         if restaurant_cls is not None:
-            paths[restaurant_cls.site_name] = restaurant.restaurant_snapshot_path(data_dir)
+            paths[restaurant_cls.site_name] = resolve_snapshot_path(
+                restaurant.restaurant_snapshot_path(data_dir).name, data_dir
+            )
         if restaurant.delivery_platform == "deliveroo":
             delivery_cls = _deliveroo_factory(restaurant)
         elif restaurant.delivery_platform == "ubereats":
             delivery_cls = _ubereats_factory(restaurant)
         else:
             continue
-        paths[delivery_cls.site_name] = restaurant.delivery_snapshot_path(data_dir)
+        paths[delivery_cls.site_name] = resolve_snapshot_path(
+            restaurant.delivery_snapshot_path(data_dir).name, data_dir
+        )
     return paths
 
 

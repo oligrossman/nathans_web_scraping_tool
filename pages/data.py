@@ -35,9 +35,9 @@ def _slug(site_name: str) -> str:
     return "".join(c if c.isalnum() else "_" for c in site_name).lower()
 
 
-def _snapshot_path(site_name: str) -> Path:
-    """Canonical snapshot path the rest of the pipeline reads for this site."""
-    return SNAPSHOT_BY_SITE[site_name]
+def _snapshot_filename(site_name: str) -> str:
+    """Snapshot filename for this site (used when writing dated archives)."""
+    return SNAPSHOT_BY_SITE[site_name].name
 
 
 def _scrape_one(site_name: str):
@@ -74,26 +74,20 @@ def run_scrapes(site_names: list[str]) -> list[dict]:
 
 
 def persist_results(results: list[dict]) -> None:
-    """Save each scrape to its canonical snapshot and today's dated archive.
+    """Save each successful scrape into today's dated archive folder.
 
-    The canonical ``data/*_snapshot.csv`` is the *latest* menu (used by the
-    delivery and high/low comparisons). A dated copy is also filed under
-    ``data/scrapes/<YYYY-MM-DD>/`` so **Update price history** can accumulate a
-    real time series across scrapes (and you can delete a day to drop it).
+    Snapshots live only under ``data/scrapes/<YYYY-MM-DD>/``. Re-scraping on the
+    same day replaces the existing file for that site in that folder.
     """
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
     when = datetime.now().date()
     for result in results:
         if not result["ok"]:
             continue
-        path = _snapshot_path(result["site"])
-        path.parent.mkdir(parents=True, exist_ok=True)
-        result["frame"].to_csv(path, index=False)
-        archived = history_archive.archive_snapshot(
-            result["frame"], path.name, when=when
+        filename = _snapshot_filename(result["site"])
+        archived = history_archive.persist_scrape_snapshot(
+            result["frame"], filename, when=when
         )
-        result["path"] = str(path.relative_to(DATA_DIR.parent))
-        result["archived"] = str(archived.relative_to(DATA_DIR.parent))
+        result["path"] = str(archived.relative_to(DATA_DIR.parent))
         scrape_log.record_scrape(result["site"], result["count"])
 
 
@@ -150,12 +144,8 @@ if results:
             continue
         with st.expander(f"{site} — {len(frame)} items", expanded=len(results) == 1):
             saved_to = result.get("path")
-            archived_to = result.get("archived")
             if saved_to:
-                caption = f"Saved to `{saved_to}`"
-                if archived_to:
-                    caption += f" and archived to `{archived_to}`"
-                st.caption(caption + ".")
+                st.caption(f"Saved to `{saved_to}`.")
             st.dataframe(frame, use_container_width=True)
             st.download_button(
                 label="Download CSV",
@@ -172,8 +162,8 @@ st.subheader("Build the analytics dataset")
 st.markdown(
     "Turn the scraped snapshots into what the **Price Analysis** page reads. "
     "Run these after scraping (or re-scraping) sites:\n\n"
-    "1. **Scrape sites** above — each scrape is archived to "
-    "`data/scrapes/<date>/` (a dated snapshot of every site).\n"
+    "1. **Scrape sites** above — each scrape is saved to "
+    "`data/scrapes/<date>/` (re-scraping the same day replaces that file).\n"
     "2. **Run enrichment** — classifies dishes in `all_company_prices.csv` that are "
     "not yet in `menu_mappings.db`.\n"
     "3. **Update price history** — stacks the frozen `prior` base with every dated "

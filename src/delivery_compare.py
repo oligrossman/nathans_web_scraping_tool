@@ -18,7 +18,7 @@ from pathlib import Path
 import pandas as pd
 
 from .synthetic import resolve_bucket
-from src.history_archive import resolve_company_snapshots
+from src.history_archive import resolve_company_snapshots, resolve_snapshot_path
 from src.restaurants.config import load_restaurants
 
 _DATA_DIR = Path(__file__).resolve().parent.parent / "data"
@@ -30,8 +30,8 @@ def build_company_snapshots(data_dir: Path | None = None) -> dict[str, tuple[Pat
     snapshots: dict[str, tuple[Path, Path]] = {}
     for restaurant in load_restaurants():
         snapshots[restaurant.brand] = (
-            restaurant.restaurant_snapshot_path(root),
-            restaurant.delivery_snapshot_path(root),
+            resolve_snapshot_path(restaurant.restaurant_snapshot_path(root).name, root),
+            resolve_snapshot_path(restaurant.delivery_snapshot_path(root).name, root),
         )
     return snapshots
 
