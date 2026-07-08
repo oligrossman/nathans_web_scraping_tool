@@ -1,4 +1,4 @@
-"""Scraper for Pizza Express collection menu (mobile-pay site).
+"""Scraper for Pizza Express restaurant website menu (mobile-pay site).
 
 The menu is split into category tabs (Drinks, Starters & Sides, Pizza, etc.).
 We accept cookies, click each tab, scroll to load items, and read every
@@ -40,7 +40,7 @@ _CATEGORY_TABS = (
 
 
 class PizzaExpressScraper(BaseScraper):
-    site_name = "Pizza Express (Birmingham Bullring, Collection)"
+    site_name = "Pizza Express (Birmingham Bullring, Restaurant)"
     base_url = (
         "https://mobile-pay.pizzaexpress.com/birmingham-bullring-shopping-centre/"
         "restaurant-menu/main-menu"

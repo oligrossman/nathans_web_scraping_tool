@@ -13,6 +13,7 @@ import pandas as pd
 import streamlit as st
 
 from src import analytics, auth, charts, delivery_compare, high_low
+from src.history_archive import resolve_company_snapshots
 from src.branding import (
     ANALYTICS_TAGLINE,
     ANALYTICS_TITLE,
@@ -42,15 +43,15 @@ auth.require_login()
 apply_sidebar_logo()
 st.markdown(brand_css(), unsafe_allow_html=True)
 
-HISTORY_PATH = analytics.DEFAULT_HISTORY_PATH
+PRICES_PATH = analytics.DEFAULT_ALL_COMPANY_PRICES_PATH
 
 st.title(ANALYTICS_TITLE)
 st.caption(ANALYTICS_TAGLINE)
 
-if not Path(HISTORY_PATH).exists():
+if not Path(PRICES_PATH).exists():
     st.warning(
-        "No price history found. Generate it first by running "
-        "`python -m scripts.generate_data` from the project root."
+        "No all-company prices file found. Open the **Data** page and click "
+        "**Update price history** (or run `python -m scripts.generate_data`)."
     )
     st.stop()
 
@@ -80,12 +81,12 @@ def _wagamama_menu(path: str, _mtime: float, _db_mtime: float):
     return analytics.enrich_snapshot(frame)
 
 
-history = _load(str(HISTORY_PATH), HISTORY_PATH.stat().st_mtime)
+history = _load(str(PRICES_PATH), PRICES_PATH.stat().st_mtime)
 if OWN_BRAND not in history["source"].unique():
     st.error(
         f"No price history rows for **{OWN_BRAND}**. "
         f"Found sources: {sorted(history['source'].unique())}. "
-        "Re-run `python -m scripts.generate_data` to regenerate the dataset."
+        "Update it from the **Data** page (or run `python -m scripts.generate_data`)."
     )
     st.stop()
 competitors = analytics.competitor_sources(history)
@@ -122,7 +123,7 @@ def _global_price_max(path: str, _mtime: float) -> float:
         prices.append(float(items["price"].max()))
     comparison = delivery_compare.build_comparison()
     if not comparison.empty:
-        prices.append(float(comparison[["collection", "delivery"]].to_numpy().max()))
+        prices.append(float(comparison[["restaurant", "delivery"]].to_numpy().max()))
     menu = high_low.build_menu_prices()
     if not menu.empty:
         prices.append(float(menu["price"].max()))
@@ -160,7 +161,7 @@ if not competitors:
 # filter drive every tab. The grouping selector is bound to a shared session
 # key, so it stays in sync with the same control on the Comparison
 # Configuration page.
-price_ceiling = _global_price_max(str(HISTORY_PATH), HISTORY_PATH.stat().st_mtime)
+price_ceiling = _global_price_max(str(PRICES_PATH), PRICES_PATH.stat().st_mtime)
 slider_max = float(math.ceil(price_ceiling)) or 1.0
 # Seed and clamp the stored range before the widget is built (its only safe
 # mutation point). Driving the slider purely from session state — rather than
@@ -219,8 +220,8 @@ if not selected_companies:
 
 db_mtime = DEFAULT_DB_PATH.stat().st_mtime if DEFAULT_DB_PATH.exists() else 0.0
 chart_history = _chart_history(
-    str(HISTORY_PATH),
-    HISTORY_PATH.stat().st_mtime,
+    str(PRICES_PATH),
+    PRICES_PATH.stat().st_mtime,
     grouping_dimension.value,
     tuple(selected_custom_names),
     db_mtime,
@@ -299,18 +300,18 @@ def _drilldown_nav(
 
 
 # Wagamama has no Deliveroo snapshot, so its delivery price is a placeholder:
-# collection price plus this flat markup. Replace with real data when scraped.
+# Restaurant-menu price plus this flat markup. Replace with real data when scraped.
 PROXY_DELIVERY_MARKUP_PCT = 10.0
 
 
 def _wagamama_delivery_proxy(wag_menu):
-    """Proxy collection-vs-delivery rows for Wagamama from its collection menu."""
+    """Proxy restaurant-vs-delivery rows for Wagamama from its restaurant menu."""
     if wag_menu.empty:
         return wag_menu
-    out = wag_menu.rename(columns={"price": "collection"}).copy()
+    out = wag_menu.rename(columns={"price": "restaurant"}).copy()
     factor = 1.0 + PROXY_DELIVERY_MARKUP_PCT / 100.0
-    out["delivery"] = (out["collection"] * factor).round(2)
-    out["markup_abs"] = (out["delivery"] - out["collection"]).round(2)
+    out["delivery"] = (out["restaurant"] * factor).round(2)
+    out["markup_abs"] = (out["delivery"] - out["restaurant"]).round(2)
     out["markup_pct"] = PROXY_DELIVERY_MARKUP_PCT
     return out
 
@@ -332,7 +333,7 @@ def _plain_pounds(value: float) -> str:
 
 
 def _delivery_annotation(frame, by_abs: bool):
-    """Signed markup label per row for the collection-vs-delivery dumbbell."""
+    """Signed markup label per row for the restaurant-vs-delivery dumbbell."""
     if by_abs:
         return frame["markup_abs"].map(_signed_pounds)
     return frame["markup_pct"].map(_signed_pct)
@@ -434,7 +435,7 @@ tab_buckets, tab_compare, tab_delivery, tab_high_low = st.tabs(
     [
         "By group",
         f"{OWN_BRAND} vs market",
-        "Collection vs delivery",
+        "Restaurant vs delivery",
         "High vs low",
     ]
 )
@@ -552,24 +553,25 @@ with tab_compare:
         use_container_width=True,
     )
 
-# --- Collection vs delivery ------------------------------------------------
+# --- Restaurant vs delivery ------------------------------------------------
 with tab_delivery:
     st.caption(
-        "Real prices scraped from each company's collection menu and the same "
+        "Real prices scraped from each company's restaurant website menu and the same "
         "restaurant on Deliveroo (Camden postcode). Filter by company and/or "
         f"{dim_label.lower()} below — the metrics and both charts follow your "
         f"selection. {OWN_BRAND} isn't on Deliveroo, so its delivery price is a "
-        f"placeholder (collection +{PROXY_DELIVERY_MARKUP_PCT:.0f}%)."
+        f"placeholder (restaurant menu +{PROXY_DELIVERY_MARKUP_PCT:.0f}%)."
     )
 
+    _snapshots = resolve_company_snapshots()
     snapshots_ready = any(
         coll.exists() and deliv.exists()
-        for coll, deliv in delivery_compare.COMPANY_SNAPSHOTS.values()
+        for coll, deliv in _snapshots.values()
     )
     if not snapshots_ready:
         st.warning(
-            "No delivery snapshots found. Run `python -m scripts.generate_data` "
-            "to scrape them."
+            "No delivery snapshots found. Scrape the delivery sites on the "
+            "**Data** page (or run `python -m scripts.scrape_all`)."
         )
     else:
 
@@ -586,18 +588,18 @@ with tab_delivery:
         comparison = analytics.enrich_snapshot(comparison)
         # Wagamama is always present as a benchmark (with proxy delivery prices).
         wag_proxy = _wagamama_delivery_proxy(
-            _wagamama_menu(str(HISTORY_PATH), HISTORY_PATH.stat().st_mtime, db_mtime)
+            _wagamama_menu(str(PRICES_PATH), PRICES_PATH.stat().st_mtime, db_mtime)
         )
         if not wag_proxy.empty:
             comparison = pd.concat([comparison, wag_proxy], ignore_index=True)
-        # Global price band: judge an item by its collection (menu) price.
-        comparison = _in_price_range(comparison, "collection")
+        # Global price band: judge an item by its restaurant (menu) price.
+        comparison = _in_price_range(comparison, "restaurant")
         comparison, active_market = _market_filter(
             "delivery", comparison, saved_markets
         )
         if comparison.empty:
             st.warning(
-                "No matched collection vs delivery items for the current selection."
+                "No matched restaurant vs delivery items for the current selection."
             )
         else:
             company, mid = _drilldown_nav(
@@ -646,7 +648,7 @@ with tab_delivery:
                 delivery_highlight = "is_benchmark"
                 title = (
                     f"{market_prefix}{scope_label} / {mid}: "
-                    "collection vs delivery by item"
+                    "restaurant vs delivery by item"
                 )
             elif company is not None:
                 drill_frame = delivery_compare.bucket_summary(
@@ -654,7 +656,7 @@ with tab_delivery:
                 )
                 label_col = dim
                 title = (
-                    f"{market_prefix}{company}: collection vs delivery by "
+                    f"{market_prefix}{company}: restaurant vs delivery by "
                     f"{dim_label.lower()}"
                 )
             else:
@@ -668,7 +670,7 @@ with tab_delivery:
                 label_col = "company"
                 delivery_highlight = "is_benchmark"
                 title = (
-                    f"{market_prefix}Collection vs delivery by company "
+                    f"{market_prefix}Restaurant vs delivery by company "
                     f"(+ {overall_label} average)"
                 )
 
@@ -710,16 +712,16 @@ with tab_delivery:
             with st.expander("Full matched item table"):
                 st.dataframe(comparison, use_container_width=True, hide_index=True)
             st.download_button(
-                "Download collection vs delivery (CSV)",
+                "Download restaurant vs delivery (CSV)",
                 data=comparison.to_csv(index=False).encode("utf-8"),
-                file_name="collection_vs_delivery.csv",
+                file_name="restaurant_vs_delivery.csv",
                 mime="text/csv",
             )
 
 # --- High vs low -----------------------------------------------------------
 with tab_high_low:
     st.caption(
-        "Lowest, average and highest menu prices from collection snapshots, with "
+        "Lowest, average and highest menu prices from restaurant-menu snapshots, with "
         f"{OWN_BRAND} always included as a benchmark. At item level the average "
         f"dot shows each item's price within its {dim_label.lower()} min–max "
         f"range. Filter by company and/or {dim_label.lower()} below — the metrics "
@@ -727,10 +729,13 @@ with tab_high_low:
     )
 
     menu_ready = any(
-        coll.exists() for coll, _ in delivery_compare.COMPANY_SNAPSHOTS.values()
+        coll.exists() for coll, _ in resolve_company_snapshots().values()
     )
     if not menu_ready:
-        st.warning("No menu snapshots found. Run `python -m scripts.generate_data`.")
+        st.warning(
+            "No menu snapshots found. Scrape sites on the **Data** page "
+            "(or run `python -m scripts.scrape_all`)."
+        )
     else:
 
         @st.cache_data
@@ -743,7 +748,7 @@ with tab_high_low:
         menu = analytics.enrich_snapshot(menu)
         # Wagamama is always present as a benchmark company.
         wag_menu = _wagamama_menu(
-            str(HISTORY_PATH), HISTORY_PATH.stat().st_mtime, db_mtime
+            str(PRICES_PATH), PRICES_PATH.stat().st_mtime, db_mtime
         )
         if not wag_menu.empty:
             menu = pd.concat([menu, wag_menu], ignore_index=True)
@@ -897,6 +902,6 @@ st.divider()
 st.download_button(
     "Download price history (CSV)",
     data=history.to_csv(index=False).encode("utf-8"),
-    file_name="price_history.csv",
+    file_name="all_company_prices.csv",
     mime="text/csv",
 )

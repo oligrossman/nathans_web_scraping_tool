@@ -40,7 +40,7 @@ APP_TAGLINE = (
     "Competitive menu pricing intelligence — scrape live competitor menus, "
     "track price trends, and benchmark Wagamama against the market."
 )
-SCRAPE_SECTION = "Menu data collection"
+SCRAPE_SECTION = "Scrape restaurant & delivery menus"
 ANALYTICS_TITLE = "Price Analysis"
 ANALYTICS_TAGLINE = (
     "Synthetic quarterly price history (5 years) for Wagamama, competitor "

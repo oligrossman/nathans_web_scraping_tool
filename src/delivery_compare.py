@@ -1,6 +1,6 @@
-"""Compare collection prices against Deliveroo (delivery) prices.
+"""Compare restaurant-website menu prices against Deliveroo (delivery) prices.
 
-Both menus are scraped snapshots. Deliveroo names don't match the collection
+Both menus are scraped snapshots. Deliveroo names don't match the restaurant
 menu character-for-character (e.g. "PERi-PERi Nuts" vs "Peri Peri Nuts"), so we
 normalise names to a canonical key and inner-join on it. The result is a
 like-for-like, item-level view of the delivery price premium.
@@ -17,22 +17,27 @@ from pathlib import Path
 
 import pandas as pd
 
-from .synthetic import CATEGORY_TO_BUCKET
+from .synthetic import resolve_bucket
+from src.history_archive import resolve_company_snapshots
+from src.restaurants.config import load_restaurants
 
 _DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
-# Registry: company -> (collection snapshot, deliveroo snapshot).
-# Add new companies here as scrapers and snapshots become available.
-COMPANY_SNAPSHOTS: dict[str, tuple[Path, Path]] = {
-    "Nando's": (
-        _DATA_DIR / "nandos_menu_snapshot.csv",
-        _DATA_DIR / "deliveroo_nandos_snapshot.csv",
-    ),
-    "Pizza Express": (
-        _DATA_DIR / "pizza_express_menu_snapshot.csv",
-        _DATA_DIR / "deliveroo_pizza_express_snapshot.csv",
-    ),
-}
+
+def build_company_snapshots(data_dir: Path | None = None) -> dict[str, tuple[Path, Path]]:
+    """Build restaurant-vs-delivery snapshot paths from ``restaurants.csv``."""
+    root = data_dir or _DATA_DIR
+    snapshots: dict[str, tuple[Path, Path]] = {}
+    for restaurant in load_restaurants():
+        snapshots[restaurant.brand] = (
+            restaurant.restaurant_snapshot_path(root),
+            restaurant.delivery_snapshot_path(root),
+        )
+    return snapshots
+
+
+# Registry: company -> (restaurant snapshot, delivery snapshot).
+COMPANY_SNAPSHOTS: dict[str, tuple[Path, Path]] = build_company_snapshots()
 
 
 def normalise_name(name: str) -> str:
@@ -46,53 +51,60 @@ def normalise_name(name: str) -> str:
 
 def _build_one_comparison(
     company: str,
-    collection_path: Path,
-    deliveroo_path: Path,
+    restaurant_path: Path,
+    delivery_path: Path,
 ) -> pd.DataFrame:
-    """Match collection vs delivery prices for a single company."""
-    collection = pd.read_csv(collection_path)
-    deliveroo = pd.read_csv(deliveroo_path)
+    """Match restaurant-website vs delivery prices for a single company."""
+    restaurant_menu = pd.read_csv(restaurant_path)
+    delivery_menu = pd.read_csv(delivery_path)
 
-    collection = collection.dropna(subset=["price"]).copy()
-    collection["key"] = collection["name"].map(normalise_name)
-    collection["bucket"] = collection["category"].map(CATEGORY_TO_BUCKET)
-    collection = collection.sort_values("price").drop_duplicates("key", keep="first")
+    restaurant_menu = restaurant_menu.dropna(subset=["price"]).copy()
+    restaurant_menu["key"] = restaurant_menu["name"].map(normalise_name)
+    if "category" in restaurant_menu.columns:
+        restaurant_menu["bucket"] = restaurant_menu["category"].map(resolve_bucket)
+    else:
+        restaurant_menu["bucket"] = "Mains"
+    restaurant_menu = restaurant_menu.sort_values("price").drop_duplicates(
+        "key", keep="first"
+    )
 
-    deliveroo = deliveroo.dropna(subset=["price"]).copy()
-    deliveroo["key"] = deliveroo["name"].map(normalise_name)
-    deliveroo = deliveroo.sort_values("price").drop_duplicates("key", keep="first")
+    delivery_menu = delivery_menu.dropna(subset=["price"]).copy()
+    delivery_menu["key"] = delivery_menu["name"].map(normalise_name)
+    delivery_menu = delivery_menu.sort_values("price").drop_duplicates(
+        "key", keep="first"
+    )
 
-    merged = collection.merge(
-        deliveroo[["key", "price"]], on="key", suffixes=("_collection", "_delivery")
+    merged = restaurant_menu.merge(
+        delivery_menu[["key", "price"]], on="key", suffixes=("_restaurant", "_delivery")
     )
     out = pd.DataFrame(
         {
             "company": company,
             "item": merged["name"],
             "bucket": merged["bucket"],
-            "collection": merged["price_collection"].round(2),
+            "restaurant": merged["price_restaurant"].round(2),
             "delivery": merged["price_delivery"].round(2),
         }
     )
-    out["markup_abs"] = (out["delivery"] - out["collection"]).round(2)
-    out["markup_pct"] = (out["markup_abs"] / out["collection"] * 100.0).round(1)
+    out["markup_abs"] = (out["delivery"] - out["restaurant"]).round(2)
+    out["markup_pct"] = (out["markup_abs"] / out["restaurant"] * 100.0).round(1)
     return out
 
 
 def build_comparison(
     snapshots: dict[str, tuple[Path, Path]] | None = None,
 ) -> pd.DataFrame:
-    """Return the item-level collection-vs-delivery comparison for all companies.
+    """Return the item-level restaurant-vs-delivery comparison for all companies.
 
-    Columns: ``company``, ``item``, ``bucket``, ``collection``, ``delivery``,
+    Columns: ``company``, ``item``, ``bucket``, ``restaurant``, ``delivery``,
     ``markup_abs``, ``markup_pct``.
     """
-    registry = snapshots or COMPANY_SNAPSHOTS
+    registry = snapshots or resolve_company_snapshots()
     frames: list[pd.DataFrame] = []
-    for company, (collection_path, deliveroo_path) in registry.items():
-        if not collection_path.exists() or not deliveroo_path.exists():
+    for company, (restaurant_path, delivery_path) in registry.items():
+        if not restaurant_path.exists() or not delivery_path.exists():
             continue
-        frames.append(_build_one_comparison(company, collection_path, deliveroo_path))
+        frames.append(_build_one_comparison(company, restaurant_path, delivery_path))
 
     if not frames:
         return pd.DataFrame(
@@ -100,7 +112,7 @@ def build_comparison(
                 "company",
                 "item",
                 "bucket",
-                "collection",
+                "restaurant",
                 "delivery",
                 "markup_abs",
                 "markup_pct",
@@ -121,7 +133,7 @@ def company_summary(
     overall_exclude: str | None = None,
     sort_by: str = "markup_pct",
 ) -> pd.DataFrame:
-    """Average collection vs delivery price (and markup) per company.
+    """Average restaurant vs delivery price (and markup) per company.
 
     When ``overall_label`` is set, an extra top row aggregates *every* item in
     the frame (the market average, not an average of per-restaurant averages).
@@ -135,14 +147,14 @@ def company_summary(
         comparison.groupby("company", as_index=False)
         .agg(
             items=("item", "count"),
-            collection=("collection", "mean"),
+            restaurant=("restaurant", "mean"),
             delivery=("delivery", "mean"),
         )
         .round(2)
     )
-    summary["markup_abs"] = (summary["delivery"] - summary["collection"]).round(2)
+    summary["markup_abs"] = (summary["delivery"] - summary["restaurant"]).round(2)
     summary["markup_pct"] = (
-        (summary["delivery"] / summary["collection"] - 1.0) * 100.0
+        (summary["delivery"] / summary["restaurant"] - 1.0) * 100.0
     ).round(1)
     out = summary.sort_values(sort_by, ascending=False).reset_index(drop=True)
     base = (
@@ -151,17 +163,19 @@ def company_summary(
         else comparison[comparison["company"] != overall_exclude]
     )
     if overall_label and not base.empty:
-        collection = round(float(base["collection"].mean()), 2)
-        delivery = round(float(base["delivery"].mean()), 2)
+        restaurant_avg = round(float(base["restaurant"].mean()), 2)
+        delivery_avg = round(float(base["delivery"].mean()), 2)
         overall = pd.DataFrame(
             [
                 {
                     "company": overall_label,
                     "items": len(base),
-                    "collection": collection,
-                    "delivery": delivery,
-                    "markup_abs": round(delivery - collection, 2),
-                    "markup_pct": round((delivery / collection - 1.0) * 100.0, 1),
+                    "restaurant": restaurant_avg,
+                    "delivery": delivery_avg,
+                    "markup_abs": round(delivery_avg - restaurant_avg, 2),
+                    "markup_pct": round(
+                        (delivery_avg / restaurant_avg - 1.0) * 100.0, 1
+                    ),
                 }
             ]
         )
@@ -176,7 +190,7 @@ def bucket_summary(
     dim: str = "bucket",
     sort_by: str = "markup_pct",
 ) -> pd.DataFrame:
-    """Average collection vs delivery price (and markup) per group (``dim``).
+    """Average restaurant vs delivery price (and markup) per group (``dim``).
 
     ``sort_by`` picks the ranking column (``"markup_pct"`` or ``"markup_abs"``)
     so the chart order can follow the caller's £/% toggle.
@@ -186,13 +200,13 @@ def bucket_summary(
         frame.groupby(dim, as_index=False)
         .agg(
             items=("item", "count"),
-            collection=("collection", "mean"),
+            restaurant=("restaurant", "mean"),
             delivery=("delivery", "mean"),
         )
         .round(2)
     )
-    summary["markup_abs"] = (summary["delivery"] - summary["collection"]).round(2)
+    summary["markup_abs"] = (summary["delivery"] - summary["restaurant"]).round(2)
     summary["markup_pct"] = (
-        (summary["delivery"] / summary["collection"] - 1.0) * 100.0
+        (summary["delivery"] / summary["restaurant"] - 1.0) * 100.0
     ).round(1)
     return summary.sort_values(sort_by, ascending=False).reset_index(drop=True)

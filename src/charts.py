@@ -18,8 +18,8 @@ from .synthetic import MARKET_LABEL, TOTAL_LABEL
 _TEMPLATE = "plotly_white"
 # Source colours imported from branding — Wagamama red is the hero series.
 _SOURCE_COLOURS = SOURCE_COLOURS
-# Channel colours for collection vs delivery views.
-_COLLECTION_COLOUR = WAGAMAMA_RED
+# Channel colours for restaurant vs delivery views.
+_RESTAURANT_COLOUR = WAGAMAMA_RED
 _DELIVERY_COLOUR = DELIVEROO_TEAL
 # Pastel low/high tones drawn from the default qualitative palette (the "By
 # group" scheme) — teal for low, warm orange for high; avoids clashing with the
@@ -27,7 +27,7 @@ _DELIVERY_COLOUR = DELIVEROO_TEAL
 _LOW_COLOUR = "#00CC96"  # pastel teal
 _HIGH_COLOUR = "#FFA15A"  # pastel orange
 _AVG_COLOUR = "#111827"  # near-black
-_CHANNEL_LABELS = {"collection": "Collection", "delivery": "Delivery (Deliveroo)"}
+_CHANNEL_LABELS = {"restaurant": "Restaurant", "delivery": "Delivery (Deliveroo)"}
 _HIGH_LOW_LABELS = {"low": "Lowest", "average": "Average", "high": "Highest"}
 
 
@@ -369,7 +369,7 @@ def pct_change_heatmap(
     return fig
 
 
-# --- Collection vs delivery (real scraped snapshot) ------------------------
+# --- Restaurant vs delivery (real scraped snapshot) ------------------------
 
 
 def delivery_scatter(
@@ -394,7 +394,7 @@ def delivery_scatter(
             continue
         fig.add_trace(
             go.Scatter(
-                x=sub["collection"],
+                x=sub["restaurant"],
                 y=sub["delivery"],
                 mode="markers",
                 name=value,
@@ -405,7 +405,7 @@ def delivery_scatter(
                 ),
                 text=sub["item"],
                 hovertemplate=(
-                    "%{text}<br>Collection £%{x:.2f}<br>Delivery £%{y:.2f}"
+                    "%{text}<br>Restaurant £%{x:.2f}<br>Delivery £%{y:.2f}"
                     f"<extra>{value}</extra>"
                 ),
             )
@@ -417,7 +417,7 @@ def delivery_scatter(
         if not own.empty:
             fig.add_trace(
                 go.Scatter(
-                    x=own["collection"],
+                    x=own["restaurant"],
                     y=own["delivery"],
                     mode="markers",
                     name=OWN_BRAND,
@@ -429,13 +429,13 @@ def delivery_scatter(
                     ),
                     text=own["item"],
                     hovertemplate=(
-                        "%{text}<br>Collection £%{x:.2f}<br>Delivery £%{y:.2f}"
+                        "%{text}<br>Restaurant £%{x:.2f}<br>Delivery £%{y:.2f}"
                         f"<extra>{OWN_BRAND}</extra>"
                     ),
                 )
             )
 
-    hi = float(max(comparison["collection"].max(), comparison["delivery"].max())) * 1.05
+    hi = float(max(comparison["restaurant"].max(), comparison["delivery"].max())) * 1.05
     fig.add_trace(
         go.Scatter(
             x=[0, hi],
@@ -448,8 +448,8 @@ def delivery_scatter(
     )
     fig.update_layout(
         template=_TEMPLATE,
-        title="Per-item price: delivery vs collection (above dashed line = premium)",
-        xaxis_title="Collection price (GBP)",
+        title="Per-item price: delivery vs restaurant (above dashed line = premium)",
+        xaxis_title="Restaurant price (GBP)",
         yaxis_title="Delivery price (GBP)",
         legend_title_text=dim_label,
         xaxis_tickprefix="£",
@@ -544,7 +544,7 @@ def drilldown_dumbbell(
     label_col: str,
     *,
     title: str,
-    left_col: str = "collection",
+    left_col: str = "restaurant",
     right_col: str = "delivery",
     mid_col: str | None = None,
     left_label: str | None = None,
@@ -595,7 +595,7 @@ def drilldown_dumbbell(
             mode="markers",
             name=left_name,
             marker=dict(
-                color=_COLLECTION_COLOUR if left_col == "collection" else _LOW_COLOUR,
+                color=_RESTAURANT_COLOUR if left_col == "restaurant" else _LOW_COLOUR,
                 size=12,
             ),
             customdata=[[lbl] for lbl in labels],

@@ -34,7 +34,7 @@ _DESC_SELECTORS = ("[class*='MenuItemOverview_description']",)
 
 
 class NandosScraper(BaseScraper):
-    site_name = "Nando's (Camden, Collection)"
+    site_name = "Nando's (Camden, Restaurant)"
     base_url = "https://www.nandos.co.uk/order/menu/camden?fulfilment=COLLECTION"
 
     def __init__(self, *, page_load_timeout: int = 30, max_scrolls: int = 25) -> None:

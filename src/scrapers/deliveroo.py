@@ -9,7 +9,7 @@ token in the card (Deliveroo shows the live price first and any struck-through
 original second, so the first match is the price actually charged).
 
 The default target is Nando's Camden delivering to a Camden geohash, matching
-the collection restaurant we scrape elsewhere so the two are comparable.
+the restaurant menu we scrape elsewhere so the two are comparable.
 """
 
 from __future__ import annotations
@@ -19,7 +19,6 @@ import time
 
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
-from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -28,6 +27,27 @@ from .driver import chrome_driver
 
 _ITEM_SELECTOR = "[data-testid='menu-item-image']"
 _PRICE_PATTERN = re.compile(r"£\s*\d+(?:\.\d{2})?")
+
+# Read every mounted card's rendered text in one round-trip. For each menu-item
+# image we climb to the nearest ancestor that actually holds a price (the card
+# body), then take its ``innerText``. ``innerText`` is used deliberately: it
+# preserves the block-level line breaks we rely on to split name/price, and
+# unlike Selenium's ``WebElement.text`` it returns text for cards outside the
+# viewport too.
+_EXTRACT_CARDS_JS = r"""
+const images = document.querySelectorAll("[data-testid='menu-item-image']");
+const cards = [];
+for (const image of images) {
+    let card = image.parentElement;
+    while (card && card.textContent.indexOf('\u00a3') === -1) {
+        card = card.parentElement;
+    }
+    if (card) {
+        cards.push(card.innerText || card.textContent || '');
+    }
+}
+return cards;
+"""
 _COOKIE_XPATHS = (
     "//button[@id='onetrust-accept-btn-handler']",
     "//button[contains(., 'Accept all')]",
@@ -46,9 +66,12 @@ class DeliverooScraper(BaseScraper):
         self,
         url: str | None = None,
         *,
+        site_name: str | None = None,
         page_load_timeout: int = 30,
         max_scrolls: int = 18,
     ) -> None:
+        if site_name is not None:
+            self.site_name = site_name
         self.url = url or self.base_url
         self.page_load_timeout = page_load_timeout
         self.max_scrolls = max_scrolls
@@ -93,22 +116,30 @@ class DeliverooScraper(BaseScraper):
             last_height = new_height
 
     def _extract_items(self, driver) -> list[MenuItem]:
+        """Read every mounted card in one pass via the DOM's ``innerText``.
+
+        Deliveroo mounts all its item cards up front but lays them out in
+        horizontally-scrolling carousels, so most sit outside the viewport.
+        Reading the DOM directly captures them all; the same dish can appear in
+        several carousels (e.g. a "Popular" strip and its real section), so we
+        de-duplicate by name.
+        """
+        raw_cards: list[str] = driver.execute_script(_EXTRACT_CARDS_JS)
         items: list[MenuItem] = []
         seen: set[str] = set()
-        for image in driver.find_elements(By.CSS_SELECTOR, _ITEM_SELECTOR):
-            card = image.find_element(By.XPATH, "..")
-            item = self._card_to_item(card)
+        for raw in raw_cards:
+            item = self._card_to_item(raw)
             if item and item.name not in seen:
                 seen.add(item.name)
                 items.append(item)
         return items
 
-    def _card_to_item(self, card: WebElement) -> MenuItem | None:
-        lines = [line.strip() for line in card.text.splitlines() if line.strip()]
+    def _card_to_item(self, text: str) -> MenuItem | None:
+        lines = [line.strip() for line in text.splitlines() if line.strip()]
         if not lines:
             return None
         name = lines[0]
-        match = _PRICE_PATTERN.search(card.text)
+        match = _PRICE_PATTERN.search(text)
         if not match:
             return None
         return MenuItem(name=name, price=parse_price(match.group()))

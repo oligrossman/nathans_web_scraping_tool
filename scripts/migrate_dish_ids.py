@@ -23,7 +23,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.analytics import DEFAULT_HISTORY_PATH
+from src.analytics import DEFAULT_ALL_COMPANY_PRICES_PATH
 from src.delivery_compare import normalise_name
 from src.enrichment.identity import make_dish_id
 from src.enrichment.store import DEFAULT_DB_PATH, _utc_now, init_db
@@ -46,7 +46,7 @@ def _table_exists(conn: sqlite3.Connection, table: str) -> bool:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--db", type=Path, default=DEFAULT_DB_PATH)
-    parser.add_argument("--history", type=Path, default=DEFAULT_HISTORY_PATH)
+    parser.add_argument("--history", type=Path, default=DEFAULT_ALL_COMPANY_PRICES_PATH)
     args = parser.parse_args()
 
     if not Path(args.db).exists():

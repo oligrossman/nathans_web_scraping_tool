@@ -1,4 +1,4 @@
-"""High vs low menu price spread from collection snapshots.
+"""High vs low menu price spread from restaurant-menu snapshots.
 
 For each aggregation level we report the lowest item price, highest item price,
 and the average menu price. Item-level drilldown shows where each item sits
@@ -13,33 +13,35 @@ from pathlib import Path
 import pandas as pd
 
 from .branding import OWN_BRAND
-from .delivery_compare import COMPANY_SNAPSHOTS
-from .synthetic import CATEGORY_TO_BUCKET
+from .history_archive import resolve_company_snapshots
+from .synthetic import resolve_bucket
 
 _DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
 
-def _load_company_menu(company: str, collection_path: Path) -> pd.DataFrame:
-    menu = pd.read_csv(collection_path).dropna(subset=["price"]).copy()
+def _load_company_menu(company: str, restaurant_path: Path) -> pd.DataFrame:
+    menu = pd.read_csv(restaurant_path).dropna(subset=["price"]).copy()
     menu["company"] = company
-    menu["bucket"] = menu["category"].map(CATEGORY_TO_BUCKET)
-    menu = menu.dropna(subset=["bucket"])
+    if "category" in menu.columns:
+        menu["bucket"] = menu["category"].map(resolve_bucket)
+    else:
+        menu["bucket"] = "Mains"
     return menu.rename(columns={"name": "item"})
 
 
 def build_menu_prices(
     snapshots: dict[str, tuple[Path, Path]] | None = None,
 ) -> pd.DataFrame:
-    """Item-level menu prices from collection snapshots.
+    """Item-level menu prices from restaurant-menu snapshots.
 
     Columns: ``company``, ``item``, ``bucket``, ``price``.
     """
-    registry = snapshots or COMPANY_SNAPSHOTS
+    registry = snapshots or resolve_company_snapshots()
     frames: list[pd.DataFrame] = []
-    for company, (collection_path, _) in registry.items():
-        if not collection_path.exists():
+    for company, (restaurant_path, _) in registry.items():
+        if not restaurant_path.exists():
             continue
-        frames.append(_load_company_menu(company, collection_path))
+        frames.append(_load_company_menu(company, restaurant_path))
     if not frames:
         return pd.DataFrame(columns=["company", "item", "bucket", "price"])
     return pd.concat(frames, ignore_index=True)

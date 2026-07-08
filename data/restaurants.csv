@@ -1,0 +1,11 @@
+brand,location,slug,restaurant_url,delivery_url,delivery_platform,postcode,site_count,restaurant_snapshot,delivery_snapshot
+Banana Tree,Chelmsford,banana_tree,https://bananatree.co.uk/restaurants/chelmsford/menu,https://deliveroo.co.uk/menu/Chelmsford/chelmsford-center/banana-tree-chelmsford?day=today&geohash=u10q69zs5nur&time=1216,deliveroo,CM1 1XD,21,,
+Five Guys,Cambridge,five_guys,https://order.fiveguys.co.uk/TimeSlotSelection?storeId=42&orderType=ClickAndCollect,https://deliveroo.co.uk/menu/cambridge/cambridge-centre/five-guys-cambridge-market-street,deliveroo,CB2 3PA,174,,
+Giggling Squid,Windsor,giggling_squid,https://www.gigglingsquid.com/menu/windsor/,https://deliveroo.co.uk/menu/london/windsor-and-eton/giggling-squid-windsor,deliveroo,SL4 1PR,49,,
+Nando's,Camden,nandos,https://www.nandos.co.uk/order/menu/camden?fulfilment=COLLECTION,https://deliveroo.co.uk/menu/london/chalk-farm/nandos-camden,deliveroo,NW1 7BY,473,nandos_menu_snapshot.csv,deliveroo_nandos_snapshot.csv
+Pho,Birmingham - Grand Central,pho,https://content.phocafe.co.uk/wp-content/uploads/2026/06/Pho_Main-Menu_web.pdf,https://deliveroo.co.uk/menu/birmingham/birmingham-city-centre/pho-birmingham,deliveroo,B2 4BQ,43,,
+Pizza Express,Birmingham - Bullring,pizza_express,https://mobile-pay.pizzaexpress.com/birmingham-bullring-shopping-centre/restaurant-menu/main-menu,https://deliveroo.co.uk/menu/birmingham/bullring/3225-pizzaexpress-birmingham-bullring,deliveroo,B5 4BF,343,pizza_express_menu_snapshot.csv,deliveroo_pizza_express_snapshot.csv
+Prezzo,Cambridge,prezzo,https://www.prezzo.co.uk/restaurants/cambridge/a-la-carte/,https://deliveroo.co.uk/menu/cambridge/university-of-cambridge/prezzo-cambridge,deliveroo,CB2 1UJ,96,,
+Rosa's Thai,London - Islington,rosas_thai,https://rosasthai.com/menus,https://www.ubereats.com/gb/store/rosas-thai-islington/eWs49JFtXyymCktZVnXtRA?diningMode=DELIVERY,ubereats,N1 0QX,40,,
+Zizzi,London - Bankside,zizzi,https://www.zizzi.co.uk/italian-restaurants/greater-london/london/bankside/menus,https://deliveroo.co.uk/menu/london/bankside/zizzi-bankside,deliveroo,SE1 9HA,134,,
+Wagamama,Brighton,wagamama,https://takeout.wagamama.com/TimeSlotSelection?storeId=22&orderType=ClickAndCollect,https://deliveroo.co.uk/menu/brighton/brighton-centre/wagamama-brighton,deliveroo,BN1 4AJ,173,,

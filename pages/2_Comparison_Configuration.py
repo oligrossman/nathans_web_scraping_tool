@@ -52,7 +52,7 @@ st.caption(
 init_db()
 
 # Competitors feed the "limit to companies" option on custom markets.
-history_path = analytics.DEFAULT_HISTORY_PATH
+history_path = analytics.DEFAULT_ALL_COMPANY_PRICES_PATH
 if history_path.exists():
     competitors = analytics.competitor_sources(analytics.load_history(history_path))
 else:
@@ -65,8 +65,9 @@ st.subheader("Dish mappings")
 
 if not DEFAULT_DB_PATH.exists() or get_resolved_mappings().empty:
     st.warning(
-        "No dish mappings found. Run `python -m scripts.enrich_menus` "
-        "(requires `OPENAI_API_KEY`) to classify menu items offline."
+        "No dish mappings found. Run **Update price history** then **Run enrichment** "
+        "on the **Data** page, or run `python -m scripts.enrich_menus` "
+        "(requires `OPENAI_API_KEY`)."
     )
 else:
     mappings = get_resolved_mappings()

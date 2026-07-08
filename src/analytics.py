@@ -16,14 +16,15 @@ from .branding import LEGACY_OWN_BRAND, OWN_BRAND
 from .enrichment.identity import make_dish_id
 from .enrichment.schema import GroupingDimension, MarketDefinition, UNMAPPED_LABEL
 from .enrichment.store import DEFAULT_DB_PATH, get_resolved_mappings, init_db
+from .history_archive import ALL_COMPANY_PRICES_PATH
 from .synthetic import BUCKETS, MARKET_LABEL, TOTAL_LABEL
 
-DEFAULT_HISTORY_PATH = Path(__file__).resolve().parent.parent / "data" / "price_history.csv"
+DEFAULT_ALL_COMPANY_PRICES_PATH = ALL_COMPANY_PRICES_PATH
 DEFAULT_WEIGHTS_PATH = Path(__file__).resolve().parent.parent / "data" / "company_weights.csv"
 
 
-def load_history(path: str | Path = DEFAULT_HISTORY_PATH) -> pd.DataFrame:
-    """Load the tidy price history with ``date`` parsed to datetime."""
+def load_history(path: str | Path = DEFAULT_ALL_COMPANY_PRICES_PATH) -> pd.DataFrame:
+    """Load the tidy all-company prices dataset with ``date`` parsed to datetime."""
     frame = pd.read_csv(path, parse_dates=["date"])
     frame["item"] = frame["item"].fillna("")
     # Keep in sync with branding renames (WagaNath → Wagamama).
@@ -206,7 +207,7 @@ def enrich_snapshot(
 ) -> pd.DataFrame:
     """Attach ``cuisine``/``dish_type`` to a snapshot frame keyed by (company, item).
 
-    Snapshot frames (collection vs delivery, high/low) use ``company`` rather than
+    Snapshot frames (restaurant vs delivery, high/low) use ``company`` rather than
     ``source``; this bridges them to the shared ``dish_id`` join in
     :func:`enriched_history` so they can be grouped by any dimension.
     """

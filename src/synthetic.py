@@ -69,7 +69,117 @@ CATEGORY_TO_BUCKET: dict[str, str] = {
     "Soft Drinks": "Drinks",
     "Pizza": "Mains",
     "Gluten-Free": "Mains",
+    # Banana Tree / Giggling Squid (K10)
+    "Small Plates": "Starters",
+    "Curries": "Mains",
+    "Noodles & Rice": "Mains",
+    "Chef's Specials": "Mains",
+    "Bao Buns": "Mains",
+    "Salads": "Mains",
+    "Dessert": "Desserts",
+    "Soft Drinks": "Drinks",
+    "Beers": "Drinks",
+    "Wine": "Drinks",
+    "Cocktails": "Drinks",
+    # Five Guys / Wagamama
+    "Burgers": "Mains",
+    "Beef Dogs": "Mains",
+    "Sandwiches": "Mains",
+    "Fries": "Sides",
+    "Milkshakes": "Drinks",
+    "Ramen": "Mains",
+    "Curry": "Mains",
+    "Teppan": "Mains",
+    "Donburi": "Mains",
+    "Salads & Sides": "Sides",
+    "Juices & Soft Drinks": "Drinks",
+    # Prezzo
+    "Antipasti": "Starters",
+    "Pasta": "Mains",
+    "Pizza": "Mains",
+    "Mains & Grill": "Mains",
+    "Dolci": "Desserts",
+    # Zizzi
+    "Pasta": "Mains",
+    "Pizza & Calzone": "Mains",
+    "Sides & Salads": "Sides",
+    "Desserts": "Desserts",
+    "Soft Drinks & Juices": "Drinks",
+    # Pho
+    "Starters & Sides": "Starters",
+    "Classics": "Mains",
+    "Noodles": "Mains",
+    "Rice": "Mains",
+    "Kids": "Mains",
+    "Beer & Cider": "Drinks",
+    "Wine & Sparkling": "Drinks",
+    "Cocktails": "Drinks",
+    "Tea & Coffee": "Drinks",
+    "Lemonade & Soft Drinks": "Drinks",
+    # Rosa's Thai
+    "Small Plates": "Starters",
+    "Curries": "Mains",
+    "Stir Fries": "Mains",
+    "Noodles": "Mains",
+    "Rice": "Mains",
+    "Salads": "Mains",
 }
+
+# Keyword fallbacks when a scraped category isn't in the map above. Checked in order;
+# anything still unmatched defaults to Mains so no menu item is silently dropped.
+_BUCKET_KEYWORDS: tuple[tuple[str, str], ...] = (
+    ("starter", "Starters"),
+    ("antipasti", "Starters"),
+    ("small plate", "Starters"),
+    ("aperitivo", "Starters"),
+    ("dough ball", "Starters"),
+    ("side", "Sides"),
+    ("fries", "Sides"),
+    ("drink", "Drinks"),
+    ("soft drink", "Drinks"),
+    ("beer", "Drinks"),
+    ("cider", "Drinks"),
+    ("wine", "Drinks"),
+    ("cocktail", "Drinks"),
+    ("coffee", "Drinks"),
+    ("tea", "Drinks"),
+    ("milkshake", "Drinks"),
+    ("juice", "Drinks"),
+    ("lemonade", "Drinks"),
+    ("dessert", "Desserts"),
+    ("dolci", "Desserts"),
+    ("pizza", "Mains"),
+    ("pasta", "Mains"),
+    ("burger", "Mains"),
+    ("ramen", "Mains"),
+    ("curry", "Mains"),
+    ("noodle", "Mains"),
+    ("calzone", "Mains"),
+    ("al forno", "Mains"),
+    ("grill", "Mains"),
+    ("main", "Mains"),
+)
+
+
+def resolve_bucket(category: object) -> str:
+    """Map a scraped menu category to one of the five board-level buckets.
+
+    Uses the explicit map first, then keyword heuristics, then defaults to Mains
+    so every priced item can enter ``all_company_prices.csv``.
+    """
+    if category is None or (isinstance(category, float) and pd.isna(category)):
+        return "Mains"
+    cat = str(category).strip()
+    if not cat:
+        return "Mains"
+    mapped = CATEGORY_TO_BUCKET.get(cat)
+    if mapped is not None:
+        return mapped
+    lower = cat.lower()
+    for keyword, bucket in _BUCKET_KEYWORDS:
+        if keyword in lower:
+            return bucket
+    return "Mains"
 
 # Nominal annual price growth per bucket - the headline market trend that the
 # back-cast reverses. Drinks and Mains inflate fastest; Sides slowest.
@@ -112,6 +222,14 @@ WAGAMAMA_ANNUAL_GROWTH: dict[str, float] = {
 
 _QUARTERLY_NOISE_SD = 0.012  # Per-quarter idiosyncratic wobble.
 _ITEM_GROWTH_SPREAD = 0.015  # Per-item deviation from its bucket's growth.
+
+# Column contract for the tidy history frame (also used for empty results).
+HISTORY_COLUMNS = ["date", "source", "item", "dish_id", "bucket", "price"]
+
+
+def _empty_history() -> pd.DataFrame:
+    """An empty history frame with the canonical columns."""
+    return pd.DataFrame(columns=HISTORY_COLUMNS)
 
 
 def quarter_end_dates(n: int, end: date | None = None) -> list[date]:
@@ -190,6 +308,8 @@ def _generate_for_menu(
         )
         for item, bucket, price in menu
     ]
+    if not frames:
+        return _empty_history()
     return pd.concat(frames, ignore_index=True)
 
 
@@ -203,8 +323,10 @@ def _menu_df_to_history(
 ) -> pd.DataFrame:
     growth = growth_by_bucket or BUCKET_ANNUAL_GROWTH
     priced = menu_df.dropna(subset=["price"]).copy()
-    priced["bucket"] = priced["category"].map(CATEGORY_TO_BUCKET)
-    priced = priced.dropna(subset=["bucket"])
+    if "category" in priced.columns:
+        priced["bucket"] = priced["category"].map(resolve_bucket)
+    else:
+        priced["bucket"] = "Mains"
     menu = list(zip(priced["name"], priced["bucket"], priced["price"].astype(float)))
     return _generate_for_menu(
         source=source,
@@ -216,20 +338,36 @@ def _menu_df_to_history(
 
 
 def generate_price_history(
-    menu_df: pd.DataFrame,
+    menu_dfs: dict[str, pd.DataFrame] | None = None,
     *,
+    menu_df: pd.DataFrame | None = None,
     pizza_express_df: pd.DataFrame | None = None,
     seed: int = SEED,
 ) -> pd.DataFrame:
     """Generate the tidy price-history dataset for competitor companies + Wagamama.
 
-    ``menu_df`` anchors Nando's. Optional ``pizza_express_df`` anchors Pizza Express.
+    Pass ``menu_dfs`` as ``{company_name: menu_dataframe}`` for multiple competitors.
+    Legacy kwargs ``menu_df`` / ``pizza_express_df`` are still accepted.
     Market is derived at load time from ``company_weights.csv``.
     """
+    if menu_dfs is None:
+        menu_dfs = {}
+        if menu_df is not None and not menu_df.empty:
+            menu_dfs["Nando's"] = menu_df
+        if pizza_express_df is not None and not pizza_express_df.empty:
+            menu_dfs["Pizza Express"] = pizza_express_df
+
     rng = np.random.default_rng(seed)
     dates = quarter_end_dates(N_QUARTERS)
 
-    nandos = _menu_df_to_history("Nando's", menu_df, dates=dates, rng=rng)
+    frames: list[pd.DataFrame] = []
+    for source, df in menu_dfs.items():
+        if df is None or df.empty:
+            continue
+        rows = _menu_df_to_history(source, df, dates=dates, rng=rng)
+        if not rows.empty:
+            frames.append(rows)
+
     own_brand = _generate_for_menu(
         source=OWN_BRAND,
         menu=list(WAGAMAMA_MENU),
@@ -237,12 +375,7 @@ def generate_price_history(
         dates=dates,
         rng=rng,
     )
-
-    frames = [nandos, own_brand]
-    if pizza_express_df is not None and not pizza_express_df.empty:
-        frames.append(
-            _menu_df_to_history("Pizza Express", pizza_express_df, dates=dates, rng=rng)
-        )
+    frames.append(own_brand)
 
     history = pd.concat(frames, ignore_index=True)
     return history.sort_values(["source", "bucket", "item", "date"]).reset_index(

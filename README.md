@@ -4,10 +4,10 @@ A Streamlit platform for Wagamama's competitive pricing team. It scrapes
 competitor food-chain menus (item names + prices) using Selenium, previews
 results in a table, and lets you download them as CSVs. A dedicated **Price
 Analytics** page benchmarks Wagamama against the market with synthetic
-historical trends and real collection-vs-delivery comparisons.
+historical trends and real restaurant-vs-delivery comparisons.
 
 The first supported competitor sites are **Nando's** (Camden) and **Pizza
-Express** (Birmingham Bullring), each with collection and Deliveroo delivery
+Express** (Birmingham Bullring), each with restaurant-website and Deliveroo delivery
 scrapers. The architecture is built so additional chains can be added by
 writing a scraper class and registering it.
 
@@ -50,8 +50,34 @@ and **Price Analysis** (analytics dashboard):
 3. Click **Scrape selected** — the chosen sites are scraped concurrently.
 4. Expand each result to review the table and **Download CSV**.
 
-Each successful scrape is cached to `data/scrapes/` and its time recorded in
-`data/scrape_log.json`, so you can see what is already fresh before re-running.
+Each successful scrape writes its canonical snapshot in `data/`
+(`<slug>_menu_snapshot.csv` for restaurant menus, `<platform>_<slug>_snapshot.csv`
+for delivery) — the *latest* menu used by the delivery/high-low comparisons — and
+also files a dated copy under `data/scrapes/<YYYY-MM-DD>/`. Scrape times are
+recorded in `data/scrape_log.json`.
+
+Then, in the **Build the analytics dataset** section on the same page:
+
+5. **Run enrichment** — classifies dishes in `data/all_company_prices.csv` that are
+   not yet in `data/menu_mappings.db` (needs `OPENAI_API_KEY`; only unmapped
+   dishes are sent, so there's no duplicate cost).
+6. **Update price history** — stacks the frozen `prior` base with every dated
+   archive into `data/all_company_prices.csv` (the dashboard's source of truth).
+7. Open **Price Analysis** to explore the refreshed data.
+
+### How price history accumulates
+
+`data/all_company_prices.csv` is composed from two things:
+
+- `data/scrapes/prior/price_history.csv` — the frozen historical base (the
+  synthetic 5-year backcast). Seeded automatically the first time from whatever
+  `all_company_prices.csv` already exists.
+- `data/scrapes/<YYYY-MM-DD>/*.csv` — one dated snapshot per scrape. Each becomes
+  a real observation (per item, per date) when you click **Update price history**.
+
+Delete a dated folder (there's a **Manage dated archives** panel on the Data page)
+and the next update drops those observations — an easy way to prune bad scrapes.
+Only restaurant menus feed history; Wagamama stays synthetic.
 
 ## Adding a new chain
 
@@ -81,7 +107,7 @@ buckets). The page shows five views:
   Pick which market benchmark(s) to compare against — **Market whole** (a
   restaurant-count-weighted average of all selected competitors) and any custom
   markets. All market benchmarks exclude Wagamama dishes.
-- **Collection vs delivery (real data)** — click-through drilldown with
+- **Restaurant vs delivery (real data)** — click-through drilldown with
   **← Back**, breadcrumb, or chart click: Company → Bucket → Item.
 - **High vs low** — lowest, average and highest menu prices with the same
   drilldown pattern (item level shows each price within its bucket range).
@@ -95,7 +121,7 @@ market benchmarks (e.g. Asian noodle dishes, all pizzas).
   Each dish is keyed by a **`dish_id`** unique per `(restaurant, item)` — so the
   same name at two chains (e.g. "Mac & Cheese") maps and overrides independently.
   The id is deterministic (`src/enrichment/identity.py`) and materialised into
-  both `data/price_history.csv` and `data/menu_mappings.db`, which is how
+  both `data/all_company_prices.csv` and `data/menu_mappings.db`, which is how
   mappings join back to each restaurant and its price history.
 
   Offline enrichment (API key never exposed in the app):
@@ -115,7 +141,7 @@ market benchmarks (e.g. Asian noodle dishes, all pizzas).
   schema (preserves existing classifications, no re-spend):
 
   ```bash
-  python -m scripts.generate_data      # rewrite price_history.csv with dish_id
+  python -m scripts.generate_data      # rewrite all_company_prices.csv with dish_id
   python -m scripts.migrate_dish_ids   # backfill mappings into the new schema
   ```
 
@@ -124,18 +150,23 @@ Charts use Wagamama brand red (`#D11317`) for our brand and Deliveroo teal
 
 ### Generating / refreshing the data
 
-The datasets in `data/` are committed so the page works out of the box. To
-regenerate them (deterministic - uses a fixed random seed):
+The datasets in `data/` are committed so the page works out of the box. You can
+rebuild them from the **Data** page buttons, or from the CLI (deterministic -
+uses a fixed random seed):
 
 ```bash
-python -m scripts.generate_data            # reuse the cached menu snapshot
+python -m scripts.scrape_all               # scrape every chain into snapshots
+python -m scripts.generate_data            # scrape + regenerate synthetic prior base + update
 python -m scripts.generate_data --rescrape # force a fresh scrape first
+python -m scripts.generate_data --skip-scrape # regenerate base + update from snapshots only
 ```
 
-This writes `data/nandos_menu_snapshot.csv`, `data/pizza_express_menu_snapshot.csv`,
-`data/deliveroo_nandos_snapshot.csv`, `data/deliveroo_pizza_express_snapshot.csv`,
-`data/price_history.csv` (Nando's + Pizza Express + Wagamama), and reads
-`data/company_weights.csv` for the Market benchmark weights.
+`generate_data` regenerates the synthetic **prior base**
+(`data/scrapes/prior/price_history.csv`) from the current snapshots, then
+recomposes `data/all_company_prices.csv` from that base plus any dated archives. It
+reads `data/company_weights.csv` for the Market benchmark weights. For a
+day-to-day append (no synthetic regeneration), use **Update price history** on the
+Data page.
 
 Brand constants (colours, copy, own-brand label) live in `src/branding.py`.
 
