@@ -27,6 +27,10 @@ app.py (Streamlit UI)
 - Python 3.10+
 - Google Chrome installed locally (Selenium 4's built-in Selenium Manager
   resolves the matching driver automatically; no manual chromedriver setup).
+- On Streamlit Community Cloud, `packages.txt` installs Debian's `chromium`
+  and `chromium-driver`. Without those packages the downloaded chromedriver
+  exits with status 127 and every scrape fails. Reboot the app after adding
+  the file so apt installs them.
 
 ## Setup
 

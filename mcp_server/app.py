@@ -7,6 +7,7 @@ stays open while every other path requires ``MCP_AUTH_TOKEN``.
 
 from __future__ import annotations
 
+import logging
 import os
 from typing import Any
 
@@ -19,6 +20,8 @@ from mcp_server.auth import BearerAuthMiddleware, load_auth_token
 from mcp_server.serialize import DEFAULT_LIMIT, HARD_MAX
 from src.enrichment.schema import GroupingDimension
 from src.synthetic import MARKET_LABEL
+
+logger = logging.getLogger(__name__)
 
 SERVER_INSTRUCTIONS = (
     "Read-only Wagamama menu pricing intelligence. "
@@ -184,13 +187,35 @@ def create_app(*, token: str | None = None, host: str | None = None):
     return BearerAuthMiddleware(inner, token=token)
 
 
+def listen_port() -> int:
+    """Return the TCP port to bind.
+
+    ``MCP_PORT`` is an optional local override and must be digits, for example
+    ``8000``. Render sets its own variable, ``PORT``, to a number such as
+    ``10000``. A non-numeric ``MCP_PORT`` is skipped so that value is used.
+    """
+    mcp_port = os.environ.get("MCP_PORT", "").strip()
+    if mcp_port:
+        if mcp_port.isdigit():
+            return int(mcp_port)
+        logger.warning(
+            "MCP_PORT=%r is not an integer, so it is ignored. "
+            "Delete it on Render; the platform's PORT value is used instead.",
+            mcp_port,
+        )
+    platform_port = os.environ.get("PORT", "").strip()
+    if platform_port.isdigit():
+        return int(platform_port)
+    return 8000
+
+
 def main() -> None:
     """CLI entrypoint: ``python -m mcp_server``."""
     import uvicorn
 
     token = load_auth_token()
     host = os.environ.get("MCP_HOST", "127.0.0.1")
-    port = int(os.environ.get("MCP_PORT", "8000"))
+    port = listen_port()
     app = create_app(token=token, host=host)
     uvicorn.run(app, host=host, port=port, log_level="info")
 
