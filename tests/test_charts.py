@@ -122,6 +122,43 @@ def test_long_axis_name_stays_narrow_and_hover_keeps_it() -> None:
     assert "%{customdata[0]}" in lowest.hovertemplate
 
 
+def test_item_row_labels_the_gap_versus_the_group_average() -> None:
+    """The margin figure sits past the orange high dot, so the chart must say it is versus the average."""
+    frame = pd.DataFrame(
+        {
+            "item": ["Yasai chilli men", "Chicken raisukaree"],
+            "low": [6.0, 6.0],
+            "average": [16.5, 11.0],
+            "high": [19.0, 19.0],
+            "annotation": ["+£2.50 vs avg", "-£3.00 vs avg"],
+            "is_benchmark": [True, False],
+        }
+    )
+
+    fig = high_low_dumbbell(
+        frame,
+        "item",
+        title="Mains: item prices within course range",
+        annotate_col="annotation",
+        highlight_col="is_benchmark",
+        mid_label="Item price",
+        subtitle="Number on the right = this item's price minus the course average",
+    )
+
+    assert fig.layout.title.text == "Mains: item prices within course range"
+    assert (
+        fig.layout.title.subtitle.text
+        == "Number on the right = this item's price minus the course average"
+    )
+    names = [trace.name for trace in fig.data]
+    assert "Item price" in names
+    assert "Average" not in names
+    labels = next(trace for trace in fig.data if trace.mode == "text")
+    # The frame is drawn bottom-up, so the first row ends up last.
+    assert list(labels.text) == ["<i>-£3.00 vs avg</i>", "<i>+£2.50 vs avg</i>"]
+    assert all(x > 19.0 for x in labels.x)
+
+
 def test_linear_fit_recovers_a_known_line() -> None:
     intercept, slope = linear_fit([1, 2, 3], [2, 4, 6])
     assert intercept == pytest.approx(0.0)

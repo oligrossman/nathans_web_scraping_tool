@@ -375,6 +375,21 @@ def _spread_annotation(frame, by_abs: bool):
     return pct.map(lambda v: f"{v:.1f}%")
 
 
+def _versus_average_annotation(frame, by_abs: bool):
+    """Item price minus the group average.
+
+    The figure is drawn in the margin past the orange (highest) dot, so the
+    words have to say what it measures. A bare ``+£2.50`` reads as the high
+    price.
+    """
+    signed = (
+        frame["diff_abs"].map(_signed_pounds)
+        if by_abs
+        else frame["diff_pct"].map(_signed_pct)
+    )
+    return signed.map(lambda text: f"{text} vs avg")
+
+
 def _apply_drill_filter(frame, company: str | None, mid: str | None, dim: str):
     """Subset an item-level frame to the current (company, dimension) selection."""
     out = frame
@@ -792,12 +807,14 @@ with tab_delivery:
 with tab_high_low:
     st.caption(
         "Lowest, average and highest menu prices from restaurant-menu snapshots, with "
-        f"{OWN_BRAND} always included as a benchmark. At item level the average "
-        f"dot shows each item's price within its {dim_label.lower()} min–max "
-        f"range. The curve plots every 5th percentile (20 points) so a long menu "
-        f"and {OWN_BRAND}'s shorter one share the same axis. Filter by company "
-        f"and/or {dim_label.lower()} below — the metrics and both charts follow "
-        "your selection."
+        f"{OWN_BRAND} always included as a benchmark. At item level the diamond "
+        f"(red star for {OWN_BRAND}) is that item's own price, between the cheapest "
+        f"(teal) and dearest (orange) in the {dim_label.lower()} — those two ends "
+        f"are the same on every row. The number to the right of each row is that "
+        f"item's price minus the {dim_label.lower()} average. The curve plots every "
+        f"5th percentile (20 points) so a long menu and {OWN_BRAND}'s shorter one "
+        f"share the same axis. Filter by company and/or {dim_label.lower()} below — "
+        "the metrics and both charts follow your selection."
     )
 
     menu_ready = any(
@@ -864,8 +881,9 @@ with tab_high_low:
             by_abs = not st.toggle(
                 "Show differences as %",
                 key="highlow_pct",
-                help="Off: absolute £ difference. On: % difference. Drives both "
-                "the labels and the sort order.",
+                help="Off: absolute £ difference. On: % difference. At item level "
+                f"the number is that item's price minus the {dim_label.lower()} "
+                "average. Drives both the labels and the sort order.",
             )
             spread_sort = "spread" if by_abs else "spread_pct"
             highlight_col: str | None = None
@@ -880,10 +898,8 @@ with tab_high_low:
                         * 100.0
                     ).round(1)
                     rank_col = "diff_abs" if by_abs else "diff_pct"
-                    drill_frame["annotation"] = (
-                        drill_frame["diff_abs"].map(_signed_pounds)
-                        if by_abs
-                        else drill_frame["diff_pct"].map(_signed_pct)
+                    drill_frame["annotation"] = _versus_average_annotation(
+                        drill_frame, by_abs
                     )
                     drill_frame = (
                         drill_frame.assign(_rank=drill_frame[rank_col].abs())
@@ -946,6 +962,11 @@ with tab_high_low:
                 pd.concat(curve_parts, ignore_index=True) if curve_parts else view
             )
 
+            # Item rows: the margin number is the gap versus the group average,
+            # drawn past the orange dot. Say so on the chart, and call the
+            # middle marker the item's price so "Average" is not a second,
+            # conflicting reading of that number.
+            item_level = mid is not None
             left, right = st.columns(2)
             with left:
                 if not drill_frame.empty:
@@ -956,6 +977,13 @@ with tab_high_low:
                             title=title,
                             annotate_col="annotation",
                             highlight_col=highlight_col,
+                            mid_label="Item price" if item_level else None,
+                            subtitle=(
+                                "Number on the right = this item's price minus "
+                                f"the {dim_label.lower()} average"
+                                if item_level
+                                else None
+                            ),
                         ),
                         use_container_width=True,
                         key="highlow_drill",

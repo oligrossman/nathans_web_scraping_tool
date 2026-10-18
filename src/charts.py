@@ -809,6 +809,7 @@ def drilldown_dumbbell(
     annotate_col: str | None = None,
     highlight_col: str | None = None,
     highlight_label: str = OWN_BRAND,
+    subtitle: str | None = None,
 ) -> go.Figure:
     """Generic dumbbell chart with optional middle marker (e.g. average price).
 
@@ -818,8 +819,10 @@ def drilldown_dumbbell(
     duplicate labels never collapse into a single slot. Axis names are capped at
     one short line so a long dish name cannot steal the plot width; the full
     name stays on the hover. ``annotate_col`` names a column of ready-made text
-    labels (e.g. ``"+£1.20"``) drawn to the right of each dumbbell.
-    ``highlight_col`` (a bool column) splits the middle marker
+    labels (e.g. ``"+£1.20 vs avg"``) drawn in the margin past the right-hand
+    dot, where they cannot collide with the markers. ``subtitle`` is a second
+    line under the title, used when that margin label needs a sentence to say
+    what it measures. ``highlight_col`` (a bool column) splits the middle marker
     into a second, brand-red series so a benchmark like Wagamama reads
     separately in the legend, and bolds that row's axis label.
     """
@@ -921,7 +924,11 @@ def drilldown_dumbbell(
                 cliponaxis=False,
             )
         )
-        fig.update_xaxes(range=[max(0.0, lo - 0.05 * span), hi + 0.34 * span])
+        # "+£1.20" fits in the old pad. "vs avg" needs more of the axis or the
+        # words clip against the edge of a half-width chart.
+        longest = max(len(str(text)) for text in plot[annotate_col])
+        right_pad = 0.34 if longest <= 8 else 0.58
+        fig.update_xaxes(range=[max(0.0, lo - 0.05 * span), hi + right_pad * span])
 
     # Short ticks keep automargin from handing the width to one long name.
     # The benchmark row (e.g. Wagamama) stays bold and brand red.
@@ -941,9 +948,16 @@ def drilldown_dumbbell(
         range=[-0.5, len(plot) - 0.5],
     )
     height = max(400, 40 * len(plot) + 120)
+    title_layout: str | dict = title
+    if subtitle:
+        title_layout = {
+            "text": title,
+            "subtitle": {"text": subtitle, "font": {"size": 13, "color": "#4B5563"}},
+        }
+        height += 28
     fig.update_layout(
         template=_TEMPLATE,
-        title=title,
+        title=title_layout,
         xaxis_tickprefix="£",
         legend_title_text="",
         height=height,
@@ -960,8 +974,16 @@ def high_low_dumbbell(
     title: str,
     annotate_col: str | None = None,
     highlight_col: str | None = None,
+    mid_label: str | None = None,
+    subtitle: str | None = None,
 ) -> go.Figure:
-    """Dumbbell chart for low / average / high price spread."""
+    """Dumbbell chart for low / average / high price spread.
+
+    ``mid_label`` renames the middle marker. Company and course rows use
+    "Average" (the mean price). Item rows pass "Item price", because that
+    marker is the dish itself and the margin label is its gap versus the
+    group average.
+    """
     return drilldown_dumbbell(
         frame,
         label_col,
@@ -971,9 +993,10 @@ def high_low_dumbbell(
         mid_col="average",
         left_label=_HIGH_LOW_LABELS["low"],
         right_label=_HIGH_LOW_LABELS["high"],
-        mid_label=_HIGH_LOW_LABELS["average"],
+        mid_label=mid_label or _HIGH_LOW_LABELS["average"],
         annotate_col=annotate_col,
         highlight_col=highlight_col,
+        subtitle=subtitle,
     )
 
 

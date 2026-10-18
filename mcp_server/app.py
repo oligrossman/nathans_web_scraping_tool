@@ -168,10 +168,19 @@ def build_mcp() -> MCPServer:
     return mcp
 
 
-def create_app(*, token: str | None = None):
-    """Build the streamable-HTTP Starlette app wrapped in bearer auth."""
+def create_app(*, token: str | None = None, host: str | None = None):
+    """Build the streamable-HTTP Starlette app wrapped in bearer auth.
+
+    ``host`` is the address the process binds to. It defaults to ``MCP_HOST``
+    (``127.0.0.1`` when unset). The MCP SDK turns on DNS-rebinding protection
+    only for loopback addresses, and that check allows ``Host: localhost`` /
+    ``127.0.0.1`` only. A public deploy must set ``MCP_HOST=0.0.0.0`` or every
+    client request is rejected with ``Invalid Host header``.
+    """
+    if host is None:
+        host = os.environ.get("MCP_HOST", "127.0.0.1")
     mcp = build_mcp()
-    inner = mcp.streamable_http_app()
+    inner = mcp.streamable_http_app(host=host)
     return BearerAuthMiddleware(inner, token=token)
 
 
@@ -182,7 +191,7 @@ def main() -> None:
     token = load_auth_token()
     host = os.environ.get("MCP_HOST", "127.0.0.1")
     port = int(os.environ.get("MCP_PORT", "8000"))
-    app = create_app(token=token)
+    app = create_app(token=token, host=host)
     uvicorn.run(app, host=host, port=port, log_level="info")
 
 
