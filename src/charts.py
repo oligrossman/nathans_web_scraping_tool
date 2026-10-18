@@ -7,8 +7,13 @@ Plotly ``Figure``. No Streamlit here, so figures can be reused or exported
 
 from __future__ import annotations
 
+import html
+
+import numpy as np
+import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+import plotly.io as pio
 
 from . import analytics
 from .branding import DELIVEROO_TEAL, OWN_BRAND, SOURCE_COLOURS, WAGAMAMA_RED
@@ -29,24 +34,57 @@ _HIGH_COLOUR = "#FFA15A"  # pastel orange
 _AVG_COLOUR = "#111827"  # near-black
 _CHANNEL_LABELS = {"restaurant": "Restaurant", "delivery": "Delivery (Deliveroo)"}
 _HIGH_LOW_LABELS = {"low": "Lowest", "average": "Average", "high": "Highest"}
+# Y-axis names live in the margin. Plotly grows that margin until the longest
+# tick fits, so one scraped description can leave a sliver for the range.
+# One short line stays recognisable; the full name is on the hover.
+_AXIS_LABEL_CHARS = 28
 
 
-def _source_colour_map(sources: list[str]) -> dict[str, str]:
-    """Colour map keeping Wagamama brand-red while others use the pastel palette.
+def _date_label(value: object) -> str:
+    """Calendar label, matching the trend charts (``Apr 2026``, ``8 Jul 2026``)."""
+    stamp = pd.Timestamp(value)
+    if stamp.day == 1:
+        return f"{stamp:%b %Y}"
+    return f"{stamp.day} {stamp:%b %Y}"
 
-    Wagamama is always the hero red in every chart; the remaining sources cycle
-    through the default (pastel) qualitative palette so competitors and markets
-    read as a soft, distinct set rather than the fixed brand colours.
+
+def comparison_colour_map(
+    history: pd.DataFrame, sources: list[str]
+) -> dict[str, str]:
+    """One colour per source, shared by the trend line and the bars beside it.
+
+    Named brands keep the colours in ``SOURCE_COLOURS``. Every other source
+    takes the next ``plotly_white`` colour, in the order the trend first meets
+    them (earliest date, then name). Plotly itself spends one palette slot per
+    named brand before it colours the rest; matching that here means a company
+    stays the same colour when it moves from the line to the bars, even though
+    the two frames list sources in a different order.
     """
-    palette = [c for c in px.colors.qualitative.Plotly if c.lower() != WAGAMAMA_RED.lower()]
+    if not sources:
+        return {}
+    palette = list(pio.templates[_TEMPLATE].layout.colorway or [])
+    frame = history.loc[history["source"].isin(sources), ["source", "date"]]
+    if frame.empty:
+        order = list(sources)
+    else:
+        first_seen = (
+            frame.groupby("source", as_index=False)["date"]
+            .min()
+            .sort_values(["date", "source"], kind="mergesort")
+        )
+        order = first_seen["source"].tolist()
+        order.extend(source for source in sources if source not in set(order))
+
     mapping: dict[str, str] = {}
-    i = 0
-    for source in sources:
-        if source == OWN_BRAND:
-            mapping[source] = WAGAMAMA_RED
-        else:
-            mapping[source] = palette[i % len(palette)]
-            i += 1
+    cursor = len(_SOURCE_COLOURS)
+    for source in order:
+        named = _SOURCE_COLOURS.get(source)
+        if named is not None:
+            mapping[source] = named
+            continue
+        if palette:
+            mapping[source] = palette[cursor % len(palette)]
+            cursor += 1
     return mapping
 
 
@@ -57,6 +95,63 @@ def _competitor_label(sources: list[str]) -> str:
     """
     others = [s for s in sources if s != OWN_BRAND and not s.startswith("Market")]
     return ", ".join(others) if others else "competitors"
+
+
+def _observation_labels(frame: pd.DataFrame) -> tuple[pd.DataFrame, list[str]]:
+    """Turn timestamps into date labels, kept in calendar order.
+
+    Passing a datetime to Plotly makes the axis a clock. Midnight is then drawn
+    as a time, and a short series can collapse to a single timestamp even when
+    several months of prices are present. Labels such as ``Mar 2025`` are
+    categories, so each workbook date stays visible.
+    """
+    if frame.empty or "date" not in frame.columns:
+        return frame, []
+    out = frame.copy()
+    out["_stamp"] = pd.to_datetime(out["date"])
+    out = out.sort_values("_stamp")
+    out["date"] = [
+        f"{stamp:%b %Y}" if stamp.day == 1 else f"{stamp.day} {stamp:%b %Y}"
+        for stamp in out["_stamp"]
+    ]
+    order = (
+        out.drop_duplicates("_stamp")
+        .sort_values("_stamp")["date"]
+        .tolist()
+    )
+    return out.drop(columns="_stamp"), order
+
+
+def _pin_date_axis(fig: go.Figure, order: list[str]) -> go.Figure:
+    """Draw one tick per observation date, in calendar order.
+
+    Labels such as ``Mar 2025`` are still date-shaped. Plotly will parse them
+    back into a clock, then a narrow chart keeps a single tick at the latest
+    month. Positions are plain numbers so that cannot happen; the tick text is
+    the date.
+    """
+    if not order:
+        return fig
+    index = {label: i for i, label in enumerate(order)}
+    for trace in fig.data:
+        raw_x = getattr(trace, "x", None)
+        if raw_x is None:
+            continue
+        labels = [str(value) for value in list(raw_x)]
+        trace.customdata = labels
+        trace.x = [index.get(label, label) for label in labels]
+        template = getattr(trace, "hovertemplate", None)
+        if isinstance(template, str) and "%{customdata}" not in template:
+            trace.hovertemplate = template.replace("%{x}", "%{customdata}")
+    fig.update_xaxes(
+        type="linear",
+        tickmode="array",
+        tickvals=list(range(len(order))),
+        ticktext=list(order),
+        range=[-0.5, len(order) - 0.5],
+        tickangle=-40,
+    )
+    return fig
 
 
 def _style_total_trace(fig: go.Figure, color_col: str = "bucket") -> go.Figure:
@@ -72,6 +167,7 @@ def _style_total_trace(fig: go.Figure, color_col: str = "bucket") -> go.Figure:
 def individual_items_line(history, items: list[str]) -> go.Figure:
     """Line chart of selected individual items (Nando's) over time."""
     frame = history[(history["source"] == "Nando's") & (history["item"].isin(items))]
+    frame, date_order = _observation_labels(frame)
     fig = px.line(
         frame,
         x="date",
@@ -79,11 +175,12 @@ def individual_items_line(history, items: list[str]) -> go.Figure:
         color="item",
         markers=True,
         template=_TEMPLATE,
-        labels={"price": "Price (GBP)", "date": "Quarter", "item": "Item"},
+        labels={"price": "Price (GBP)", "date": "Date", "item": "Item"},
         title="Individual item price trends - Nando's",
+        category_orders={"date": date_order},
     )
     fig.update_layout(yaxis_tickprefix="£", legend_title_text="")
-    return fig
+    return _pin_date_axis(fig, date_order)
 
 
 def total_line(history, source: str = "Nando's", *, indexed: bool = False) -> go.Figure:
@@ -95,18 +192,20 @@ def total_line(history, source: str = "Nando's", *, indexed: bool = False) -> go
         y, y_label, prefix, suffix = "index", "Price index (Q1 = 100)", "", " (indexed)"
     else:
         y, y_label, prefix, suffix = "price", "Avg price (GBP)", "£", ""
+    totals, date_order = _observation_labels(totals)
     fig = px.line(
         totals,
         x="date",
         y=y,
         markers=True,
         template=_TEMPLATE,
-        labels={y: y_label, "date": "Quarter"},
+        labels={y: y_label, "date": "Date"},
         title=f"Total average menu price{suffix} - {source}",
+        category_orders={"date": date_order},
     )
     fig.update_traces(line=dict(color="#111827", width=3), marker=dict(size=8, symbol="diamond"))
     fig.update_layout(yaxis_tickprefix=prefix, showlegend=False)
-    return fig
+    return _pin_date_axis(fig, date_order)
 
 
 def _dimension_label(dimension: GroupingDimension | str) -> str:
@@ -145,6 +244,7 @@ def bucket_line(
     uniques = list(means["bucket"].unique())
     rest = sorted(b for b in uniques if b != TOTAL_LABEL)
     bucket_order = ([TOTAL_LABEL] if TOTAL_LABEL in uniques else []) + rest
+    means, date_order = _observation_labels(means)
     fig = px.line(
         means,
         x="date",
@@ -152,9 +252,9 @@ def bucket_line(
         color="bucket",
         markers=True,
         template=_TEMPLATE,
-        labels={y: y_label, "date": "Quarter", "bucket": dim_label},
+        labels={y: y_label, "date": "Date", "bucket": dim_label},
         title=f"Average price by {dim_label.lower()}{title} - {source}" if show_title else None,
-        category_orders={"bucket": bucket_order},
+        category_orders={"bucket": bucket_order, "date": date_order},
     )
     if include_total:
         _style_total_trace(fig)
@@ -166,7 +266,7 @@ def bucket_line(
         # No title means the default ~100px top margin is just dead space; shrink
         # it so the chart sits snugly under its (external) heading.
         fig.update_layout(margin=dict(t=30))
-    return fig
+    return _pin_date_axis(fig, date_order)
 
 
 def comparison_facets(
@@ -202,6 +302,11 @@ def comparison_facets(
         f"{_competitor_label(sources)} vs market (market excl. Wagamama)"
     )
     facet_col_wrap = 3
+    means, date_order = _observation_labels(means)
+    colour_map = comparison_colour_map(history, sources)
+    orders: dict[str, list[str]] = {"date": date_order, "source": list(colour_map)}
+    if bucket_order:
+        orders["bucket"] = bucket_order
     fig = px.line(
         means,
         x="date",
@@ -211,10 +316,10 @@ def comparison_facets(
         facet_col_wrap=facet_col_wrap,
         markers=True,
         template=_TEMPLATE,
-        color_discrete_map=_SOURCE_COLOURS,
-        labels={y: y_label, "date": "Quarter", "source": "Source"},
+        color_discrete_map=colour_map,
+        labels={y: y_label, "date": "Date", "source": "Source"},
         title=title,
-        category_orders={"bucket": bucket_order} if bucket_order else None,
+        category_orders=orders,
     )
     if as_pct_change:
         fig.update_yaxes(matches=None, ticksuffix="%")
@@ -229,7 +334,7 @@ def comparison_facets(
         height=max(420, 300 * n_rows),
         margin=dict(t=90),
     )
-    return fig
+    return _pin_date_axis(fig, date_order)
 
 
 def single_bucket_comparison(
@@ -259,6 +364,8 @@ def single_bucket_comparison(
         f"{bucket}: Wagamama vs {_competitor_label(sources)} "
         f"vs market (excl. Wagamama){suffix}"
     )
+    colour_map = comparison_colour_map(history, sources)
+    frame, date_order = _observation_labels(frame)
     fig = px.line(
         frame,
         x="date",
@@ -266,15 +373,16 @@ def single_bucket_comparison(
         color="source",
         markers=True,
         template=_TEMPLATE,
-        color_discrete_map=_SOURCE_COLOURS,
-        labels={y: y_label, "date": "Quarter", "source": "Source"},
+        color_discrete_map=colour_map,
+        labels={y: y_label, "date": "Date", "source": "Source"},
         title=title,
+        category_orders={"date": date_order, "source": list(colour_map)},
     )
     if as_pct_change:
         fig.update_layout(yaxis_ticksuffix="%", legend_title_text="")
     else:
         fig.update_layout(yaxis_tickprefix="£", legend_title_text="")
-    return fig
+    return _pin_date_axis(fig, date_order)
 
 
 def latest_price_bars(
@@ -282,31 +390,43 @@ def latest_price_bars(
     *,
     sources: list[str] | None = None,
     as_pct_change: bool = False,
+    use_latest: bool = True,
     dimension: GroupingDimension | str = GroupingDimension.BUCKET,
 ) -> go.Figure:
-    """Grouped bar of the latest average price by grouping dimension across sources.
+    """Grouped bar of price level by grouping dimension across sources.
 
-    With ``as_pct_change`` the bars show each series' total % change over the
-    whole window (compounded growth from first to latest quarter) instead of the
-    latest absolute price.
+    ``use_latest`` chooses each series' own most recent average (so a brand whose
+    history ends earlier still appears) or the average of those quarterly prices
+    over the whole window. With ``as_pct_change`` the bars show each series'
+    total % change from its first date to its own last date, and ``use_latest``
+    is ignored.
     """
     if sources is None:
         sources = [OWN_BRAND, "Nando's", MARKET_LABEL]
     dim_label = _dimension_label(dimension)
     if as_pct_change:
-        means = analytics.dimension_means(history, dimension=dimension)
-        means = analytics.add_pct_change(means, ["source", "bucket"])
-        latest = means[means["date"] == means["date"].max()]
+        latest = analytics.total_bucket_pct_change(history, dimension=dimension)
         y, y_label, title = "pct_change", "Total price change (%)", (
             f"Total price change by {dim_label.lower()} (full period)"
         )
-    else:
+    elif use_latest:
         latest = analytics.latest_bucket_prices(history, dimension=dimension)
-        y, y_label, title = "price", "Avg price (GBP)", (
-            f"Latest average price by {dim_label.lower()}"
+        y, y_label, title = "price", "Latest price (GBP)", (
+            f"Latest price by {dim_label.lower()}"
         )
-    latest = latest[latest["source"].isin(sources)]
-    # Pastel palette for competitors/markets, but Wagamama stays brand-red.
+    else:
+        latest = analytics.average_bucket_prices(history, dimension=dimension)
+        y, y_label, title = "price", "Average price (GBP)", (
+            f"Average price by {dim_label.lower()}"
+        )
+    latest = latest[latest["source"].isin(sources)].copy()
+    labels = {y: y_label, "bucket": dim_label, "source": "Source"}
+    hover_data = None
+    if "date" in latest.columns:
+        latest["as_of"] = latest["date"].map(_date_label)
+        labels["as_of"] = "As of"
+        hover_data = {"as_of": True}
+    colour_map = comparison_colour_map(history, sources)
     fig = px.bar(
         latest,
         x="bucket",
@@ -314,9 +434,11 @@ def latest_price_bars(
         color="source",
         barmode="group",
         template=_TEMPLATE,
-        color_discrete_map=_source_colour_map(sources),
-        labels={y: y_label, "bucket": dim_label, "source": "Source"},
+        color_discrete_map=colour_map,
+        hover_data=hover_data,
+        labels=labels,
         title=title,
+        category_orders={"source": list(colour_map)},
     )
     if as_pct_change:
         fig.update_layout(yaxis_ticksuffix="%", legend_title_text="")
@@ -333,7 +455,7 @@ def pct_change_heatmap(
     show_title: bool = True,
     dimension: GroupingDimension | str = GroupingDimension.BUCKET,
 ) -> go.Figure:
-    """Heatmap of quarter-on-quarter % price change by grouping dimension.
+    """Heatmap of the % price change between successive dates by grouping dimension.
 
     Set ``show_title=False`` to drop the per-chart title when a shared caption
     already describes the column.
@@ -347,21 +469,23 @@ def pct_change_heatmap(
     rest = sorted(b for b in pct.index if b != TOTAL_LABEL)
     ordered = ([TOTAL_LABEL] if TOTAL_LABEL in pct.index else []) + rest
     pct = pct.loc[ordered]
-    quarter_labels = [f"{d.year} Q{(d.month - 1) // 3 + 1}" for d in pct.columns]
+    # A calendar date, not a quarter bucket: two observations can fall in the
+    # same quarter (October and December 2022) and must stay separate.
+    date_labels = [f"{pd.Timestamp(d).day} {pd.Timestamp(d):%b %Y}" for d in pct.columns]
     y_labels = [f"<b>{b}</b>" if b == TOTAL_LABEL else str(b) for b in pct.index]
     dim_label = _dimension_label(dimension)
     fig = px.imshow(
         pct,
-        x=quarter_labels,
+        x=date_labels,
         y=y_labels,
         color_continuous_scale="RdBu_r",
         color_continuous_midpoint=0,
         aspect="auto",
         template=_TEMPLATE,
-        labels={"x": "Quarter", "y": dim_label, "color": "% change"},
-        title=f"Quarter-on-quarter % price change - {source}" if show_title else None,
+        labels={"x": "Date", "y": dim_label, "color": "% change"},
+        title=f"Price change since the previous date - {source}" if show_title else None,
     )
-    # Force a consistent diagonal, italic quarter axis. Plotly only auto-rotates
+    # Force a consistent diagonal, italic date axis. Plotly only auto-rotates
     # the labels when they'd collide, so short series would otherwise sit flat.
     fig.update_xaxes(tickangle=-45, tickfont=dict(style="italic"))
     if not show_title:
@@ -372,8 +496,28 @@ def pct_change_heatmap(
 # --- Restaurant vs delivery (real scraped snapshot) ------------------------
 
 
+def linear_fit(x, y) -> tuple[float, float] | None:
+    """Ordinary least-squares line ``y = intercept + slope * x``.
+
+    Returns ``None`` when there are fewer than two distinct x values, because a
+    line is not identified. ``numpy.polyfit`` returns the slope first.
+    """
+    xs = np.asarray(x, dtype=float)
+    ys = np.asarray(y, dtype=float)
+    ok = np.isfinite(xs) & np.isfinite(ys)
+    xs, ys = xs[ok], ys[ok]
+    if xs.size < 2 or np.unique(xs).size < 2:
+        return None
+    slope, intercept = np.polyfit(xs, ys, 1)
+    return float(intercept), float(slope)
+
+
 def delivery_scatter(
-    comparison, *, dim: str = "bucket", dim_label: str = "Bucket"
+    comparison,
+    *,
+    dim: str = "bucket",
+    dim_label: str = "Bucket",
+    benchmark=None,
 ) -> go.Figure:
     """Per-item scatter; points above the parity line carry a delivery premium.
 
@@ -381,6 +525,10 @@ def delivery_scatter(
     plain circle. A separate ``Wagamama`` legend entry — hidden until clicked —
     overlays a brand-red ring on the own-brand dots, so the chart stays clean by
     default but you can reveal exactly which points are Wagamama on demand.
+
+    ``benchmark`` is Wagamama's own restaurant/delivery pairs. When it is passed
+    (a competitor is on the chart, not Wagamama alone), its line of best fit is
+    drawn in brand red across the prices actually plotted.
     """
     palette = px.colors.qualitative.Plotly
     dim_values = sorted(str(v) for v in comparison[dim].dropna().unique())
@@ -446,6 +594,7 @@ def delivery_scatter(
             hoverinfo="skip",
         )
     )
+    _add_benchmark_fit(fig, benchmark, x_max=hi)
     fig.update_layout(
         template=_TEMPLATE,
         title="Per-item price: delivery vs restaurant (above dashed line = premium)",
@@ -456,6 +605,109 @@ def delivery_scatter(
         yaxis_tickprefix="£",
     )
     return fig
+
+
+def _fit_axis_label(text: str, *, width: int = _AXIS_LABEL_CHARS) -> str:
+    """Cut a category name so the plot, not the label, keeps the width.
+
+    ``width`` is a character budget for the tick. A longer name is cut on a
+    word boundary and marked with an ellipsis. The caller keeps the original
+    string for the hover.
+    """
+    clean = " ".join(str(text).split())
+    if len(clean) <= width:
+        return html.escape(clean, quote=False)
+    # Leave room for the ellipsis, and don't end mid-word when a space is near.
+    clipped = clean[: width - 1].rstrip()
+    if " " in clipped:
+        clipped = clipped.rsplit(" ", 1)[0]
+    clipped = clipped.rstrip(" -–—,;:/&")
+    if len(clipped) < width // 2:
+        clipped = clean[: width - 1].rstrip(" -–—,;:/&")
+    # Tick text can sit inside a colour span. Escape the dish name only.
+    return html.escape(clipped, quote=False) + "…"
+
+
+def _price_hover(series_name: str) -> str:
+    """Hover that leads with the full row name, then the series value."""
+    return f"<b>%{{customdata[0]}}</b><br>{series_name}: £%{{x:.2f}}<extra></extra>"
+
+
+def _ordinal(n: int) -> str:
+    """5 -> '5th'. Teens stay 'th' so 11, 12 and 13 are not '11st'."""
+    if 10 <= n % 100 <= 20:
+        suffix = "th"
+    else:
+        suffix = {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+    return f"{n}{suffix}"
+
+
+def percentile_prices(prices, *, buckets: int = 20) -> pd.DataFrame:
+    """Price at every ``100 / buckets`` percentile, low to high.
+
+    Twenty buckets means the 5th, 10th, …, 100th percentile. Menus with
+    different item counts then share an x-axis, so the lines are comparable.
+    The 100th percentile is the dearest item; the 50th is the median.
+    """
+    if buckets < 1 or 100 % buckets != 0:
+        raise ValueError("buckets must be a divisor of 100.")
+    step = 100 // buckets
+    levels = list(range(step, 101, step))
+    clean = pd.to_numeric(pd.Series(prices), errors="coerce").dropna()
+    if clean.empty:
+        return pd.DataFrame(columns=["percentile", "price"])
+    values = clean.quantile([level / 100 for level in levels], interpolation="linear")
+    return pd.DataFrame(
+        {"percentile": levels, "price": [float(v) for v in values.to_numpy()]}
+    )
+
+
+def _add_benchmark_fit(fig: go.Figure, benchmark, *, x_max: float) -> None:
+    """Draw Wagamama's best-fit line out to the same x as the y = x line."""
+    if benchmark is None or getattr(benchmark, "empty", True):
+        return
+    fit = linear_fit(benchmark["restaurant"], benchmark["delivery"])
+    if fit is None or not np.isfinite(x_max) or x_max <= 0:
+        return
+    intercept, slope = fit
+    fig.add_trace(
+        go.Scatter(
+            x=[0, x_max],
+            y=[
+                round(intercept, 2),
+                round(intercept + slope * x_max, 2),
+            ],
+            mode="lines",
+            name=f"{OWN_BRAND} best fit",
+            line=dict(color="rgba(209, 19, 23, 0.45)", width=2, dash="dot"),
+            hovertemplate=(
+                f"{OWN_BRAND} best fit<br>Restaurant £%{{x:.2f}}"
+                "<br>Delivery £%{y:.2f}<extra></extra>"
+            ),
+        )
+    )
+
+
+def _percentile_curve_trace(frame, price_col, *, name, color):
+    """One percentile line for :func:`price_curve`."""
+    curve = percentile_prices(frame[price_col])
+    if curve.empty:
+        return None
+    ordinals = [_ordinal(int(level)) for level in curve["percentile"]]
+    return go.Scatter(
+        x=curve["percentile"],
+        y=curve["price"],
+        mode="lines+markers",
+        name=name or "",
+        line=dict(color=color, width=2),
+        marker=dict(color=color, size=8),
+        customdata=ordinals,
+        hovertemplate=(
+            (f"<b>{name}</b><br>" if name else "")
+            + "%{customdata} percentile<br>£%{y:.2f}<extra></extra>"
+        ),
+        showlegend=bool(name),
+    )
 
 
 def _price_curve_trace(frame, price_col, cols, *, name, color, showlegend):
@@ -489,29 +741,33 @@ def price_curve(
     detail_col: str | None = None,
     series_col: str | None = None,
 ) -> go.Figure:
-    """Items sorted low→high as a price curve.
+    """Price distribution, low to high.
 
-    The high/low analogue of ``delivery_scatter``: it shows the shape of the
-    price distribution for whatever subset is currently drilled into, so a steep
-    tail flags a few premium items. With ``series_col`` each series is sorted and
-    drawn independently (e.g. the market vs the Wagamama benchmark), so their
-    curves can be compared directly; the own-brand series is drawn in brand red.
+    With ``series_col`` each series is drawn at the same percentiles (5th, 10th,
+    …, 100th — twenty points). Item rank would stretch a long menu further along
+    the x-axis than a short one, so the lines would not be comparable. The
+    own-brand series is brand red.
+
+    Without ``series_col`` each item is one point, sorted cheap to dear, with a
+    dashed average.
     """
     cols = [label_col] + ([detail_col] if detail_col else [])
     fig = go.Figure()
+    xaxis_title = "Item (sorted by price)"
 
     if series_col and series_col in frame.columns:
+        xaxis_title = "Percentile"
         for name, group in frame.groupby(series_col):
             if group.empty:
                 continue
             color = WAGAMAMA_RED if name == OWN_BRAND else _LOW_COLOUR
-            fig.add_trace(
-                _price_curve_trace(
-                    group, price_col, cols, name=str(name), color=color,
-                    showlegend=True,
-                )
+            trace = _percentile_curve_trace(
+                group, price_col, name=str(name), color=color
             )
+            if trace is not None:
+                fig.add_trace(trace)
         fig.update_layout(legend_title_text="")
+        fig.update_xaxes(range=[0, 105], dtick=10)
     else:
         fig.add_trace(
             _price_curve_trace(
@@ -531,7 +787,7 @@ def price_curve(
     fig.update_layout(
         template=_TEMPLATE,
         title=title,
-        xaxis_title="Item (sorted by price)",
+        xaxis_title=xaxis_title,
         yaxis_title="Price (GBP)",
         yaxis_tickprefix="£",
         height=420,
@@ -559,9 +815,11 @@ def drilldown_dumbbell(
     Rows are drawn in the frame's given order (top row = first row), so callers
     sort before plotting. Each row is pinned to an explicit numeric y-position
     (rather than a categorical axis), so ordering is preserved exactly and
-    duplicate labels never collapse into a single slot. ``annotate_col`` names a
-    column of ready-made text labels (e.g. ``"+£1.20"``) drawn to the right of
-    each dumbbell. ``highlight_col`` (a bool column) splits the middle marker
+    duplicate labels never collapse into a single slot. Axis names are capped at
+    one short line so a long dish name cannot steal the plot width; the full
+    name stays on the hover. ``annotate_col`` names a column of ready-made text
+    labels (e.g. ``"+£1.20"``) drawn to the right of each dumbbell.
+    ``highlight_col`` (a bool column) splits the middle marker
     into a second, brand-red series so a benchmark like Wagamama reads
     separately in the legend, and bolds that row's axis label.
     """
@@ -599,7 +857,7 @@ def drilldown_dumbbell(
                 size=12,
             ),
             customdata=[[lbl] for lbl in labels],
-            hovertemplate=f"{left_name}: %{{x:.2f}}<extra></extra>",
+            hovertemplate=_price_hover(left_name),
         )
     )
     if mid_col and mid_col in plot.columns:
@@ -624,7 +882,7 @@ def drilldown_dumbbell(
                     name=name,
                     marker=dict(color=colour, size=12, symbol=symbol),
                     customdata=[[lbl] for lbl in part[label_col].astype(str)],
-                    hovertemplate=f"{name}: %{{x:.2f}}<extra></extra>",
+                    hovertemplate=_price_hover(name),
                 )
             )
     fig.add_trace(
@@ -638,7 +896,7 @@ def drilldown_dumbbell(
                 size=12,
             ),
             customdata=[[lbl] for lbl in labels],
-            hovertemplate=f"{right_name}: %{{x:.2f}}<extra></extra>",
+            hovertemplate=_price_hover(right_name),
         )
     )
 
@@ -665,15 +923,17 @@ def drilldown_dumbbell(
         )
         fig.update_xaxes(range=[max(0.0, lo - 0.05 * span), hi + 0.34 * span])
 
-    # Make the benchmark (e.g. Wagamama) row's tick label pop: bold + brand red.
+    # Short ticks keep automargin from handing the width to one long name.
+    # The benchmark row (e.g. Wagamama) stays bold and brand red.
+    fitted = [_fit_axis_label(lbl) for lbl in labels]
     if highlight_col and highlight_col in plot.columns:
         flags = plot[highlight_col].astype(bool).tolist()
         ticktext = [
             f"<b><span style='color:{WAGAMAMA_RED}'>{lbl}</span></b>" if flag else lbl
-            for lbl, flag in zip(labels, flags)
+            for lbl, flag in zip(fitted, flags)
         ]
     else:
-        ticktext = labels
+        ticktext = fitted
     fig.update_yaxes(
         tickmode="array",
         tickvals=ypos,

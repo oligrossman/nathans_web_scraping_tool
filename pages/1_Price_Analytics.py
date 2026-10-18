@@ -13,21 +13,23 @@ import pandas as pd
 import streamlit as st
 
 from src import analytics, auth, charts, delivery_compare, high_low
-from src.history_archive import resolve_company_snapshots
-from src.branding import (
-    ANALYTICS_TAGLINE,
-    ANALYTICS_TITLE,
-    APP_TITLE,
-    CONFIG_PAGE_TITLE,
-    OWN_BRAND,
-    apply_sidebar_footer_logo,
-    apply_sidebar_logo,
-    brand_css,
-    render_grouping_selectbox,
-)
+from src.app_reload import reload_branding
 from src.enrichment.schema import GroupingDimension
 from src.enrichment.store import DEFAULT_DB_PATH, list_markets
+from src.history_archive import resolve_company_snapshots
 from src.synthetic import MARKET_LABEL
+
+_branding = reload_branding()
+ANALYTICS_TAGLINE = _branding.ANALYTICS_TAGLINE
+ANALYTICS_TITLE = _branding.ANALYTICS_TITLE
+APP_TITLE = _branding.APP_TITLE
+CONFIG_PAGE_TITLE = _branding.CONFIG_PAGE_TITLE
+OWN_BRAND = _branding.OWN_BRAND
+apply_sidebar_footer_logo = _branding.apply_sidebar_footer_logo
+apply_sidebar_logo = _branding.apply_sidebar_logo
+brand_css = _branding.brand_css
+render_grouping_selectbox = _branding.render_grouping_selectbox
+search_label = _branding.search_label
 
 st.set_page_config(
     page_title=f"{ANALYTICS_TITLE} | {APP_TITLE}",
@@ -175,14 +177,35 @@ st.session_state["price_range"] = (
     min(slider_max, float(stored_hi)),
 )
 
+def _sync_comparison_selection(options: list[str]) -> None:
+    """Keep the company multiselect in step with the history file.
+
+    ``default=`` applies only the first time a widget is created. A brand that
+    arrives after Update price history would otherwise sit in the list unticked.
+    Brands the user has already turned off stay off.
+    """
+    key = "comparison_companies"
+    previous = st.session_state.get("_comparison_options")
+    if key not in st.session_state or previous is None:
+        st.session_state[key] = list(options)
+    else:
+        chosen = [company for company in st.session_state[key] if company in options]
+        chosen.extend(company for company in options if company not in previous)
+        st.session_state[key] = chosen
+    st.session_state["_comparison_options"] = list(options)
+
+
 # Shared controls live in the sidebar (they drive every tab).
 with st.sidebar:
+    _sync_comparison_selection(competitors)
     selected_companies = st.multiselect(
         "Comparison companies",
         competitors,
-        default=competitors,
+        format_func=search_label,
+        key="comparison_companies",
         help=f"Drives every chart. {OWN_BRAND} is always shown; pick one or "
-        "more companies to compare against.",
+        "more companies to compare against. Search ignores apostrophes, so "
+        "Rosa's can be found by typing Rosas.",
     )
     grouping_dimension = render_grouping_selectbox(
         help="Group every chart and drilldown by course (bucket), cuisine or dish "
@@ -280,7 +303,12 @@ def _drilldown_nav(
 
     cols = st.columns([1, 1, 2])
     with cols[0]:
-        company_choice = st.selectbox("Company", company_options, key=company_key)
+        company_choice = st.selectbox(
+            "Company",
+            company_options,
+            format_func=search_label,
+            key=company_key,
+        )
     company = None if company_choice == all_companies else company_choice
 
     scope = frame if company is None else frame[frame["company"] == company]
@@ -444,8 +472,11 @@ tab_buckets, tab_compare, tab_delivery, tab_high_low = st.tabs(
 with tab_buckets:
     st.caption(
         f"Grouped by **{dim_label}** (change it with 'Group charts by' above). "
-        f"{OWN_BRAND} is shown first as the benchmark. For each company: "
-        "**left** — average price trend; **right** — quarter-on-quarter % change."
+        f"{OWN_BRAND} is shown first as the benchmark. Dates are the day the "
+        "price was recorded. Each point averages dishes we can follow across "
+        "dates, so a dish that appears only on the latest menu does not move "
+        "the line. For each company: **left** — average price trend; "
+        "**right** — change since the previous date."
     )
     bygroup_pct = st.toggle(
         "Show as % change",
@@ -458,6 +489,13 @@ with tab_buckets:
     # heading below already say what each chart is, so the titles were dead space.
     for company in [OWN_BRAND, *selected_companies]:
         st.markdown(f"#### {company}")
+        company_rows = chart_history[chart_history["source"] == company]
+        if company_rows.empty:
+            st.caption(
+                "No trend yet. A dish has to be priced on at least two dates "
+                "before it can show a price change."
+            )
+            continue
         left, right = st.columns(2)
         with left:
             st.plotly_chart(
@@ -514,10 +552,26 @@ with tab_compare:
     )
 
     # Top-level comparison first, then the more granular per-value breakdown below.
-    st.subheader("Latest prices and focus trend")
-    # Keep the focus selector above the columns so the two charts stay top-aligned
+    st.subheader("Prices and focus trend")
+    # Keep both controls above the columns so the two charts stay top-aligned
     # (a widget inside one column would push only that chart down).
-    focus_bucket = st.selectbox("Focus value", focus_options, index=0)
+    focus_col, toggle_col = st.columns(2, vertical_alignment="bottom")
+    with focus_col:
+        focus_bucket = st.selectbox("Focus value", focus_options, index=0)
+    with toggle_col:
+        show_latest_bars = st.toggle(
+            "Show latest instead of average",
+            value=True,
+            key="compare_bar_latest",
+            disabled=compare_pct,
+            help=(
+                "On: each bar is that company's own most recent price for the "
+                f"group, so {OWN_BRAND} stays visible when its history ends "
+                "before a competitor scrape. Off: each bar is the average of "
+                "those prices over the whole period. Both are still an average "
+                "across the dishes in the group."
+            ),
+        )
     left, right = st.columns(2)
     with left:
         st.plotly_chart(
@@ -536,6 +590,7 @@ with tab_compare:
                 chart_history,
                 sources=compare_sources,
                 as_pct_change=compare_pct,
+                use_latest=show_latest_bars,
                 dimension=grouping_dimension,
             ),
             use_container_width=True,
@@ -560,7 +615,9 @@ with tab_delivery:
         "restaurant on Deliveroo (Camden postcode). Filter by company and/or "
         f"{dim_label.lower()} below — the metrics and both charts follow your "
         f"selection. {OWN_BRAND} isn't on Deliveroo, so its delivery price is a "
-        f"placeholder (restaurant menu +{PROXY_DELIVERY_MARKUP_PCT:.0f}%)."
+        f"placeholder (restaurant menu +{PROXY_DELIVERY_MARKUP_PCT:.0f}%). "
+        f"The red line is {OWN_BRAND}'s best fit of delivery against restaurant "
+        "price, shown when another restaurant or all companies is selected."
     )
 
     _snapshots = resolve_company_snapshots()
@@ -702,9 +759,22 @@ with tab_delivery:
                     )
             with right:
                 if not view.empty:
+                    # Fit Wagamama on the same price band and bucket, but not on
+                    # the competitor's rows. Omit the line when Wagamama is the
+                    # restaurant on the chart — the dots are already that menu.
+                    benchmark = None
+                    if company != OWN_BRAND:
+                        benchmark = comparison[comparison["company"] == OWN_BRAND]
+                        if mid is not None:
+                            benchmark = benchmark[benchmark[dim] == mid]
+                        if len(benchmark) < 2:
+                            benchmark = None
                     st.plotly_chart(
                         charts.delivery_scatter(
-                            view, dim=dim, dim_label=dim_label
+                            view,
+                            dim=dim,
+                            dim_label=dim_label,
+                            benchmark=benchmark,
                         ),
                         use_container_width=True,
                     )
@@ -724,8 +794,10 @@ with tab_high_low:
         "Lowest, average and highest menu prices from restaurant-menu snapshots, with "
         f"{OWN_BRAND} always included as a benchmark. At item level the average "
         f"dot shows each item's price within its {dim_label.lower()} min–max "
-        f"range. Filter by company and/or {dim_label.lower()} below — the metrics "
-        "and both charts follow your selection."
+        f"range. The curve plots every 5th percentile (20 points) so a long menu "
+        f"and {OWN_BRAND}'s shorter one share the same axis. Filter by company "
+        f"and/or {dim_label.lower()} below — the metrics and both charts follow "
+        "your selection."
     )
 
     menu_ready = any(
@@ -855,10 +927,17 @@ with tab_high_low:
                 )
 
             # RHS curve keeps Wagamama as its own line vs the rest of the field.
+            # The company drilldown must not drop Wagamama, or the comparison
+            # line disappears the moment a competitor is selected.
             comp_label = company if company else "Competitors"
+            curve_scope = _apply_drill_filter(menu, None, mid, dim)
+            comp_rows = curve_scope[curve_scope["company"] != OWN_BRAND]
+            if company == OWN_BRAND:
+                comp_rows = comp_rows.iloc[0:0]
+            elif company is not None:
+                comp_rows = comp_rows[comp_rows["company"] == company]
+            wag_rows = curve_scope[curve_scope["company"] == OWN_BRAND]
             curve_parts = []
-            comp_rows = view[view["company"] != OWN_BRAND]
-            wag_rows = view[view["company"] == OWN_BRAND]
             if not comp_rows.empty:
                 curve_parts.append(comp_rows.assign(series=comp_label))
             if not wag_rows.empty:
@@ -888,8 +967,13 @@ with tab_high_low:
                             curve_frame,
                             series_col="series",
                             detail_col="company",
-                            title=f"{market_prefix}{scope_label} vs {OWN_BRAND}: "
-                            "price curve (low → high)",
+                            title=(
+                                f"{market_prefix}{OWN_BRAND}: "
+                                "price by percentile (low → high)"
+                                if company == OWN_BRAND
+                                else f"{market_prefix}{scope_label} vs {OWN_BRAND}: "
+                                "price by percentile (low → high)"
+                            ),
                         ),
                         use_container_width=True,
                         key="highlow_curve",

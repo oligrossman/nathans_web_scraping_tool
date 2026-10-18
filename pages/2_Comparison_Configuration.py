@@ -11,14 +11,16 @@ from __future__ import annotations
 import streamlit as st
 
 from src import analytics, auth
-from src.branding import (
-    APP_TITLE,
-    CONFIG_PAGE_TITLE,
-    OWN_BRAND,
-    apply_sidebar_branding,
-    brand_css,
-)
+from src.app_reload import reload_branding
 from src.enrichment.schema import Cuisine, DishType, MarketDefinition
+
+_branding = reload_branding()
+APP_TITLE = _branding.APP_TITLE
+CONFIG_PAGE_TITLE = _branding.CONFIG_PAGE_TITLE
+OWN_BRAND = _branding.OWN_BRAND
+apply_sidebar_branding = _branding.apply_sidebar_branding
+brand_css = _branding.brand_css
+search_label = _branding.search_label
 from src.enrichment.store import (
     DEFAULT_DB_PATH,
     delete_market,
@@ -148,6 +150,7 @@ with st.form("market_form"):
         filter_companies = st.multiselect(
             "Limit to companies (optional)",
             competitors,
+            format_func=search_label,
         )
     submitted = st.form_submit_button("Save market")
 

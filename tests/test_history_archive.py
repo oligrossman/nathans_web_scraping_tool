@@ -38,6 +38,48 @@ def test_resolve_snapshot_path_prefers_newest_archive(archive_root: Path) -> Non
     assert resolved.read_text(encoding="utf-8") == "new\n"
 
 
+def test_update_compiles_tracker_before_stacking_scrapes(
+    archive_root: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    prior = archive_root / "scrapes" / "prior" / "price_history.csv"
+    live = archive_root / "all_company_prices.csv"
+    monkeypatch.setattr(history_archive, "PRIOR_HISTORY_PATH", prior)
+    monkeypatch.setattr(history_archive, "ALL_COMPANY_PRICES_PATH", live)
+    monkeypatch.setattr(
+        history_archive,
+        "restaurant_snapshot_filenames",
+        lambda: {"rosas_thai_menu_snapshot.csv": "Rosa's Thai"},
+    )
+
+    def fake_sync() -> dict[str, object]:
+        prior.parent.mkdir(parents=True, exist_ok=True)
+        pd.DataFrame(
+            {
+                "date": ["2025-03-01"],
+                "source": ["Rosa's Thai"],
+                "item": ["Sticky Rice"],
+                "dish_id": ["rice"],
+                "bucket": ["Mains"],
+                "price": [4.1],
+            }
+        ).to_csv(prior, index=False)
+        return {"workbook": "tracker.xlsx", "imported": [{"brand": "Rosa's Thai", "written": True}]}
+
+    monkeypatch.setattr("src.pricing_tracker.sync_tracker_into_prior", fake_sync)
+    archive = archive_root / "scrapes" / "2026-10-18"
+    archive.mkdir()
+    pd.DataFrame(
+        {"name": ["Sticky Rice"], "category": ["Rice"], "price": [4.4]}
+    ).to_csv(archive / "rosas_thai_menu_snapshot.csv", index=False)
+
+    summary = history_archive.update_all_company_prices()
+
+    saved = pd.read_csv(live, parse_dates=["date"])
+    rice = saved[saved["item"] == "Sticky Rice"].sort_values("date")
+    assert rice["date"].dt.strftime("%Y-%m-%d").tolist() == ["2025-03-01", "2026-10-18"]
+    assert summary["tracker"]["imported"][0]["brand"] == "Rosa's Thai"
+
+
 def test_persist_scrape_snapshot_overwrites_same_day_file(archive_root: Path) -> None:
     when = date(2026, 7, 8)
     frame = pd.DataFrame({"name": ["Item A"], "price": [9.95]})

@@ -170,6 +170,44 @@ Data page.
 
 Brand constants (colours, copy, own-brand label) live in `src/branding.py`.
 
+## Read-only MCP server
+
+A separate process exposes the same analytics as the Streamlit dashboard over
+MCP (Model Context Protocol), so Claude Desktop, Codex, or Cursor can ask
+pricing questions without cloning the repo. Streamlit Cloud does **not** host
+this — keep installing `requirements.txt` for the dashboard; use
+`requirements-mcp.txt` only on the MCP host.
+
+### Run locally
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements-mcp.txt
+export MCP_AUTH_TOKEN='choose-a-long-random-token'
+python -m mcp_server
+```
+
+Defaults: `http://127.0.0.1:8000/mcp` (override with `MCP_HOST` / `MCP_PORT`).
+`GET /health` is open; every other path requires `Authorization: Bearer <token>`.
+
+### Connect a client
+
+Paste the server URL and bearer token into the app’s MCP / connector settings
+(no project checkout needed for directors):
+
+| Client | Where |
+| --- | --- |
+| **Claude Desktop** / **Codex** | MCP connector settings: URL + `Authorization: Bearer <token>` |
+| **Cursor** | MCP settings: same URL + bearer header |
+
+**Claude.ai** (browser) expects OAuth for custom connectors, not a pasted bearer
+token — v1 does not cover that. Use Claude Desktop, or add OAuth later.
+
+Hosting (Render, Fly, a VM) needs this repo’s `data/` directory on disk. Scrapes
+that exist only on Streamlit Cloud are invisible here until those files are
+copied onto the MCP host.
+
 ## A note on respectful scraping
 
 This prototype scrapes only when you click the button. Please use it

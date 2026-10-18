@@ -21,6 +21,7 @@ from .nandos import NandosScraper
 from .pho import PhoScraper
 from .pizza_express import PizzaExpressScraper
 from .prezzo import PrezzoScraper
+from .rosas_thai import RosasThaiScraper
 from .ubereats import UberEatsScraper
 from .wagamama import WagamamaScraper
 from .zizzi import ZizziScraper
@@ -33,6 +34,7 @@ _RESTAURANT_BY_SLUG: dict[str, type[BaseScraper]] = {
     "pho": PhoScraper,
     "pizza_express": PizzaExpressScraper,
     "prezzo": PrezzoScraper,
+    "rosas_thai": RosasThaiScraper,
     "zizzi": ZizziScraper,
     "wagamama": WagamamaScraper,
 }

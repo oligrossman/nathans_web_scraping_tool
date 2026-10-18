@@ -29,7 +29,25 @@ def load_history(path: str | Path = DEFAULT_ALL_COMPANY_PRICES_PATH) -> pd.DataF
     frame["item"] = frame["item"].fillna("")
     # Keep in sync with branding renames (WagaNath → Wagamama).
     frame["source"] = frame["source"].replace({LEGACY_OWN_BRAND: OWN_BRAND})
+    # The file stores a calendar date. Normalise so a midnight timestamp cannot
+    # leak into a chart as a time of day.
+    frame["date"] = pd.to_datetime(frame["date"]).dt.normalize()
     return frame
+
+
+def repeated_observations(history: pd.DataFrame) -> pd.DataFrame:
+    """Keep dishes that have a price on more than one date.
+
+    An average is a price comparison only when the same dishes can be followed.
+    A dish seen once — usually the rest of a menu captured on the scrape day —
+    would otherwise move that one date without any price having changed.
+    Market rows are already averages, so they are left as they are.
+    """
+    if history.empty or not {"source", "item", "date"}.issubset(history.columns):
+        return history
+    is_market = history["source"].astype(str).str.startswith("Market")
+    n_dates = history.groupby(["source", "item"], sort=False)["date"].transform("nunique")
+    return history.loc[is_market | n_dates.ge(2)].reset_index(drop=True)
 
 
 def load_company_weights(path: str | Path = DEFAULT_WEIGHTS_PATH) -> dict[str, float]:
@@ -113,9 +131,13 @@ def prepare_chart_history(
     db_path: str | Path = DEFAULT_DB_PATH,
     weights: dict[str, float] | None = None,
 ) -> pd.DataFrame:
-    """History with default Market and any selected custom market series."""
+    """History with default Market and any selected custom market series.
+
+    Dishes observed on only one date are dropped first, so the market and every
+    trend are built from dishes that can actually be followed.
+    """
     frame = with_derived_market(
-        history,
+        repeated_observations(history),
         weights=weights,
         dimension=dimension,
         db_path=db_path,
@@ -412,16 +434,57 @@ def add_pct_change(
     return out
 
 
+def _at_series_end(frame: pd.DataFrame) -> pd.DataFrame:
+    """Keep each source and grouping value on its own latest date.
+
+    A single cutoff — the newest date anywhere in the file — drops every brand
+    whose history ends sooner. Wagamama's series is synthetic and stops before
+    the latest competitor scrape, so each series has to be read at its own end.
+    """
+    if frame.empty:
+        return frame.copy()
+    latest = frame.groupby(["source", "bucket"])["date"].transform("max")
+    return frame.loc[frame["date"].eq(latest)].reset_index(drop=True)
+
+
 def latest_bucket_prices(
     history: pd.DataFrame,
     *,
     dimension: GroupingDimension | str = GroupingDimension.BUCKET,
 ) -> pd.DataFrame:
-    """Most-recent-quarter average price per source and grouping dimension."""
+    """Average price on each series' own latest date, per grouping value."""
+    return _at_series_end(dimension_means(history, dimension=dimension))
+
+
+def average_bucket_prices(
+    history: pd.DataFrame,
+    *,
+    dimension: GroupingDimension | str = GroupingDimension.BUCKET,
+) -> pd.DataFrame:
+    """Mean of the quarterly average prices, per source and grouping value.
+
+    Each quarter already averages the dishes in the group. Averaging those
+    quarters equally matches the level of the trend line, so a quarter with
+    more dishes does not count for more.
+    """
     means = dimension_means(history, dimension=dimension)
-    latest_date = means["date"].max()
-    latest = means[means["date"] == latest_date]
-    return latest.groupby(["source", "bucket"], as_index=False)["price"].mean().round(2)
+    if means.empty:
+        return means
+    averaged = means.groupby(["source", "bucket"], as_index=False)["price"].mean()
+    averaged["price"] = averaged["price"].round(2)
+    return averaged
+
+
+def total_bucket_pct_change(
+    history: pd.DataFrame,
+    *,
+    dimension: GroupingDimension | str = GroupingDimension.BUCKET,
+) -> pd.DataFrame:
+    """Cumulative % change from each series' first date to its own last date."""
+    means = dimension_means(history, dimension=dimension)
+    if means.empty:
+        return means
+    return _at_series_end(add_pct_change(means, ["source", "bucket"]))
 
 
 def bucket_pct_change(
@@ -462,6 +525,9 @@ class Kpis:
 
 def compute_kpis(history: pd.DataFrame) -> Kpis:
     """Compute board-level headline metrics across the whole dataset."""
+    history = repeated_observations(history)
+    if history.empty:
+        return Kpis(0.0, 0.0, "", 0.0, {})
     dates = history["date"]
     span_years = (dates.max() - dates.min()).days / 365.25
 

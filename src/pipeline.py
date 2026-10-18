@@ -27,6 +27,7 @@ from src.branding import OWN_BRAND
 from src.history_archive import (
     ALL_COMPANY_PRICES_PATH,
     PRIOR_HISTORY_PATH,
+    keep_observed_brands,
     resolve_snapshot_path,
     update_all_company_prices,
 )
@@ -66,12 +67,15 @@ def rebuild_price_history(
     (``data/scrapes/prior/price_history.csv``) from the current restaurant
     snapshots, then folds in any dated real archives via
     :func:`src.history_archive.update_all_company_prices`.
+
+    Brands listed in ``observed_sources.txt`` keep the rows already in the prior
+    file. Regenerating must not replace imported tracker history with a backcast.
     """
     root = data_dir or DATA_DIR
     base_target = prior_path or PRIOR_HISTORY_PATH
 
     menus = load_menu_snapshots(root)
-    history = generate_price_history(menus)
+    history = keep_observed_brands(generate_price_history(menus), base_target)
     base_target.parent.mkdir(parents=True, exist_ok=True)
     save_history(history, str(base_target))
 

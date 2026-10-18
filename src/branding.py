@@ -10,6 +10,21 @@ from .enrichment.schema import GroupingDimension
 
 OWN_BRAND = "Wagamama"
 
+
+def search_label(name: str) -> str:
+    """Label a dropdown option so a search still finds it without an apostrophe.
+
+    Streamlit's dropdown filter is a substring of the displayed label. ``Rosa's``
+    does not contain the letters ``Rosas``, so typing the name that way shows
+    an empty list. The widget still stores ``name``; only the label changes.
+    """
+    text = str(name)
+    plain = text.replace("'", "").replace("\u2019", "").replace("\u2018", "")
+    if plain == text:
+        return text
+    return f"{text} · {plain}"
+
+
 # Shared session key so every page/tab reads and writes the same grouping choice.
 GROUPING_STATE_KEY = "grouping_dimension"
 

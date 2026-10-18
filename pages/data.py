@@ -11,13 +11,26 @@ import streamlit as st
 from datetime import datetime
 
 from src import auth, history_archive, scrape_log
-from src.branding import APP_TAGLINE, APP_TITLE, SCRAPE_SECTION, apply_sidebar_branding, brand_css
+from src.app_reload import reload_branding, reload_history_compiler, reload_scrape_registry
 from src.enrichment.store import DEFAULT_DB_PATH
 from src.export import dataframe_to_csv_bytes, items_to_dataframe
-from src.scrapers.registry import SCRAPERS, get_scraper, snapshot_paths_by_site
+
+_branding = reload_branding()
+APP_TAGLINE = _branding.APP_TAGLINE
+APP_TITLE = _branding.APP_TITLE
+SCRAPE_SECTION = _branding.SCRAPE_SECTION
+apply_sidebar_branding = _branding.apply_sidebar_branding
+brand_css = _branding.brand_css
+search_label = _branding.search_label
+
+# Rebuild the scrape list on every rerun. The page file is read again, but the
+# registry module would otherwise stay as it was when the process started.
+_registry = reload_scrape_registry()
+SCRAPERS = _registry.build_scrapers()
+get_scraper = _registry.get_scraper
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
-SNAPSHOT_BY_SITE = snapshot_paths_by_site(data_dir=DATA_DIR)
+SNAPSHOT_BY_SITE = _registry.snapshot_paths_by_site(data_dir=DATA_DIR)
 _MAX_WORKERS = 4
 
 # Gate this page directly too: on Streamlit Cloud each file under ``pages/`` is
@@ -113,9 +126,15 @@ def _toggle_select_all() -> None:
 
 
 st.checkbox("Select all sites", key="scrape_select_all", on_change=_toggle_select_all)
+# A site removed from the registry must not stay selected, or the widget errors.
+if "scrape_selection" in st.session_state:
+    st.session_state["scrape_selection"] = [
+        site for site in st.session_state["scrape_selection"] if site in SCRAPERS
+    ]
 selected = st.multiselect(
     "Choose websites to scrape",
     options=list(SCRAPERS),
+    format_func=search_label,
     key="scrape_selection",
 )
 
@@ -166,8 +185,9 @@ st.markdown(
     "`data/scrapes/<date>/` (re-scraping the same day replaces that file).\n"
     "2. **Run enrichment** — classifies dishes in `all_company_prices.csv` that are "
     "not yet in `menu_mappings.db`.\n"
-    "3. **Update price history** — stacks the frozen `prior` base with every dated "
-    "archive into `all_company_prices.csv` (the dashboard's source of truth).\n"
+    "3. **Update price history** — matches the pricing-tracker workbook onto each "
+    "scraped menu, then stacks that history with every dated archive into "
+    "`all_company_prices.csv` (the dashboard's source of truth).\n"
     "4. Open **Price Analysis** to explore the refreshed data."
 )
 
@@ -250,15 +270,35 @@ with enrich_col:
 
 with history_col:
     if st.button("Update price history", type="primary", key="update_prices"):
-        with st.spinner("Composing all company prices from prior base + dated archives..."):
-            st.session_state["prices_update_summary"] = history_archive.update_all_company_prices()
+        with st.spinner("Compiling the pricing tracker and dated scrapes..."):
+            compiler = reload_history_compiler()
+            st.session_state["prices_update_summary"] = compiler.update_all_company_prices()
+        # Price Analysis caches frames in this same process. Drop them so the
+        # next visit reads the file just written, without restarting the app.
+        st.cache_data.clear()
 
     _prices_summary = st.session_state.get("prices_update_summary")
     if _prices_summary:
+        _tracker = _prices_summary.get("tracker") or {}
+        _imported = [
+            row for row in _tracker.get("imported", []) if row.get("written")
+        ]
         st.success(
             f"Wrote {_prices_summary['rows']} rows across {len(_prices_summary['sources'])} brands "
             f"and {_prices_summary['dates']} dates to `all_company_prices.csv`."
         )
+        if _imported:
+            st.caption(
+                "Tracker compiled: "
+                + ", ".join(
+                    f"{row['brand']} ({row['dishes']} dishes)" for row in _imported
+                )
+            )
+        elif _tracker.get("workbook") is None:
+            st.caption(
+                "No pricing-tracker workbook was found, so only the prior file "
+                "and dated scrapes were stacked."
+            )
         st.caption(
             f"Sources: {', '.join(_prices_summary['sources']) or '—'} · "
             f"Dated archives: {len(_prices_summary['archives'])} · "
@@ -266,8 +306,10 @@ with history_col:
             f"{', '.join(_prices_summary.get('brands_from_archives', [])) or '—'}"
         )
     st.caption(
-        "Stacks the frozen `prior/price_history.csv` base with every dated archive. "
-        "Delete a day below to drop it on the next update."
+        "Matches `Master - Pricing Tracker.xlsx` onto each scraped menu, then "
+        "stacks `prior/price_history.csv` with every dated archive. "
+        "Delete a day below to drop that scrape on the next update. "
+        "Open Price Analysis afterwards — the company list reloads with the file."
     )
 
 # --- Manage dated archives -------------------------------------------------

@@ -2,8 +2,9 @@
 
 Layout under ``data/scrapes/``::
 
-    prior/price_history.csv     # frozen historical base (the synthetic backcast)
-    <YYYY-MM-DD>/<snapshot>.csv # raw snapshots captured on that date
+    prior/price_history.csv      # frozen historical base
+    prior/observed_sources.txt   # brands whose prior rows are real, not synthetic
+    <YYYY-MM-DD>/<snapshot>.csv  # raw snapshots captured on that date
 
 :func:`update_all_company_prices` composes ``data/all_company_prices.csv`` (the
 dashboard's single source of truth) by stacking the frozen ``prior`` history
@@ -34,6 +35,7 @@ ARCHIVE_DIR = DATA_DIR / "scrapes"
 PRIOR_DIR = ARCHIVE_DIR / "prior"
 ALL_COMPANY_PRICES_PATH = DATA_DIR / "all_company_prices.csv"
 PRIOR_HISTORY_PATH = PRIOR_DIR / "price_history.csv"
+OBSERVED_SOURCES_FILENAME = "observed_sources.txt"
 
 _DATE_FMT = "%Y-%m-%d"
 
@@ -107,6 +109,105 @@ def ensure_prior_seed() -> None:
     if ALL_COMPANY_PRICES_PATH.exists():
         PRIOR_DIR.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(ALL_COMPANY_PRICES_PATH, PRIOR_HISTORY_PATH)
+
+
+def observed_sources_path(prior_path: Path | None = None) -> Path:
+    """Path of the brand list whose prior rows must survive a synthetic rebuild."""
+    base = prior_path or PRIOR_HISTORY_PATH
+    return base.parent / OBSERVED_SOURCES_FILENAME
+
+
+def load_observed_sources(prior_path: Path | None = None) -> set[str]:
+    """Return brands imported from the pricing tracker, if any."""
+    path = observed_sources_path(prior_path)
+    if not path.exists():
+        return set()
+    return {
+        line.strip()
+        for line in path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    }
+
+
+def mark_observed_source(source: str, prior_path: Path | None = None) -> None:
+    """Record that ``source`` prior rows are observed history, not a backcast."""
+    path = observed_sources_path(prior_path)
+    sources = load_observed_sources(prior_path)
+    sources.add(source)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        "".join(f"{name}\n" for name in sorted(sources)),
+        encoding="utf-8",
+    )
+
+
+def keep_observed_brands(
+    synthetic: pd.DataFrame, prior_path: Path | None = None
+) -> pd.DataFrame:
+    """Replace synthetic rows with the prior file's rows for observed brands.
+
+    ``rebuild_price_history`` regenerates every brand from the current menu.
+    Brands already imported from the pricing tracker must keep those rows, so a
+    later rebuild cannot put the fabricated backcast back.
+    """
+    path = prior_path or PRIOR_HISTORY_PATH
+    observed = load_observed_sources(path)
+    if not observed or not path.exists():
+        return synthetic
+    existing = pd.read_csv(path, parse_dates=["date"])
+    real = existing[existing["source"].isin(observed)]
+    if real.empty:
+        return synthetic
+    generated = synthetic[~synthetic["source"].isin(observed)]
+    combined = pd.concat(
+        [generated, real.reindex(columns=HISTORY_COLUMNS)],
+        ignore_index=True,
+    )
+    return combined.sort_values(["source", "bucket", "item", "date"]).reset_index(
+        drop=True
+    )
+
+
+def replace_brand_in_prior(
+    source: str,
+    rows: pd.DataFrame,
+    prior_path: Path | None = None,
+) -> dict[str, int]:
+    """Replace one brand's rows in the frozen prior base.
+
+    Every other brand is left as it is. ``rows`` uses :data:`HISTORY_COLUMNS`.
+    An empty frame is refused so a bad match cannot wipe a brand by accident.
+    """
+    path = prior_path or PRIOR_HISTORY_PATH
+    if rows.empty:
+        raise ValueError(f"Refusing to replace {source!r} with an empty history.")
+    missing = [column for column in HISTORY_COLUMNS if column not in rows.columns]
+    if missing:
+        raise ValueError(f"History rows are missing columns: {missing}")
+    incoming = rows.loc[:, list(HISTORY_COLUMNS)].copy()
+    if not incoming["source"].eq(source).all():
+        raise ValueError(f"Every history row must have source {source!r}.")
+
+    if path.exists():
+        existing = pd.read_csv(path, parse_dates=["date"])
+    else:
+        existing = pd.DataFrame(columns=HISTORY_COLUMNS)
+    removed = int(existing["source"].eq(source).sum()) if len(existing) else 0
+    kept = existing.loc[~existing["source"].eq(source), list(HISTORY_COLUMNS)]
+    incoming["date"] = pd.to_datetime(incoming["date"])
+    combined = pd.concat([kept, incoming], ignore_index=True)
+    combined = combined.sort_values(
+        ["source", "bucket", "item", "date"]
+    ).reset_index(drop=True)
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    combined.to_csv(path, index=False)
+    mark_observed_source(source, path)
+    return {
+        "removed": removed,
+        "added": len(incoming),
+        "kept": len(kept),
+    }
 
 
 def list_archive_dates() -> list[date]:
@@ -232,9 +333,18 @@ def build_source_of_truth() -> tuple[pd.DataFrame, dict[str, object]]:
 
 
 def update_all_company_prices() -> dict[str, object]:
-    """Recompose ``all_company_prices.csv`` from prior base + dated archives."""
+    """Recompose ``all_company_prices.csv`` from the tracker, prior base, and archives.
+
+    The pricing-tracker workbook is matched onto each scraped menu and written
+    into the prior base first. Dated restaurant snapshots are then stacked on
+    those dishes, so one click compiles history and the latest scrape together.
+    """
+    from src.pricing_tracker import sync_tracker_into_prior
+
+    tracker = sync_tracker_into_prior()
     combined, summary = build_source_of_truth()
     ALL_COMPANY_PRICES_PATH.parent.mkdir(parents=True, exist_ok=True)
     combined.to_csv(ALL_COMPANY_PRICES_PATH, index=False)
     summary["path"] = str(ALL_COMPANY_PRICES_PATH)
+    summary["tracker"] = tracker
     return summary
