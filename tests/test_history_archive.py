@@ -21,6 +21,34 @@ def archive_root(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     return data_dir
 
 
+def test_rebucket_splits_drinks_and_leaves_other_courses() -> None:
+    """A spirit leaves Mains. A dessert does not, because this change is the drink split."""
+    from src.menu_buckets import ALCOHOLIC_DRINKS, NON_ALCOHOLIC_DRINKS
+
+    frame = pd.DataFrame(
+        {
+            "source": ["Zizzi", "Prezzo", "Five Guys", "Nando's"],
+            "item": ["House Prosecco 125ml", "Tiramisu", "Kids Burger With Soda", "Coke"],
+            "bucket": ["Mains", "Mains", "Drinks", "Drinks"],
+        }
+    )
+    lookup = {
+        ("Zizzi", "House Prosecco 125ml"): ALCOHOLIC_DRINKS,
+        ("Prezzo", "Tiramisu"): "Desserts",
+        ("Five Guys", "Kids Burger With Soda"): "Mains",
+        ("Nando's", "Coke"): NON_ALCOHOLIC_DRINKS,
+    }
+
+    revised = history_archive.rebucket_history(frame, lookup)
+
+    assert revised["bucket"].tolist() == [
+        ALCOHOLIC_DRINKS,
+        "Mains",
+        "Mains",
+        NON_ALCOHOLIC_DRINKS,
+    ]
+
+
 def test_resolve_snapshot_path_prefers_newest_archive(archive_root: Path) -> None:
     older = archive_root / "scrapes" / "2026-07-01"
     newer = archive_root / "scrapes" / "2026-07-08"
@@ -78,6 +106,31 @@ def test_update_compiles_tracker_before_stacking_scrapes(
     rice = saved[saved["item"] == "Sticky Rice"].sort_values("date")
     assert rice["date"].dt.strftime("%Y-%m-%d").tolist() == ["2025-03-01", "2026-10-18"]
     assert summary["tracker"]["imported"][0]["brand"] == "Rosa's Thai"
+
+
+def test_own_brand_restaurant_scrape_enters_history(
+    archive_root: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    prior = archive_root / "scrapes" / "prior" / "price_history.csv"
+    live = archive_root / "all_company_prices.csv"
+    monkeypatch.setattr(history_archive, "PRIOR_HISTORY_PATH", prior)
+    monkeypatch.setattr(history_archive, "ALL_COMPANY_PRICES_PATH", live)
+    monkeypatch.setattr(
+        history_archive,
+        "restaurant_snapshot_filenames",
+        lambda: {"wagamama_menu_snapshot.csv": "Wagamama"},
+    )
+    archive = archive_root / "scrapes" / "2026-07-08"
+    archive.mkdir()
+    pd.DataFrame(
+        {"name": ["chicken katsu curry"], "category": ["Curry"], "price": [14.9]}
+    ).to_csv(archive / "wagamama_menu_snapshot.csv", index=False)
+
+    combined, _summary = history_archive.build_source_of_truth()
+
+    assert combined["source"].tolist() == ["Wagamama"]
+    assert combined["price"].tolist() == [14.9]
+    assert combined["date"].dt.strftime("%Y-%m-%d").tolist() == ["2026-07-08"]
 
 
 def test_persist_scrape_snapshot_overwrites_same_day_file(archive_root: Path) -> None:

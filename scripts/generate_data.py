@@ -1,28 +1,27 @@
-"""Build the synthetic analytics dataset and menu snapshots.
+"""Scrape menus and recompose observed price history.
 
 Usage (from the project root)::
 
     python -m scripts.generate_data              # reuse cached snapshots if present
     python -m scripts.generate_data --rescrape   # force fresh scrapes
-    python -m scripts.generate_data --skip-scrape # rebuild price history only
+    python -m scripts.generate_data --skip-scrape # recompose history only
 
 Outputs:
-    data/*_menu_snapshot.csv
-    data/deliveroo_*_snapshot.csv / data/ubereats_*_snapshot.csv
+    data/scrapes/<YYYY-MM-DD>/*_snapshot.csv
     data/all_company_prices.csv
+
+Price history is the pricing-tracker workbook plus dated restaurant-menu
+scrapes. This script does not estimate a price.
 """
 
 from __future__ import annotations
 
 import argparse
-from pathlib import Path
 
-from src.pipeline import ALL_COMPANY_PRICES_PATH, rebuild_price_history
+from src.history_archive import ALL_COMPANY_PRICES_PATH, update_all_company_prices
 from src.restaurants.config import load_restaurants
 from scripts.scrape_all import scrape_restaurant
 from src.scrapers.registry import build_scrapers
-
-DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
 
 def main() -> None:
@@ -35,7 +34,7 @@ def main() -> None:
     parser.add_argument(
         "--skip-scrape",
         action="store_true",
-        help="Rebuild price history from existing snapshots only (no scraping).",
+        help="Recompose price history from the tracker and existing snapshots.",
     )
     args = parser.parse_args()
 
@@ -47,7 +46,7 @@ def main() -> None:
             if result["restaurant_error"]:
                 print(f"Warning: {restaurant.brand} restaurant scrape failed.")
 
-    summary = rebuild_price_history()
+    summary = update_all_company_prices()
     print(
         f"Wrote {summary['rows']} rows to {ALL_COMPANY_PRICES_PATH} "
         f"({len(summary['sources'])} sources, {summary['dates']} dates, "

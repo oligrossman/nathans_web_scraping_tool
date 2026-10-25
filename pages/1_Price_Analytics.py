@@ -1,4 +1,4 @@
-"""Streamlit page: synthetic price analytics.
+"""Streamlit page: observed price analytics.
 
 Thin presentation layer - all data work lives in ``src/analytics.py`` and all
 figures in ``src/charts.py``. This file only wires them to widgets.
@@ -12,18 +12,19 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from src import analytics, auth, charts, delivery_compare, high_low
+from src import analytics, auth, charts, delivery_compare, drilldown, high_low
 from src.app_reload import reload_branding
+from src.github_data import render_sync_banner
 from src.enrichment.schema import GroupingDimension
 from src.enrichment.store import DEFAULT_DB_PATH, list_markets
 from src.history_archive import resolve_company_snapshots
-from src.synthetic import MARKET_LABEL
 
 _branding = reload_branding()
 ANALYTICS_TAGLINE = _branding.ANALYTICS_TAGLINE
 ANALYTICS_TITLE = _branding.ANALYTICS_TITLE
 APP_TITLE = _branding.APP_TITLE
 CONFIG_PAGE_TITLE = _branding.CONFIG_PAGE_TITLE
+MARKET_LABEL = _branding.MARKET_LABEL
 OWN_BRAND = _branding.OWN_BRAND
 apply_sidebar_footer_logo = _branding.apply_sidebar_footer_logo
 apply_sidebar_logo = _branding.apply_sidebar_logo
@@ -49,6 +50,7 @@ PRICES_PATH = analytics.DEFAULT_ALL_COMPANY_PRICES_PATH
 
 st.title(ANALYTICS_TITLE)
 st.caption(ANALYTICS_TAGLINE)
+render_sync_banner()
 
 if not Path(PRICES_PATH).exists():
     st.warning(
@@ -62,25 +64,6 @@ if not Path(PRICES_PATH).exists():
 def _load(path: str, _mtime: float):
     raw = analytics.load_history(path)
     return analytics.with_derived_market(raw)
-
-
-@st.cache_data
-def _wagamama_menu(path: str, _mtime: float, _db_mtime: float):
-    """Wagamama's latest menu snapshot from price history, enriched for grouping.
-
-    Wagamama isn't scraped like the competitors, so its menu comes from the most
-    recent quarter of the synthetic history — enough to always benchmark it on
-    the high/low charts.
-    """
-    raw = analytics.load_history(path)
-    wag = raw[raw["source"] == OWN_BRAND]
-    if wag.empty:
-        return wag.assign(company=OWN_BRAND)
-    latest = wag[wag["date"] == wag["date"].max()]
-    keep = [c for c in ("item", "bucket", "price", "dish_id") if c in latest.columns]
-    frame = latest[keep].copy()
-    frame["company"] = OWN_BRAND
-    return analytics.enrich_snapshot(frame)
 
 
 history = _load(str(PRICES_PATH), PRICES_PATH.stat().st_mtime)
@@ -321,27 +304,11 @@ def _drilldown_nav(
     mid = None if mid_choice == all_mid else mid_choice
     with cols[2]:
         st.caption(
-            f"Filter by company and/or {dim_label.lower()} — pick a specific "
-            f"{dim_label.lower()} (even with **{all_companies}**) to see items."
+            f"The left chart compares restaurants. Pick a {dim_label.lower()} "
+            "to average that group only — the dishes sit on the right, so you "
+            "can see what is driving the average. A company narrows those dishes."
         )
     return company, mid
-
-
-# Wagamama has no Deliveroo snapshot, so its delivery price is a placeholder:
-# Restaurant-menu price plus this flat markup. Replace with real data when scraped.
-PROXY_DELIVERY_MARKUP_PCT = 10.0
-
-
-def _wagamama_delivery_proxy(wag_menu):
-    """Proxy restaurant-vs-delivery rows for Wagamama from its restaurant menu."""
-    if wag_menu.empty:
-        return wag_menu
-    out = wag_menu.rename(columns={"price": "restaurant"}).copy()
-    factor = 1.0 + PROXY_DELIVERY_MARKUP_PCT / 100.0
-    out["delivery"] = (out["restaurant"] * factor).round(2)
-    out["markup_abs"] = (out["delivery"] - out["restaurant"]).round(2)
-    out["markup_pct"] = PROXY_DELIVERY_MARKUP_PCT
-    return out
 
 
 def _signed_pounds(value: float) -> str:
@@ -626,13 +593,13 @@ with tab_compare:
 # --- Restaurant vs delivery ------------------------------------------------
 with tab_delivery:
     st.caption(
-        "Real prices scraped from each company's restaurant website menu and the same "
-        "restaurant on Deliveroo (Camden postcode). Filter by company and/or "
-        f"{dim_label.lower()} below — the metrics and both charts follow your "
-        f"selection. {OWN_BRAND} isn't on Deliveroo, so its delivery price is a "
-        f"placeholder (restaurant menu +{PROXY_DELIVERY_MARKUP_PCT:.0f}%). "
-        f"The red line is {OWN_BRAND}'s best fit of delivery against restaurant "
-        "price, shown when another restaurant or all companies is selected."
+        "Each restaurant is shown on its latest scraped menu and its latest "
+        "delivery menu — not an average over the price history. The left chart "
+        f"compares restaurants. Pick a {dim_label.lower()} to keep that "
+        "comparison and list the dishes on the right. "
+        f"{OWN_BRAND} uses its scraped Brighton restaurant menu and Deliveroo "
+        f"menu. The red line is {OWN_BRAND}'s best fit of those delivery prices "
+        "against restaurant price, shown on the distribution chart."
     )
 
     _snapshots = resolve_company_snapshots()
@@ -653,17 +620,11 @@ with tab_delivery:
 
         comparison = _comparison()
         comparison = comparison[
-            comparison["company"].isin(selected_companies)
+            comparison["company"].isin([OWN_BRAND, *selected_companies])
         ].reset_index(drop=True)
         # Always enrich so market filters (which use cuisine/dish_type) work even
         # when the active grouping dimension is the native bucket column.
         comparison = analytics.enrich_snapshot(comparison)
-        # Wagamama is always present as a benchmark (with proxy delivery prices).
-        wag_proxy = _wagamama_delivery_proxy(
-            _wagamama_menu(str(PRICES_PATH), PRICES_PATH.stat().st_mtime, db_mtime)
-        )
-        if not wag_proxy.empty:
-            comparison = pd.concat([comparison, wag_proxy], ignore_index=True)
         # Global price band: judge an item by its restaurant (menu) price.
         comparison = _in_price_range(comparison, "restaurant")
         comparison, active_market = _market_filter(
@@ -711,18 +672,33 @@ with tab_delivery:
                 "labels and the sort order.",
             )
             sort_col = "markup_abs" if by_abs else "markup_pct"
+            left_kind, right_kind = drilldown.charts_for(company, mid)
+            overall_label = active_market or MARKET_LABEL
+            menu_note = drilldown.latest_menu_note(comparison)
             delivery_highlight: str | None = None
-            if mid is not None:
-                drill_frame = view.sort_values(
-                    sort_col, ascending=False
-                ).reset_index(drop=True)
-                label_col = "item"
+            if left_kind == drilldown.RESTAURANTS:
+                # A chosen group changes which dishes are averaged. It does not
+                # replace the restaurants with those dishes.
+                left_items = drilldown.items_for_restaurant_comparison(
+                    comparison, group=mid, dim=dim
+                )
+                drill_frame = delivery_compare.company_summary(
+                    left_items,
+                    overall_label=overall_label,
+                    overall_exclude=OWN_BRAND,
+                    sort_by=sort_col,
+                )
+                label_col = "company"
                 delivery_highlight = "is_benchmark"
                 title = (
-                    f"{market_prefix}{scope_label} / {mid}: "
-                    "restaurant vs delivery by item"
+                    f"{market_prefix}{mid}: restaurant vs delivery by restaurant"
+                    if mid is not None
+                    else (
+                        f"{market_prefix}Restaurant vs delivery by restaurant "
+                        f"(+ {overall_label} average)"
+                    )
                 )
-            elif company is not None:
+            else:
                 drill_frame = delivery_compare.bucket_summary(
                     comparison, company, dim=dim, sort_by=sort_col
                 )
@@ -731,32 +707,34 @@ with tab_delivery:
                     f"{market_prefix}{company}: restaurant vs delivery by "
                     f"{dim_label.lower()}"
                 )
-            else:
-                overall_label = active_market or MARKET_LABEL
-                drill_frame = delivery_compare.company_summary(
-                    comparison,
-                    overall_label=overall_label,
-                    overall_exclude=OWN_BRAND,
-                    sort_by=sort_col,
-                )
-                label_col = "company"
-                delivery_highlight = "is_benchmark"
-                title = (
-                    f"{market_prefix}Restaurant vs delivery by company "
-                    f"(+ {overall_label} average)"
-                )
 
-            # Every level carries markup, so label the price gap everywhere.
             if not drill_frame.empty:
                 drill_frame = drill_frame.copy()
                 drill_frame["annotation"] = _delivery_annotation(drill_frame, by_abs)
-                # Flag the own-brand row so the chart can make its label stand out.
                 if delivery_highlight and label_col in drill_frame.columns:
                     drill_frame[delivery_highlight] = (
                         drill_frame[label_col] == OWN_BRAND
-                        if label_col == "company"
-                        else drill_frame.get("company") == OWN_BRAND
                     )
+
+            item_frame = pd.DataFrame()
+            if right_kind == drilldown.ITEMS:
+                item_frame = drilldown.items_for_drivers(
+                    comparison, company=company, group=mid, dim=dim
+                )
+                if not item_frame.empty:
+                    item_frame = item_frame.sort_values(
+                        sort_col, ascending=False
+                    ).reset_index(drop=True)
+                    item_frame = item_frame.copy()
+                    if item_frame["company"].nunique() > 1:
+                        item_frame["item"] = (
+                            item_frame["item"].astype(str)
+                            + " ("
+                            + item_frame["company"].astype(str)
+                            + ")"
+                        )
+                    item_frame["annotation"] = _delivery_annotation(item_frame, by_abs)
+                    item_frame["is_benchmark"] = item_frame["company"] == OWN_BRAND
 
             left, right = st.columns(2)
             with left:
@@ -768,20 +746,35 @@ with tab_delivery:
                             title=title,
                             annotate_col="annotation",
                             highlight_col=delivery_highlight,
+                            subtitle=menu_note,
                         ),
                         use_container_width=True,
                         key="delivery_drill",
                     )
             with right:
-                if not view.empty:
-                    # Fit Wagamama on the same price band and bucket, but not on
-                    # the competitor's rows. Omit the line when Wagamama is the
+                if right_kind == drilldown.ITEMS and not item_frame.empty:
+                    driver_scope = company or "All restaurants"
+                    st.plotly_chart(
+                        charts.drilldown_dumbbell(
+                            item_frame,
+                            "item",
+                            title=(
+                                f"{market_prefix}{driver_scope} / {mid}: "
+                                "dishes driving the average"
+                            ),
+                            annotate_col="annotation",
+                            highlight_col="is_benchmark",
+                        ),
+                        use_container_width=True,
+                        key="delivery_items",
+                    )
+                elif right_kind == drilldown.DISTRIBUTION and not view.empty:
+                    # Fit Wagamama on the same price band, but not on the
+                    # competitor's rows. Omit the line when Wagamama is the
                     # restaurant on the chart — the dots are already that menu.
                     benchmark = None
                     if company != OWN_BRAND:
                         benchmark = comparison[comparison["company"] == OWN_BRAND]
-                        if mid is not None:
-                            benchmark = benchmark[benchmark[dim] == mid]
                         if len(benchmark) < 2:
                             benchmark = None
                     st.plotly_chart(
@@ -790,6 +783,7 @@ with tab_delivery:
                             dim=dim,
                             dim_label=dim_label,
                             benchmark=benchmark,
+                            subtitle=menu_note,
                         ),
                         use_container_width=True,
                     )
@@ -806,15 +800,14 @@ with tab_delivery:
 # --- High vs low -----------------------------------------------------------
 with tab_high_low:
     st.caption(
-        "Lowest, average and highest menu prices from restaurant-menu snapshots, with "
-        f"{OWN_BRAND} always included as a benchmark. At item level the diamond "
-        f"(red star for {OWN_BRAND}) is that item's own price, between the cheapest "
-        f"(teal) and dearest (orange) in the {dim_label.lower()} — those two ends "
-        f"are the same on every row. The number to the right of each row is that "
-        f"item's price minus the {dim_label.lower()} average. The curve plots every "
-        f"5th percentile (20 points) so a long menu and {OWN_BRAND}'s shorter one "
-        f"share the same axis. Filter by company and/or {dim_label.lower()} below — "
-        "the metrics and both charts follow your selection."
+        "Lowest, average and highest prices on each restaurant's latest scraped "
+        f"menu, with {OWN_BRAND} always included. This is not an average over the "
+        "price history. The left chart compares restaurants. Pick a "
+        f"{dim_label.lower()} to keep that comparison and list the dishes on the "
+        f"right: the diamond (red star for {OWN_BRAND}) is that dish's price, "
+        "between the cheapest and dearest in the group, and the number beside "
+        "the row is the gap versus the group average. With no "
+        f"{dim_label.lower()} selected, the right chart is the percentile curve."
     )
 
     menu_ready = any(
@@ -832,15 +825,11 @@ with tab_high_low:
             return high_low.build_menu_prices()
 
         menu = _menu_prices()
-        menu = menu[menu["company"].isin(selected_companies)].reset_index(drop=True)
+        menu = menu[
+            menu["company"].isin([OWN_BRAND, *selected_companies])
+        ].reset_index(drop=True)
         # Always enrich so market filters work regardless of grouping dimension.
         menu = analytics.enrich_snapshot(menu)
-        # Wagamama is always present as a benchmark company.
-        wag_menu = _wagamama_menu(
-            str(PRICES_PATH), PRICES_PATH.stat().st_mtime, db_mtime
-        )
-        if not wag_menu.empty:
-            menu = pd.concat([menu, wag_menu], ignore_index=True)
         menu = _in_price_range(menu, "price")
         menu, active_market = _market_filter("highlow", menu, saved_markets)
         if menu.empty:
@@ -886,48 +875,16 @@ with tab_high_low:
                 "average. Drives both the labels and the sort order.",
             )
             spread_sort = "spread" if by_abs else "spread_pct"
+            left_kind, right_kind = drilldown.charts_for(company, mid)
+            overall_label = active_market or MARKET_LABEL
+            menu_note = drilldown.latest_menu_note(menu)
             highlight_col: str | None = None
-            if mid is not None:
-                drill_frame = high_low.item_detail(view, None, mid, dim=dim)
-                if not drill_frame.empty:
-                    drill_frame["diff_abs"] = (
-                        drill_frame["price"] - drill_frame["group_avg"]
-                    ).round(2)
-                    drill_frame["diff_pct"] = (
-                        (drill_frame["price"] / drill_frame["group_avg"] - 1.0)
-                        * 100.0
-                    ).round(1)
-                    rank_col = "diff_abs" if by_abs else "diff_pct"
-                    drill_frame["annotation"] = _versus_average_annotation(
-                        drill_frame, by_abs
-                    )
-                    drill_frame = (
-                        drill_frame.assign(_rank=drill_frame[rank_col].abs())
-                        .sort_values("_rank", ascending=False)
-                        .drop(columns="_rank")
-                        .reset_index(drop=True)
-                    )
-                highlight_col = "is_benchmark"
-                label_col = "item"
-                title = (
-                    f"{market_prefix}{scope_label} / {mid}: item prices within "
-                    f"{dim_label.lower()} range"
+            if left_kind == drilldown.RESTAURANTS:
+                left_items = drilldown.items_for_restaurant_comparison(
+                    menu, group=mid, dim=dim
                 )
-            elif company is not None:
-                drill_frame = high_low.bucket_summary(
-                    menu, company, dim=dim, sort_by=spread_sort
-                )
-                if not drill_frame.empty:
-                    drill_frame["annotation"] = _spread_annotation(drill_frame, by_abs)
-                label_col = dim
-                title = (
-                    f"{market_prefix}{company}: price spread by "
-                    f"{dim_label.lower()}"
-                )
-            else:
-                overall_label = active_market or MARKET_LABEL
                 drill_frame = high_low.company_summary(
-                    menu,
+                    left_items,
                     overall_label=overall_label,
                     overall_exclude=OWN_BRAND,
                     sort_by=spread_sort,
@@ -938,35 +895,68 @@ with tab_high_low:
                     highlight_col = "is_benchmark"
                 label_col = "company"
                 title = (
-                    f"{market_prefix}Menu price spread by company "
-                    f"(+ {overall_label} average)"
+                    f"{market_prefix}{mid}: price spread by restaurant"
+                    if mid is not None
+                    else (
+                        f"{market_prefix}Menu price spread by restaurant "
+                        f"(+ {overall_label} average)"
+                    )
+                )
+            else:
+                drill_frame = high_low.bucket_summary(
+                    menu, company, dim=dim, sort_by=spread_sort
+                )
+                if not drill_frame.empty:
+                    drill_frame["annotation"] = _spread_annotation(drill_frame, by_abs)
+                label_col = dim
+                title = (
+                    f"{market_prefix}{company}: price spread by "
+                    f"{dim_label.lower()}"
                 )
 
-            # RHS curve keeps Wagamama as its own line vs the rest of the field.
-            # The company drilldown must not drop Wagamama, or the comparison
-            # line disappears the moment a competitor is selected.
-            comp_label = company if company else "Competitors"
-            curve_scope = _apply_drill_filter(menu, None, mid, dim)
-            comp_rows = curve_scope[curve_scope["company"] != OWN_BRAND]
-            if company == OWN_BRAND:
-                comp_rows = comp_rows.iloc[0:0]
-            elif company is not None:
-                comp_rows = comp_rows[comp_rows["company"] == company]
-            wag_rows = curve_scope[curve_scope["company"] == OWN_BRAND]
-            curve_parts = []
-            if not comp_rows.empty:
-                curve_parts.append(comp_rows.assign(series=comp_label))
-            if not wag_rows.empty:
-                curve_parts.append(wag_rows.assign(series=OWN_BRAND))
-            curve_frame = (
-                pd.concat(curve_parts, ignore_index=True) if curve_parts else view
-            )
+            item_frame = pd.DataFrame()
+            if right_kind == drilldown.ITEMS:
+                # Drivers of the restaurant average: one row per dish in the group.
+                item_frame = high_low.item_detail(menu, company, mid, dim=dim)
+                if not item_frame.empty:
+                    item_frame["diff_abs"] = (
+                        item_frame["price"] - item_frame["group_avg"]
+                    ).round(2)
+                    item_frame["diff_pct"] = (
+                        (item_frame["price"] / item_frame["group_avg"] - 1.0) * 100.0
+                    ).round(1)
+                    rank_col = "diff_abs" if by_abs else "diff_pct"
+                    item_frame["annotation"] = _versus_average_annotation(
+                        item_frame, by_abs
+                    )
+                    item_frame = (
+                        item_frame.assign(_rank=item_frame[rank_col].abs())
+                        .sort_values("_rank", ascending=False)
+                        .drop(columns="_rank")
+                        .reset_index(drop=True)
+                    )
 
-            # Item rows: the margin number is the gap versus the group average,
-            # drawn past the orange dot. Say so on the chart, and call the
-            # middle marker the item's price so "Average" is not a second,
-            # conflicting reading of that number.
-            item_level = mid is not None
+            # The curve is the right chart only when no group is selected.
+            # Wagamama stays its own line, or the comparison disappears the
+            # moment a competitor is selected.
+            curve_frame = pd.DataFrame()
+            if right_kind == drilldown.DISTRIBUTION:
+                comp_label = company if company else "Competitors"
+                comp_rows = menu[menu["company"] != OWN_BRAND]
+                if company == OWN_BRAND:
+                    comp_rows = comp_rows.iloc[0:0]
+                elif company is not None:
+                    comp_rows = comp_rows[comp_rows["company"] == company]
+                wag_rows = menu[menu["company"] == OWN_BRAND]
+                curve_parts = []
+                if not comp_rows.empty:
+                    curve_parts.append(comp_rows.assign(series=comp_label))
+                if not wag_rows.empty:
+                    curve_parts.append(wag_rows.assign(series=OWN_BRAND))
+                curve_frame = (
+                    pd.concat(curve_parts, ignore_index=True) if curve_parts else view
+                )
+
             left, right = st.columns(2)
             with left:
                 if not drill_frame.empty:
@@ -975,21 +965,36 @@ with tab_high_low:
                             drill_frame,
                             label_col,
                             title=title,
-                            annotate_col="annotation",
+                            annotate_col="annotation" if "annotation" in drill_frame.columns else None,
                             highlight_col=highlight_col,
-                            mid_label="Item price" if item_level else None,
-                            subtitle=(
-                                "Number on the right = this item's price minus "
-                                f"the {dim_label.lower()} average"
-                                if item_level
-                                else None
-                            ),
+                            subtitle=menu_note,
                         ),
                         use_container_width=True,
                         key="highlow_drill",
                     )
             with right:
-                if not curve_frame.empty:
+                if right_kind == drilldown.ITEMS and not item_frame.empty:
+                    driver_scope = company or "All restaurants"
+                    st.plotly_chart(
+                        charts.high_low_dumbbell(
+                            item_frame,
+                            "item",
+                            title=(
+                                f"{market_prefix}{driver_scope} / {mid}: "
+                                "dishes driving the average"
+                            ),
+                            annotate_col="annotation",
+                            highlight_col="is_benchmark",
+                            mid_label="Item price",
+                            subtitle=(
+                                "Number on the right = this dish's price minus "
+                                f"the {dim_label.lower()} average"
+                            ),
+                        ),
+                        use_container_width=True,
+                        key="highlow_items",
+                    )
+                elif right_kind == drilldown.DISTRIBUTION and not curve_frame.empty:
                     st.plotly_chart(
                         charts.price_curve(
                             curve_frame,
@@ -1002,6 +1007,7 @@ with tab_high_low:
                                 else f"{market_prefix}{scope_label} vs {OWN_BRAND}: "
                                 "price by percentile (low → high)"
                             ),
+                            subtitle=menu_note,
                         ),
                         use_container_width=True,
                         key="highlow_curve",

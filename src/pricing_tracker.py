@@ -28,7 +28,7 @@ from pathlib import Path
 import pandas as pd
 
 from src.enrichment.identity import make_dish_id
-from src.synthetic import HISTORY_COLUMNS, resolve_bucket
+from src.menu_buckets import HISTORY_COLUMNS, assign_buckets
 
 # Tracker spelling -> the scraped name it refers to.
 # Normalisation is not enough: a typo, a quantity written as a digit, or a
@@ -291,15 +291,21 @@ def read_big_table(
 
 
 def _bucket_by_item(menu: pd.DataFrame) -> dict[str, str]:
-    """Map each scraped dish to the board bucket its menu category resolves to."""
+    """Map each scraped dish to the board bucket its menu heading resolves to.
+
+    A dish listed under two headings still has one price series. The first
+    heading in the snapshot decides the bucket, and that bucket is applied to
+    every historical date of the dish.
+    """
     if "name" not in menu.columns:
         raise ValueError("Menu snapshot needs a name column.")
+    labelled = menu.copy()
+    labelled["bucket"] = assign_buckets(labelled)
     buckets: dict[str, str] = {}
-    for name, group in menu.groupby("name", sort=False):
-        categories = group["category"] if "category" in group.columns else [None]
-        # A dish listed under two menu headings still has one price series.
-        # The first heading in the snapshot decides the bucket.
-        buckets[str(name)] = resolve_bucket(next(iter(categories)))
+    for name, bucket in zip(labelled["name"], labelled["bucket"]):
+        key = str(name)
+        if key not in buckets:
+            buckets[key] = str(bucket)
     return buckets
 
 

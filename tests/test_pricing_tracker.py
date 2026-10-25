@@ -190,34 +190,3 @@ def test_replace_brand_in_prior_leaves_other_brands(tmp_path: Path) -> None:
     assert saved.loc[saved["source"] == "Pizza Express", "item"].tolist() == ["Margherita"]
     assert saved.loc[saved["source"] == "Nando's", "price"].tolist() == [3.5]
     assert history_archive.load_observed_sources(prior) == {"Nando's"}
-
-
-def test_keep_observed_brands_drops_the_synthetic_rebuild(tmp_path: Path) -> None:
-    prior = tmp_path / "price_history.csv"
-    pd.DataFrame(
-        {
-            "date": ["2022-02-01"],
-            "source": ["Nando's"],
-            "item": ["Chips"],
-            "dish_id": ["real"],
-            "bucket": ["Sides"],
-            "price": [3.5],
-        }
-    ).to_csv(prior, index=False)
-    history_archive.mark_observed_source("Nando's", prior)
-    synthetic = pd.DataFrame(
-        {
-            "date": [pd.Timestamp("2021-12-31"), pd.Timestamp("2021-12-31")],
-            "source": ["Nando's", "Wagamama"],
-            "item": ["Chips", "Pad Thai"],
-            "dish_id": ["fake", "own"],
-            "bucket": ["Sides", "Mains"],
-            "price": [1.0, 13.0],
-        }
-    )
-
-    kept = history_archive.keep_observed_brands(synthetic, prior)
-
-    nandos = kept[kept["source"] == "Nando's"]
-    assert nandos["dish_id"].tolist() == ["real"]
-    assert kept.loc[kept["source"] == "Wagamama", "item"].tolist() == ["Pad Thai"]

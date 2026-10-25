@@ -1,20 +1,19 @@
-"""Date-stamped scrape archive and real price-history accumulation.
+"""Date-stamped scrape archive and observed price-history accumulation.
 
 Layout under ``data/scrapes/``::
 
-    prior/price_history.csv      # frozen historical base
-    prior/observed_sources.txt   # brands whose prior rows are real, not synthetic
+    prior/price_history.csv      # frozen base imported from the pricing tracker
+    prior/observed_sources.txt   # brands imported from the pricing tracker
     <YYYY-MM-DD>/<snapshot>.csv  # raw snapshots captured on that date
 
 :func:`update_all_company_prices` composes ``data/all_company_prices.csv`` (the
 dashboard's single source of truth) by stacking the frozen ``prior`` history
-with one real observation per dated snapshot. Delete a dated folder and re-run
-the update to drop those observations. The ``prior`` base is seeded once from
-``all_company_prices.csv`` so no history is ever lost.
+with one observation per dated restaurant snapshot. Delete a dated folder and
+re-run the update to drop those observations. The ``prior`` base is seeded once
+from ``all_company_prices.csv`` so no history is ever lost.
 
-Only restaurant-menu snapshots become price history (delivery snapshots are still
-archived for the record). Wagamama stays synthetic, so its scraped snapshot is
-archived but not folded into history.
+Only restaurant-menu snapshots become price history. Delivery snapshots stay
+in the archive for the restaurant-vs-delivery comparison.
 """
 
 from __future__ import annotations
@@ -25,10 +24,20 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.branding import OWN_BRAND
 from src.enrichment.identity import make_dish_id
+from src.menu_buckets import (
+    ALCOHOLIC_DRINKS,
+    HISTORY_COLUMNS,
+    LEGACY_DRINKS_BUCKET,
+    NON_ALCOHOLIC_DRINKS,
+    assign_buckets,
+    keep_legacy_drink,
+    migrate_bucket_list,
+    resolve_bucket,
+)
+
+_DRINK_BUCKETS = {ALCOHOLIC_DRINKS, NON_ALCOHOLIC_DRINKS}
 from src.restaurants.config import load_restaurants
-from src.synthetic import HISTORY_COLUMNS, resolve_bucket
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 ARCHIVE_DIR = DATA_DIR / "scrapes"
@@ -51,6 +60,18 @@ def restaurant_snapshot_filenames() -> dict[str, str]:
         restaurant.restaurant_snapshot_path(DATA_DIR).name: restaurant.brand
         for restaurant in load_restaurants()
     }
+
+
+def snapshot_observed_on(path: Path) -> pd.Timestamp | None:
+    """Scrape date of a snapshot stored under ``data/scrapes/YYYY-MM-DD/``.
+
+    A legacy file sitting directly in ``data/`` has no archive date and returns
+    None. High/low and delivery use this so a chart can say which menu it is.
+    """
+    try:
+        return pd.Timestamp(datetime.strptime(path.parent.name, _DATE_FMT))
+    except ValueError:
+        return None
 
 
 def resolve_snapshot_path(filename: str, data_dir: Path | None = None) -> Path:
@@ -112,7 +133,7 @@ def ensure_prior_seed() -> None:
 
 
 def observed_sources_path(prior_path: Path | None = None) -> Path:
-    """Path of the brand list whose prior rows must survive a synthetic rebuild."""
+    """Path of the brand list imported from the pricing tracker."""
     base = prior_path or PRIOR_HISTORY_PATH
     return base.parent / OBSERVED_SOURCES_FILENAME
 
@@ -130,7 +151,7 @@ def load_observed_sources(prior_path: Path | None = None) -> set[str]:
 
 
 def mark_observed_source(source: str, prior_path: Path | None = None) -> None:
-    """Record that ``source`` prior rows are observed history, not a backcast."""
+    """Record that ``source`` prior rows were imported from the pricing tracker."""
     path = observed_sources_path(prior_path)
     sources = load_observed_sources(prior_path)
     sources.add(source)
@@ -138,33 +159,6 @@ def mark_observed_source(source: str, prior_path: Path | None = None) -> None:
     path.write_text(
         "".join(f"{name}\n" for name in sorted(sources)),
         encoding="utf-8",
-    )
-
-
-def keep_observed_brands(
-    synthetic: pd.DataFrame, prior_path: Path | None = None
-) -> pd.DataFrame:
-    """Replace synthetic rows with the prior file's rows for observed brands.
-
-    ``rebuild_price_history`` regenerates every brand from the current menu.
-    Brands already imported from the pricing tracker must keep those rows, so a
-    later rebuild cannot put the fabricated backcast back.
-    """
-    path = prior_path or PRIOR_HISTORY_PATH
-    observed = load_observed_sources(path)
-    if not observed or not path.exists():
-        return synthetic
-    existing = pd.read_csv(path, parse_dates=["date"])
-    real = existing[existing["source"].isin(observed)]
-    if real.empty:
-        return synthetic
-    generated = synthetic[~synthetic["source"].isin(observed)]
-    combined = pd.concat(
-        [generated, real.reindex(columns=HISTORY_COLUMNS)],
-        ignore_index=True,
-    )
-    return combined.sort_values(["source", "bucket", "item", "date"]).reset_index(
-        drop=True
     )
 
 
@@ -243,10 +237,7 @@ def _snapshot_to_history(
     priced = frame.dropna(subset=["price", "name"]).copy()
     if priced.empty:
         return pd.DataFrame(columns=HISTORY_COLUMNS)
-    if "category" in priced.columns:
-        priced["bucket"] = priced["category"].map(resolve_bucket)
-    else:
-        priced["bucket"] = "Mains"
+    priced["bucket"] = assign_buckets(priced)
     return pd.DataFrame(
         {
             "date": pd.Timestamp(when),
@@ -259,6 +250,144 @@ def _snapshot_to_history(
     )
 
 
+def buckets_from_latest_menus() -> dict[tuple[str, str], str]:
+    """``(brand, dish name) -> bucket`` from each brand's newest restaurant menu.
+
+    Historical prices do not store the menu heading. The current heading is how
+    a dish is classified on every date, which is the same rule the pricing
+    tracker uses when it writes the prior file.
+    """
+    lookup: dict[tuple[str, str], str] = {}
+    for brand, (restaurant_path, _) in resolve_company_snapshots().items():
+        if not restaurant_path.exists():
+            continue
+        menu = pd.read_csv(restaurant_path)
+        if "name" not in menu.columns:
+            continue
+        buckets = assign_buckets(menu)
+        for name, bucket in zip(menu["name"], buckets):
+            if pd.isna(name):
+                continue
+            # A dip can also be listed under Pizza. The first heading is the
+            # course for the price series, matching the tracker import.
+            lookup.setdefault((brand, str(name)), str(bucket))
+    return lookup
+
+
+def rebucket_history(
+    frame: pd.DataFrame,
+    lookup: dict[tuple[str, str], str] | None = None,
+) -> pd.DataFrame:
+    """Apply the current drink split to a tidy history frame.
+
+    Only the drink split is applied. A dish labelled ``Drinks`` is split into
+    alcoholic or non-alcoholic (a kids meal or a brownie can leave). A dish
+    labelled as food moves only when it is actually a drink, such as a spirit
+    that had been left in Mains. Other courses are left as they are.
+    """
+    if frame.empty or "bucket" not in frame.columns:
+        return frame
+    buckets = lookup if lookup is not None else buckets_from_latest_menus()
+    sources = frame["source"].astype(str)
+    items = frame["item"].astype(str)
+    current = frame["bucket"].astype(str)
+    revised: list[str] = []
+    for source, item, bucket in zip(sources, items, current):
+        found = buckets.get((source, item))
+        if bucket == LEGACY_DRINKS_BUCKET:
+            if found is None:
+                found = resolve_bucket(LEGACY_DRINKS_BUCKET, item)
+            revised.append(keep_legacy_drink(item, found))
+            continue
+        if found in _DRINK_BUCKETS:
+            revised.append(found)
+            continue
+        revised.append(bucket)
+    out = frame.copy()
+    out["bucket"] = revised
+    return out
+
+
+def _write_history(path: Path, frame: pd.DataFrame) -> None:
+    saved = frame.copy()
+    saved["date"] = pd.to_datetime(saved["date"]).dt.strftime(_DATE_FMT)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    saved.to_csv(path, index=False)
+
+
+def refresh_recorded_buckets() -> dict[str, int]:
+    """Rewrite stored history and saved mappings onto the current buckets.
+
+    The price history and the mapping database both store a bucket on each
+    dish. Changing the drink split has to update those copies, or the charts
+    keep the old single ``Drinks`` series until the next manual import.
+    """
+    from src.enrichment.schema import MarketDefinition
+    from src.enrichment.store import (
+        DEFAULT_DB_PATH,
+        list_markets,
+        save_market,
+    )
+
+    lookup = buckets_from_latest_menus()
+    changed = {"history_rows": 0, "prior_rows": 0, "mappings": 0, "markets": 0}
+
+    for path, key in (
+        (ALL_COMPANY_PRICES_PATH, "history_rows"),
+        (PRIOR_HISTORY_PATH, "prior_rows"),
+    ):
+        if not path.exists():
+            continue
+        frame = pd.read_csv(path)
+        revised = rebucket_history(frame, lookup)
+        changed[key] = int((revised["bucket"] != frame["bucket"].astype(str)).sum())
+        if changed[key]:
+            _write_history(path, revised)
+
+    if DEFAULT_DB_PATH.exists():
+        import sqlite3
+
+        with sqlite3.connect(DEFAULT_DB_PATH) as conn:
+            conn.row_factory = sqlite3.Row
+            for table in ("dish_mappings", "dish_overrides"):
+                rows = conn.execute(
+                    f"SELECT dish_id, source, name, bucket FROM {table}"
+                ).fetchall()
+                for row in rows:
+                    current = row["bucket"]
+                    if current is None:
+                        continue
+                    found = lookup.get((row["source"], row["name"]))
+                    if current == LEGACY_DRINKS_BUCKET:
+                        if found is None:
+                            found = resolve_bucket(LEGACY_DRINKS_BUCKET, row["name"])
+                        found = keep_legacy_drink(row["name"], found)
+                    elif found not in _DRINK_BUCKETS:
+                        continue
+                    if found and found != current:
+                        conn.execute(
+                            f"UPDATE {table} SET bucket = ? WHERE dish_id = ?",
+                            (found, row["dish_id"]),
+                        )
+                        changed["mappings"] += 1
+
+    for market in list_markets():
+        migrated = migrate_bucket_list(list(market.buckets))
+        if migrated == list(market.buckets):
+            continue
+        save_market(
+            MarketDefinition(
+                name=market.name,
+                cuisines=list(market.cuisines),
+                dish_types=list(market.dish_types),
+                companies=list(market.companies),
+                buckets=migrated,
+            )
+        )
+        changed["markets"] += 1
+    return changed
+
+
 def _frames_from_latest_snapshots(when: date | None = None) -> list[pd.DataFrame]:
     """Convert legacy canonical snapshots in ``data/`` into history rows.
 
@@ -269,8 +398,6 @@ def _frames_from_latest_snapshots(when: date | None = None) -> list[pd.DataFrame
     observed = when or date.today()
     frames: list[pd.DataFrame] = []
     for filename, brand in restaurant_snapshot_filenames().items():
-        if brand == OWN_BRAND:
-            continue
         path = resolve_snapshot_path(filename)
         if ARCHIVE_DIR in path.parents or not path.exists():
             continue
@@ -295,7 +422,7 @@ def build_source_of_truth() -> tuple[pd.DataFrame, dict[str, object]]:
         captured = False
         for path in sorted(archive_dir_for(archive_date).glob("*.csv")):
             brand = filename_to_brand.get(path.name)
-            if brand is None or brand == OWN_BRAND:
+            if brand is None:
                 continue
             rows = _snapshot_to_history(pd.read_csv(path), brand, archive_date)
             if not rows.empty:
@@ -320,6 +447,9 @@ def build_source_of_truth() -> tuple[pd.DataFrame, dict[str, object]]:
             .sort_values(["source", "bucket", "item", "date"])
             .reset_index(drop=True)
         )
+        # Prior rows were classified when they were imported. Re-apply the
+        # current headings so a drink split reaches those historical dates too.
+        combined = rebucket_history(combined)
 
     summary: dict[str, object] = {
         "rows": len(combined),

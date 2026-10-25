@@ -19,6 +19,7 @@ from src.charts import (
     percentile_prices,
     price_curve,
     single_bucket_comparison,
+    soft_wrap_heading,
 )
 
 
@@ -90,6 +91,23 @@ def test_price_curve_aligns_menus_of_different_lengths() -> None:
     assert fig.layout.xaxis.title.text == "Percentile"
 
 
+def test_long_heading_soft_wraps_on_word_boundaries() -> None:
+    """A heading breaks at a space. It does not cut a word, and a short one stays one line."""
+    short = "Latest price by course (bucket)"
+    long = (
+        "Price trends by course (bucket) - Wagamama vs Nando's, Pizza Express "
+        "vs market (market excl. Wagamama)"
+    )
+
+    assert soft_wrap_heading(short) == short
+    wrapped = soft_wrap_heading(long, width=48)
+    assert "<br>" in wrapped
+    assert "Wagamama" in wrapped
+    for line in wrapped.split("<br>"):
+        assert len(line) <= 48
+        assert not line.endswith(" ")
+
+
 def test_long_axis_name_stays_narrow_and_hover_keeps_it() -> None:
     """A scraped description must not become the width of the range chart."""
     long_name = "182 kcal - slightly smaller portion, ideal as a side or starter " + ("noodle " * 20)
@@ -146,10 +164,11 @@ def test_item_row_labels_the_gap_versus_the_group_average() -> None:
     )
 
     assert fig.layout.title.text == "Mains: item prices within course range"
-    assert (
-        fig.layout.title.subtitle.text
-        == "Number on the right = this item's price minus the course average"
+    # The sentence is wider than a half-width chart, so it breaks on a space.
+    assert fig.layout.title.subtitle.text == soft_wrap_heading(
+        "Number on the right = this item's price minus the course average"
     )
+    assert "<br>" in fig.layout.title.subtitle.text
     names = [trace.name for trace in fig.data]
     assert "Item price" in names
     assert "Average" not in names

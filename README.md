@@ -3,8 +3,8 @@
 A Streamlit platform for Wagamama's competitive pricing team. It scrapes
 competitor food-chain menus (item names + prices) using Selenium, previews
 results in a table, and lets you download them as CSVs. A dedicated **Price
-Analytics** page benchmarks Wagamama against the market with synthetic
-historical trends and real restaurant-vs-delivery comparisons.
+Analytics** page benchmarks Wagamama against the market using observed prices:
+the pricing tracker, plus dated restaurant-menu scrapes.
 
 The first supported competitor sites are **Nando's** (Camden) and **Pizza
 Express** (Birmingham Bullring), each with restaurant-website and Deliveroo delivery
@@ -71,17 +71,19 @@ Then, in the **Build the analytics dataset** section on the same page:
 
 ### How price history accumulates
 
-`data/all_company_prices.csv` is composed from two things:
+`data/all_company_prices.csv` is composed from two observed sources:
 
-- `data/scrapes/prior/price_history.csv` — the frozen historical base (the
-  synthetic 5-year backcast). Seeded automatically the first time from whatever
-  `all_company_prices.csv` already exists.
-- `data/scrapes/<YYYY-MM-DD>/*.csv` — one dated snapshot per scrape. Each becomes
-  a real observation (per item, per date) when you click **Update price history**.
+- `data/scrapes/prior/price_history.csv` — the frozen base imported from
+  `Master - Pricing Tracker.xlsx`. Seeded automatically the first time from
+  whatever `all_company_prices.csv` already exists.
+- `data/scrapes/<YYYY-MM-DD>/*.csv` — one dated snapshot per scrape. Each
+  restaurant menu becomes one observation (per item, per date) when you click
+  **Update price history**.
 
 Delete a dated folder (there's a **Manage dated archives** panel on the Data page)
 and the next update drops those observations — an easy way to prune bad scrapes.
-Only restaurant menus feed history; Wagamama stays synthetic.
+Only restaurant menus feed history. Delivery snapshots stay in the archive for
+the restaurant-vs-delivery comparison.
 
 ## Adding a new chain
 
@@ -91,19 +93,21 @@ Only restaurant menus feed history; Wagamama stays synthetic.
 
 That's it - the UI updates automatically from the registry.
 
-## Price analytics (synthetic)
+## Price analytics
 
-The **Price Analytics** page (in the sidebar) explores 5 years of *synthetic*
-quarterly price history for:
+The **Price Analytics** page (in the sidebar) explores observed price history for:
 
-- **Wagamama** — our brand, with a distinct bespoke menu.
-- **Nando's / Pizza Express** — competitor companies anchored on live scraped menus.
+- **Wagamama** — our brand. History comes from the pricing tracker and the
+  dated restaurant-menu scrapes.
+- **Nando's / Pizza Express** and the other scraped chains — the same two
+  observed sources.
 - **Market** — derived at load time as a restaurant-count-weighted average of
-  competitor companies (weights in `data/company_weights.csv`).
+  competitor companies (weights in `data/company_weights.csv`). Every market
+  point is an average of those observed competitor prices.
 
-All menu categories collapse into five board-level buckets (Starters, Mains,
-Sides, Drinks, Desserts), plus a **Total** series (equal-weighted mean across
-buckets). The page shows five views:
+All menu categories collapse into six board-level buckets (Starters, Mains,
+Sides, Drinks (non-alcoholic), Drinks (alcoholic), Desserts), plus a **Total**
+series (equal-weighted mean across buckets). The page shows five views:
 
 - **By bucket** — bucket breakdown (absolute, indexed, heatmap with Total row).
 - **Wagamama vs market** — breakdown by bucket (including **Total** as a facet
@@ -111,10 +115,12 @@ buckets). The page shows five views:
   Pick which market benchmark(s) to compare against — **Market whole** (a
   restaurant-count-weighted average of all selected competitors) and any custom
   markets. All market benchmarks exclude Wagamama dishes.
-- **Restaurant vs delivery (real data)** — click-through drilldown with
-  **← Back**, breadcrumb, or chart click: Company → Bucket → Item.
-- **High vs low** — lowest, average and highest menu prices with the same
-  drilldown pattern (item level shows each price within its bucket range).
+- **Restaurant vs delivery** — latest scraped menu against the latest delivery
+  menu. The left chart compares restaurants. Choosing a bucket keeps that
+  comparison and lists the dishes on the right.
+- **High vs low** — lowest, average and highest price on each restaurant's
+  latest menu (not an average over the price history), with the same
+  left-hand restaurant comparison.
 
 The **Comparison Configuration** page holds the settings that shape the
 analytics charts: LLM-generated dish attributes (cuisine, dish type such as
@@ -155,22 +161,19 @@ Charts use Wagamama brand red (`#D11317`) for our brand and Deliveroo teal
 ### Generating / refreshing the data
 
 The datasets in `data/` are committed so the page works out of the box. You can
-rebuild them from the **Data** page buttons, or from the CLI (deterministic -
-uses a fixed random seed):
+rebuild them from the **Data** page buttons, or from the CLI:
 
 ```bash
 python -m scripts.scrape_all               # scrape every chain into snapshots
-python -m scripts.generate_data            # scrape + regenerate synthetic prior base + update
+python -m scripts.generate_data            # scrape, then recompose observed history
 python -m scripts.generate_data --rescrape # force a fresh scrape first
-python -m scripts.generate_data --skip-scrape # regenerate base + update from snapshots only
+python -m scripts.generate_data --skip-scrape # recompose history from snapshots only
 ```
 
-`generate_data` regenerates the synthetic **prior base**
-(`data/scrapes/prior/price_history.csv`) from the current snapshots, then
-recomposes `data/all_company_prices.csv` from that base plus any dated archives. It
-reads `data/company_weights.csv` for the Market benchmark weights. For a
-day-to-day append (no synthetic regeneration), use **Update price history** on the
-Data page.
+`generate_data` recomposes `data/all_company_prices.csv` from the pricing
+tracker and the dated restaurant archives. It does not estimate a price. The
+Market benchmark weights are in `data/company_weights.csv`. **Update price
+history** on the Data page runs the same recompose.
 
 Brand constants (colours, copy, own-brand label) live in `src/branding.py`.
 

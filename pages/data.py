@@ -11,6 +11,7 @@ import streamlit as st
 from datetime import datetime
 
 from src import auth, history_archive, scrape_log
+from src.github_data import publish, render_sync_banner
 from src.app_reload import reload_branding, reload_history_compiler, reload_scrape_registry
 from src.enrichment.store import DEFAULT_DB_PATH
 from src.export import dataframe_to_csv_bytes, items_to_dataframe
@@ -42,6 +43,7 @@ apply_sidebar_branding()
 st.markdown(brand_css(), unsafe_allow_html=True)
 st.title(APP_TITLE)
 st.caption(APP_TAGLINE)
+render_sync_banner()
 
 
 def _slug(site_name: str) -> str:
@@ -142,6 +144,7 @@ if st.button("Scrape selected", type="primary", disabled=not selected):
     with st.spinner(f"Scraping {len(selected)} site(s) concurrently..."):
         results = run_scrapes(selected)
         persist_results(results)
+        publish("Save scraped menus")
     st.session_state["scrape_results"] = results
     st.rerun()
 
@@ -188,7 +191,9 @@ st.markdown(
     "3. **Update price history** — matches the pricing-tracker workbook onto each "
     "scraped menu, then stacks that history with every dated archive into "
     "`all_company_prices.csv` (the dashboard's source of truth).\n"
-    "4. Open **Price Analysis** to explore the refreshed data."
+    "4. Open **Price Analysis** to explore the refreshed data.\n\n"
+    "With a `GITHUB_TOKEN` secret, each of these saves is also copied to GitHub "
+    "so the files are still there after the app restarts."
 )
 
 _snapshot_paths = sorted({str(p) for p in SNAPSHOT_BY_SITE.values()})
@@ -232,6 +237,7 @@ with enrich_col:
 
         with st.spinner(f"Classifying {_pending} new dish(es) via OpenAI..."):
             summary = enrich_all(on_progress=_on_progress)
+            publish("Save dish enrichment")
         progress.empty()
 
         if summary["status"] == "empty":
@@ -273,9 +279,11 @@ with history_col:
         with st.spinner("Compiling the pricing tracker and dated scrapes..."):
             compiler = reload_history_compiler()
             st.session_state["prices_update_summary"] = compiler.update_all_company_prices()
+            publish("Update price history")
         # Price Analysis caches frames in this same process. Drop them so the
         # next visit reads the file just written, without restarting the app.
         st.cache_data.clear()
+        st.rerun()
 
     _prices_summary = st.session_state.get("prices_update_summary")
     if _prices_summary:
@@ -326,4 +334,5 @@ if _archive_dates:
             row_left.write(f"`{label}` — {file_count} snapshot file(s)")
             if row_right.button("Delete", key=f"del_archive_{label}"):
                 history_archive.delete_archive(archive_date)
+                publish(f"Delete scrape archive {label}")
                 st.rerun()

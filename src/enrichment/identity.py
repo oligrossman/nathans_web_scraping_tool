@@ -7,9 +7,8 @@ always resolves to the same id in the CSV, the SQLite mappings, and at join
 time — no persisted counter required, and existing rows can be back-filled by
 recomputation.
 
-This module intentionally has no project imports so it can be used from both
-``synthetic`` (which builds the price history) and ``delivery_compare``-adjacent
-code without creating an import cycle.
+This module intentionally has no project imports so price history, delivery
+comparisons, and the mappings database can share one id without an import cycle.
 """
 
 from __future__ import annotations

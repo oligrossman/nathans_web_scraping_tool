@@ -10,6 +10,8 @@ from typing import Any
 
 import pandas as pd
 
+from src.menu_buckets import BUCKETS
+
 from .schema import (
     UNMAPPED_LABEL,
     Cuisine,
@@ -245,6 +247,14 @@ def set_override(
         )
 
 
+def delete_dish(dish_id: str, db_path: Path | str = DEFAULT_DB_PATH) -> None:
+    """Remove one dish's mapping and any override."""
+    init_db(db_path)
+    with _connect(db_path) as conn:
+        conn.execute("DELETE FROM dish_overrides WHERE dish_id = ?", (dish_id,))
+        conn.execute("DELETE FROM dish_mappings WHERE dish_id = ?", (dish_id,))
+
+
 def clear_override(dish_id: str, db_path: Path | str = DEFAULT_DB_PATH) -> None:
     """Remove all user overrides for a dish."""
     init_db(db_path)
@@ -351,7 +361,7 @@ def enum_options() -> dict[str, list[str]]:
     return {
         "cuisine": [member.value for member in Cuisine],
         "dish_type": [member.value for member in DishType],
-        "bucket": ["Starters", "Mains", "Sides", "Drinks", "Desserts"],
+        "bucket": list(BUCKETS),
     }
 
 

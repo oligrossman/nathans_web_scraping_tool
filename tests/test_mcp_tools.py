@@ -4,9 +4,8 @@ from __future__ import annotations
 
 from mcp_server import tools
 from mcp_server.serialize import HARD_MAX, clamp_limit, dataframe_to_records
-from src.branding import OWN_BRAND
+from src.branding import MARKET_LABEL, OWN_BRAND
 from src.enrichment.schema import GroupingDimension
-from src.synthetic import MARKET_LABEL
 
 
 def test_list_companies_happy_path():
@@ -54,6 +53,66 @@ def test_find_dishes_happy_path():
     result = tools.find_dishes("chicken")
     assert result["rows"]
     assert all("chicken" in row["item"].lower() for row in result["rows"])
+
+
+def test_find_dishes_uses_each_companys_own_latest_date():
+    result = tools.find_dishes("duck soba")
+    assert result["rows"]
+    duck = next(row for row in result["rows"] if "duck soba" in row["item"].lower())
+    assert duck["source"] == OWN_BRAND
+    assert duck["price"] == 20.4
+    assert duck["date"] == "2026-07-08"
+
+
+def test_dish_history_returns_the_series():
+    result = tools.dish_history("saku saku duck soba", source=OWN_BRAND)
+    assert result["items"] == 1
+    assert len(result["rows"]) > 1
+    assert result["rows"][0]["pct_change"] == 0.0
+    assert result["rows"][-1]["price"] == 20.4
+    assert result["rows"][-1]["date"] == "2026-07-08"
+
+
+def test_latest_prices_ranks_mains_by_average():
+    result = tools.latest_prices("Mains")
+    assert result["group"] == "Mains"
+    assert result["rows"]
+    averages = [row["average"] for row in result["rows"]]
+    assert averages == sorted(averages, reverse=True)
+    wagamama = next(row for row in result["rows"] if row["source"] == OWN_BRAND)
+    assert wagamama["date"] == "2026-07-08"
+    assert wagamama["dishes"] >= 1
+    assert wagamama["average"] == max(averages)
+    assert "median" in wagamama
+
+
+def test_latest_prices_unknown_group_lists_valid_values():
+    result = tools.latest_prices("Not a course")
+    assert "error" in result
+    assert "Mains" in result["valid_groups"]
+
+
+def test_list_markets_and_company_weights():
+    markets = tools.list_markets()
+    assert isinstance(markets["markets"], list)
+    assert markets["count"] == len(markets["markets"])
+
+    weights = tools.company_weights()
+    assert weights["rows"]
+    assert OWN_BRAND not in {row["company"] for row in weights["rows"]}
+    nandos = next(row for row in weights["rows"] if row["company"] == "Nando's")
+    assert nandos["restaurants"] == 473
+    assert abs(sum(row["weight_pct"] for row in weights["rows"]) - 100) < 0.2
+
+
+def test_dish_attributes_returns_classification():
+    result = tools.dish_attributes("duck soba", source=OWN_BRAND)
+    assert result["rows"]
+    row = result["rows"][0]
+    assert "duck soba" in row["name"].lower()
+    assert row["cuisine"]
+    assert row["dish_type"]
+    assert "is_vegan" in row
 
 
 def test_data_freshness_happy_path():
@@ -107,7 +166,8 @@ def test_glossary_resource_text():
     text = tools.glossary()
     assert OWN_BRAND in text
     assert MARKET_LABEL in text
-    assert "synthetic" in text.lower()
+    assert "observed only" in text.lower()
+    assert "synthetic" not in text.lower()
 
 
 def test_dataframe_to_records_rounds_and_caps():

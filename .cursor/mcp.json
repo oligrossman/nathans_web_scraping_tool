@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "menu-intelligence-render": {
+      "url": "https://nathans-web-scraping-tool.onrender.com/mcp",
+      "headers": {
+        "Authorization": WHATSBETTERTHANADUCKSOBA
+      }
+    }
+  }
+}

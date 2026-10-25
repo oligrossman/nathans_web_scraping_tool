@@ -8,6 +8,7 @@ Plotly ``Figure``. No Streamlit here, so figures can be reused or exported
 from __future__ import annotations
 
 import html
+import textwrap
 
 import numpy as np
 import pandas as pd
@@ -16,9 +17,15 @@ import plotly.graph_objects as go
 import plotly.io as pio
 
 from . import analytics
-from .branding import DELIVEROO_TEAL, OWN_BRAND, SOURCE_COLOURS, WAGAMAMA_RED
+from .branding import (
+    DELIVEROO_TEAL,
+    MARKET_LABEL,
+    OWN_BRAND,
+    SOURCE_COLOURS,
+    TOTAL_LABEL,
+    WAGAMAMA_RED,
+)
 from .enrichment.schema import GroupingDimension
-from .synthetic import MARKET_LABEL, TOTAL_LABEL
 
 _TEMPLATE = "plotly_white"
 # Source colours imported from branding — Wagamama red is the hero series.
@@ -38,6 +45,61 @@ _HIGH_LOW_LABELS = {"low": "Lowest", "average": "Average", "high": "Highest"}
 # tick fits, so one scraped description can leave a sliver for the range.
 # One short line stays recognisable; the full name is on the hover.
 _AXIS_LABEL_CHARS = 28
+# Half-width charts sit in a Streamlit column. Plotly does not wrap a title,
+# so a long heading is clipped. Break on spaces and let the top margin grow.
+_HEADING_WIDTH = 52
+
+
+def soft_wrap_heading(text: str, *, width: int = _HEADING_WIDTH) -> str:
+    """Break a chart heading on word boundaries.
+
+    Plotly draws the title as HTML and does not soft-wrap it. A ``<br>`` is a
+    line break that still happens between words, which is what "soft wrap"
+    means: the line breaks at a space, not in the middle of a word.
+    """
+    clean = " ".join(str(text).split())
+    if not clean:
+        return clean
+    lines = textwrap.wrap(
+        clean,
+        width=width,
+        break_long_words=False,
+        break_on_hyphens=False,
+    )
+    return "<br>".join(lines) if lines else clean
+
+
+def _set_heading(
+    fig: go.Figure,
+    title: str | None,
+    *,
+    subtitle: str | None = None,
+    width: int = _HEADING_WIDTH,
+) -> go.Figure:
+    """Apply a soft-wrapped title, and grow the top margin to fit the lines."""
+    if not title:
+        return fig
+    wrapped = soft_wrap_heading(title, width=width)
+    extra_lines = wrapped.count("<br>")
+    if subtitle:
+        wrapped_sub = soft_wrap_heading(subtitle, width=width)
+        extra_lines += 1 + wrapped_sub.count("<br>")
+        fig.update_layout(
+            title={
+                "text": wrapped,
+                "subtitle": {
+                    "text": wrapped_sub,
+                    "font": {"size": 13, "color": "#4B5563"},
+                },
+            }
+        )
+    else:
+        fig.update_layout(title={"text": wrapped})
+    if extra_lines:
+        current = fig.layout.margin.t
+        top = 80 if current is None else int(current)
+        fig.update_layout(margin_t=top + extra_lines * 20)
+    return fig
 
 
 def _date_label(value: object) -> str:
@@ -180,6 +242,7 @@ def individual_items_line(history, items: list[str]) -> go.Figure:
         category_orders={"date": date_order},
     )
     fig.update_layout(yaxis_tickprefix="£", legend_title_text="")
+    _set_heading(fig, "Individual item price trends - Nando's")
     return _pin_date_axis(fig, date_order)
 
 
@@ -205,6 +268,7 @@ def total_line(history, source: str = "Nando's", *, indexed: bool = False) -> go
     )
     fig.update_traces(line=dict(color="#111827", width=3), marker=dict(size=8, symbol="diamond"))
     fig.update_layout(yaxis_tickprefix=prefix, showlegend=False)
+    _set_heading(fig, f"Total average menu price{suffix} - {source}")
     return _pin_date_axis(fig, date_order)
 
 
@@ -266,6 +330,8 @@ def bucket_line(
         # No title means the default ~100px top margin is just dead space; shrink
         # it so the chart sits snugly under its (external) heading.
         fig.update_layout(margin=dict(t=30))
+    else:
+        _set_heading(fig, f"Average price by {dim_label.lower()}{title} - {source}")
     return _pin_date_axis(fig, date_order)
 
 
@@ -334,6 +400,7 @@ def comparison_facets(
         height=max(420, 300 * n_rows),
         margin=dict(t=90),
     )
+    _set_heading(fig, title, width=78)
     return _pin_date_axis(fig, date_order)
 
 
@@ -382,6 +449,7 @@ def single_bucket_comparison(
         fig.update_layout(yaxis_ticksuffix="%", legend_title_text="")
     else:
         fig.update_layout(yaxis_tickprefix="£", legend_title_text="")
+    _set_heading(fig, title)
     return _pin_date_axis(fig, date_order)
 
 
@@ -444,6 +512,7 @@ def latest_price_bars(
         fig.update_layout(yaxis_ticksuffix="%", legend_title_text="")
     else:
         fig.update_layout(yaxis_tickprefix="£", legend_title_text="")
+    _set_heading(fig, title)
     return fig
 
 
@@ -490,6 +559,8 @@ def pct_change_heatmap(
     fig.update_xaxes(tickangle=-45, tickfont=dict(style="italic"))
     if not show_title:
         fig.update_layout(margin=dict(t=30))
+    else:
+        _set_heading(fig, f"Price change since the previous date - {source}")
     return fig
 
 
@@ -518,6 +589,7 @@ def delivery_scatter(
     dim: str = "bucket",
     dim_label: str = "Bucket",
     benchmark=None,
+    subtitle: str | None = None,
 ) -> go.Figure:
     """Per-item scatter; points above the parity line carry a delivery premium.
 
@@ -597,12 +669,16 @@ def delivery_scatter(
     _add_benchmark_fit(fig, benchmark, x_max=hi)
     fig.update_layout(
         template=_TEMPLATE,
-        title="Per-item price: delivery vs restaurant (above dashed line = premium)",
         xaxis_title="Restaurant price (GBP)",
         yaxis_title="Delivery price (GBP)",
         legend_title_text=dim_label,
         xaxis_tickprefix="£",
         yaxis_tickprefix="£",
+    )
+    _set_heading(
+        fig,
+        "Per-item price: delivery vs restaurant (above dashed line = premium)",
+        subtitle=subtitle,
     )
     return fig
 
@@ -740,6 +816,7 @@ def price_curve(
     label_col: str = "item",
     detail_col: str | None = None,
     series_col: str | None = None,
+    subtitle: str | None = None,
 ) -> go.Figure:
     """Price distribution, low to high.
 
@@ -786,12 +863,12 @@ def price_curve(
 
     fig.update_layout(
         template=_TEMPLATE,
-        title=title,
         xaxis_title=xaxis_title,
         yaxis_title="Price (GBP)",
         yaxis_tickprefix="£",
         height=420,
     )
+    _set_heading(fig, title, subtitle=subtitle)
     return fig
 
 
@@ -948,22 +1025,17 @@ def drilldown_dumbbell(
         range=[-0.5, len(plot) - 0.5],
     )
     height = max(400, 40 * len(plot) + 120)
-    title_layout: str | dict = title
     if subtitle:
-        title_layout = {
-            "text": title,
-            "subtitle": {"text": subtitle, "font": {"size": 13, "color": "#4B5563"}},
-        }
         height += 28
     fig.update_layout(
         template=_TEMPLATE,
-        title=title_layout,
         xaxis_tickprefix="£",
         legend_title_text="",
         height=height,
         dragmode=False,
         hovermode="closest",
     )
+    _set_heading(fig, title, subtitle=subtitle)
     return fig
 
 

@@ -1,9 +1,11 @@
-"""High vs low menu price spread from restaurant-menu snapshots.
+"""High vs low menu price spread from each restaurant's latest menu snapshot.
 
-For each aggregation level we report the lowest item price, highest item price,
-and the average menu price. Item-level drilldown shows where each item sits
-within its bucket's min–max range (low = bucket min, high = bucket max,
-average = item price).
+The figures are the current menu: lowest item, highest item, and the average
+item price. They are not an average across the price history. ``as_of`` is the
+date that snapshot was scraped.
+
+Item-level detail shows where each dish sits within its group's min–max range
+(low = group min, high = group max, average = the dish price).
 """
 
 from __future__ import annotations
@@ -13,8 +15,8 @@ from pathlib import Path
 import pandas as pd
 
 from .branding import OWN_BRAND
-from .history_archive import resolve_company_snapshots
-from .synthetic import resolve_bucket
+from .history_archive import resolve_company_snapshots, snapshot_observed_on
+from .menu_buckets import assign_buckets
 
 _DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
@@ -22,10 +24,9 @@ _DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 def _load_company_menu(company: str, restaurant_path: Path) -> pd.DataFrame:
     menu = pd.read_csv(restaurant_path).dropna(subset=["price"]).copy()
     menu["company"] = company
-    if "category" in menu.columns:
-        menu["bucket"] = menu["category"].map(resolve_bucket)
-    else:
-        menu["bucket"] = "Mains"
+    menu["bucket"] = assign_buckets(menu)
+    observed = snapshot_observed_on(restaurant_path)
+    menu["as_of"] = observed
     return menu.rename(columns={"name": "item"})
 
 
@@ -34,7 +35,8 @@ def build_menu_prices(
 ) -> pd.DataFrame:
     """Item-level menu prices from restaurant-menu snapshots.
 
-    Columns: ``company``, ``item``, ``bucket``, ``price``.
+    Columns: ``company``, ``item``, ``bucket``, ``price``, ``as_of``.
+    ``as_of`` is the scrape date of that restaurant's newest snapshot.
     """
     registry = snapshots or resolve_company_snapshots()
     frames: list[pd.DataFrame] = []
@@ -43,7 +45,7 @@ def build_menu_prices(
             continue
         frames.append(_load_company_menu(company, restaurant_path))
     if not frames:
-        return pd.DataFrame(columns=["company", "item", "bucket", "price"])
+        return pd.DataFrame(columns=["company", "item", "bucket", "price", "as_of"])
     return pd.concat(frames, ignore_index=True)
 
 

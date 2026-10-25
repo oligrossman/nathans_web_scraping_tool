@@ -18,14 +18,14 @@ from starlette.responses import JSONResponse
 from mcp_server import tools
 from mcp_server.auth import BearerAuthMiddleware, load_auth_token
 from mcp_server.serialize import DEFAULT_LIMIT, HARD_MAX
+from src.branding import MARKET_LABEL, OWN_BRAND
 from src.enrichment.schema import GroupingDimension
-from src.synthetic import MARKET_LABEL
 
 logger = logging.getLogger(__name__)
 
 SERVER_INSTRUCTIONS = (
     "Read-only Wagamama menu pricing intelligence. "
-    f"{tools.SYNTHETIC_HISTORY_CAVEAT} {tools.SNAPSHOT_CAVEAT} "
+    f"{tools.OBSERVED_HISTORY_NOTE} {tools.SNAPSHOT_CAVEAT} "
     "Call list_companies for valid company names; never invent chains. "
     f"Grouping dimensions: {[d.value for d in GroupingDimension]}. "
     f"Default market benchmark label: {MARKET_LABEL!r}."
@@ -47,8 +47,8 @@ def build_mcp() -> MCPServer:
         "menu://glossary",
         name="glossary",
         description=(
-            "Short definitions: buckets, Market whole, synthetic history vs "
-            "scraped snapshots."
+            "Short definitions: buckets, Market whole, observed price history, "
+            "and scraped snapshots."
         ),
         mime_type="text/markdown",
     )
@@ -58,7 +58,7 @@ def build_mcp() -> MCPServer:
     @mcp.tool(
         description=(
             "List the own brand and competitor companies present in price history. "
-            f"{tools.SYNTHETIC_HISTORY_CAVEAT}"
+            f"{tools.OBSERVED_HISTORY_NOTE}"
         )
     )
     def list_companies() -> dict[str, Any]:
@@ -67,7 +67,7 @@ def build_mcp() -> MCPServer:
     @mcp.tool(
         description=(
             "Latest price-history date plus scrape status for registered sites "
-            f"(for 'as of' answers). {tools.SYNTHETIC_HISTORY_CAVEAT}"
+            f"(for 'as of' answers). {tools.OBSERVED_HISTORY_NOTE}"
         )
     )
     def data_freshness() -> dict[str, Any]:
@@ -77,7 +77,7 @@ def build_mcp() -> MCPServer:
         description=(
             "Board-level KPIs (CAGR, total change, fastest bucket, latest averages). "
             "Optional source filters to one company; omit for the whole set. "
-            f"{tools.SYNTHETIC_HISTORY_CAVEAT}"
+            f"{tools.OBSERVED_HISTORY_NOTE}"
         )
     )
     def price_kpis(source: str | None = None) -> dict[str, Any]:
@@ -88,7 +88,7 @@ def build_mcp() -> MCPServer:
             "Average price and cumulative % change by company and grouping "
             f"dimension ({[d.value for d in GroupingDimension]}). "
             f"Rows capped (default {DEFAULT_LIMIT}, max {HARD_MAX}). "
-            f"{tools.SYNTHETIC_HISTORY_CAVEAT}"
+            f"{tools.OBSERVED_HISTORY_NOTE}"
         )
     )
     def price_trends(
@@ -109,7 +109,7 @@ def build_mcp() -> MCPServer:
             "Latest Wagamama prices vs a market benchmark by dimension. "
             f"Default market is {MARKET_LABEL!r}; pass a saved custom market name "
             "when mappings DB is present. "
-            f"{tools.SYNTHETIC_HISTORY_CAVEAT}"
+            f"{tools.OBSERVED_HISTORY_NOTE}"
         )
     )
     def compare_to_market(
@@ -156,9 +156,10 @@ def build_mcp() -> MCPServer:
 
     @mcp.tool(
         description=(
-            "Case-insensitive dish name search on the latest quarter of price "
-            f"history. Rows capped (default {DEFAULT_LIMIT}, max {HARD_MAX}). "
-            f"{tools.SYNTHETIC_HISTORY_CAVEAT}"
+            "Case-insensitive dish name search on each company's own latest "
+            "recorded date. A single shared date would hide brands whose history ends "
+            f"earlier. Rows capped (default {DEFAULT_LIMIT}, max {HARD_MAX}). "
+            f"{tools.OBSERVED_HISTORY_NOTE}"
         )
     )
     def find_dishes(
@@ -167,6 +168,74 @@ def build_mcp() -> MCPServer:
         limit: int = DEFAULT_LIMIT,
     ) -> dict[str, Any]:
         return tools.find_dishes(query, source, limit=limit)
+
+    @mcp.tool(
+        description=(
+            "Full price series for dishes whose name contains the query. "
+            "Optional source limits to one company. pct_change is versus that "
+            "dish's own first recorded price. "
+            f"Rows capped (default {DEFAULT_LIMIT}, max {HARD_MAX}). "
+            f"{tools.OBSERVED_HISTORY_NOTE}"
+        )
+    )
+    def dish_history(
+        query: str,
+        source: str | None = None,
+        limit: int = DEFAULT_LIMIT,
+    ) -> dict[str, Any]:
+        return tools.dish_history(query, source, limit=limit)
+
+    @mcp.tool(
+        description=(
+            "Latest item-count, average and median price by company for one "
+            "grouping value (for example group='Mains', dimension='bucket'). "
+            "Each company is read on its own latest date. Dishes seen only once "
+            "are excluded, matching the trend charts. "
+            f"Rows capped (default {DEFAULT_LIMIT}, max {HARD_MAX}). "
+            f"{tools.OBSERVED_HISTORY_NOTE}"
+        )
+    )
+    def latest_prices(
+        group: str,
+        dimension: str = GroupingDimension.BUCKET.value,
+        limit: int = DEFAULT_LIMIT,
+    ) -> dict[str, Any]:
+        return tools.latest_prices(group, dimension, limit=limit)
+
+    @mcp.tool(
+        description=(
+            "Saved custom market benchmarks (name plus cuisine, dish type, "
+            f"company and bucket filters). {MARKET_LABEL!r} is always available "
+            "and is not in this list. Pass a returned name to compare_to_market."
+        )
+    )
+    def list_markets() -> dict[str, Any]:
+        return tools.list_markets()
+
+    @mcp.tool(
+        description=(
+            "Restaurant counts and weight shares behind Market whole. "
+            f"{OWN_BRAND} is excluded. The market average is weighted by these "
+            "restaurant counts, so large chains pull it more than small ones."
+        )
+    )
+    def company_weights() -> dict[str, Any]:
+        return tools.company_weights()
+
+    @mcp.tool(
+        description=(
+            "Cuisine, dish type and vegetarian/vegan flags for dishes whose "
+            "name contains the query. Optional source limits to one company. "
+            "A manual override wins over the model classification. "
+            f"Rows capped (default {DEFAULT_LIMIT}, max {HARD_MAX})."
+        )
+    )
+    def dish_attributes(
+        query: str,
+        source: str | None = None,
+        limit: int = DEFAULT_LIMIT,
+    ) -> dict[str, Any]:
+        return tools.dish_attributes(query, source, limit=limit)
 
     return mcp
 

@@ -1,7 +1,8 @@
-"""Compare restaurant-website menu prices against Deliveroo (delivery) prices.
+"""Compare each restaurant's latest menu with its latest delivery menu.
 
-Both menus are scraped snapshots. Deliveroo names don't match the restaurant
-menu character-for-character (e.g. "PERi-PERi Nuts" vs "Peri Peri Nuts"), so we
+Both sides are the newest scraped snapshot for that file, not an average over
+the price history. Deliveroo names don't match the restaurant menu
+character-for-character (e.g. "PERi-PERi Nuts" vs "Peri Peri Nuts"), so we
 normalise names to a canonical key and inner-join on it. The result is a
 like-for-like, item-level view of the delivery price premium.
 
@@ -17,8 +18,12 @@ from pathlib import Path
 
 import pandas as pd
 
-from .synthetic import resolve_bucket
-from src.history_archive import resolve_company_snapshots, resolve_snapshot_path
+from .menu_buckets import assign_buckets
+from src.history_archive import (
+    resolve_company_snapshots,
+    resolve_snapshot_path,
+    snapshot_observed_on,
+)
 from src.restaurants.config import load_restaurants
 
 _DATA_DIR = Path(__file__).resolve().parent.parent / "data"
@@ -60,10 +65,8 @@ def _build_one_comparison(
 
     restaurant_menu = restaurant_menu.dropna(subset=["price"]).copy()
     restaurant_menu["key"] = restaurant_menu["name"].map(normalise_name)
-    if "category" in restaurant_menu.columns:
-        restaurant_menu["bucket"] = restaurant_menu["category"].map(resolve_bucket)
-    else:
-        restaurant_menu["bucket"] = "Mains"
+    restaurant_menu["bucket"] = assign_buckets(restaurant_menu)
+    observed = snapshot_observed_on(restaurant_path)
     restaurant_menu = restaurant_menu.sort_values("price").drop_duplicates(
         "key", keep="first"
     )
@@ -84,6 +87,7 @@ def _build_one_comparison(
             "bucket": merged["bucket"],
             "restaurant": merged["price_restaurant"].round(2),
             "delivery": merged["price_delivery"].round(2),
+            "as_of": observed,
         }
     )
     out["markup_abs"] = (out["delivery"] - out["restaurant"]).round(2)
@@ -116,6 +120,7 @@ def build_comparison(
                 "delivery",
                 "markup_abs",
                 "markup_pct",
+                "as_of",
             ]
         )
 

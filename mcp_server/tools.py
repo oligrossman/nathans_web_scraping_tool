@@ -13,24 +13,28 @@ from typing import Any
 import pandas as pd
 
 from src import analytics, delivery_compare, high_low, scrape_log
-from src.branding import OWN_BRAND
+from src.branding import MARKET_LABEL, OWN_BRAND
 from src.enrichment.schema import GroupingDimension
-from src.enrichment.store import DEFAULT_DB_PATH, list_markets
+from src.enrichment.store import (
+    DEFAULT_DB_PATH,
+    get_resolved_mappings,
+    list_markets as load_saved_markets,
+)
 from src.scrapers.registry import SCRAPERS
-from src.synthetic import MARKET_LABEL
 
 from mcp_server.serialize import clamp_limit, dataframe_to_records
 
-# Shared caveat for tool descriptions / payload notes. Multi-year history is
-# synthetic; restaurant-vs-delivery and high/low come from the latest scrapes.
-SYNTHETIC_HISTORY_CAVEAT = (
-    "Multi-year quarterly price history is synthetic (demonstration backcast). "
+# Shared note for tool descriptions and payloads. Every history price is an
+# observed tracker date or a dated restaurant scrape.
+OBSERVED_HISTORY_NOTE = (
+    "Price history is observed only: pricing-tracker dates plus dated "
+    "restaurant-menu scrapes. No price is estimated. "
     "Use data_freshness for the latest history date and scrape ages."
 )
 SNAPSHOT_CAVEAT = (
-    "Restaurant-vs-delivery and high/low figures come from the latest scraped "
-    "menu snapshots, not the synthetic multi-year history. Deliveroo delivery "
-    "and service fees at checkout are not included."
+    "Restaurant-vs-delivery and high/low figures come from each restaurant's "
+    "latest scraped menu snapshot, not an average over the price history. "
+    "Deliveroo delivery and service fees at checkout are not included."
 )
 
 _MAPPINGS_REQUIRED_DIMS = frozenset(
@@ -98,14 +102,15 @@ def _require_mappings_for_dimension(
 
 
 def glossary() -> str:
-    """Short vocabulary for models: buckets, Market, synthetic vs scraped."""
+    """Short vocabulary for models: buckets, Market, observed history, scrapes."""
     dims = ", ".join(d.value for d in GroupingDimension)
     return "\n".join(
         [
             "# Menu intelligence glossary",
             "",
             f"- **Own brand**: {OWN_BRAND}.",
-            "- **Buckets (course)**: Starters, Mains, Sides, Drinks, Desserts "
+            "- **Buckets (course)**: Starters, Mains, Sides, "
+            "Drinks (non-alcoholic), Drinks (alcoholic), Desserts "
             "(plus Total = equal-weighted mean across buckets).",
             f"- **Grouping dimensions**: {dims}.",
             f"- **{MARKET_LABEL}**: restaurant-count-weighted average of "
@@ -113,7 +118,7 @@ def glossary() -> str:
             "data/company_weights.csv.",
             "- **Custom markets**: named competitor benchmarks saved in "
             "data/menu_mappings.db (e.g. Grill dishes).",
-            f"- **Synthetic history**: {SYNTHETIC_HISTORY_CAVEAT}",
+            f"- **Price history**: {OBSERVED_HISTORY_NOTE}",
             f"- **Scraped snapshots**: {SNAPSHOT_CAVEAT}",
         ]
     )
@@ -125,7 +130,7 @@ def list_companies() -> dict[str, Any]:
     return {
         "own_brand": OWN_BRAND,
         "competitors": analytics.competitor_sources(history),
-        "note": SYNTHETIC_HISTORY_CAVEAT,
+        "note": OBSERVED_HISTORY_NOTE,
     }
 
 
@@ -138,7 +143,7 @@ def data_freshness() -> dict[str, Any]:
         "latest_history_date": pd.Timestamp(latest).strftime("%Y-%m-%d"),
         "scrape_status": dataframe_to_records(status, limit=200),
         "note": (
-            f"{SYNTHETIC_HISTORY_CAVEAT} Scrape ages are from data/scrape_log.json."
+            f"{OBSERVED_HISTORY_NOTE} Scrape ages are from data/scrape_log.json."
         ),
     }
 
@@ -164,7 +169,7 @@ def price_kpis(source: str | None = None) -> dict[str, Any]:
                 k: (v.item() if hasattr(v, "item") else v) for k, v in value.items()
             }
     payload["source"] = source or "all"
-    payload["note"] = SYNTHETIC_HISTORY_CAVEAT
+    payload["note"] = OBSERVED_HISTORY_NOTE
     return payload
 
 
@@ -206,7 +211,7 @@ def price_trends(
         "rows": records,
         "row_count": len(records),
         "truncated": len(with_pct) > clamp_limit(limit),
-        "note": SYNTHETIC_HISTORY_CAVEAT,
+        "note": OBSERVED_HISTORY_NOTE,
     }
 
 
@@ -231,7 +236,7 @@ def compare_to_market(
     if label != MARKET_LABEL:
         if not _mappings_db_path().exists():
             return _mappings_missing_message()
-        saved = list_markets(_mappings_db_path())
+        saved = load_saved_markets(_mappings_db_path())
         match = next((m for m in saved if m.name == label), None)
         if match is None:
             return {
@@ -254,13 +259,13 @@ def compare_to_market(
         include_total=True,
         dimension=parsed,
     )
-    # Own-brand synthetic history can end earlier than scraped competitors —
-    # take each source's own latest quarter rather than the global max date.
+    # One brand's history can end earlier than another's. Read each source
+    # on its own latest date rather than the newest date in the file.
     focus = means[means["source"].isin([OWN_BRAND, series_label])]
     if focus.empty:
         return {
             "error": f"No rows for {OWN_BRAND!r} or {series_label!r}.",
-            "note": SYNTHETIC_HISTORY_CAVEAT,
+            "note": OBSERVED_HISTORY_NOTE,
         }
     idx = focus.groupby(["source", "bucket"], sort=False)["date"].idxmax()
     latest = focus.loc[idx].sort_values(["source", "bucket"])
@@ -276,7 +281,7 @@ def compare_to_market(
         "as_of": as_of,
         "rows": records,
         "row_count": len(records),
-        "note": SYNTHETIC_HISTORY_CAVEAT,
+        "note": OBSERVED_HISTORY_NOTE,
     }
 
 
@@ -379,37 +384,265 @@ def price_range(
     }
 
 
+def _without_markets(history: pd.DataFrame) -> pd.DataFrame:
+    """Drop derived market series. A market is an average, not a company."""
+    return history[~history["source"].astype(str).str.startswith("Market")].copy()
+
+
+def _rows_at_each_source_end(history: pd.DataFrame) -> pd.DataFrame:
+    """Keep each company's own latest date.
+
+    One shared cutoff drops every brand whose history ends sooner. Wagamama's
+    series stops before the newest competitor scrape, so a search has to read
+    each company at its own end.
+    """
+    if history.empty:
+        return history
+    latest = history.groupby("source")["date"].transform("max")
+    return history.loc[history["date"].eq(latest)].copy()
+
+
+def _scoped_history(source: str | None) -> pd.DataFrame | dict[str, Any]:
+    """Price history for one company, or every company. Markets are excluded."""
+    history = _without_markets(_history())
+    if source is None:
+        return history
+    if source not in _valid_companies(history):
+        return _unknown_company(source, history)
+    return history[history["source"] == source].copy()
+
+
 def find_dishes(
     query: str,
     source: str | None = None,
     *,
     limit: int | None = None,
 ) -> dict[str, Any]:
-    """Case-insensitive name search on the latest quarter of price history."""
-    history = _history()
-    history = history[~history["source"].astype(str).str.startswith("Market")]
-    if source is not None:
-        if source not in _valid_companies(history):
-            return _unknown_company(source, history)
-        history = history[history["source"] == source]
-
-    latest_date = history["date"].max()
-    latest = history[history["date"] == latest_date]
+    """Case-insensitive name search on each company's own latest recorded date."""
     needle = (query or "").strip()
     if not needle:
         return {"error": "query must be a non-empty string."}
 
+    history = _scoped_history(source)
+    if isinstance(history, dict):
+        return history
+    if history.empty:
+        return {
+            "query": needle,
+            "source": source,
+            "as_of": None,
+            "rows": [],
+            "row_count": 0,
+            "truncated": False,
+            "note": OBSERVED_HISTORY_NOTE,
+        }
+
+    latest = _rows_at_each_source_end(history)
     matches = latest[
         latest["item"].astype(str).str.contains(needle, case=False, na=False)
     ].sort_values(["source", "item"])
     cols = [c for c in ("date", "source", "item", "bucket", "price") if c in matches.columns]
     records = dataframe_to_records(matches[cols], limit=limit)
+    as_of = pd.Timestamp(history["date"].max()).strftime("%Y-%m-%d")
     return {
         "query": needle,
         "source": source,
-        "as_of": pd.Timestamp(latest_date).strftime("%Y-%m-%d"),
+        "as_of": as_of,
         "rows": records,
         "row_count": len(records),
         "truncated": len(matches) > clamp_limit(limit),
-        "note": SYNTHETIC_HISTORY_CAVEAT,
+        "note": (
+            "Each row is that company's own latest recorded date, not one shared date. "
+            f"{OBSERVED_HISTORY_NOTE}"
+        ),
+    }
+
+
+def dish_history(
+    query: str,
+    source: str | None = None,
+    *,
+    limit: int | None = None,
+) -> dict[str, Any]:
+    """Every recorded price for dishes whose name contains ``query``."""
+    needle = (query or "").strip()
+    if not needle:
+        return {"error": "query must be a non-empty string."}
+
+    history = _scoped_history(source)
+    if isinstance(history, dict):
+        return history
+
+    matches = history[
+        history["item"].astype(str).str.contains(needle, case=False, na=False)
+    ].copy()
+    if not matches.empty:
+        matches = analytics.add_pct_change(matches, ["source", "item"])
+        matches = matches.sort_values(["source", "item", "date"])
+    cols = [
+        c
+        for c in ("date", "source", "item", "bucket", "price", "pct_change")
+        if c in matches.columns
+    ]
+    records = dataframe_to_records(matches[cols], limit=limit)
+    return {
+        "query": needle,
+        "source": source,
+        "items": int(matches["item"].nunique()) if not matches.empty else 0,
+        "rows": records,
+        "row_count": len(records),
+        "truncated": len(matches) > clamp_limit(limit),
+        "note": (
+            "pct_change is versus that dish's own first recorded price. "
+            f"{OBSERVED_HISTORY_NOTE}"
+        ),
+    }
+
+
+def latest_prices(
+    group: str,
+    dimension: str = GroupingDimension.BUCKET.value,
+    *,
+    limit: int | None = None,
+) -> dict[str, Any]:
+    """Item count, average and median on each company's own latest date.
+
+    ``group`` is the value inside ``dimension`` (for example ``Mains`` when
+    dimension is ``bucket``). Dishes seen on only one date are excluded, the
+    same rule the trend charts use, so a one-off scrape cannot move the average.
+    """
+    parsed = _parse_dimension(dimension)
+    if isinstance(parsed, dict):
+        return parsed
+    missing = _require_mappings_for_dimension(parsed)
+    if missing:
+        return missing
+
+    needle = (group or "").strip()
+    if not needle:
+        return {"error": "group must be a non-empty string."}
+
+    history = analytics.repeated_observations(_without_markets(_history()))
+    dim = analytics.dimension_column(parsed)
+    if dim != GroupingDimension.BUCKET.value:
+        history = analytics.enriched_history(history, db_path=_mappings_db_path())
+
+    labels = sorted({str(value) for value in history[dim].dropna().unique()})
+    canonical = next((label for label in labels if label.lower() == needle.lower()), None)
+    if canonical is None:
+        return {
+            "error": f"Unknown {parsed.value} {needle!r}.",
+            "valid_groups": labels,
+        }
+
+    subset = history[history[dim].astype(str) == canonical]
+    latest = _rows_at_each_source_end(subset)
+    summary = (
+        latest.groupby("source", as_index=False)
+        .agg(
+            date=("date", "max"),
+            dishes=("item", "nunique"),
+            average=("price", "mean"),
+            median=("price", "median"),
+        )
+        .sort_values(["average", "source"], ascending=[False, True])
+    )
+    records = dataframe_to_records(summary, limit=limit)
+    return {
+        "dimension": parsed.value,
+        "group": canonical,
+        "rows": records,
+        "row_count": len(records),
+        "truncated": len(summary) > clamp_limit(limit),
+        "note": (
+            "Each company is read on its own latest date. Average and median "
+            "are equal-weighted across dishes seen on more than one date. "
+            f"{OBSERVED_HISTORY_NOTE}"
+        ),
+    }
+
+
+def list_markets() -> dict[str, Any]:
+    """Named competitor benchmarks saved in the mappings database."""
+    if not _mappings_db_path().exists():
+        return _mappings_missing_message()
+    saved = load_saved_markets(_mappings_db_path())
+    return {
+        "markets": [market.to_dict() for market in saved],
+        "count": len(saved),
+        "note": (
+            f"Pass a market name to compare_to_market. {MARKET_LABEL!r} is always "
+            "available and is not stored in this list."
+        ),
+    }
+
+
+def company_weights() -> dict[str, Any]:
+    """Restaurant counts behind the Market whole average."""
+    weights = analytics.load_company_weights()
+    total = float(sum(weights.values()))
+    rows = [
+        {
+            "company": company,
+            "restaurants": int(count) if float(count).is_integer() else float(count),
+            "weight_pct": round(100.0 * float(count) / total, 1) if total else 0.0,
+        }
+        for company, count in weights.items()
+    ]
+    rows.sort(key=lambda row: (-row["restaurants"], row["company"]))
+    return {
+        "rows": rows,
+        "restaurant_count": int(total) if total.is_integer() else total,
+        "note": (
+            f"{MARKET_LABEL} is the restaurant-count-weighted average of these "
+            f"competitors. {OWN_BRAND} is excluded from the weights and from the "
+            "market."
+        ),
+    }
+
+
+def dish_attributes(
+    query: str,
+    source: str | None = None,
+    *,
+    limit: int | None = None,
+) -> dict[str, Any]:
+    """Cuisine, dish type and dietary flags for dishes matching ``query``."""
+    needle = (query or "").strip()
+    if not needle:
+        return {"error": "query must be a non-empty string."}
+    if not _mappings_db_path().exists():
+        return _mappings_missing_message()
+
+    mappings = get_resolved_mappings(_mappings_db_path())
+    if source is not None:
+        known = sorted(mappings["source"].dropna().unique()) if not mappings.empty else []
+        if source not in known:
+            return {
+                "error": f"Unknown company {source!r} in dish mappings.",
+                "valid_companies": known,
+            }
+        mappings = mappings[mappings["source"] == source]
+
+    matches = mappings[
+        mappings["name"].astype(str).str.contains(needle, case=False, na=False)
+    ].sort_values(["source", "name"])
+    cols = [
+        "source",
+        "name",
+        "bucket",
+        "cuisine",
+        "dish_type",
+        "is_vegetarian",
+        "is_vegan",
+        "is_override",
+    ]
+    records = dataframe_to_records(matches[cols], limit=limit)
+    return {
+        "query": needle,
+        "source": source,
+        "rows": records,
+        "row_count": len(records),
+        "truncated": len(matches) > clamp_limit(limit),
+        "note": "Attributes are the resolved mapping: a manual override wins over the model.",
     }

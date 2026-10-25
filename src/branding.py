@@ -57,19 +57,22 @@ APP_TAGLINE = (
 )
 SCRAPE_SECTION = "Scrape restaurant & delivery menus"
 ANALYTICS_TITLE = "Price Analysis"
+# Chart series labels. Defined here so colours and copy share one spelling.
+MARKET_LABEL = "Market whole"
+TOTAL_LABEL = "Total"
+
 ANALYTICS_TAGLINE = (
-    "Synthetic quarterly price history (5 years) for Wagamama, competitor "
-    "companies and the wider market. 'Market whole' is a restaurant-count-weighted "
-    "average of competitor companies (see `data/company_weights.csv`) and never "
-    "includes Wagamama dishes. Synthetic data is for demonstration."
+    "Observed menu prices for Wagamama, competitor companies and the wider market. "
+    "History is the pricing tracker plus dated restaurant-menu scrapes. "
+    f"'{MARKET_LABEL}' is a restaurant-count-weighted average of competitor "
+    "companies (see `data/company_weights.csv`) and excludes Wagamama dishes."
 )
 
 # Chart source colours — Wagamama red is always the hero; competitors stay distinct.
 SOURCE_COLOURS: dict[str, str] = {
     OWN_BRAND: WAGAMAMA_RED,
     LEGACY_OWN_BRAND: WAGAMAMA_RED,
-    # Must match synthetic.MARKET_LABEL (branding can't import synthetic — cycle).
-    "Market whole": MARKET_GREY,
+    MARKET_LABEL: MARKET_GREY,
     "Nando's": "#B8860B",
     "Pizza Express": "#0E7C61",
 }

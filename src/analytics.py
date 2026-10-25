@@ -12,12 +12,11 @@ from pathlib import Path
 
 import pandas as pd
 
-from .branding import LEGACY_OWN_BRAND, OWN_BRAND
+from .branding import LEGACY_OWN_BRAND, MARKET_LABEL, OWN_BRAND, TOTAL_LABEL
 from .enrichment.identity import make_dish_id
 from .enrichment.schema import GroupingDimension, MarketDefinition, UNMAPPED_LABEL
 from .enrichment.store import DEFAULT_DB_PATH, get_resolved_mappings, init_db
 from .history_archive import ALL_COMPANY_PRICES_PATH
-from .synthetic import BUCKETS, MARKET_LABEL, TOTAL_LABEL
 
 DEFAULT_ALL_COMPANY_PRICES_PATH = ALL_COMPANY_PRICES_PATH
 DEFAULT_WEIGHTS_PATH = Path(__file__).resolve().parent.parent / "data" / "company_weights.csv"
@@ -336,7 +335,11 @@ def build_market_series(
     dimension: GroupingDimension | str = GroupingDimension.BUCKET,
     weights: dict[str, float] | None = None,
 ) -> pd.DataFrame:
-    """Build a synthetic market series from filtered enriched history."""
+    """Build a market series from filtered competitor history.
+
+    Each point is the restaurant-count-weighted average of the competitor
+    prices on that date.
+    """
     if weights is None:
         weights = load_company_weights()
 
@@ -438,8 +441,7 @@ def _at_series_end(frame: pd.DataFrame) -> pd.DataFrame:
     """Keep each source and grouping value on its own latest date.
 
     A single cutoff — the newest date anywhere in the file — drops every brand
-    whose history ends sooner. Wagamama's series is synthetic and stops before
-    the latest competitor scrape, so each series has to be read at its own end.
+    whose history ends sooner, so each series is read at its own latest date.
     """
     if frame.empty:
         return frame.copy()
