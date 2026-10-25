@@ -1,0 +1,308 @@
+name,price,category,description
+Pasta Crisps,3.5,APERITIVO,Smoked paprika. Garlic. Salt & pepper.
+Olive Bowl,4.75,APERITIVO,Queen Green. Nocellara. Purple Kalamata.
+Dough Crusts,8.25,APERITIVO,Freshly baked. Maldon Sea Salt. Garlic aioli.
+Aperol Spritz,10.45,APERITIVO,Aperol. Prosecco. Soda.
+Garlic Bread,7.45,STARTERS,Garlic. Rosemary.
+Chorizo & Mozzarella Bombe,8.95,STARTERS,Large freshly baked gooey cheesy dough ball. Hot honey.
+Garlic & Mozzarella Bombe,8.95,STARTERS,Large freshly baked gooey cheesy dough ball. Hot honey.
+Garlic Bread with Mozzarella,7.75,STARTERS,Just cheese
+Garlic Bread with Mozzarella & Caramelised Onions,7.75,STARTERS,with caramelised balsamic onions.
+Cheesy Chilli Garlic Bread,7.75,STARTERS,
+Burrata Caprese,9.95,STARTERS,Whole burrata. Red & orange baby plum tomatoes. Red onion.
+La Bomba Meatballs,9.25,STARTERS,"Pork, fennel & mozzarella meatballs. Fiery La Bomba sauce. Melted mozzarella."
+Aubergine Fritti,8.95,STARTERS,Polenta-coated aubergine wedges. Calabrese dip.
+Chicken Spiedini,9.75,STARTERS,Garlic chicken breast roasted on a skewer. Sunblush tomatoes. Your choice of dip.
+Bruschetta Classica,8.45,STARTERS,Red & orange baby plum tomatoes. Red onion. Freshly baked bread. Balsamic drizzle.
+Mushroom Brindisi,8.45,STARTERS,Creamy Portobello & Porcini mushrooms. Riserva cheese. Crispy sage. Freshly baked dough crusts.
+King Prawn Spiedini,10.25,STARTERS,Harissa-marinated king prawns. Calabrese sauce.
+Calamari Small,9.45,STARTERS,Garlic aioli.
+Calamari Large,18.45,STARTERS,Garlic aioli.
+Crispy Chilli Calamari - Small,9.75,STARTERS,Crispy squid. Hot honey. Crispy chilli oil. Calabrese dip.
+Crispy Chilli Calamari - Large,18.75,STARTERS,Crispy squid. Hot honey. Crispy chilli oil. Calabrese dip.
+Fonduta Formaggi,8.75,STARTERS,Five melted cheeses. Freshly baked dough crusts to dip.
+Mozzarella Arancini,8.45,STARTERS,Calabrese dip.
+Pollo Fritti,9.25,STARTERS,Breadcrumbed chicken. Riserva cheese. Garlic aioli.
+Crab & Lemon Arancini,9.25,STARTERS,Cromer Crab Arancini. Garlic aioli. Riserva cheese. Charred lemon.
+Hot Honey Pork Belly,9.45,STARTERS,Roasted & glazed pork belly bites. Roquito hot honey. La Bomba sauce. Fire-roasted red peppers. Crispy chilli oil.
+Fonduta Board,19.75,TO SHARE,Fonduta formaggi. Garlic & Mozzarella Bombe. Roquito hot honey. Mozzarella arancini. Courgetti fritti. Freshly baked dough crusts. Calabrese dip.
+Favourites Board,19.75,TO SHARE,Mozzarella arancini. Garlic bread. Tomato bruschetta. Calamari. Garlic aioli. Calabrese dip.
+Grande Antipasto,19.75,TO SHARE,Prosciutto. Truffle salami. Spianata salami. Garlic & Mozzarella Bombe. Hot honey. Olives. Tomato & mozzarella salad.
+Venison Pepperoni,20.25,THE RUSTICA,Venison pepperoni. Candied jalapenos. Mozzarella. Roquito pepper pearls. Crispy Riserva. Hot honey. Sage.
+Pepperoni Campagna,18.75,THE RUSTICA,Pepperoni. Ham. Mushrooms. Mozzarella. Rosemary. Over 50g of protein.
+Chicken & Fiery Roquito,19.75,THE RUSTICA,Harissa chicken breast. Mozzarella. Roquito chillies. Fiery La Bomba base. Over 50g protein.
+Margherita,16.75,THE RUSTICA,Tomato. Mozzarella. Fresh basil.
+Vegan Margherita,16.75,THE RUSTICA,Tomato. MozzaRisella. Fresh basil.
+Carne Sofia,19.75,THE RUSTICA,Harissa chicken breast. Pepperoni. Chorizo. Mozzarella. Roquito chillies. Over 50g protein
+Piccante,19.75,THE RUSTICA,'Nduja. Pepperoni. Spianata salami. Chilli. Mushrooms. Mozzarella. Mascarpone. Rocket.
+Sticky Pig,19.75,THE RUSTICA,"Slow-cooked pulled pork. Crumbled meatballs. ‘Nduja. Mozzarella. Riserva cheese. Crackling. Hot honey. A pizza of two halves. One side tomato, the other bechamel."
+Pinoli,18.45,THE RUSTICA,Goat's cheese. Mozzarella. Caramelised balsamic onions. Sunblush tomatoes. Toasted pine nuts.
+Pepperoni Premio,18.75,THE RUSTICA,Pepperoni. Mozzarella. Over 50g protein.
+Truffle Salami,19.95,THE RUSTICA,Black truffle salami. Mozzarella. Mushrooms. Crispy prosciutto. Riserva cheese. Truffle & bechamel base. Over 50g protein.
+Primavera,18.75,THE RUSTICA,Goat's cheese. Mozzarella. Artichokes. Rocket. Olives. Fire-roasted peppers. Sunblush tomatoes. Genovese pesto.
+Aubergine Parmigiana,17.95,THE RUSTICA,Crispy aubergine. Candied jalapenos. Roquito pepper pearls. Vegan MozzaRisella. Spicy harissa.
+Quattro Pomodoro,17.95,THE RUSTICA,Isle of Wight heritage tomatoes. Sunblush tomatoes. Pomodoro sauce. Mozzarella. Burrata. Crispy chilli oil. Yellow Pepper & Pomodoro sauce.
+Classic Margherita,14.75,CLASSICO,Tomato. Mozzarella. Fresh basil.
+Classic Vegan Margherita Pizza,14.75,CLASSICO,Tomato. MozzaRisella. Fresh basil.
+Classico Pepperoni Campagna,16.75,CLASSICO,Pepperoni. Ham. Mushrooms. Mozzarella. Rosemary.
+Classic Pinoli,16.45,CLASSICO,Goat's cheese. Mozzarella. Caramelised balsamic onions. Sunblush tomatoes. Toasted pine nuts.
+Pollo & Pesto,16.75,CLASSICO,Roasted chicken breast. Genovese pesto. Pine nuts. Red & orange baby plum tomatoes. Mixed leaves. Riserva cheese.
+Calzone Carne Piccante,18.45,CALZONE,Crumbled meatballs. Harissa chicken breast. Bolognese. Mozzarella. Roquito chillies. Mushrooms. Over 50g protein.
+Calzone Pollo Spinaci,18.45,CALZONE,Roasted chicken breast. Prosciutto. Spinach. Mushrooms. Mozzarella. Bechamel sauce. Over 50g protein.
+Truffle Carbonara,21.25,FRESH PASTA SUPERIORE,"Four cheese, black pepper & truffle sauce. Pancetta. Crispy prosciutto. Riserva cheese crisp. Fresh Mafaldine pasta."
+Truffle Carbonara Sharepan,38.5,FRESH PASTA SUPERIORE,"Four cheese, black pepper & truffle sauce. Pancetta. Crispy prosciutto. Riserva cheese crisp. Fresh Mafaldine pasta. For two."
+Meatballs Alla Vodka,21.45,FRESH PASTA SUPERIORE,"Pork, fennel & mozzarella meatballs. Spicy Alla Vodka sauce. Cherry tomatoes. Riserva cheese. Flamed chilli. Fresh Mafaldine pasta."
+Chianti Beef Ragu,20.75,FRESH PASTA SUPERIORE,Slow-cooked beef brisket & beef rib ragu. Black garlic. Chianti red wine. Slow-roasted tomatoes. Fresh Mafaldine pasta.
+Chilli King Prawn,21.25,FRESH PASTA SUPERIORE,King prawn spiedini. Seafood & Roquito chilli bisque. Courgette ribbons. Fresh Mafaldine pasta.
+Seafood Vongole,21.45,FRESH PASTA SUPERIORE,"King prawns. Clams. Wild garlic, lemon, caper & parsley butter sauce. Fresh Mafaldine pasta."
+Chorizo Carbonara,18.75,PASTA CLASSICO,Chorizo & pancetta carbonara sauce. Spaghetti.
+Pollo Piccante,19.25,PASTA CLASSICO,Spicy harissa chicken breast. Creamy harissa sauce. Baby plum tomatoes. Spinach. Flamed chilli. Casareccia pasta.
+Pesto Rosso,17.75,PASTA CLASSICO,Harissa chicken breast. Creamy red pesto sauce. Mascarpone. Casareccia pasta.
+Bolognese Classico,17.95,PASTA CLASSICO,Slow-cooked British beef & tomato ragu. Spaghetti.
+Pomodoro,15.75,PASTA CLASSICO,Baby plum tomatoes. Pomodoro sauce. Fior di Latte mozzarella. Spaghetti.
+Vegan Pomodoro,15.75,PASTA CLASSICO,Datterini tomatoes. Pomodoro sauce. Spaghetti.
+Vegan Lentil Ragu,17.25,PASTA CLASSICO,Du Berry lentils. Baby plum tomatoes. Spinach. Genovese pesto. Spaghetti.
+Ravioli Di Capra,18.45,PASTA CLASSICO,Spinach & goat's cheese ravioli. Pomodoro sauce. Baby plum tomatoes. Genovese pesto. Pine nuts.
+Six Layer Lasagne,18.75,AL FORNO,Six layers of egg pasta. Rich beef ragu. Bechamel. Breadcrumbs. Riserva cheese.
+All Out Lasagne,21.25,AL FORNO,"Even better with more beef ragu, more mozzarella & more bechamel ."
+Vegan Rainbow Lasagne,17.95,AL FORNO,Butternut squash. Beetroot. Red onion. Spinach. Slow-roasted tomato sauce. Genovese pesto. Crispy kale. Breadcrumbs.
+Pollo Della Casa,18.95,AL FORNO,"Roasted chicken breast. Pancetta. Mascarpone, Portobello & Porcini mushroom sauce. Crispy prosciutto. Casareccia."
+Chicken Caesar Salad,16.75,SALADS,Roasted chicken breast. Crispy pancetta. Mixed leaves. Baby gem. Riserva cheese. Homemade croutons. Crispy prosciutto. Caesar dressing.
+Salmon & Tomato Caesar Salad,17.75,SALADS,Pan-fried salmon. Red & orange baby plum tomatoes. Green beans. Baby potatoes. Mixed leaves. Baby gem. Caesar dressing.
+Butter Bean Salad,15.75,SALADS,Queen Butter Beans. Red & orange baby plum tomatoes. Green beans. Spinach. Cucumber. Mint. Rocket. Dough Crusts. Yellow Pepper & Pomodoro dressing.
+Hot Honey Glazed Duck,21.25,SIGNATURE DISHES,"Slow-cooked duck leg. Crispy Riserva potatoes. Green beans, kale & spinach. Smoky garlic oil. Lemon & herb pangrattato. Roquito hot honey."
+Pollo Calabrese,19.45,SIGNATURE DISHES,Roasted chicken breast. 'Nduja. Baby potatoes. Calabrese sauce. Mascarpone. Flamed chilli.
+Funghi Risotto,17.45,SIGNATURE DISHES,"Portobello, Chestnut & Porcini mushrooms. Mascarpone. Crispy sage. Riserva cheese."
+Butter Bean Stufato,17.95,SIGNATURE DISHES,Queen Butter Beans. Fiery La Bomba sauce. Lentils. Sundried tomatoes. Seasonal greens. Spicy harissa. Dough bowl.
+Mediterranean Sea Bass,20.95,SIGNATURE DISHES,Pan-fried sea bass. Courgette ribbons. Baby potatoes. Green beans. Artichokes. Fire-roasted red peppers. Baby plum tomatoes. Olives. Lemon & herb pangrattato crumb.
+Pollo Milanese,19.75,SIGNATURE DISHES,Lemon & black pepper breadcrumbed chicken breast. Crispy Riserva potatoes. Caesar salad.
+Salmon & Pesto Risotto,19.95,SIGNATURE DISHES,Pan-fried salmon fillet. Genovese pesto. Spinach. Courgette ribbons. Lemon.
+Chicken Milanese Fonduta,21.95,SIGNATURE DISHES,Chicken Milanese. Pomodoro sauce. Heritage tomatoes. Chips. Hot cheese fonduta to pour.
+Chips,5.25,ON THE SIDE,Skin on. Rosemary. Maldon Sea Salt.
+Sweet Potato Fries,5.25,ON THE SIDE,Crispy sweet potato fries.
+Loaded Bolognese Chips,6.75,ON THE SIDE,Skin on chips. Rich beef ragu. Mozzarella.
+Mixed Leaf Salad,5.45,ON THE SIDE,Baby gem. Mixed leaves. Caesar dressing. Riserva cheese.
+Fresca Greens,5.25,ON THE SIDE,Green beans. Spinach. Kale. Garlic.
+Courgetti Fritti,5.45,ON THE SIDE,Crispy courgette chips.
+Garlic Bread with Mozzarella,7.75,ON THE SIDE,Just cheese
+Garlic Bread with Mozzarella & Caramelised Onions,7.75,ON THE SIDE,with caramelised balsamic onions.
+Cheesy Chilli Garlic Bread,7.75,ON THE SIDE,
+Nemesis,8.95,DESSERTS,Rich chocolate cake. Gooey chocolate centre. Vanilla gelato. Salted caramel sauce.
+Limoncello Basque,8.95,DESSERTS,Baked Limoncello cheesecake. Lemon curd. Vanilla gelato.
+Tiramisu,7.95,DESSERTS,Espresso & coffee liqueur-soaked sponge. Mascarpone cream. Cocoa. Dark chocolate shavings.
+Raspberry Collins Cheesecake,8.75,DESSERTS,Raspberry & gin-layered cheesecake. Strawberry sorbet.
+Chocolate Caramello Sundae,7.95,DESSERTS,Salted caramel chocolate brownie. Chocolate gelato. Salted caramel gelato. Freshly whipped cream. Honeycomb. Salted caramel sauce.
+Cioccolato Mousse,7.95,DESSERTS,Rich dark chocolate mousse. Extra Virgin Olive Oil & Maldon Sea Salt on the side.
+Salted Caramel Chocolate Brownie,7.45,DESSERTS,Warm brownie with a gooey salted caramel centre. Vanilla gelato. Salted caramel drizzle.
+Honeycomb Cheesecake,7.95,DESSERTS,Salted caramel gelato. Salted caramel sauce. Honeycomb.
+Candy Floss Dolce,9.75,DESSERTS,Panna cotta & wild strawberry gelato. Dragon fruit sorbet. Fresh strawberries. Pink meringue. Freshly whipped cream. Strawberry coulis. Candy floss.
+Fudge Cake,7.95,DESSERTS,Warm chocolate & salted caramel fudge cake. Honeycomb.
+Gelato & Sorbet (3 scoops),6.5,DESSERTS,Vanilla | Chocolate | Panna Cotta & Wild Strawberry | Salted Caramel | Coconut & Lime | Strawberry Sorbet | Dragon Fruit Sorbet
+Tropical Pina Colada Sundae,7.95,DESSERTS,Coconut & Lime gelato. Vanilla gelato. Freshly whipped cream. Pineapple puree. Pink meringue. Dried raspberries. (Not really a Pina Colada)
+Non-Gluten Venison Pepperoni,20.25,NON-GLUTEN PIZZAS,Venison pepperoni. Candied jalapenos. Mozzarella. Roquito pepper pearls. Crispy Riserva. Hot honey. Sage.
+Non-Gluten Pepperoni Campagna Pizza,18.75,NON-GLUTEN PIZZAS,Pepperoni. Ham. Mushrooms. Mozzarella. Rosemary.
+Non-Gluten Chicken & Fiery Roquito,19.75,NON-GLUTEN PIZZAS,Harissa chicken breast. Mozzarella. Roquito chillies. Fiery La Bomba base.
+Non-Gluten Margherita Pizza,16.75,NON-GLUTEN PIZZAS,Tomato. Mozzarella. Fresh basil.
+Non-Gluten Vegan Margherita Pizza,16.75,NON-GLUTEN PIZZAS,Tomato. MozzaRisella. Fresh basil.
+Non-Gluten Carne Sofia,19.75,NON-GLUTEN PIZZAS,Harissa chicken breast. Pepperoni. Chorizo. Mozzarella. Roquito chillies.
+Non-Gluten Piccante Pizza,19.75,NON-GLUTEN PIZZAS,'Nduja. Pepperoni. Spianata salami. Chilli. Mushrooms. Mozzarella. Mascarpone. Rocket.
+Non-Gluten Sticky Pig Pizza,19.75,NON-GLUTEN PIZZAS,"Slow-cooked pulled pork. Crumbled meatballs. ‘Nduja. Mozzarella. Riserva cheese. Crackling. Hot honey. A pizza of two halves. One side tomato, the other bechamel."
+Non-Gluten Pinoli Pizza,18.45,NON-GLUTEN PIZZAS,Goat's cheese. Mozzarella. Caramelised balsamic onions. Sunblush tomatoes. Toasted pine nuts.
+Non-Gluten Pepperoni Premio Pizza,18.75,NON-GLUTEN PIZZAS,Pepperoni. Mozzarella.
+Non-Gluten Truffle Salami,19.95,NON-GLUTEN PIZZAS,Black truffle salami. Mozzarella. Mushrooms. Crispy prosciutto. Riserva cheese. Truffle & bechamel base.
+Non-Gluten Primavera,18.75,NON-GLUTEN PIZZAS,Goat's cheese. Mozzarella. Artichokes. Rocket. Olives. Fire-roasted peppers. Sunblush tomatoes. Genovese pesto.
+Non-Gluten Aubergine Parmigiana,17.95,NON-GLUTEN PIZZAS,Crispy aubergine. Candied jalapenos. Roquito pepper pearls. Vegan MozzaRisella. Spicy harissa.
+Non-Gluten Roast Pollo & Pesto,16.75,NON-GLUTEN PIZZAS,Roasted chicken breast. Genovese pesto. Pine nuts. Isle of Wight heritage tomatoes. Mixed leaves.
+Non-Gluten Quattro Pomodoro,17.95,NON-GLUTEN PIZZAS,Isle of Wight heritage tomatoes. Sunblush tomatoes. Pomodoro sauce. Mozzarella. Burrata. Crispy chilli oil. Yellow Pepper & Pomodoro sauce.
+Non-Gluten Pasta Truffle Carbonara,21.25,NON-GLUTEN PASTAS,"Four cheese, black pepper & truffle sauce. Pancetta. Crispy prosciutto. Riserva cheese crisp."
+Non-Gluten Truffle Carbonara Sharepan,38.5,NON-GLUTEN PASTAS,"Four cheese, black pepper & truffle sauce. Crispy prosciutto. Pancetta. Riserva cheese crisp."
+Non-Gluten Meatballs Alla Vodka,21.45,NON-GLUTEN PASTAS,"Pork, fennel & mozzarella meatballs. Spicy Alla Vodka sauce. Cherry tomatoes. Riserva cheese. Flamed chilli."
+Non-Gluten Pasta Chianti Beef Ragu,20.75,NON-GLUTEN PASTAS,Slow-cooked beef brisket & beef rib ragu. Black garlic. Chianti red wine. Slow-roasted tomatoes.
+Non-Gluten Pasta Chilli King Prawn,21.25,NON-GLUTEN PASTAS,King prawn spiedini. Seafood & Roquito chilli bisque. Courgette ribbons.
+Non-Gluten Seafood Vongole,21.45,NON-GLUTEN PASTAS,"King prawns. Clams. Wild garlic, lemon, caper & parsley butter sauce."
+Non-gluten Pasta Chorizo Carbonara,18.75,NON-GLUTEN PASTAS,Chorizo & pancetta carbonara sauce.
+Non-Gluten Pasta Pollo Piccante,19.25,NON-GLUTEN PASTAS,Spicy harissa chicken breast. Creamy harissa sauce. Baby plum tomatoes. Spinach. Flamed chilli.
+Non-Gluten Pesto Rosso,17.75,NON-GLUTEN PASTAS,Harissa chicken breast. Creamy red pesto sauce. Mascarpone.
+Non-Gluten Pasta Bolognese Classico,17.95,NON-GLUTEN PASTAS,Slow-cooked British beef & tomato ragu.
+Non-Gluten Pomodoro,15.75,NON-GLUTEN PASTAS,Baby plum tomatoes. Pomodoro sauce. Fior di Latte mozzarella.
+Non-Gluten Pasta Vegan Pomodoro,15.75,NON-GLUTEN PASTAS,Datterini tomatoes. Pomodoro sauce.
+Non-gluten Pasta Lentil Ragu,17.25,NON-GLUTEN PASTAS,Du Berry lentils. Baby plum tomatoes. Spinach. Genovese pesto.
+Dragon Fruit Margarita,12.95,SIGNATURE COCKTAILS,Tequila. Dragon fruit sorbet. Orange. Persian lime. Lemon.
+Morello Cherry Sour,11.45,SIGNATURE COCKTAILS,Amaretto. Morello cherry. Persian lime. Orange. Lemon.
+Pineapple Colada,12.95,SIGNATURE COCKTAILS,Spiced rum. Amaretto. Pineapple. Coconut & lime gelato.
+Mocha Martini,12.45,SIGNATURE COCKTAILS,Respirited Vodka. Baileys. Mr Black coffee liqueur. Cioccolata.
+Sunset Mango Margarita,9.45,SIGNATURE COCKTAILS,Tequila. Mango. Orange. Lemon. Persian lime. Smoked paprika salt rim.
+Aperol Spritz,10.45,SPRITZ COCKTAILS,Aperol. Prosecco. Soda.
+Limoncello Spritz,12.95,SPRITZ COCKTAILS,Respirited Vodka. Limoncello. Limonata.
+Elderflower Spritz,12.95,SPRITZ COCKTAILS,Fiorente Italian Elderflower Liqueur. Prosecco. Elderflower Tonic.
+Peachello Spritz,12.95,SPRITZ COCKTAILS,Peachello. Prosecco. Soda. Ice-lolly.
+Raspberry Mojito,10.45,CLASSIC COCKTAILS,White rum. Raspberry. Lime.
+Passion Fruitini,10.75,CLASSIC COCKTAILS,Respirited Vodka. Passion fruit. Mango. Lime. Prosecco.
+Strawberry Cloud Daiquiri,10.95,CLASSIC COCKTAILS,White rum. Strawberry. Persian lime. Candy floss.
+Tuscan G&T,10.75,CLASSIC COCKTAILS,British Gin. Rosemary. Original or Blood Orange & Elderflower tonic – up to you.
+Mango & Lime Cooler,5.75,MOCKTAILS & SOFTS,Mango. Orange. Lemon. Persian lime. Soda. Smoked paprika salt rim.
+Strawberry Sparkler,5.95,MOCKTAILS & SOFTS,Strawberry. Persian lime. Soda.
+Passion Fruit Sparkler,5.95,MOCKTAILS & SOFTS,Passion fruit. Mango. Lime. Soda.
+Raspberry & Mint Cooler,5.95,MOCKTAILS & SOFTS,Raspberry. Mint. Lime. Soda.
+Morello Cherry Refresher,5.95,MOCKTAILS & SOFTS,Morello cherry. Persian lime. Orange. Lemon. Soda.
+Raspberry & Rose Lemonade,6.25,MOCKTAILS & SOFTS,Lemon. Raspberry & Rose Soda. Dragon fruit sorbet.
+Pineapple and Citrus Refresher,5.95,MOCKTAILS & SOFTS,Morello cherry. Persian lime. Orange. Lemon. Soda.
+Trip CBD Blend,4.45,MOCKTAILS & SOFTS,CBD Blend: Raspberry. Orange blossom. Sparkling water.
+Trip Mindful Blend,4.45,MOCKTAILS & SOFTS,Mindful Blend: Blood orange. Sparkling water. Magnesium.
+Hip Pop Kombucha Blueberry & Ginger,4.45,MOCKTAILS & SOFTS,Blueberry & Ginger
+Hip Pop Strawberry & Pineapple,4.45,MOCKTAILS & SOFTS,
+Sicilian Still Lemonade,4.25,MOCKTAILS & SOFTS,
+San Pellegrino Blood Orange,4.25,MOCKTAILS & SOFTS,
+San Pellegrino Lemon,4.25,MOCKTAILS & SOFTS,
+Coke Small,4.25,MOCKTAILS & SOFTS,
+Coke Large,6.25,MOCKTAILS & SOFTS,
+Diet Coke Small,4.25,MOCKTAILS & SOFTS,
+Diet Coke Large,6.25,MOCKTAILS & SOFTS,
+Coke Zero Small,4.25,MOCKTAILS & SOFTS,
+Coke Zero Large,6.25,MOCKTAILS & SOFTS,
+Sprite Zero Small,4.25,MOCKTAILS & SOFTS,
+Sprite Zero Large,6.25,MOCKTAILS & SOFTS,
+Apple Juice,4.25,MOCKTAILS & SOFTS,
+Orange Juice,4.25,MOCKTAILS & SOFTS,
+Appletiser,4.25,MOCKTAILS & SOFTS,
+Belu Water Still Small,3.75,MOCKTAILS & SOFTS,
+Belu Still Water Large,4.95,MOCKTAILS & SOFTS,
+Belu Sparkling Water Small,3.75,MOCKTAILS & SOFTS,
+Belu Sparkling Water Large,4.95,MOCKTAILS & SOFTS,
+Blood Orange & Elderflower Tonic,2.8,MOCKTAILS & SOFTS,
+Original Tonic,2.8,MOCKTAILS & SOFTS,
+Pink Grapefruit Soda,2.8,MOCKTAILS & SOFTS,
+Raspberry & Rose Soda,2.8,MOCKTAILS & SOFTS,
+Roasted Pineapple Soda,2.8,MOCKTAILS & SOFTS,
+Ginger Ale,2.8,MOCKTAILS & SOFTS,
+Pinot Grigio 125ml,6.95,WHITE WINE,
+Pinot Grigio 175ml,7.95,WHITE WINE,"Veneto, Italy 10.5% ABV"
+Pinot Grigio 250ml,9.15,WHITE WINE,
+Pinot Grigio Bottle,25.95,WHITE WINE,
+Sauvignon Blanc 125ml,7.3,WHITE WINE,"Vino D'Italia, Italy 11% ABV"
+Sauvignon Blanc 175ml,8.3,WHITE WINE,
+Sauvignon Blanc 250ml,9.95,WHITE WINE,
+Sauvignon Blanc Bottle,28.75,WHITE WINE,
+Trebbiano 125ml,6.15,WHITE WINE,
+Trebbiano 175ml,7.15,WHITE WINE,
+Trebbiano 250ml,8.35,WHITE WINE,
+Trebbiano Bottle,23.95,WHITE WINE,
+"Sauvignon Blanc, St Clair 125ml",7.75,WHITE WINE,
+"Sauvignon Blanc, St Clair 175ml",8.75,WHITE WINE,
+"Sauvignon Blanc, St Clair 250ml",10.45,WHITE WINE,
+"Sauvignon Blanc, St Clair Bottle",29.95,WHITE WINE,
+Catarratto Chardonnay 125ml,7.15,WHITE WINE,
+Catarratto Chardonnay 175ml,8.15,WHITE WINE,
+Catarratto Chardonnay 250ml,9.65,WHITE WINE,
+Catarratto Chardonnay Bottle,27.85,WHITE WINE,
+Pinot Grigio Blush 125ml,7.1,ROSE WINE,
+Pinot Grigio Blush 175ml,8.1,ROSE WINE,
+Pinot Grigio Blush 250ml,9.3,ROSE WINE,
+Pinot Grigio Blush Bottle,26.25,ROSE WINE,
+Zinfandel Blush 125ml,6.65,ROSE WINE,
+Zinfandel Blush 175ml,7.65,ROSE WINE,
+Zinfandel Blush 250ml,8.85,ROSE WINE,
+Zinfandel Blush Bottle,24.95,ROSE WINE,
+Montepulciano 125ml,6.35,RED WINE,
+Montepulciano 175ml,7.35,RED WINE,
+Montepulciano 250ml,8.55,RED WINE,
+Montepulciano Bottle,24.45,RED WINE,"Abruzzo, Italy 12.5% ABV"
+Merlot 125ml,6.95,RED WINE,
+Merlot 175ml,7.95,RED WINE,
+Merlot 250ml,9.15,RED WINE,
+Merlot Bottle,25.95,RED WINE,
+Nero D'Avola 125ml,5.75,RED WINE,
+Nero D'Avola 175ml,6.75,RED WINE,
+Nero D'Avola 250ml,7.95,RED WINE,
+Nero D'Avola Bottle,22.95,RED WINE,"Sicilia, Italy 13.5% ABV"
+Primitivo 125ml,7.5,RED WINE,
+Primitivo 175ml,8.5,RED WINE,
+Primitivo 250ml,10.15,RED WINE,
+Primitivo Bottle,28.95,RED WINE,"Puglia, Italy 13.5% ABV"
+Chianti Flask 125ml,7.75,RED WINE,Chianti from Bonacchi
+Chianti Flask 175ml,8.75,RED WINE,Chianti from Bonacchi
+Chianti Flask 250ml,10.45,RED WINE,Chianti from Bonacchi
+Chianti Flask Bottle,29.95,RED WINE,Chianti from Bonacchi
+Chianti Flask Magnum bottle,59.75,RED WINE,Chianti from Bonacchi
+Malbec 125ml,7.75,RED WINE,
+Malbec 175ml,8.75,RED WINE,
+Malbec 250ml,10.45,RED WINE,
+Malbec Bottle,29.95,RED WINE,"Mendoza, Argentina 13.5% ABV"
+House Prosecco 125ml,7.45,FIZZ,
+House Prosecco Bottle,28.95,FIZZ,
+House Prosecco Magnum Bottle,55.95,FIZZ,1.5L magnum bottle
+Pink Prosecco 125ml,7.85,FIZZ,
+Pink Prosecco Bottle,29.95,FIZZ,
+Peroni 330ml,5.95,BEER & CIDER,5% ABV
+Peroni 660ml,7.95,BEER & CIDER,5% ABV
+Peroni Gran Riserva,6.45,BEER & CIDER,6.6% ABV 330ml
+Peroni Gluten Free,5.95,BEER & CIDER,5% ABV 330ml
+Peroni 0.0%,5.45,BEER & CIDER,0.0% ABV 330ml
+Beyond Belief Brewing Pasta Beer IPA,6.45,BEER & CIDER,IPA 5% ABV 330ml
+Beyond Belief Brewing Pasta Beer Pale Ale,6.45,BEER & CIDER,Pale Ale 4.7% ABV 330ml
+Cornish Orchards Gold Cider,6.95,BEER & CIDER,5% ABV 500ml
+Cornish Orchards Raspberry & Elderflower Cider,6.95,BEER & CIDER,4% ABV 500ml
+Hophead,7.45,BEER & CIDER,Golden Pale Ale 3.4% ABV 500ml
+Meantime Anytime IPA,5.75,BEER & CIDER,IPA 4.7% ABV 330ml
+Sipsmith London Dry Gin 25ml,6.0,SPIRITS,
+Sipsmith London Dry Gin 50ml,9.0,SPIRITS,
+White Rum - Calados 25ML,4.0,SPIRITS,
+White Rum - Calados 50ML,7.0,SPIRITS,
+Jamesons Irish Whiskey 25ml,4.0,SPIRITS,
+Jamesons Irish Whiskey 50ml,7.0,SPIRITS,
+Jack Daniels 25ML,4.0,SPIRITS,
+Jack Daniels 50ML,7.0,SPIRITS,
+Tequila 25 ml,4.0,SPIRITS,
+Tequila 50 ml,7.0,SPIRITS,
+Respirited Vodka 25ml,6.0,SPIRITS,
+Respirited Vodka 50ml,9.0,SPIRITS,
+Mr Black Coffee Liquor 25ml,4.0,LIQUEURS,
+Mr Black Coffee Liquor 50ml,7.0,LIQUEURS,
+Amaretto 25ML,4.0,LIQUEURS,
+Amaretto 50ML,7.0,LIQUEURS,
+Limoncello 25ML,4.0,LIQUEURS,
+Limoncello 50ML,7.0,LIQUEURS,
+Peachello 25ml,4.0,LIQUEURS,
+Peachello 50ml,7.0,LIQUEURS,
+Fiorente Elderflower Liqueur 25ml,4.0,LIQUEURS,
+Fiorente Elderflower Liqueur 50ml,7.0,LIQUEURS,
+Frangelico 25ML,4.0,LIQUEURS,
+Frangelico 50ML,7.0,LIQUEURS,
+Baileys 50ML,5.45,LIQUEURS,
+Baileys 100ML,7.45,LIQUEURS,
+Cappuccino,3.75,COFFEE,
+Latte,3.75,COFFEE,
+Flat White,3.75,COFFEE,
+Mocha,3.75,COFFEE,
+Macchiato,3.65,COFFEE,
+Americano,3.65,COFFEE,
+Single Espresso,3.45,COFFEE,
+Double Espresso,3.55,COFFEE,
+Oat Cappuccino,3.85,COFFEE,
+Oat Latte,3.85,COFFEE,
+Oat Flat White,3.85,COFFEE,
+Oat Mocha,3.85,COFFEE,
+Oat Macchiato,3.75,COFFEE,
+Oat Americano,3.75,COFFEE,
+Hot Chocolate,4.25,COFFEE,
+Iced Latte,4.25,ICE COFFEE,
+Ice Americano,3.95,ICE COFFEE,
+English Breakfast,3.55,TEA,
+Earl Grey,3.55,TEA,
+Pure Green,3.55,TEA,
+Peppermint,3.55,TEA,
+Fresh Mint Tea,3.35,TEA,
+Hot Cioccolata,7.25,FEELING A LITTLE EXTRA?,Hot Chocolate. Whipped cream. Dark chocolate shavings.
+Mocha Martini,12.45,FEELING A LITTLE EXTRA?,Respirited Vodka. Baileys. Mr Black coffee liqueur. Cioccolata.
+TWO DINE FOR £25,25.0,SET MENU,"Any pizza to share (Rustica, Calzone or Classico) + 2 sides + 2 soft drinks = £25"
+Kids Orange Juice,2.5,DRINKS,
+Kids Apple Juice,2.5,DRINKS,
+Flawsome Apple & Blackcurrant,2.5,DRINKS,
+Flawsome Sweet Apple,2.5,DRINKS,
+Apple & Blackcurrant Squash,1.0,DRINKS,
+Orange Squash,1.0,DRINKS,
+Kids Milk,1.0,DRINKS,
+Kids Oat Milk,1.0,DRINKS,
+Kids Sweet Potato Fries,0.88,SIDES,
+Kids Chips,0.88,SIDES,
+Kids Green Beans,0.88,SIDES,
