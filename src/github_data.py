@@ -35,14 +35,18 @@ DEFAULT_REPOSITORY = "oligrossman/nathans_web_scraping_tool"
 DEFAULT_BRANCH = "data"
 _TIMEOUT_SECONDS = 60
 
-# These are the files a save in the app can change. The rest of ``data/``
-# (restaurant config, company weights, local notes) ships with the code on
-# ``main`` and must not be uploaded or overwritten from the data branch.
+# These are the files a save in the app can change. Restaurant config and
+# local notes ship with the code on ``main`` and must not be uploaded.
+# Market weights are editable in the app, so they travel with this branch.
+# An older snapshot that never contained the weights file must not delete the
+# copy that shipped with the app. See ``_KEEP_IF_REMOTE_OMITS``.
 _DATA_FILES = (
     "all_company_prices.csv",
     "scrape_log.json",
     "menu_mappings.db",
+    "company_weights.csv",
 )
+_KEEP_IF_REMOTE_OMITS = frozenset({"data/company_weights.csv"})
 _ROOT_FILES = tuple(f"data/{name}" for name in _DATA_FILES)
 _SCRAPES_PREFIX = "data/scrapes/"
 _SKIP_FILENAMES = {".DS_Store"}
@@ -139,12 +143,17 @@ def git_blob_sha(content: bytes) -> str:
 def load_credentials() -> Credentials | None:
     """Return GitHub credentials, or ``None`` when no token is configured.
 
-    ``GITHUB_TOKEN`` is required. ``GITHUB_REPOSITORY`` and
+    The token is read from ``DATA_UPLOAD``. ``GITHUB_TOKEN`` is used only when
+    that is empty, so an older secret still works. ``GITHUB_REPOSITORY`` and
     ``GITHUB_DATA_BRANCH`` are optional (``oligrossman/nathans_web_scraping_tool``
     and ``data``). An environment variable wins over a Streamlit secret, so
     a local shell can point somewhere else without editing the app.
     """
-    token = _setting("GITHUB_TOKEN")
+    token = ""
+    for name in ("DATA_UPLOAD", "GITHUB_TOKEN"):
+        token = _setting(name)
+        if token:
+            break
     if not token:
         return None
     repository = _setting("GITHUB_REPOSITORY") or DEFAULT_REPOSITORY
@@ -238,7 +247,7 @@ def render_sync_banner() -> None:
         )
     elif result.status == "disabled":
         st.info(
-            "Add a secret named GITHUB_TOKEN so scrapes and updates are saved "
+            "Add a secret named DATA_UPLOAD so scrapes and updates are saved "
             "to GitHub. Without it, they disappear when this app restarts."
         )
 
@@ -413,7 +422,9 @@ def _replace_local(data_dir: Path, files: dict[str, bytes]) -> None:
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(content)
     for relative, path in synced_files(data_dir).items():
-        if relative not in files and path.is_file():
+        if relative in files or relative in _KEEP_IF_REMOTE_OMITS:
+            continue
+        if path.is_file():
             path.unlink()
     _remove_empty_dirs(data_dir / "scrapes")
 

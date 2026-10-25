@@ -40,8 +40,10 @@ st.subheader("Where each menu comes from")
 st.markdown(
     "Every brand is one restaurant location, scraped twice: the restaurant menu, "
     "and the delivery menu at that same location. The postcode is the store that "
-    "was scraped. **UK sites** is the chain's restaurant count. **Market weight** "
-    f"is the count used for **{MARKET_LABEL}** (`data/company_weights.csv`). "
+    "was scraped. **UK sites** is the chain's restaurant count from the restaurant "
+    "list. **Market weight** is the count used for "
+    f"**{MARKET_LABEL}**. It starts as the UK site count, and you change it on "
+    "**Comparison Configuration**. A blank weight leaves that company out. "
     "Wagamama is left out of that average."
 )
 st.dataframe(menu_sources(), use_container_width=True, hide_index=True)
@@ -84,7 +86,7 @@ if coverage["Tracker dates"].eq("—").all() and coverage["Scrape dates"].eq("�
 else:
     st.dataframe(coverage, use_container_width=True, hide_index=True)
 st.caption(
-    "On Streamlit Cloud, a `GITHUB_TOKEN` secret copies these saves back to the "
+    "On Streamlit Cloud, a `DATA_UPLOAD` secret copies these saves back to the "
     "repository so they are still there after the app restarts."
 )
 
@@ -120,10 +122,13 @@ st.caption(
 
 st.subheader("What Price Analysis shows")
 st.markdown(
-    f"The charts use the observed prices only. **{MARKET_LABEL}** is the "
-    "restaurant-count-weighted average of the competitor companies, and it "
-    "excludes Wagamama. A custom market, saved on Comparison Configuration, "
-    "narrows that set by cuisine, dish type, company, and course."
+    f"The charts use the observed prices only. **{MARKET_LABEL}** multiplies each "
+    "competitor's average price by its market weight, then divides by the sum "
+    "of those weights. Ticking a company on Price Analysis draws that company's "
+    "line. It does not change the weights. **Total** is a different number: "
+    "once each course has an average, Total is the equal mean of those course "
+    "averages, so Mains counts the same as Sides. A custom market, saved on "
+    "Comparison Configuration, uses the same weights on the dishes it keeps."
 )
 st.markdown(
     "Restaurant versus delivery compares the scraped restaurant menu with the "
@@ -140,5 +145,5 @@ st.markdown(
     "- **Price Analysis** — trends, market comparison, delivery markup, and "
     "high versus low.\n"
     "- **Comparison Configuration** — manual classification, the CSV import, "
-    "and custom markets."
+    "market weights, and custom markets."
 )

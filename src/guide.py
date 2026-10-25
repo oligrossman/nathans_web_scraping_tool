@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from .analytics import DEFAULT_WEIGHTS_PATH
+from .analytics import DEFAULT_WEIGHTS_PATH, load_company_weights
 from .branding import OWN_BRAND
 from .history_archive import ALL_COMPANY_PRICES_PATH, list_archive_dates
 from .pricing_tracker import DEFAULT_WORKBOOK_PATH, TRACKER_NOTES, TRACKER_SHEETS
@@ -44,7 +44,7 @@ def menu_sources(
         if restaurant.brand == OWN_BRAND:
             weight = "Excluded"
         elif restaurant.brand in weights:
-            weight = str(weights[restaurant.brand])
+            weight = _count_label(weights[restaurant.brand])
         else:
             weight = "Not set"
         rows.append(
@@ -118,16 +118,55 @@ def load_price_date_coverage(
     return price_date_coverage(prices, dated, brands)
 
 
-def _market_weights(path: Path) -> dict[str, int]:
-    if not path.exists():
-        return {}
-    frame = pd.read_csv(path)
-    if not {"company", "restaurants"}.issubset(frame.columns):
-        return {}
-    return {
-        str(company): int(count)
-        for company, count in zip(frame["company"], frame["restaurants"])
-    }
+def market_weight_rows(
+    restaurants: list[Restaurant] | None = None,
+    weights_path: Path = DEFAULT_WEIGHTS_PATH,
+) -> pd.DataFrame:
+    """One row per competitor for the weight editor.
+
+    ``uk_sites`` is the estate size from the restaurant list. ``restaurants``
+    is the count the market average uses. A competitor with no weight row is
+    included with a blank count, so it can be filled in. A weight row for a
+    company that is no longer in the list is kept, so saving does not drop it
+    by accident. Wagamama is absent: the market never includes it.
+    """
+    weights = _market_weights(weights_path)
+    rows: list[dict] = []
+    seen: set[str] = set()
+    for restaurant in restaurants if restaurants is not None else load_restaurants():
+        if restaurant.brand == OWN_BRAND or restaurant.brand in seen:
+            continue
+        seen.add(restaurant.brand)
+        rows.append(
+            {
+                "company": restaurant.brand,
+                "uk_sites": restaurant.site_count,
+                "restaurants": weights.get(restaurant.brand),
+            }
+        )
+    for company, count in weights.items():
+        if company in seen or company == OWN_BRAND:
+            continue
+        rows.append({"company": company, "uk_sites": None, "restaurants": count})
+    frame = pd.DataFrame(rows, columns=["company", "uk_sites", "restaurants"])
+    frame["uk_sites"] = pd.to_numeric(frame["uk_sites"], errors="coerce").astype("Int64")
+    frame["restaurants"] = pd.to_numeric(frame["restaurants"], errors="coerce").astype(
+        "Float64"
+    )
+    return frame
+
+
+def _count_label(count: float) -> str:
+    """Show a whole restaurant count without a trailing ``.0``."""
+    number = float(count)
+    if number.is_integer():
+        return str(int(number))
+    return str(number)
+
+
+def _market_weights(path: Path) -> dict[str, float]:
+    """Restaurant counts from the weights file. Blank and non-positive rows are skipped."""
+    return load_company_weights(path)
 
 
 def _span(days: list[date]) -> str:

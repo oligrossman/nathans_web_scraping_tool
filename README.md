@@ -101,20 +101,20 @@ The **Price Analytics** page (in the sidebar) explores observed price history fo
   dated restaurant-menu scrapes.
 - **Nando's / Pizza Express** and the other scraped chains — the same two
   observed sources.
-- **Market** — derived at load time as a restaurant-count-weighted average of
-  competitor companies (weights in `data/company_weights.csv`). Every market
-  point is an average of those observed competitor prices.
+- **Market whole** — built when the charts load. See
+  [How the averages are weighted](#how-the-averages-are-weighted).
 
 All menu categories collapse into six board-level buckets (Starters, Mains,
 Sides, Drinks (non-alcoholic), Drinks (alcoholic), Desserts), plus a **Total**
-series (equal-weighted mean across buckets). The page shows five views:
+series. Total gives every course one vote. The page shows five views:
 
 - **By bucket** — bucket breakdown (absolute, indexed, heatmap with Total row).
 - **Wagamama vs market** — breakdown by bucket (including **Total** as a facet
   panel alongside Starters, Mains, etc.), focus chart, and latest-price bars.
-  Pick which market benchmark(s) to compare against — **Market whole** (a
-  restaurant-count-weighted average of all selected competitors) and any custom
-  markets. All market benchmarks exclude Wagamama dishes.
+  Pick which market benchmark(s) to compare against — **Market whole** and any
+  custom markets. Both use the restaurant-count weights below. All market
+  benchmarks exclude Wagamama dishes. The company tick-boxes choose which
+  company lines to draw. They do not change the market weights.
 - **Restaurant vs delivery** — latest scraped menu against the latest delivery
   menu. The left chart compares restaurants. Choosing a bucket keeps that
   comparison and lists the dishes on the right.
@@ -126,8 +126,8 @@ series (equal-weighted mean across buckets). The page shows five views:
 The **Comparison Configuration** page holds the settings that shape the
 analytics charts: LLM-generated dish attributes (cuisine, dish type such as
 Noodles / Pizza / Curry / Soup, and dietary flags) stored in SQLite with user
-overrides, the grouping dimension (course, cuisine, dish type), and custom
-market benchmarks (e.g. Asian noodle dishes, all pizzas).
+overrides, the grouping dimension (course, cuisine, dish type), the market
+weights, and custom market benchmarks (e.g. Asian noodle dishes, all pizzas).
 
   Each dish is keyed by a **`dish_id`** unique per `(restaurant, item)` — so the
   same name at two chains (e.g. "Mac & Cheese") maps and overrides independently.
@@ -172,9 +172,46 @@ python -m scripts.generate_data --skip-scrape # recompose history from snapshots
 ```
 
 `generate_data` recomposes `data/all_company_prices.csv` from the pricing
-tracker and the dated restaurant archives. It does not estimate a price. The
-Market benchmark weights are in `data/company_weights.csv`. **Update price
-history** on the Data page runs the same recompose.
+tracker and the dated restaurant archives. It does not estimate a price.
+**Update price history** on the Data page runs the same recompose.
+
+### How the averages are weighted
+
+Three different averages show up on the charts. They answer different questions.
+
+**A company line, inside one course.** Each dish counts once. A £5 side and a
+£15 side average to £10. The number of restaurants does not enter this step.
+Dishes seen on only one date are left out before this average is taken, so a
+single scrape of a new dish cannot move the line on its own.
+
+**Market whole.** Take those company averages, then combine them with a
+restaurant count:
+
+```
+market price = Σ (company average × restaurant count) / Σ restaurant count
+```
+
+A company on 400 restaurants at £12 and a company on 100 restaurants at £10
+give `(12 × 400 + 10 × 100) / 500 = £11.60`. The larger estate pulls the
+market four times as hard. Wagamama is never in this sum. A competitor with
+no count is left out. A custom market uses the same formula on the companies
+that match its filters. If none of those companies has a count, each of them
+counts once, so the market can still be drawn.
+
+**Total.** After each course has one average, Total is the equal mean of those
+course averages. Mains counts the same as Sides. Restaurant counts are not
+used, and a course with 40 dishes counts the same as a course with 4.
+
+**Changing the counts.** On **Comparison Configuration**, open **Market
+weights**. **UK sites** is the estate size from `data/restaurants.csv`. The
+editable column starts as that number. Save writes
+`data/company_weights.csv` (`company`, `restaurants`). A blank cell leaves
+that company out. Wagamama cannot be given a weight. The same file can be
+edited by hand. With a `DATA_UPLOAD` secret, saving in the app also copies
+the file to the data branch, so the counts are still there after a restart.
+
+The live share of each company — its count divided by the sum of the counts —
+is shown under the editor. Price Analysis reads the file on load.
 
 Brand constants (colours, copy, own-brand label) live in `src/branding.py`.
 

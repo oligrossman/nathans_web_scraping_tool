@@ -1,9 +1,9 @@
 """Streamlit page: comparison configuration.
 
 Controls that shape the Price Analysis charts: the grouping dimension, dish
-attribute mappings (with user overrides), and custom market definitions. All
-settings are shared with the analytics page via ``st.session_state`` and the
-SQLite mappings database.
+attribute mappings (with user overrides), market weights, and custom market
+definitions. All settings are shared with the analytics page via
+``st.session_state`` and the files under ``data/``.
 """
 
 from __future__ import annotations
@@ -32,11 +32,13 @@ from src.enrichment.store import (
     save_market,
     set_override,
 )
+from src.guide import market_weight_rows
 from src.menu_buckets import BUCKETS
 
 _branding = reload_branding()
 APP_TITLE = _branding.APP_TITLE
 CONFIG_PAGE_TITLE = _branding.CONFIG_PAGE_TITLE
+MARKET_LABEL = _branding.MARKET_LABEL
 OWN_BRAND = _branding.OWN_BRAND
 apply_sidebar_branding = _branding.apply_sidebar_branding
 brand_css = _branding.brand_css
@@ -236,11 +238,91 @@ if dish_file is not None:
 
 st.divider()
 
+# --- Market weights --------------------------------------------------------
+st.subheader("Market weights")
+st.markdown(
+    f"**{MARKET_LABEL}** takes each competitor's average price, multiplies it "
+    "by that competitor's restaurant count, and divides by the sum of those "
+    "counts. A company on 400 restaurants pulls four times as hard as a company "
+    "on 100 restaurants. Leave a count blank to leave that company out. "
+    f"**{OWN_BRAND}** is never included."
+)
+st.markdown(
+    "**UK sites** is the estate size from the restaurant list. The weight "
+    "starts as that number, and this table is where you change it. "
+    "**Total** on the course charts is a different average: each course counts "
+    "once, whatever its restaurant count or its number of dishes."
+)
+weight_rows = market_weight_rows()
+edited_weights = st.data_editor(
+    weight_rows,
+    column_config={
+        "company": st.column_config.TextColumn("Company", disabled=True),
+        "uk_sites": st.column_config.NumberColumn(
+            "UK sites", disabled=True, format="%d"
+        ),
+        "restaurants": st.column_config.NumberColumn(
+            "Market weight (restaurants)",
+            min_value=0,
+            step=1,
+            help=(
+                "Restaurant count used in the market average. "
+                "Blank leaves this company out."
+            ),
+        ),
+    },
+    hide_index=True,
+    use_container_width=True,
+    num_rows="fixed",
+    key="market_weight_editor",
+)
+try:
+    weight_preview = analytics.normalise_company_weights(edited_weights)
+except ValueError as exc:
+    weight_preview = None
+    weight_preview_error = str(exc)
+else:
+    weight_preview_error = ""
+if weight_preview is not None:
+    total_sites = float(weight_preview["restaurants"].sum())
+    share = weight_preview.copy()
+    share["share"] = (share["restaurants"] / total_sites * 100).map(
+        lambda value: f"{value:.1f}%"
+    )
+    share = share.sort_values("restaurants", ascending=False)
+    st.caption(
+        "Share of the market average if you save this table. "
+        "A larger share means that company's price pulls the market further."
+    )
+    st.dataframe(
+        share.rename(
+            columns={
+                "company": "Company",
+                "restaurants": "Market weight",
+                "share": "Share",
+            }
+        ),
+        hide_index=True,
+        use_container_width=True,
+    )
+if st.button("Save market weights", type="primary"):
+    if weight_preview is None:
+        st.error(weight_preview_error)
+    else:
+        analytics.save_company_weights(edited_weights)
+        publish("Update market weights")
+        st.cache_data.clear()
+        st.success("Market weights saved. Price Analysis uses them on the next load.")
+        st.rerun()
+
+st.divider()
+
 # --- Custom markets --------------------------------------------------------
 st.subheader("Define a custom market")
 st.caption(
     "Markets are competitor benchmarks — Wagamama dishes are always excluded. "
-    f"Saved markets can then be plotted on the **{OWN_BRAND} vs market** tab."
+    "A saved market uses the same restaurant-count weights as "
+    f"**{MARKET_LABEL}**. It can then be plotted on the **{OWN_BRAND} vs market** tab."
 )
 
 with st.form("market_form"):

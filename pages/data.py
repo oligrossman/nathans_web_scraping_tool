@@ -194,7 +194,7 @@ st.markdown(
     "scraped menu, then stacks that history with every dated archive into "
     "`all_company_prices.csv` (the dashboard's source of truth).\n"
     "4. Open **Price Analysis** to explore the refreshed data.\n\n"
-    "With a `GITHUB_TOKEN` secret, each of these saves is also copied to GitHub "
+    "With a `DATA_UPLOAD` secret, each of these saves is also copied to GitHub "
     "so the files are still there after the app restarts."
 )
 

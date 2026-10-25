@@ -50,9 +50,104 @@ def repeated_observations(history: pd.DataFrame) -> pd.DataFrame:
 
 
 def load_company_weights(path: str | Path = DEFAULT_WEIGHTS_PATH) -> dict[str, float]:
-    """Return ``{company: restaurant_count}`` from the weights CSV."""
-    weights_df = pd.read_csv(path)
-    return dict(zip(weights_df["company"], weights_df["restaurants"].astype(float)))
+    """Return ``{company: restaurant_count}`` from the weights CSV.
+
+    A blank or non-positive count is ignored. Those companies are left out of
+    the market rather than given a zero that would still change the divisor.
+    """
+    weights_path = Path(path)
+    if not weights_path.exists():
+        return {}
+    weights_df = pd.read_csv(weights_path)
+    if not {"company", "restaurants"}.issubset(weights_df.columns):
+        return {}
+    weights: dict[str, float] = {}
+    for company, count in zip(weights_df["company"], weights_df["restaurants"]):
+        name = str(company).strip()
+        if not name or name.lower() == "nan":
+            continue
+        number = pd.to_numeric(count, errors="coerce")
+        if pd.isna(number) or float(number) <= 0:
+            continue
+        weights[name] = float(number)
+    return weights
+
+
+def normalise_company_weights(frame: pd.DataFrame) -> pd.DataFrame:
+    """Return a ``company, restaurants`` table that is safe to save.
+
+    A blank count drops that company from the market. A count must be a
+    positive number. The own brand is refused, because the market never
+    includes it, and a duplicate name is refused so two rows cannot disagree.
+    """
+    if not {"company", "restaurants"}.issubset(frame.columns):
+        raise ValueError("Weights need a company column and a restaurants column.")
+    rows: list[dict[str, str | int | float]] = []
+    seen: set[str] = set()
+    for _, row in frame.iterrows():
+        company = str(row["company"]).strip()
+        if not company or company.lower() == "nan":
+            raise ValueError("Every weight needs a company name.")
+        if company in {OWN_BRAND, LEGACY_OWN_BRAND}:
+            raise ValueError(
+                f"{OWN_BRAND} is left out of the market, so it has no weight."
+            )
+        if company in seen:
+            raise ValueError(f"{company} is listed more than once.")
+        seen.add(company)
+        raw = row["restaurants"]
+        if pd.isna(raw) or str(raw).strip() == "":
+            continue
+        number = pd.to_numeric(raw, errors="coerce")
+        if pd.isna(number) or not float(number) > 0:
+            raise ValueError(
+                f"{company}: restaurant count must be greater than zero."
+            )
+        count = float(number)
+        rows.append(
+            {
+                "company": company,
+                "restaurants": int(count) if count.is_integer() else round(count, 4),
+            }
+        )
+    if not rows:
+        raise ValueError("Enter a restaurant count for at least one competitor.")
+    return (
+        pd.DataFrame(rows, columns=["company", "restaurants"])
+        .sort_values("company")
+        .reset_index(drop=True)
+    )
+
+
+def save_company_weights(
+    frame: pd.DataFrame,
+    path: str | Path = DEFAULT_WEIGHTS_PATH,
+) -> pd.DataFrame:
+    """Write restaurant-count weights. Returns the table that was written."""
+    cleaned = normalise_company_weights(frame)
+    target = Path(path)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    cleaned.to_csv(target, index=False)
+    return cleaned
+
+
+def weighted_company_mean(company_means: pd.DataFrame, weights: dict[str, float]) -> float:
+    """Restaurant-count-weighted average of one price per company.
+
+    ``company_means`` has ``source`` and ``price``. A company with no positive
+    weight is left out. When nobody in the group has a weight, each company
+    counts once. That fallback keeps a custom market drawable before its
+    companies have been given counts.
+    """
+    if company_means.empty:
+        return float("nan")
+    scored = company_means.copy()
+    scored["weight"] = scored["source"].map(weights)
+    scored["weight"] = pd.to_numeric(scored["weight"], errors="coerce")
+    scored = scored[scored["weight"].gt(0)]
+    if scored.empty:
+        return float(company_means["price"].mean())
+    return float((scored["price"] * scored["weight"]).sum() / scored["weight"].sum())
 
 
 def competitor_sources(history: pd.DataFrame) -> list[str]:
@@ -98,12 +193,7 @@ def with_derived_market(
 
     market_rows: list[dict] = []
     for (dt, bucket), group in comp_means.groupby(["date", "bucket"]):
-        w = group["source"].map(weights).astype(float)
-        price = (
-            float((group["price"] * w).sum() / w.sum())
-            if w.sum() > 0
-            else float(group["price"].mean())
-        )
+        price = weighted_company_mean(group, weights)
         row = {
             "date": dt,
             "bucket": bucket,
@@ -358,11 +448,7 @@ def build_market_series(
         company_means = (
             group.groupby("source")["price"].mean().reset_index(name="price")
         )
-        w = company_means["source"].map(weights).astype(float)
-        if w.sum() > 0:
-            price = float((company_means["price"] * w).sum() / w.sum())
-        else:
-            price = float(company_means["price"].mean())
+        price = weighted_company_mean(company_means, weights)
         row = {
             "date": dt,
             "source": market_label,

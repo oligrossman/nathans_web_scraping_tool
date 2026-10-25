@@ -110,12 +110,15 @@ def glossary() -> str:
             "",
             f"- **Own brand**: {OWN_BRAND}.",
             "- **Buckets (course)**: Starters, Mains, Sides, "
-            "Drinks (non-alcoholic), Drinks (alcoholic), Desserts "
-            "(plus Total = equal-weighted mean across buckets).",
+            "Drinks (non-alcoholic), Drinks (alcoholic), Desserts.",
             f"- **Grouping dimensions**: {dims}.",
-            f"- **{MARKET_LABEL}**: restaurant-count-weighted average of "
-            "competitor companies (never includes Wagamama). Weights live in "
-            "data/company_weights.csv.",
+            f"- **{MARKET_LABEL}**: each competitor's average price, weighted by "
+            "its restaurant count in data/company_weights.csv "
+            "(sum of price × count, divided by the sum of counts). "
+            "Wagamama is excluded. A company with no count is left out. "
+            "Edit the counts on Comparison Configuration.",
+            "- **Total**: equal mean of the course averages. Each course counts "
+            "once. Restaurant counts are not used.",
             "- **Custom markets**: named competitor benchmarks saved in "
             "data/menu_mappings.db (e.g. Grill dishes).",
             f"- **Price history**: {OBSERVED_HISTORY_NOTE}",
@@ -596,9 +599,10 @@ def company_weights() -> dict[str, Any]:
         "rows": rows,
         "restaurant_count": int(total) if total.is_integer() else total,
         "note": (
-            f"{MARKET_LABEL} is the restaurant-count-weighted average of these "
-            f"competitors. {OWN_BRAND} is excluded from the weights and from the "
-            "market."
+            f"{MARKET_LABEL} weights each competitor's average by these restaurant "
+            f"counts, then divides by the sum of the counts. {OWN_BRAND} is "
+            "excluded. A company with no row is left out. Edit the counts on "
+            "Comparison Configuration, or in data/company_weights.csv."
         ),
     }
 

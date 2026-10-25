@@ -61,12 +61,21 @@ if not Path(PRICES_PATH).exists():
 
 
 @st.cache_data
-def _load(path: str, _mtime: float):
+def _load(path: str, _mtime: float, _weights_mtime: float):
     raw = analytics.load_history(path)
     return analytics.with_derived_market(raw)
 
 
-history = _load(str(PRICES_PATH), PRICES_PATH.stat().st_mtime)
+def _file_mtime(path: Path) -> float:
+    """Cache key for a file the charts read. Missing means the cache still refreshes."""
+    return path.stat().st_mtime if path.exists() else 0.0
+
+
+history = _load(
+    str(PRICES_PATH),
+    PRICES_PATH.stat().st_mtime,
+    _file_mtime(analytics.DEFAULT_WEIGHTS_PATH),
+)
 if OWN_BRAND not in history["source"].unique():
     st.error(
         f"No price history rows for **{OWN_BRAND}**. "
@@ -119,6 +128,7 @@ def _global_price_max(path: str, _mtime: float) -> float:
 def _chart_history(
     path: str,
     _mtime: float,
+    _weights_mtime: float,
     dimension_value: str,
     market_names: tuple[str, ...],
     db_mtime: float,
@@ -228,6 +238,7 @@ db_mtime = DEFAULT_DB_PATH.stat().st_mtime if DEFAULT_DB_PATH.exists() else 0.0
 chart_history = _chart_history(
     str(PRICES_PATH),
     PRICES_PATH.stat().st_mtime,
+    _file_mtime(analytics.DEFAULT_WEIGHTS_PATH),
     grouping_dimension.value,
     tuple(selected_custom_names),
     db_mtime,
@@ -502,9 +513,10 @@ with tab_compare:
         key="selected_markets",
         help=(
             f"Pick one or more markets to show as 'the market'. "
-            f"'{MARKET_LABEL}' is the weighted average of all selected competitors; "
-            "saved custom markets appear by their name. Markets always exclude "
-            f"{OWN_BRAND}. Create new markets on the {CONFIG_PAGE_TITLE} page."
+            f"'{MARKET_LABEL}' weights every competitor that has a restaurant count, "
+            "not only the companies ticked above. Edit those counts on the "
+            f"{CONFIG_PAGE_TITLE} page. Saved custom markets use the same counts. "
+            f"Markets always exclude {OWN_BRAND}."
         ),
     )
     if not show_generic_market and not selected_custom_names:

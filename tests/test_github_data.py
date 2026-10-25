@@ -159,6 +159,38 @@ def test_synced_files_leave_config_and_notes_alone(tmp_path) -> None:
     assert "data/scrapes/2026-01-01/wagamama_menu_snapshot.csv" in relative
 
 
+def test_market_weights_upload_and_an_old_snapshot_does_not_delete_them(tmp_path) -> None:
+    """Weights are part of a save. A data branch from before that must not wipe them."""
+    data = _sample_dir(tmp_path)
+    weights = data / "company_weights.csv"
+    weights.write_text("company,restaurants\nPho,43\n", encoding="utf-8")
+    assert "data/company_weights.csv" in synced_files(data)
+    assert "data/restaurants.csv" not in synced_files(data)
+
+    remote = MemoryGitHub()
+    pushed = github_data._push(_credentials(), "Update market weights", remote, data)
+    assert pushed.status == "pushed"
+    stored = remote.trees[remote.commits[remote.branch]["tree"]]
+    assert remote.blobs[stored["data/company_weights.csv"]] == weights.read_bytes()
+
+    fresh = tmp_path / "fresh"
+    fresh.mkdir()
+    (fresh / "company_weights.csv").write_text("company,restaurants\nPho,1\n", encoding="utf-8")
+    (fresh / "restaurants.csv").write_text("keep\n", encoding="utf-8")
+    github_data._pull(_credentials(), remote, fresh)
+    assert (fresh / "company_weights.csv").read_text(encoding="utf-8") == weights.read_text(
+        encoding="utf-8"
+    )
+    assert (fresh / "restaurants.csv").read_text(encoding="utf-8") == "keep\n"
+
+    older = MemoryGitHub()
+    bare = _sample_dir(tmp_path / "bare")
+    github_data._push(_credentials(), "Save scraped menus", older, bare)
+    kept = data / "company_weights.csv"
+    github_data._pull(_credentials(), older, data)
+    assert kept.read_text(encoding="utf-8") == "company,restaurants\nPho,43\n"
+
+
 def test_zip_keeps_only_menu_files() -> None:
     buffer = io.BytesIO()
     with zipfile.ZipFile(buffer, "w") as archive:
@@ -297,6 +329,7 @@ def test_startup_download_runs_once(
 
 
 def test_credentials_default_to_this_repo(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("DATA_UPLOAD", raising=False)
     monkeypatch.setenv("GITHUB_TOKEN", "test-token")
     monkeypatch.delenv("GITHUB_REPOSITORY", raising=False)
     monkeypatch.delenv("GITHUB_DATA_BRANCH", raising=False)
@@ -307,5 +340,21 @@ def test_credentials_default_to_this_repo(monkeypatch: pytest.MonkeyPatch) -> No
     credentials = github_data.load_credentials()
 
     assert credentials is not None
+    assert credentials.token == "test-token"
     assert credentials.repository == "oligrossman/nathans_web_scraping_tool"
     assert credentials.branch == "data"
+
+
+def test_data_upload_secret_is_used_before_github_token(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("DATA_UPLOAD", "data-token")
+    monkeypatch.setenv("GITHUB_TOKEN", "old-token")
+    monkeypatch.setattr(
+        github_data, "_setting", lambda name: os.environ.get(name, "").strip()
+    )
+
+    credentials = github_data.load_credentials()
+
+    assert credentials is not None
+    assert credentials.token == "data-token"
