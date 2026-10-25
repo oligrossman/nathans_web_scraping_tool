@@ -1,188 +1,280 @@
 date,source,item,dish_id,bucket,price
 2026-07-08,Banana Tree,Banana Tree Curry - Chicken,188f214d13de,Mains,16.95
+2026-10-25,Banana Tree,Banana Tree Curry - Chicken,188f214d13de,Mains,17.35
 2026-07-08,Banana Tree,Banana Tree Curry - Chicken (Gluten-free),7a219588d458,Mains,16.95
+2026-10-25,Banana Tree,Banana Tree Curry - Chicken (Gluten-free),7a219588d458,Mains,17.35
 2026-07-08,Banana Tree,Banana Tree Curry - Prawn,47b474c382b4,Mains,17.65
+2026-10-25,Banana Tree,Banana Tree Curry - Prawn,47b474c382b4,Mains,17.95
 2026-07-08,Banana Tree,Banana Tree Curry - Prawn (Gluten-free),cb5e1c12c294,Mains,17.65
+2026-10-25,Banana Tree,Banana Tree Curry - Prawn (Gluten-free),cb5e1c12c294,Mains,17.95
 2026-07-08,Banana Tree,Banana Tree Curry - Tofu,b92aa0ee41bd,Mains,16.95
+2026-10-25,Banana Tree,Banana Tree Curry - Tofu,b92aa0ee41bd,Mains,17.35
 2026-07-08,Banana Tree,Banana Tree Curry - Tofu (Gluten-free),3f72fccbfe6e,Mains,16.95
+2026-10-25,Banana Tree,Banana Tree Curry - Tofu (Gluten-free),3f72fccbfe6e,Mains,17.35
 2025-03-01,Banana Tree,Banana Tree Spiced Noodles,b7352512c08d,Mains,15.45
 2025-05-01,Banana Tree,Banana Tree Spiced Noodles,b7352512c08d,Mains,15.45
 2025-08-01,Banana Tree,Banana Tree Spiced Noodles,b7352512c08d,Mains,15.95
 2025-11-01,Banana Tree,Banana Tree Spiced Noodles,b7352512c08d,Mains,15.45
 2026-04-01,Banana Tree,Banana Tree Spiced Noodles,b7352512c08d,Mains,16.75
 2026-07-08,Banana Tree,Banana Tree Spiced Noodles,b7352512c08d,Mains,16.75
+2026-10-25,Banana Tree,Banana Tree Spiced Noodles,b7352512c08d,Mains,16.95
 2025-03-01,Banana Tree,Bang Bang Broccoli,1d199a79bc0b,Mains,6.5
 2025-05-01,Banana Tree,Bang Bang Broccoli,1d199a79bc0b,Mains,6.5
 2025-08-01,Banana Tree,Bang Bang Broccoli,1d199a79bc0b,Mains,6.85
 2025-11-01,Banana Tree,Bang Bang Broccoli,1d199a79bc0b,Mains,6.85
 2026-04-01,Banana Tree,Bang Bang Broccoli,1d199a79bc0b,Mains,6.85
 2026-07-08,Banana Tree,Bang Bang Broccoli,1d199a79bc0b,Mains,7.25
+2026-10-25,Banana Tree,Bang Bang Broccoli,1d199a79bc0b,Mains,6.95
 2026-04-01,Banana Tree,Blistered Dragon Peppers,d4611ef6fa0d,Mains,3.25
 2026-07-08,Banana Tree,Blistered Dragon Peppers,d4611ef6fa0d,Mains,3.25
+2026-10-25,Banana Tree,Blistered Dragon Peppers,d4611ef6fa0d,Mains,3.25
 2026-07-08,Banana Tree,Blistered Dragon Peppers (Gluten-free),0be775ede021,Mains,3.25
+2026-10-25,Banana Tree,Blistered Dragon Peppers (Gluten-free),0be775ede021,Mains,3.25
 2025-03-01,Banana Tree,Chicken Singapore Noodles,e35026831c00,Mains,14.85
 2025-05-01,Banana Tree,Chicken Singapore Noodles,e35026831c00,Mains,14.85
 2025-08-01,Banana Tree,Chicken Singapore Noodles,e35026831c00,Mains,15.45
 2025-11-01,Banana Tree,Chicken Singapore Noodles,e35026831c00,Mains,15.45
 2026-04-01,Banana Tree,Chicken Singapore Noodles,e35026831c00,Mains,16.25
 2026-07-08,Banana Tree,Chicken Singapore Noodles,e35026831c00,Mains,16.25
+2026-10-25,Banana Tree,Chicken Singapore Noodles,e35026831c00,Mains,16.65
 2026-07-08,Banana Tree,Chicken in Mango & Sweet Lime Sauce - Sweet & Sour Chicken,864601c17f4e,Mains,16.95
+2026-10-25,Banana Tree,"Chicken, Mango in Sweet Lime Sauce - Chicken in Mango & Sweet Lime",515ccee58a21,Mains,17.35
 2026-07-08,Banana Tree,Classic Sweet & Sour - Crispy Chicken,7aa906059bd1,Mains,16.5
+2026-10-25,Banana Tree,Classic Sweet & Sour - Crispy Chicken,7aa906059bd1,Mains,16.85
 2025-03-01,Banana Tree,Coconut Rice,56f9082355b8,Mains,4.5
 2025-08-01,Banana Tree,Coconut Rice,56f9082355b8,Mains,4.85
 2025-11-01,Banana Tree,Coconut Rice,56f9082355b8,Mains,4.85
 2026-04-01,Banana Tree,Coconut Rice,56f9082355b8,Mains,4.85
 2026-07-08,Banana Tree,Coconut Rice,56f9082355b8,Mains,4.85
+2026-10-25,Banana Tree,Coconut Rice,56f9082355b8,Mains,4.95
 2025-08-01,Banana Tree,Drunken Monks Noodles,a30ee57cb53a,Mains,15.5
 2025-11-01,Banana Tree,Drunken Monks Noodles,a30ee57cb53a,Mains,15.25
 2026-04-01,Banana Tree,Drunken Monks Noodles,a30ee57cb53a,Mains,16.5
 2026-07-08,Banana Tree,Drunken Monks Noodles,a30ee57cb53a,Mains,16.5
+2026-10-25,Banana Tree,Drunken Monks Noodles,a30ee57cb53a,Mains,16.65
 2025-03-01,Banana Tree,Duck Pancakes,c1c29dc861ac,Mains,14.95
 2025-05-01,Banana Tree,Duck Pancakes,c1c29dc861ac,Mains,14.95
 2025-08-01,Banana Tree,Duck Pancakes,c1c29dc861ac,Mains,15.95
 2025-11-01,Banana Tree,Duck Pancakes,c1c29dc861ac,Mains,15.95
 2026-04-01,Banana Tree,Duck Pancakes,c1c29dc861ac,Mains,15.95
 2026-07-08,Banana Tree,Duck Pancakes,c1c29dc861ac,Mains,15.95
+2026-10-25,Banana Tree,Duck Pancakes,c1c29dc861ac,Mains,16.25
 2025-03-01,Banana Tree,Edamame,5d101046b00e,Mains,5.0
 2025-05-01,Banana Tree,Edamame,5d101046b00e,Mains,5.0
 2025-08-01,Banana Tree,Edamame,5d101046b00e,Mains,5.0
 2025-11-01,Banana Tree,Edamame,5d101046b00e,Mains,5.0
 2026-07-08,Banana Tree,Edamame,5d101046b00e,Mains,5.0
+2026-10-25,Banana Tree,Edamame,5d101046b00e,Mains,5.1
 2026-07-08,Banana Tree,Edamame (Gluten-Free),9c48ee4f6c34,Mains,5.0
+2026-10-25,Banana Tree,Edamame (Gluten-Free),9c48ee4f6c34,Mains,5.1
 2025-03-01,Banana Tree,Egg Fried Rice,57bd90b679c7,Mains,4.7
 2025-08-01,Banana Tree,Egg Fried Rice,57bd90b679c7,Mains,4.95
 2025-11-01,Banana Tree,Egg Fried Rice,57bd90b679c7,Mains,4.95
 2026-04-01,Banana Tree,Egg Fried Rice,57bd90b679c7,Mains,4.95
 2026-07-08,Banana Tree,Egg Fried Rice,57bd90b679c7,Mains,4.95
+2026-10-25,Banana Tree,Egg Fried Rice,57bd90b679c7,Mains,4.95
 2026-07-08,Banana Tree,Flatbread,f25329e9b7cb,Mains,3.25
-2025-08-01,Banana Tree,Fries,a01f34e5d36d,Mains,3.5
-2025-11-01,Banana Tree,Fries,a01f34e5d36d,Mains,4.5
-2026-04-01,Banana Tree,Fries,a01f34e5d36d,Mains,4.5
-2026-07-08,Banana Tree,Fries,a01f34e5d36d,Mains,4.5
+2026-10-25,Banana Tree,Flatbread,f25329e9b7cb,Mains,3.35
 2026-04-01,Banana Tree,Grilled Spiced Chicken,893300c4da72,Mains,16.5
 2026-07-08,Banana Tree,Grilled Spiced Chicken,893300c4da72,Mains,16.5
+2026-10-25,Banana Tree,Grilled Spiced Chicken,893300c4da72,Mains,17.35
 2026-07-08,Banana Tree,Grilled Spiced Chicken - Chicken (Gluten-free),e2c9c514de4c,Mains,16.5
+2026-10-25,Banana Tree,Grilled Spiced Chicken - Chicken (Gluten-free),e2c9c514de4c,Mains,17.35
 2026-07-08,Banana Tree,Katsu Burger - Chicken,a2217cfe110a,Mains,16.75
+2026-10-25,Banana Tree,Katsu Burger - Chicken,a2217cfe110a,Mains,16.95
 2026-07-08,Banana Tree,Katsu Burger - Extra Chicken Fillet,7fcbf40420a9,Mains,3.95
+2026-10-25,Banana Tree,Katsu Burger - Extra Chicken Fillet,7fcbf40420a9,Mains,3.95
 2026-07-08,Banana Tree,Katsu Burger - Extra Katsu Sauce,8682e1012586,Mains,1.95
+2026-10-25,Banana Tree,Katsu Burger - Extra Katsu Sauce,8682e1012586,Mains,1.95
 2026-07-08,Banana Tree,Katsu Burger - Extra Veggie Fillet,249a07e877f1,Mains,3.95
+2026-10-25,Banana Tree,Katsu Burger - Extra Veggie Fillet,249a07e877f1,Mains,3.95
 2026-07-08,Banana Tree,Katsu Burger - Veggie,ee08e438fdcb,Mains,16.75
+2026-10-25,Banana Tree,Katsu Burger - Veggie,ee08e438fdcb,Mains,17.15
 2026-07-08,Banana Tree,Katsu Curry - Chicken Fillet,3678988dabc0,Mains,16.45
+2026-10-25,Banana Tree,Katsu Curry - Chicken Fillet,3678988dabc0,Mains,16.75
 2026-07-08,Banana Tree,Katsu Curry - Vegan Fillet,b2d9c8cf9568,Mains,16.45
-2025-11-01,Banana Tree,Katsu Fries,bf8e824e83cb,Mains,4.75
-2026-04-01,Banana Tree,Katsu Fries,bf8e824e83cb,Mains,4.95
-2026-07-08,Banana Tree,Katsu Fries,bf8e824e83cb,Mains,4.95
+2026-10-25,Banana Tree,Katsu Curry - Vegan Fillet,b2d9c8cf9568,Mains,16.75
 2025-03-01,Banana Tree,Korean Drug Egg,38a14a11e24e,Mains,1.5
 2025-05-01,Banana Tree,Korean Drug Egg,38a14a11e24e,Mains,1.5
 2025-08-01,Banana Tree,Korean Drug Egg,38a14a11e24e,Mains,1.75
 2025-11-01,Banana Tree,Korean Drug Egg,38a14a11e24e,Mains,1.95
 2026-04-01,Banana Tree,Korean Drug Egg,38a14a11e24e,Mains,1.95
 2026-07-08,Banana Tree,Korean Drug Egg,38a14a11e24e,Mains,1.95
+2026-10-25,Banana Tree,Korean Drug Egg,38a14a11e24e,Mains,1.95
 2026-07-08,Banana Tree,Malaysian Satay Skewers - Grilled Chicken,b228903af46b,Mains,8.95
+2026-10-25,Banana Tree,Malaysian Satay Skewers - Grilled Chicken,b228903af46b,Mains,9.15
 2026-07-08,Banana Tree,Malaysian Satay Skewers - Vegan Satay,cdc02bf557fd,Mains,8.95
+2026-10-25,Banana Tree,Malaysian Satay Skewers - Vegan Satay,cdc02bf557fd,Mains,9.15
 2025-03-01,Banana Tree,Mekong Prawns,02f3d9c4b011,Mains,8.25
 2025-05-01,Banana Tree,Mekong Prawns,02f3d9c4b011,Mains,8.25
 2025-08-01,Banana Tree,Mekong Prawns,02f3d9c4b011,Mains,8.65
 2025-11-01,Banana Tree,Mekong Prawns,02f3d9c4b011,Mains,8.65
 2026-04-01,Banana Tree,Mekong Prawns,02f3d9c4b011,Mains,8.65
 2026-07-08,Banana Tree,Mekong Prawns,02f3d9c4b011,Mains,8.65
+2026-10-25,Banana Tree,Mekong Prawns,02f3d9c4b011,Mains,8.85
 2025-03-01,Banana Tree,Nasi Goreng Indonesian Fried Rice,f35c02bfb2d5,Mains,5.0
 2025-05-01,Banana Tree,Nasi Goreng Indonesian Fried Rice,f35c02bfb2d5,Mains,5.0
 2025-08-01,Banana Tree,Nasi Goreng Indonesian Fried Rice,f35c02bfb2d5,Mains,5.25
 2025-11-01,Banana Tree,Nasi Goreng Indonesian Fried Rice,f35c02bfb2d5,Mains,5.25
 2026-04-01,Banana Tree,Nasi Goreng Indonesian Fried Rice,f35c02bfb2d5,Mains,5.25
 2026-07-08,Banana Tree,Nasi Goreng Indonesian Fried Rice,f35c02bfb2d5,Mains,5.25
+2026-10-25,Banana Tree,Nasi Goreng Indonesian Fried Rice,f35c02bfb2d5,Mains,5.35
 2026-07-08,Banana Tree,Pad Thai (Gluten-Free) - Chicken & Prawns (Gluten-Free),4d4488561dc0,Mains,16.25
+2026-10-25,Banana Tree,Pad Thai (Gluten-Free) - Chicken & Prawns (Gluten-Free),4d4488561dc0,Mains,16.65
 2026-07-08,Banana Tree,Pad Thai (Gluten-Free) - Chicken (Gluten-Free),a29ed9d78f5f,Mains,15.25
+2026-10-25,Banana Tree,Pad Thai (Gluten-Free) - Chicken (Gluten-Free),a29ed9d78f5f,Mains,15.65
 2026-07-08,Banana Tree,Pad Thai (Gluten-Free) - Prawns (Gluten-Free),640f47fddda0,Mains,15.95
+2026-10-25,Banana Tree,Pad Thai (Gluten-Free) - Prawns (Gluten-Free),640f47fddda0,Mains,16.35
 2026-07-08,Banana Tree,Pad Thai (Gluten-Free) - Steak (Gluten-Free),48fa80232243,Mains,19.95
+2026-10-25,Banana Tree,Pad Thai (Gluten-Free) - Steak (Gluten-Free),48fa80232243,Mains,20.15
 2026-07-08,Banana Tree,Pad Thai (Gluten-Free) - THIS™ ISN’T CHICKEN Vegan Bites (Gluten-Free),aa90a03aa504,Mains,15.25
+2026-10-25,Banana Tree,Pad Thai (Gluten-Free) - THIS™ ISN’T CHICKEN Vegan Bites (Gluten-Free),aa90a03aa504,Mains,15.65
 2026-07-08,Banana Tree,Pad Thai (Gluten-Free) - Tofu (Gluten-Free),339641a71967,Mains,15.25
+2026-10-25,Banana Tree,Pad Thai (Gluten-Free) - Tofu (Gluten-Free),339641a71967,Mains,15.65
 2026-07-08,Banana Tree,Pad Thai - Chicken,b818a47ad295,Mains,15.25
+2026-10-25,Banana Tree,Pad Thai - Chicken,b818a47ad295,Mains,15.65
 2026-07-08,Banana Tree,Pad Thai - Duck,4ecdcf9b8e82,Mains,19.95
+2026-10-25,Banana Tree,Pad Thai - Duck,4ecdcf9b8e82,Mains,20.85
 2026-07-08,Banana Tree,Pad Thai - Phad Thai with Chicken and Prawns,d0c6e418f2f0,Mains,16.25
+2026-10-25,Banana Tree,Pad Thai - Phad Thai with Chicken and Prawns,d0c6e418f2f0,Mains,16.65
 2026-07-08,Banana Tree,Pad Thai - Phad Thai with Steak,2612269dab56,Mains,19.95
+2026-10-25,Banana Tree,Pad Thai - Phad Thai with Steak,2612269dab56,Mains,20.15
 2026-07-08,Banana Tree,Pad Thai - Prawns,962582d0c499,Mains,15.95
+2026-10-25,Banana Tree,Pad Thai - Prawns,962582d0c499,Mains,16.35
 2026-07-08,Banana Tree,Pad Thai - THIS™ ISN’T CHICKEN  Vegan Bites,2843351cdf0e,Mains,15.25
+2026-10-25,Banana Tree,Pad Thai - THIS™ ISN’T CHICKEN  Vegan Bites,2843351cdf0e,Mains,15.65
 2026-07-08,Banana Tree,Pad Thai - Tofu,c2ec6eb1d43a,Mains,15.25
+2026-10-25,Banana Tree,Pad Thai - Tofu,c2ec6eb1d43a,Mains,15.65
 2025-03-01,Banana Tree,Prawn Cracker Basket,70190dc21c6c,Mains,4.1
 2025-05-01,Banana Tree,Prawn Cracker Basket,70190dc21c6c,Mains,4.1
 2025-08-01,Banana Tree,Prawn Cracker Basket,70190dc21c6c,Mains,3.95
 2025-11-01,Banana Tree,Prawn Cracker Basket,70190dc21c6c,Mains,3.95
 2026-04-01,Banana Tree,Prawn Cracker Basket,70190dc21c6c,Mains,3.95
 2026-07-08,Banana Tree,Prawn Cracker Basket,70190dc21c6c,Mains,3.95
+2026-10-25,Banana Tree,Prawn Cracker Basket,70190dc21c6c,Mains,3.95
 2026-07-08,Banana Tree,Ramen - Chicken Gyozas,84eea32963cc,Mains,15.25
+2026-10-25,Banana Tree,Ramen - Chicken Gyozas,84eea32963cc,Mains,15.55
 2026-07-08,Banana Tree,Ramen - Spiced Chicken,5eaadedbf87d,Mains,16.5
+2026-10-25,Banana Tree,Ramen - Spiced Chicken,5eaadedbf87d,Mains,16.85
 2026-07-08,Banana Tree,Ramen - Steak,65087d106c65,Mains,18.5
+2026-10-25,Banana Tree,Ramen - Steak,65087d106c65,Mains,18.75
 2026-07-08,Banana Tree,Ramen - THIS™ ISN’T CHICKEN  Vegan Bites,6227037576c4,Mains,16.5
 2026-07-08,Banana Tree,Rice Your Way - Coconut Rice,fbbdfcd44927,Mains,1.9
+2026-10-25,Banana Tree,Rice Your Way - Coconut Rice,fbbdfcd44927,Mains,1.9
 2026-07-08,Banana Tree,Rice Your Way - Egg Fried Rice,64c26548598b,Mains,1.95
+2026-10-25,Banana Tree,Rice Your Way - Egg Fried Rice,64c26548598b,Mains,1.95
 2026-07-08,Banana Tree,Salt n' Pepper Chilli Chips,aa8dd925ebd2,Mains,4.95
+2026-10-25,Banana Tree,Salt n' Pepper Chilli Chips,aa8dd925ebd2,Mains,4.95
 2026-07-08,Banana Tree,Singapore Laksa - Grilled Chicken,69e1b74f1afa,Mains,15.25
+2026-10-25,Banana Tree,Singapore Laksa - Grilled Chicken,69e1b74f1afa,Mains,15.55
 2026-07-08,Banana Tree,Singapore Laksa - Prawns,2e39554ba8ff,Mains,16.25
+2026-10-25,Banana Tree,Singapore Laksa - Prawns,2e39554ba8ff,Mains,16.55
 2026-07-08,Banana Tree,Singapore Laksa - Tofu,f466db1bc807,Mains,15.25
+2026-10-25,Banana Tree,Singapore Laksa - Tofu,f466db1bc807,Mains,15.55
 2026-07-08,Banana Tree,Spiced Crackers,cd8689d5453e,Mains,3.95
+2026-10-25,Banana Tree,Spiced Crackers,cd8689d5453e,Mains,3.95
 2026-07-08,Banana Tree,Spring Rolls - Shredded Duck,6985b7b6a629,Mains,8.45
+2026-10-25,Banana Tree,Spring Rolls - Shredded Duck,6985b7b6a629,Mains,8.65
 2025-03-01,Banana Tree,Steamed Chicken Dumplings,23e6b5b1487a,Mains,7.95
 2025-05-01,Banana Tree,Steamed Chicken Dumplings,23e6b5b1487a,Mains,7.95
 2025-08-01,Banana Tree,Steamed Chicken Dumplings,23e6b5b1487a,Mains,8.15
 2025-11-01,Banana Tree,Steamed Chicken Dumplings,23e6b5b1487a,Mains,8.15
 2026-04-01,Banana Tree,Steamed Chicken Dumplings,23e6b5b1487a,Mains,8.15
 2026-07-08,Banana Tree,Steamed Chicken Dumplings,23e6b5b1487a,Mains,8.15
+2026-10-25,Banana Tree,Steamed Chicken Dumplings,23e6b5b1487a,Mains,8.35
 2025-03-01,Banana Tree,Steamed Jasmine Rice,39f17458d07d,Mains,3.9
 2025-05-01,Banana Tree,Steamed Jasmine Rice,39f17458d07d,Mains,3.9
 2025-08-01,Banana Tree,Steamed Jasmine Rice,39f17458d07d,Mains,4.1
 2025-11-01,Banana Tree,Steamed Jasmine Rice,39f17458d07d,Mains,4.1
 2026-04-01,Banana Tree,Steamed Jasmine Rice,39f17458d07d,Mains,4.1
 2026-07-08,Banana Tree,Steamed Jasmine Rice,39f17458d07d,Mains,4.1
+2026-10-25,Banana Tree,Steamed Jasmine Rice,39f17458d07d,Mains,4.2
 2025-03-01,Banana Tree,Stir Fried Broccoli,9cf6f8a272c3,Mains,5.6
 2025-05-01,Banana Tree,Stir Fried Broccoli,9cf6f8a272c3,Mains,5.6
 2025-08-01,Banana Tree,Stir Fried Broccoli,9cf6f8a272c3,Mains,5.85
 2025-11-01,Banana Tree,Stir Fried Broccoli,9cf6f8a272c3,Mains,5.85
 2026-04-01,Banana Tree,Stir Fried Broccoli,9cf6f8a272c3,Mains,4.65
 2026-07-08,Banana Tree,Stir Fried Broccoli,9cf6f8a272c3,Mains,4.65
+2026-10-25,Banana Tree,Stir Fried Broccoli,9cf6f8a272c3,Mains,4.75
 2026-07-08,Banana Tree,Sweetcorn Fritter Balls - With Spicy Mayo,1ab344d27aee,Mains,7.45
+2026-10-25,Banana Tree,Sweetcorn Fritter Balls - With Spicy Mayo,1ab344d27aee,Mains,7.65
 2026-07-08,Banana Tree,Sweetcorn Fritter Balls - With Sweet Chilli Sauce,0b322c35c91a,Mains,7.45
+2026-10-25,Banana Tree,Sweetcorn Fritter Balls - With Sweet Chilli Sauce,0b322c35c91a,Mains,7.65
 2026-07-08,Banana Tree,Teriyaki Soba Noodles - Duck,696b2837fabe,Mains,20.75
+2026-10-25,Banana Tree,Teriyaki Soba Noodles - Duck,696b2837fabe,Mains,21.5
 2026-07-08,Banana Tree,Teriyaki Soba Noodles - Salmon,7d649c810313,Mains,20.95
+2026-10-25,Banana Tree,Teriyaki Soba Noodles - Salmon,7d649c810313,Mains,21.35
 2026-07-08,Banana Tree,Teriyaki Soba Noodles - Steak,9ab7794eca09,Mains,19.95
+2026-10-25,Banana Tree,Teriyaki Soba Noodles - Steak,9ab7794eca09,Mains,20.75
 2026-07-08,Banana Tree,Teriyaki Soba Noodles - Stir Fried Broccoli,496098c5137c,Mains,4.65
+2026-10-25,Banana Tree,Teriyaki Soba Noodles - Stir Fried Broccoli,496098c5137c,Mains,4.75
 2025-03-01,Banana Tree,Thai Calamari,243265ed10e1,Mains,8.75
 2025-05-01,Banana Tree,Thai Calamari,243265ed10e1,Mains,8.75
 2025-08-01,Banana Tree,Thai Calamari,243265ed10e1,Mains,8.95
 2025-11-01,Banana Tree,Thai Calamari,243265ed10e1,Mains,8.95
 2026-04-01,Banana Tree,Thai Calamari,243265ed10e1,Mains,8.95
 2026-07-08,Banana Tree,Thai Calamari,243265ed10e1,Mains,8.95
+2026-10-25,Banana Tree,Thai Calamari,243265ed10e1,Mains,9.15
 2026-07-08,Banana Tree,Thai Green Curry - Chicken,5e70aaba04a6,Mains,16.95
+2026-10-25,Banana Tree,Thai Green Curry - Chicken,5e70aaba04a6,Mains,17.35
 2026-07-08,Banana Tree,Thai Green Curry - Chicken (Gluten-free),11ce9d444a3c,Mains,16.95
+2026-10-25,Banana Tree,Thai Green Curry - Chicken (Gluten-free),11ce9d444a3c,Mains,17.35
 2026-07-08,Banana Tree,Thai Green Curry - Prawn,d0caa30a0683,Mains,17.65
+2026-10-25,Banana Tree,Thai Green Curry - Prawn,d0caa30a0683,Mains,17.95
 2026-07-08,Banana Tree,Thai Green Curry - Prawn (Gluten-free),c91206171b9c,Mains,17.65
+2026-10-25,Banana Tree,Thai Green Curry - Prawn (Gluten-free),c91206171b9c,Mains,17.95
 2026-07-08,Banana Tree,Thai Massaman Curry - Beef,d679802a5eb1,Mains,18.65
+2026-10-25,Banana Tree,Thai Massaman Curry - Beef,d679802a5eb1,Mains,18.95
 2026-07-08,Banana Tree,Thai Massaman Curry - Beef (Gluten-free),3de9fdd6e6cd,Mains,18.65
+2026-10-25,Banana Tree,Thai Massaman Curry - Beef (Gluten-free),3de9fdd6e6cd,Mains,18.95
 2026-07-08,Banana Tree,Thai Massaman Curry - Chicken,96d4692f1406,Mains,17.95
+2026-10-25,Banana Tree,Thai Massaman Curry - Chicken,96d4692f1406,Mains,18.35
 2026-07-08,Banana Tree,Thai Massaman Curry - Chicken (Gluten-Free),6a2a63aebcc4,Mains,17.95
-2025-03-01,Banana Tree,The Legendary Beef Rendang,22d050336ded,Mains,18.5
-2025-05-01,Banana Tree,The Legendary Beef Rendang,22d050336ded,Mains,18.5
-2025-08-01,Banana Tree,The Legendary Beef Rendang,22d050336ded,Mains,18.95
-2025-11-01,Banana Tree,The Legendary Beef Rendang,22d050336ded,Mains,18.95
-2026-04-01,Banana Tree,The Legendary Beef Rendang,22d050336ded,Mains,19.45
+2026-10-25,Banana Tree,Thai Massaman Curry - Chicken (Gluten-Free),6a2a63aebcc4,Mains,18.35
 2026-07-08,Banana Tree,The Legendary Beef Rendang,22d050336ded,Mains,19.45
 2026-07-08,Banana Tree,The Legendary Beef Rendang - Beef (Gluten-Free),d9b66752879c,Mains,19.45
+2026-10-25,Banana Tree,The Legendary Beef Rendang - Beef (Gluten-Free),d9b66752879c,Mains,19.85
 2025-03-01,Banana Tree,Vietnamese Spring Rolls,3334fba96675,Mains,7.75
 2025-05-01,Banana Tree,Vietnamese Spring Rolls,3334fba96675,Mains,7.75
 2025-08-01,Banana Tree,Vietnamese Spring Rolls,3334fba96675,Mains,7.95
 2025-11-01,Banana Tree,Vietnamese Spring Rolls,3334fba96675,Mains,7.95
 2026-04-01,Banana Tree,Vietnamese Spring Rolls,3334fba96675,Mains,7.95
 2026-07-08,Banana Tree,Vietnamese Spring Rolls,3334fba96675,Mains,7.95
+2026-10-25,Banana Tree,Vietnamese Spring Rolls,3334fba96675,Mains,8.05
 2026-07-08,Banana Tree,Wings - Firecracker,70e9cf98435b,Mains,8.95
+2026-10-25,Banana Tree,Wings - Firecracker,70e9cf98435b,Mains,8.95
 2026-07-08,Banana Tree,Wings - Korean BBQ,737853c5e609,Mains,8.95
-2026-07-08,Five Guys,Kids Burger With Soda,4ad8d4a919f8,Mains,7.5
-2026-07-08,Five Guys,Kids Grilled Cheese With Juice,1328321f30c1,Mains,7.5
-2026-07-08,Five Guys,Kids Hot Dog With Juice,2913ccd104cc,Mains,7.5
+2026-10-25,Banana Tree,Wings - Korean BBQ,737853c5e609,Mains,8.95
+2025-08-01,Banana Tree,Fries,a01f34e5d36d,Sides,3.5
+2025-11-01,Banana Tree,Fries,a01f34e5d36d,Sides,4.5
+2026-04-01,Banana Tree,Fries,a01f34e5d36d,Sides,4.5
+2026-07-08,Banana Tree,Fries,a01f34e5d36d,Sides,4.5
+2026-10-25,Banana Tree,Fries,a01f34e5d36d,Sides,4.75
+2025-11-01,Banana Tree,Katsu Fries,bf8e824e83cb,Sides,4.75
+2026-04-01,Banana Tree,Katsu Fries,bf8e824e83cb,Sides,4.95
+2026-07-08,Banana Tree,Katsu Fries,bf8e824e83cb,Sides,4.95
+2026-10-25,Banana Tree,Katsu Fries,bf8e824e83cb,Sides,4.95
+2026-07-08,Five Guys,Hawkstone Zero,49d543909ee3,Drinks (non-alcoholic),6.15
 2026-04-01,Five Guys,Little Shake,fbfa73201af3,Drinks (non-alcoholic),4.25
 2026-07-08,Five Guys,Little Shake,fbfa73201af3,Drinks (non-alcoholic),4.35
-2026-04-01,Five Guys,RETURNING: Pistachio,9c42079f4920,Drinks (non-alcoholic),6.45
-2026-07-08,Five Guys,RETURNING: Pistachio,9c42079f4920,Drinks (non-alcoholic),6.55
+2022-02-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),5.5
+2022-08-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),5.5
+2022-10-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),5.5
+2022-12-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),5.75
+2023-05-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),5.85
+2023-09-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),5.85
+2023-10-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),5.95
+2024-02-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),5.95
+2025-03-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),5.95
+2025-05-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),6.25
+2025-08-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),6.25
+2025-11-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),6.25
+2026-04-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),6.45
+2026-07-08,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),6.55
+2026-04-01,Five Guys,NEW: Jimmy’s Iced Coffee Shake,7a1fed3fba79,Drinks (non-alcoholic),6.45
+2026-07-08,Five Guys,NEW: Jimmy’s Iced Coffee Shake,7a1fed3fba79,Drinks (non-alcoholic),6.55
+2026-07-08,Five Guys,Refillable Soda,11c0977859cb,Drinks (non-alcoholic),4.65
+2026-07-08,Five Guys,Smart Water,6894c3f8d952,Drinks (non-alcoholic),2.95
 2022-02-01,Five Guys,BLT,9bb15015cbd7,Mains,5.0
 2022-08-01,Five Guys,BLT,9bb15015cbd7,Mains,5.0
 2022-10-01,Five Guys,BLT,9bb15015cbd7,Mains,5.0
@@ -309,7 +401,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Five Guys,Hamburger,7a0c0ab90458,Mains,10.25
 2026-04-01,Five Guys,Hamburger,7a0c0ab90458,Mains,10.65
 2026-07-08,Five Guys,Hamburger,7a0c0ab90458,Mains,10.65
-2026-07-08,Five Guys,Hawkstone Zero,49d543909ee3,Drinks (non-alcoholic),6.15
 2022-02-01,Five Guys,Hot Dog,a3d8fcddd0da,Mains,5.55
 2022-08-01,Five Guys,Hot Dog,a3d8fcddd0da,Mains,5.65
 2022-10-01,Five Guys,Hot Dog,a3d8fcddd0da,Mains,5.65
@@ -326,8 +417,11 @@ date,source,item,dish_id,bucket,price
 2026-07-08,Five Guys,Hot Dog,a3d8fcddd0da,Mains,7.65
 2026-07-08,Five Guys,Kids Burger With Juice,9d5aeb59a626,Mains,7.5
 2026-07-08,Five Guys,Kids Burger With Shake,d796b41a04b4,Mains,9.5
+2026-07-08,Five Guys,Kids Burger With Soda,4ad8d4a919f8,Mains,7.5
+2026-07-08,Five Guys,Kids Grilled Cheese With Juice,1328321f30c1,Mains,7.5
 2026-07-08,Five Guys,Kids Grilled Cheese With Shake,143a138f0ff1,Mains,9.5
 2026-07-08,Five Guys,Kids Grilled Cheese With Soda,80fb3b417698,Mains,7.5
+2026-07-08,Five Guys,Kids Hot Dog With Juice,2913ccd104cc,Mains,7.5
 2026-07-08,Five Guys,Kids Hot Dog With Shake,0cdacaddcabd,Mains,9.5
 2026-07-08,Five Guys,Kids Hot Dog With Soda,af6b9b0a3752,Mains,7.5
 2026-04-01,Five Guys,Lettuce Wrap,f71bea400467,Mains,7.95
@@ -388,12 +482,8 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Five Guys,Little Hamburger,132b106a254d,Mains,7.85
 2026-04-01,Five Guys,Little Hamburger,132b106a254d,Mains,7.95
 2026-07-08,Five Guys,Little Hamburger,132b106a254d,Mains,7.95
-2026-04-01,Five Guys,NEW: Jimmy’s Iced Coffee Shake,7a1fed3fba79,Drinks (non-alcoholic),6.45
-2026-07-08,Five Guys,NEW: Jimmy’s Iced Coffee Shake,7a1fed3fba79,Drinks (non-alcoholic),6.55
-2026-04-01,Five Guys,NEW: Loaded Fries,8f9a44b8c884,Mains,7.45
-2026-07-08,Five Guys,NEW: Loaded Fries,8f9a44b8c884,Mains,7.95
-2026-07-08,Five Guys,Refillable Soda,11c0977859cb,Drinks (non-alcoholic),4.65
-2026-07-08,Five Guys,Smart Water,6894c3f8d952,Drinks (non-alcoholic),2.95
+2026-04-01,Five Guys,RETURNING: Pistachio,9c42079f4920,Mains,6.45
+2026-07-08,Five Guys,RETURNING: Pistachio,9c42079f4920,Mains,6.55
 2022-02-01,Five Guys,Veggie Sandwich,9cfb9727f2ac,Mains,3.75
 2022-08-01,Five Guys,Veggie Sandwich,9cfb9727f2ac,Mains,3.75
 2022-10-01,Five Guys,Veggie Sandwich,9cfb9727f2ac,Mains,3.75
@@ -435,24 +525,19 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Five Guys,Large Cajun Fries,bfaf6402c346,Sides,6.75
 2026-04-01,Five Guys,Large Cajun Fries,bfaf6402c346,Sides,6.95
 2026-07-08,Five Guys,Large Cajun Fries,bfaf6402c346,Sides,6.95
-2022-02-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),5.5
-2022-08-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),5.5
-2022-10-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),5.5
-2022-12-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),5.75
-2023-05-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),5.85
-2023-09-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),5.85
-2023-10-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),5.95
-2024-02-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),5.95
-2025-03-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),5.95
-2025-05-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),6.25
-2025-08-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),6.25
-2025-11-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),6.25
-2026-04-01,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),6.45
-2026-07-08,Five Guys,Milkshake,5baa24fa10a4,Drinks (non-alcoholic),6.55
 2026-04-01,Five Guys,NEW: Loaded Cajun Fries,f60b222e8c05,Sides,7.45
 2026-07-08,Five Guys,NEW: Loaded Cajun Fries,f60b222e8c05,Sides,7.95
+2026-04-01,Five Guys,NEW: Loaded Fries,8f9a44b8c884,Sides,7.45
+2026-07-08,Five Guys,NEW: Loaded Fries,8f9a44b8c884,Sides,7.95
 2026-07-08,Five Guys,REGULAR CAJUN FRIES,02188cf20273,Sides,5.95
 2026-07-08,Five Guys,REGULAR SALTED FRIES,c859f34edd65,Sides,5.95
+2025-03-01,Giggling Squid,Mad Squirrel Sumo American Pale Ale 4.7% ABV (440ml),d239aceaeea8,Drinks (alcoholic),5.95
+2025-05-01,Giggling Squid,Mad Squirrel Sumo American Pale Ale 4.7% ABV (440ml),d239aceaeea8,Drinks (alcoholic),5.99
+2025-08-01,Giggling Squid,Mad Squirrel Sumo American Pale Ale 4.7% ABV (440ml),d239aceaeea8,Drinks (alcoholic),5.99
+2025-11-01,Giggling Squid,Mad Squirrel Sumo American Pale Ale 4.7% ABV (440ml),d239aceaeea8,Drinks (alcoholic),5.99
+2026-04-01,Giggling Squid,Mad Squirrel Sumo American Pale Ale 4.7% ABV (440ml),d239aceaeea8,Drinks (alcoholic),6.5
+2026-07-08,Giggling Squid,Mad Squirrel Sumo American Pale Ale 4.7% ABV (440ml),d239aceaeea8,Drinks (alcoholic),6.5
+2026-07-08,Giggling Squid,Cobra Zero (330ml),916dbb5f144d,Drinks (non-alcoholic),4.5
 2025-03-01,Giggling Squid,Bangkok Bites,d2fee3a62e5b,Mains,24.99
 2025-05-01,Giggling Squid,Bangkok Bites,d2fee3a62e5b,Mains,24.99
 2025-08-01,Giggling Squid,Bangkok Bites,d2fee3a62e5b,Mains,36.5
@@ -501,7 +586,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Giggling Squid,Classic Papaya Salad,853c4d5f5aa8,Mains,8.99
 2026-04-01,Giggling Squid,Classic Papaya Salad,853c4d5f5aa8,Mains,8.99
 2026-07-08,Giggling Squid,Classic Papaya Salad,853c4d5f5aa8,Mains,8.99
-2026-07-08,Giggling Squid,Cobra Zero (330ml),916dbb5f144d,Drinks (non-alcoholic),4.5
 2025-03-01,Giggling Squid,Coconut Rice,a639fa93a70c,Mains,4.5
 2025-05-01,Giggling Squid,Coconut Rice,a639fa93a70c,Mains,4.5
 2025-08-01,Giggling Squid,Coconut Rice,a639fa93a70c,Mains,4.5
@@ -584,12 +668,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Giggling Squid,Live Long Noodles,00fa43ca6fb1,Mains,13.9
 2026-04-01,Giggling Squid,Live Long Noodles,00fa43ca6fb1,Mains,13.9
 2026-07-08,Giggling Squid,Live Long Noodles,00fa43ca6fb1,Mains,13.9
-2025-03-01,Giggling Squid,Mad Squirrel Sumo American Pale Ale 4.7% ABV (440ml),d239aceaeea8,Drinks (alcoholic),5.95
-2025-05-01,Giggling Squid,Mad Squirrel Sumo American Pale Ale 4.7% ABV (440ml),d239aceaeea8,Drinks (alcoholic),5.99
-2025-08-01,Giggling Squid,Mad Squirrel Sumo American Pale Ale 4.7% ABV (440ml),d239aceaeea8,Drinks (alcoholic),5.99
-2025-11-01,Giggling Squid,Mad Squirrel Sumo American Pale Ale 4.7% ABV (440ml),d239aceaeea8,Drinks (alcoholic),5.99
-2026-04-01,Giggling Squid,Mad Squirrel Sumo American Pale Ale 4.7% ABV (440ml),d239aceaeea8,Drinks (alcoholic),6.5
-2026-07-08,Giggling Squid,Mad Squirrel Sumo American Pale Ale 4.7% ABV (440ml),d239aceaeea8,Drinks (alcoholic),6.5
 2025-03-01,Giggling Squid,Marinated Steak & Crispy Slow Cooked Beef,072e86a1f963,Mains,23.5
 2025-05-01,Giggling Squid,Marinated Steak & Crispy Slow Cooked Beef,072e86a1f963,Mains,23.5
 2025-08-01,Giggling Squid,Marinated Steak & Crispy Slow Cooked Beef,072e86a1f963,Mains,23.5
@@ -803,6 +881,73 @@ date,source,item,dish_id,bucket,price
 2026-07-08,Nando's,One Pastel de Nata,fe6b8d811588,Desserts,2.75
 2026-07-08,Nando's,Ultimate Chocolate Brownie,61598253e52d,Desserts,4.75
 2026-07-08,Nando's,BERO Kingston Golden Pils,6bca6404cd2f,Drinks (alcoholic),4.75
+2025-11-01,Nando's,Camden Pale Ale,3d66bf475db2,Drinks (alcoholic),4.5
+2026-04-01,Nando's,Camden Pale Ale,3d66bf475db2,Drinks (alcoholic),4.75
+2026-07-08,Nando's,Camden Pale Ale,3d66bf475db2,Drinks (alcoholic),4.95
+2022-02-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),3.95
+2022-08-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.25
+2022-10-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.25
+2022-12-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.25
+2023-05-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.25
+2023-09-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.25
+2023-10-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.25
+2024-02-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.25
+2025-03-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.5
+2025-05-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.5
+2025-08-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.5
+2025-11-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.5
+2026-04-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.75
+2026-07-08,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.95
+2022-02-01,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),6.25
+2022-08-01,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),6.25
+2022-10-01,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),6.25
+2022-12-01,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),6.25
+2023-05-01,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),6.25
+2023-10-01,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),6.25
+2024-02-01,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),6.25
+2025-03-01,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),6.75
+2025-05-01,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),6.75
+2025-08-01,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),6.75
+2025-11-01,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),6.75
+2026-04-01,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),7.25
+2026-07-08,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),7.95
+2023-09-01,Nando's,Spier Rose (South Africa),d44afcc6673d,Drinks (alcoholic),6.25
+2023-10-01,Nando's,Spier Rose (South Africa),d44afcc6673d,Drinks (alcoholic),6.25
+2024-02-01,Nando's,Spier Rose (South Africa),d44afcc6673d,Drinks (alcoholic),6.25
+2025-03-01,Nando's,Spier Rose (South Africa),d44afcc6673d,Drinks (alcoholic),6.75
+2025-05-01,Nando's,Spier Rose (South Africa),d44afcc6673d,Drinks (alcoholic),6.75
+2025-08-01,Nando's,Spier Rose (South Africa),d44afcc6673d,Drinks (alcoholic),6.75
+2025-11-01,Nando's,Spier Rose (South Africa),d44afcc6673d,Drinks (alcoholic),6.75
+2026-04-01,Nando's,Spier Rose (South Africa),d44afcc6673d,Drinks (alcoholic),7.25
+2026-07-08,Nando's,Spier Rose (South Africa),d44afcc6673d,Drinks (alcoholic),7.95
+2022-02-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),6.25
+2022-08-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),6.25
+2022-10-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),6.25
+2022-12-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),6.25
+2023-05-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),6.25
+2023-09-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),6.25
+2023-10-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),6.25
+2024-02-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),6.25
+2025-03-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),6.75
+2025-05-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),6.75
+2025-08-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),6.75
+2025-11-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),6.75
+2026-04-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),7.25
+2026-07-08,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),7.95
+2022-02-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),4.85
+2022-08-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),4.85
+2022-10-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),4.85
+2022-12-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),4.85
+2023-05-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),4.85
+2023-09-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),4.85
+2023-10-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),4.85
+2024-02-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),4.85
+2025-03-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),5.25
+2025-05-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),5.25
+2025-08-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),5.25
+2025-11-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),5.25
+2026-04-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),5.5
+2026-07-08,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),5.95
 2024-02-01,Nando's,Beavertown Lazer Crush Alcohol Free IPA,24df87514c59,Drinks (non-alcoholic),4.25
 2025-03-01,Nando's,Beavertown Lazer Crush Alcohol Free IPA,24df87514c59,Drinks (non-alcoholic),4.25
 2025-05-01,Nando's,Beavertown Lazer Crush Alcohol Free IPA,24df87514c59,Drinks (non-alcoholic),4.25
@@ -816,9 +961,6 @@ date,source,item,dish_id,bucket,price
 2026-07-08,Nando's,Bottle of Dr Pepper Zero,bcaf3ce10cc5,Drinks (non-alcoholic),2.95
 2026-07-08,Nando's,Bottle of Fanta Zero,f40e45cd502c,Drinks (non-alcoholic),2.95
 2026-07-08,Nando's,Bottle of Sprite Zero,a77a2ae2f0f2,Drinks (non-alcoholic),2.95
-2025-11-01,Nando's,Camden Pale Ale,3d66bf475db2,Drinks (alcoholic),4.5
-2026-04-01,Nando's,Camden Pale Ale,3d66bf475db2,Drinks (alcoholic),4.75
-2026-07-08,Nando's,Camden Pale Ale,3d66bf475db2,Drinks (alcoholic),4.95
 2024-02-01,Nando's,Creative Block 2 (South Africa),441060344595,Drinks (non-alcoholic),28.95
 2025-03-01,Nando's,Creative Block 2 (South Africa),441060344595,Drinks (non-alcoholic),30.25
 2025-05-01,Nando's,Creative Block 2 (South Africa),441060344595,Drinks (non-alcoholic),30.25
@@ -840,20 +982,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Nando's,Creative Block 5 (South Africa),a5f81c6f86bb,Drinks (non-alcoholic),30.25
 2026-04-01,Nando's,Creative Block 5 (South Africa),a5f81c6f86bb,Drinks (non-alcoholic),31.5
 2026-07-08,Nando's,Creative Block 5 (South Africa),a5f81c6f86bb,Drinks (non-alcoholic),31.95
-2022-02-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),3.95
-2022-08-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.25
-2022-10-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.25
-2022-12-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.25
-2023-05-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.25
-2023-09-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.25
-2023-10-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.25
-2024-02-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.25
-2025-03-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.5
-2025-05-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.5
-2025-08-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.5
-2025-11-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.5
-2026-04-01,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.75
-2026-07-08,Nando's,Freedom Pils,7ac99a08c51d,Drinks (alcoholic),4.95
 2022-02-01,Nando's,Karma Drinks Gingerella,e4d9286416ee,Drinks (non-alcoholic),2.9
 2022-08-01,Nando's,Karma Drinks Gingerella,e4d9286416ee,Drinks (non-alcoholic),2.9
 2022-10-01,Nando's,Karma Drinks Gingerella,e4d9286416ee,Drinks (non-alcoholic),2.9
@@ -920,42 +1048,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Nando's,Sparkling Water,c46c0d41a472,Drinks (non-alcoholic),3.25
 2026-04-01,Nando's,Sparkling Water,c46c0d41a472,Drinks (non-alcoholic),3.5
 2026-07-08,Nando's,Sparkling Water,c46c0d41a472,Drinks (non-alcoholic),3.75
-2022-02-01,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),6.25
-2022-08-01,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),6.25
-2022-10-01,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),6.25
-2022-12-01,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),6.25
-2023-05-01,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),6.25
-2023-10-01,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),6.25
-2024-02-01,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),6.25
-2025-03-01,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),6.75
-2025-05-01,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),6.75
-2025-08-01,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),6.75
-2025-11-01,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),6.75
-2026-04-01,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),7.25
-2026-07-08,Nando's,Spier Merlot (South Africa),005be7248d32,Drinks (alcoholic),7.95
-2023-09-01,Nando's,Spier Rose (South Africa),d44afcc6673d,Drinks (alcoholic),6.25
-2023-10-01,Nando's,Spier Rose (South Africa),d44afcc6673d,Drinks (alcoholic),6.25
-2024-02-01,Nando's,Spier Rose (South Africa),d44afcc6673d,Drinks (alcoholic),6.25
-2025-03-01,Nando's,Spier Rose (South Africa),d44afcc6673d,Drinks (alcoholic),6.75
-2025-05-01,Nando's,Spier Rose (South Africa),d44afcc6673d,Drinks (alcoholic),6.75
-2025-08-01,Nando's,Spier Rose (South Africa),d44afcc6673d,Drinks (alcoholic),6.75
-2025-11-01,Nando's,Spier Rose (South Africa),d44afcc6673d,Drinks (alcoholic),6.75
-2026-04-01,Nando's,Spier Rose (South Africa),d44afcc6673d,Drinks (alcoholic),7.25
-2026-07-08,Nando's,Spier Rose (South Africa),d44afcc6673d,Drinks (alcoholic),7.95
-2022-02-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),6.25
-2022-08-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),6.25
-2022-10-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),6.25
-2022-12-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),6.25
-2023-05-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),6.25
-2023-09-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),6.25
-2023-10-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),6.25
-2024-02-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),6.25
-2025-03-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),6.75
-2025-05-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),6.75
-2025-08-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),6.75
-2025-11-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),6.75
-2026-04-01,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),7.25
-2026-07-08,Nando's,Spier Sauvignon Blanc (South Africa),9dcac04e87a6,Drinks (alcoholic),7.95
 2022-02-01,Nando's,Still Water,fac416ccca16,Drinks (non-alcoholic),2.4
 2022-08-01,Nando's,Still Water,fac416ccca16,Drinks (non-alcoholic),2.4
 2022-12-01,Nando's,Still Water,fac416ccca16,Drinks (non-alcoholic),2.4
@@ -969,20 +1061,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Nando's,Still Water,fac416ccca16,Drinks (non-alcoholic),3.25
 2026-04-01,Nando's,Still Water,fac416ccca16,Drinks (non-alcoholic),3.5
 2026-07-08,Nando's,Still Water,fac416ccca16,Drinks (non-alcoholic),3.75
-2022-02-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),4.85
-2022-08-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),4.85
-2022-10-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),4.85
-2022-12-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),4.85
-2023-05-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),4.85
-2023-09-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),4.85
-2023-10-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),4.85
-2024-02-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),4.85
-2025-03-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),5.25
-2025-05-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),5.25
-2025-08-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),5.25
-2025-11-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),5.25
-2026-04-01,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),5.5
-2026-07-08,Nando's,Sxollie Cider,584da41092d7,Drinks (alcoholic),5.95
 2022-02-01,Nando's,1/2 Chicken,2c62ab2952ea,Mains,7.95
 2022-08-01,Nando's,1/2 Chicken,2c62ab2952ea,Mains,8.25
 2022-10-01,Nando's,1/2 Chicken,2c62ab2952ea,Mains,8.25
@@ -1973,30 +2051,7 @@ date,source,item,dish_id,bucket,price
 2026-04-01,Pizza Express,Tiramisu,37d4e0123914,Desserts,7.95
 2026-07-08,Pizza Express,Tiramisu,37d4e0123914,Desserts,7.95
 2026-07-08,Pizza Express,White Chocolate Blondie,57e7b5c3d2b7,Desserts,8.45
-2022-02-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.83
-2022-08-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.2
-2022-10-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.4
-2022-12-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.75
-2023-05-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.75
-2023-09-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.75
-2023-10-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.75
-2024-02-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.75
-2025-03-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.75
-2025-05-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.75
-2025-08-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.75
-2025-11-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.75
-2026-04-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.75
-2026-07-08,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.75
 2026-07-08,Pizza Express,Amalfi Peachcello or Limoncello (ABV 25%) - 50ml,7f368f123573,Drinks (alcoholic),5.95
-2023-09-01,Pizza Express,Americano,bacab709e147,Drinks (non-alcoholic),3.45
-2023-10-01,Pizza Express,Americano,bacab709e147,Drinks (non-alcoholic),3.65
-2024-02-01,Pizza Express,Americano,bacab709e147,Drinks (non-alcoholic),3.65
-2025-03-01,Pizza Express,Americano,bacab709e147,Drinks (non-alcoholic),3.95
-2025-05-01,Pizza Express,Americano,bacab709e147,Drinks (non-alcoholic),3.95
-2025-08-01,Pizza Express,Americano,bacab709e147,Drinks (non-alcoholic),3.95
-2025-11-01,Pizza Express,Americano,bacab709e147,Drinks (non-alcoholic),3.95
-2026-04-01,Pizza Express,Americano,bacab709e147,Drinks (non-alcoholic),3.95
-2026-07-08,Pizza Express,Americano,bacab709e147,Drinks (non-alcoholic),3.95
 2022-02-01,Pizza Express,Aperol Spritz,d1c12eaf3f79,Drinks (alcoholic),7.2
 2022-08-01,Pizza Express,Aperol Spritz,d1c12eaf3f79,Drinks (alcoholic),7.75
 2022-10-01,Pizza Express,Aperol Spritz,d1c12eaf3f79,Drinks (alcoholic),7.75
@@ -2011,29 +2066,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Pizza Express,Aperol Spritz,d1c12eaf3f79,Drinks (alcoholic),8.95
 2026-04-01,Pizza Express,Aperol Spritz,d1c12eaf3f79,Drinks (alcoholic),8.95
 2026-07-08,Pizza Express,Aperol Spritz,d1c12eaf3f79,Drinks (alcoholic),8.95
-2023-09-01,Pizza Express,Apple Juice,bfdf82500d8e,Drinks (non-alcoholic),3.75
-2023-10-01,Pizza Express,Apple Juice,bfdf82500d8e,Drinks (non-alcoholic),3.85
-2024-02-01,Pizza Express,Apple Juice,bfdf82500d8e,Drinks (non-alcoholic),3.85
-2025-03-01,Pizza Express,Apple Juice,bfdf82500d8e,Drinks (non-alcoholic),3.95
-2025-05-01,Pizza Express,Apple Juice,bfdf82500d8e,Drinks (non-alcoholic),3.95
-2025-08-01,Pizza Express,Apple Juice,bfdf82500d8e,Drinks (non-alcoholic),3.95
-2025-11-01,Pizza Express,Apple Juice,bfdf82500d8e,Drinks (non-alcoholic),3.95
-2026-04-01,Pizza Express,Apple Juice,bfdf82500d8e,Drinks (non-alcoholic),3.95
-2026-07-08,Pizza Express,Apple Juice,bfdf82500d8e,Drinks (non-alcoholic),3.95
-2022-02-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),2.8
-2022-08-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.15
-2022-10-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.15
-2022-12-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.45
-2023-05-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.45
-2023-09-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.45
-2023-10-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.55
-2024-02-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.55
-2025-03-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.75
-2025-05-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.75
-2025-08-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.85
-2025-11-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.85
-2026-04-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.85
-2026-07-08,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.85
 2023-09-01,Pizza Express,Baileys (ABV 17%) - 50ml,69c48fb75ece,Drinks (alcoholic),4.45
 2023-10-01,Pizza Express,Baileys (ABV 17%) - 50ml,69c48fb75ece,Drinks (alcoholic),4.65
 2024-02-01,Pizza Express,Baileys (ABV 17%) - 50ml,69c48fb75ece,Drinks (alcoholic),4.65
@@ -2043,15 +2075,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Pizza Express,Baileys (ABV 17%) - 50ml,69c48fb75ece,Drinks (alcoholic),5.45
 2026-04-01,Pizza Express,Baileys (ABV 17%) - 50ml,69c48fb75ece,Drinks (alcoholic),5.45
 2026-07-08,Pizza Express,Baileys (ABV 17%) - 50ml,69c48fb75ece,Drinks (alcoholic),5.45
-2023-09-01,Pizza Express,Cappuccino,7b88eacce1c6,Drinks (non-alcoholic),3.45
-2023-10-01,Pizza Express,Cappuccino,7b88eacce1c6,Drinks (non-alcoholic),3.65
-2024-02-01,Pizza Express,Cappuccino,7b88eacce1c6,Drinks (non-alcoholic),3.65
-2025-03-01,Pizza Express,Cappuccino,7b88eacce1c6,Drinks (non-alcoholic),3.95
-2025-05-01,Pizza Express,Cappuccino,7b88eacce1c6,Drinks (non-alcoholic),3.95
-2025-08-01,Pizza Express,Cappuccino,7b88eacce1c6,Drinks (non-alcoholic),3.95
-2025-11-01,Pizza Express,Cappuccino,7b88eacce1c6,Drinks (non-alcoholic),3.95
-2026-04-01,Pizza Express,Cappuccino,7b88eacce1c6,Drinks (non-alcoholic),3.95
-2026-07-08,Pizza Express,Cappuccino,7b88eacce1c6,Drinks (non-alcoholic),3.95
 2022-10-01,Pizza Express,Chianti Riserva D.O.C.G,e7b6f4be4cb2,Drinks (alcoholic),6.45
 2022-12-01,Pizza Express,Chianti Riserva D.O.C.G,e7b6f4be4cb2,Drinks (alcoholic),6.45
 2023-05-01,Pizza Express,Chianti Riserva D.O.C.G,e7b6f4be4cb2,Drinks (alcoholic),6.45
@@ -2078,34 +2101,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Pizza Express,Classic G&T,66b984be8f44,Drinks (alcoholic),8.25
 2026-04-01,Pizza Express,Classic G&T,66b984be8f44,Drinks (alcoholic),8.25
 2026-07-08,Pizza Express,Classic G&T,66b984be8f44,Drinks (alcoholic),8.25
-2022-02-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),2.9
-2022-08-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.25
-2022-10-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.25
-2022-12-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.55
-2023-05-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.55
-2023-09-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.55
-2023-10-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.65
-2024-02-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.65
-2025-03-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.85
-2025-05-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.85
-2025-08-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.95
-2025-11-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.95
-2026-04-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.95
-2026-07-08,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.95
-2022-02-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),2.8
-2022-08-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.15
-2022-10-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.15
-2022-12-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.45
-2023-05-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.45
-2023-09-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.45
-2023-10-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.55
-2024-02-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.55
-2025-03-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.75
-2025-05-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.75
-2025-08-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.85
-2025-11-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.85
-2026-04-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.85
-2026-07-08,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.85
 2022-02-01,Pizza Express,Cornish Orchards Gold Cider (ABV 5%) - 500ml,2480ae2777aa,Drinks (alcoholic),5.7
 2022-08-01,Pizza Express,Cornish Orchards Gold Cider (ABV 5%) - 500ml,2480ae2777aa,Drinks (alcoholic),6.35
 2022-10-01,Pizza Express,Cornish Orchards Gold Cider (ABV 5%) - 500ml,2480ae2777aa,Drinks (alcoholic),6.35
@@ -2135,39 +2130,6 @@ date,source,item,dish_id,bucket,price
 2026-04-01,Pizza Express,Cornish Orchards Raspberry & Elderflower Cider (ABV 4%) - 500ml,0501fbb3807c,Drinks (alcoholic),7.45
 2026-07-08,Pizza Express,Cornish Orchards Raspberry & Elderflower Cider (ABV 4%) - 500ml,0501fbb3807c,Drinks (alcoholic),7.45
 2026-07-08,Pizza Express,"Courvoisier, Jameson, Jack Daniel's (ABV 40%) Bacardi (ABV 37.5%) Amaretto, Campari (ABV 28%) - 25ml",7c7b6863ab0f,Drinks (alcoholic),5.45
-2026-07-08,Pizza Express,Crodino Spritz,d9fb461c4666,Drinks (non-alcoholic),6.45
-2022-02-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),2.8
-2022-08-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.15
-2022-10-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.15
-2022-12-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.45
-2023-05-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.45
-2023-09-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.45
-2023-10-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.55
-2024-02-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.55
-2025-03-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.75
-2025-05-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.75
-2025-08-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.85
-2025-11-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.85
-2026-04-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.85
-2026-07-08,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.85
-2023-09-01,Pizza Express,Elderflower & Mint Sparkle,194e517973bc,Drinks (non-alcoholic),3.75
-2023-10-01,Pizza Express,Elderflower & Mint Sparkle,194e517973bc,Drinks (non-alcoholic),3.85
-2024-02-01,Pizza Express,Elderflower & Mint Sparkle,194e517973bc,Drinks (non-alcoholic),3.85
-2025-03-01,Pizza Express,Elderflower & Mint Sparkle,194e517973bc,Drinks (non-alcoholic),3.95
-2025-05-01,Pizza Express,Elderflower & Mint Sparkle,194e517973bc,Drinks (non-alcoholic),3.95
-2025-08-01,Pizza Express,Elderflower & Mint Sparkle,194e517973bc,Drinks (non-alcoholic),4.45
-2025-11-01,Pizza Express,Elderflower & Mint Sparkle,194e517973bc,Drinks (non-alcoholic),4.45
-2026-04-01,Pizza Express,Elderflower & Mint Sparkle,194e517973bc,Drinks (non-alcoholic),4.45
-2026-07-08,Pizza Express,Elderflower & Mint Sparkle,194e517973bc,Drinks (non-alcoholic),4.45
-2023-09-01,Pizza Express,Espresso,32492caee70a,Drinks (non-alcoholic),2.95
-2023-10-01,Pizza Express,Espresso,32492caee70a,Drinks (non-alcoholic),2.95
-2024-02-01,Pizza Express,Espresso,32492caee70a,Drinks (non-alcoholic),2.95
-2025-03-01,Pizza Express,Espresso,32492caee70a,Drinks (non-alcoholic),2.95
-2025-05-01,Pizza Express,Espresso,32492caee70a,Drinks (non-alcoholic),2.95
-2025-08-01,Pizza Express,Espresso,32492caee70a,Drinks (non-alcoholic),2.95
-2025-11-01,Pizza Express,Espresso,32492caee70a,Drinks (non-alcoholic),2.95
-2026-04-01,Pizza Express,Espresso,32492caee70a,Drinks (non-alcoholic),2.95
-2026-07-08,Pizza Express,Espresso,32492caee70a,Drinks (non-alcoholic),2.95
 2022-02-01,Pizza Express,Espresso Martini,f883851a5cb4,Drinks (alcoholic),7.2
 2022-08-01,Pizza Express,Espresso Martini,f883851a5cb4,Drinks (alcoholic),7.75
 2022-10-01,Pizza Express,Espresso Martini,f883851a5cb4,Drinks (alcoholic),7.75
@@ -2182,29 +2144,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Pizza Express,Espresso Martini,f883851a5cb4,Drinks (alcoholic),8.95
 2026-04-01,Pizza Express,Espresso Martini,f883851a5cb4,Drinks (alcoholic),8.95
 2026-07-08,Pizza Express,Espresso Martini,f883851a5cb4,Drinks (alcoholic),8.95
-2022-02-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),2.8
-2022-08-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.15
-2022-10-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.15
-2022-12-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.45
-2023-05-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.45
-2023-09-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.45
-2023-10-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.55
-2024-02-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.55
-2025-03-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.75
-2025-05-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.75
-2025-08-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.85
-2025-11-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.85
-2026-04-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.85
-2026-07-08,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.85
-2023-09-01,Pizza Express,Flat White,ee1caf97140d,Drinks (non-alcoholic),3.45
-2023-10-01,Pizza Express,Flat White,ee1caf97140d,Drinks (non-alcoholic),3.65
-2024-02-01,Pizza Express,Flat White,ee1caf97140d,Drinks (non-alcoholic),3.65
-2025-03-01,Pizza Express,Flat White,ee1caf97140d,Drinks (non-alcoholic),3.95
-2025-05-01,Pizza Express,Flat White,ee1caf97140d,Drinks (non-alcoholic),3.95
-2025-08-01,Pizza Express,Flat White,ee1caf97140d,Drinks (non-alcoholic),3.95
-2025-11-01,Pizza Express,Flat White,ee1caf97140d,Drinks (non-alcoholic),3.95
-2026-04-01,Pizza Express,Flat White,ee1caf97140d,Drinks (non-alcoholic),3.95
-2026-07-08,Pizza Express,Flat White,ee1caf97140d,Drinks (non-alcoholic),3.95
 2025-03-01,Pizza Express,Fuller's London Pride Amber Ale (ABV 4.7%) - 500ml,9ffe478b2b02,Drinks (alcoholic),7.25
 2025-05-01,Pizza Express,Fuller's London Pride Amber Ale (ABV 4.7%) - 500ml,9ffe478b2b02,Drinks (alcoholic),7.25
 2025-08-01,Pizza Express,Fuller's London Pride Amber Ale (ABV 4.7%) - 500ml,9ffe478b2b02,Drinks (alcoholic),7.25
@@ -2217,7 +2156,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Pizza Express,Gavi di Gavi D.O.C.G.,316867dabaa1,Drinks (alcoholic),11.15
 2026-04-01,Pizza Express,Gavi di Gavi D.O.C.G.,316867dabaa1,Drinks (alcoholic),11.15
 2026-07-08,Pizza Express,Gavi di Gavi D.O.C.G.,316867dabaa1,Drinks (alcoholic),11.15
-2026-07-08,Pizza Express,Ginger & Lime Sparkle,ca02da2da65a,Drinks (non-alcoholic),4.45
 2022-02-01,Pizza Express,Gluten-Free Peroni Nastro Azzurro (ABV 5%) - 330ml,eebc900efb9d,Drinks (alcoholic),4.3
 2022-08-01,Pizza Express,Gluten-Free Peroni Nastro Azzurro (ABV 5%) - 330ml,eebc900efb9d,Drinks (alcoholic),4.95
 2022-10-01,Pizza Express,Gluten-Free Peroni Nastro Azzurro (ABV 5%) - 330ml,eebc900efb9d,Drinks (alcoholic),4.95
@@ -2244,15 +2182,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Pizza Express,Grecanico Chardonnay,a6f5b70dc2da,Drinks (alcoholic),6.95
 2026-04-01,Pizza Express,Grecanico Chardonnay,a6f5b70dc2da,Drinks (alcoholic),6.95
 2026-07-08,Pizza Express,Grecanico Chardonnay,a6f5b70dc2da,Drinks (alcoholic),6.95
-2023-09-01,Pizza Express,Hot Chocolate,696c4cbbf26b,Drinks (non-alcoholic),3.95
-2023-10-01,Pizza Express,Hot Chocolate,696c4cbbf26b,Drinks (non-alcoholic),3.95
-2024-02-01,Pizza Express,Hot Chocolate,696c4cbbf26b,Drinks (non-alcoholic),3.95
-2025-03-01,Pizza Express,Hot Chocolate,696c4cbbf26b,Drinks (non-alcoholic),4.25
-2025-05-01,Pizza Express,Hot Chocolate,696c4cbbf26b,Drinks (non-alcoholic),4.25
-2025-08-01,Pizza Express,Hot Chocolate,696c4cbbf26b,Drinks (non-alcoholic),4.25
-2025-11-01,Pizza Express,Hot Chocolate,696c4cbbf26b,Drinks (non-alcoholic),4.25
-2026-04-01,Pizza Express,Hot Chocolate,696c4cbbf26b,Drinks (non-alcoholic),4.25
-2026-07-08,Pizza Express,Hot Chocolate,696c4cbbf26b,Drinks (non-alcoholic),4.25
 2023-09-01,Pizza Express,Ketel One Vodka (ABV 40%) - 25ml,a730a5475cfc,Drinks (alcoholic),4.95
 2023-10-01,Pizza Express,Ketel One Vodka (ABV 40%) - 25ml,a730a5475cfc,Drinks (alcoholic),5.25
 2024-02-01,Pizza Express,Ketel One Vodka (ABV 40%) - 25ml,a730a5475cfc,Drinks (alcoholic),5.25
@@ -2262,31 +2191,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Pizza Express,Ketel One Vodka (ABV 40%) - 25ml,a730a5475cfc,Drinks (alcoholic),5.95
 2026-04-01,Pizza Express,Ketel One Vodka (ABV 40%) - 25ml,a730a5475cfc,Drinks (alcoholic),5.95
 2026-07-08,Pizza Express,Ketel One Vodka (ABV 40%) - 25ml,a730a5475cfc,Drinks (alcoholic),5.95
-2023-09-01,Pizza Express,Latte,d03a1529c750,Drinks (non-alcoholic),3.45
-2023-10-01,Pizza Express,Latte,d03a1529c750,Drinks (non-alcoholic),3.65
-2024-02-01,Pizza Express,Latte,d03a1529c750,Drinks (non-alcoholic),3.65
-2025-03-01,Pizza Express,Latte,d03a1529c750,Drinks (non-alcoholic),3.95
-2025-05-01,Pizza Express,Latte,d03a1529c750,Drinks (non-alcoholic),3.95
-2025-08-01,Pizza Express,Latte,d03a1529c750,Drinks (non-alcoholic),3.95
-2025-11-01,Pizza Express,Latte,d03a1529c750,Drinks (non-alcoholic),3.95
-2026-04-01,Pizza Express,Latte,d03a1529c750,Drinks (non-alcoholic),3.95
-2026-07-08,Pizza Express,Latte,d03a1529c750,Drinks (non-alcoholic),3.95
-2025-03-01,Pizza Express,Lipton Peach Ice Tea,43fdc917303c,Drinks (non-alcoholic),3.75
-2025-05-01,Pizza Express,Lipton Peach Ice Tea,43fdc917303c,Drinks (non-alcoholic),3.75
-2025-08-01,Pizza Express,Lipton Peach Ice Tea,43fdc917303c,Drinks (non-alcoholic),3.85
-2025-11-01,Pizza Express,Lipton Peach Ice Tea,43fdc917303c,Drinks (non-alcoholic),3.85
-2026-04-01,Pizza Express,Lipton Peach Ice Tea,43fdc917303c,Drinks (non-alcoholic),3.85
-2026-07-08,Pizza Express,Lipton Peach Ice Tea,43fdc917303c,Drinks (non-alcoholic),3.85
-2026-07-08,Pizza Express,Living Things Watermelon & Lime,0e17a9efe611,Drinks (non-alcoholic),4.45
-2023-09-01,Pizza Express,Macchiato,06a6a7f406a7,Drinks (non-alcoholic),3.45
-2023-10-01,Pizza Express,Macchiato,06a6a7f406a7,Drinks (non-alcoholic),3.95
-2024-02-01,Pizza Express,Macchiato,06a6a7f406a7,Drinks (non-alcoholic),3.65
-2025-03-01,Pizza Express,Macchiato,06a6a7f406a7,Drinks (non-alcoholic),3.95
-2025-05-01,Pizza Express,Macchiato,06a6a7f406a7,Drinks (non-alcoholic),3.95
-2025-08-01,Pizza Express,Macchiato,06a6a7f406a7,Drinks (non-alcoholic),3.95
-2025-11-01,Pizza Express,Macchiato,06a6a7f406a7,Drinks (non-alcoholic),3.95
-2026-04-01,Pizza Express,Macchiato,06a6a7f406a7,Drinks (non-alcoholic),3.95
-2026-07-08,Pizza Express,Macchiato,06a6a7f406a7,Drinks (non-alcoholic),3.95
 2022-10-01,Pizza Express,Malbec,3f8a4e897505,Drinks (alcoholic),6.85
 2022-12-01,Pizza Express,Malbec,3f8a4e897505,Drinks (alcoholic),6.85
 2023-05-01,Pizza Express,Malbec,3f8a4e897505,Drinks (alcoholic),6.85
@@ -2320,15 +2224,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Pizza Express,Merlot,21dc00966436,Drinks (alcoholic),7.75
 2026-04-01,Pizza Express,Merlot,21dc00966436,Drinks (alcoholic),7.75
 2026-07-08,Pizza Express,Merlot,21dc00966436,Drinks (alcoholic),7.75
-2023-09-01,Pizza Express,Mocha,8e75fee337c5,Drinks (non-alcoholic),3.95
-2023-10-01,Pizza Express,Mocha,8e75fee337c5,Drinks (non-alcoholic),3.95
-2024-02-01,Pizza Express,Mocha,8e75fee337c5,Drinks (non-alcoholic),3.95
-2025-03-01,Pizza Express,Mocha,8e75fee337c5,Drinks (non-alcoholic),4.25
-2025-05-01,Pizza Express,Mocha,8e75fee337c5,Drinks (non-alcoholic),4.25
-2025-08-01,Pizza Express,Mocha,8e75fee337c5,Drinks (non-alcoholic),4.25
-2025-11-01,Pizza Express,Mocha,8e75fee337c5,Drinks (non-alcoholic),4.25
-2026-04-01,Pizza Express,Mocha,8e75fee337c5,Drinks (non-alcoholic),4.25
-2026-07-08,Pizza Express,Mocha,8e75fee337c5,Drinks (non-alcoholic),4.25
 2022-10-01,Pizza Express,Montepulciano d'Abruzzo D.O.C,0d76cbb340a1,Drinks (alcoholic),5.85
 2022-12-01,Pizza Express,Montepulciano d'Abruzzo D.O.C,0d76cbb340a1,Drinks (alcoholic),5.85
 2023-05-01,Pizza Express,Montepulciano d'Abruzzo D.O.C,0d76cbb340a1,Drinks (alcoholic),5.85
@@ -2353,64 +2248,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Pizza Express,Nero d'Avola Shiraz D.O.C,b51b9183bbd7,Drinks (alcoholic),6.95
 2026-04-01,Pizza Express,Nero d'Avola Shiraz D.O.C,b51b9183bbd7,Drinks (alcoholic),6.95
 2026-07-08,Pizza Express,Nero d'Avola Shiraz D.O.C,b51b9183bbd7,Drinks (alcoholic),6.95
-2025-03-01,Pizza Express,Oasis Summer Fruits,5933a444515b,Drinks (non-alcoholic),3.75
-2025-05-01,Pizza Express,Oasis Summer Fruits,5933a444515b,Drinks (non-alcoholic),3.75
-2025-08-01,Pizza Express,Oasis Summer Fruits,5933a444515b,Drinks (non-alcoholic),3.85
-2025-11-01,Pizza Express,Oasis Summer Fruits,5933a444515b,Drinks (non-alcoholic),3.85
-2026-04-01,Pizza Express,Oasis Summer Fruits,5933a444515b,Drinks (non-alcoholic),3.85
-2026-07-08,Pizza Express,Oasis Summer Fruits,5933a444515b,Drinks (non-alcoholic),3.85
-2024-02-01,Pizza Express,Oat Milk Cappuccino,dbfd15367288,Drinks (non-alcoholic),3.65
-2025-03-01,Pizza Express,Oat Milk Cappuccino,dbfd15367288,Drinks (non-alcoholic),3.95
-2025-05-01,Pizza Express,Oat Milk Cappuccino,dbfd15367288,Drinks (non-alcoholic),3.95
-2025-08-01,Pizza Express,Oat Milk Cappuccino,dbfd15367288,Drinks (non-alcoholic),3.95
-2025-11-01,Pizza Express,Oat Milk Cappuccino,dbfd15367288,Drinks (non-alcoholic),3.95
-2026-04-01,Pizza Express,Oat Milk Cappuccino,dbfd15367288,Drinks (non-alcoholic),3.95
-2026-07-08,Pizza Express,Oat Milk Cappuccino,dbfd15367288,Drinks (non-alcoholic),3.95
-2024-02-01,Pizza Express,Oat Milk Flat White,1c06b8957f0b,Drinks (non-alcoholic),3.65
-2025-03-01,Pizza Express,Oat Milk Flat White,1c06b8957f0b,Drinks (non-alcoholic),3.95
-2025-05-01,Pizza Express,Oat Milk Flat White,1c06b8957f0b,Drinks (non-alcoholic),3.95
-2025-08-01,Pizza Express,Oat Milk Flat White,1c06b8957f0b,Drinks (non-alcoholic),3.95
-2025-11-01,Pizza Express,Oat Milk Flat White,1c06b8957f0b,Drinks (non-alcoholic),3.95
-2026-04-01,Pizza Express,Oat Milk Flat White,1c06b8957f0b,Drinks (non-alcoholic),3.95
-2026-07-08,Pizza Express,Oat Milk Flat White,1c06b8957f0b,Drinks (non-alcoholic),3.95
-2024-02-01,Pizza Express,Oat Milk Hot Chocolate,ed2b3a0a5579,Drinks (non-alcoholic),3.95
-2025-03-01,Pizza Express,Oat Milk Hot Chocolate,ed2b3a0a5579,Drinks (non-alcoholic),4.25
-2025-05-01,Pizza Express,Oat Milk Hot Chocolate,ed2b3a0a5579,Drinks (non-alcoholic),4.25
-2025-08-01,Pizza Express,Oat Milk Hot Chocolate,ed2b3a0a5579,Drinks (non-alcoholic),4.25
-2025-11-01,Pizza Express,Oat Milk Hot Chocolate,ed2b3a0a5579,Drinks (non-alcoholic),4.25
-2026-04-01,Pizza Express,Oat Milk Hot Chocolate,ed2b3a0a5579,Drinks (non-alcoholic),4.25
-2026-07-08,Pizza Express,Oat Milk Hot Chocolate,ed2b3a0a5579,Drinks (non-alcoholic),4.25
-2024-02-01,Pizza Express,Oat Milk Latte,0dcee4cfa40a,Drinks (non-alcoholic),3.65
-2025-03-01,Pizza Express,Oat Milk Latte,0dcee4cfa40a,Drinks (non-alcoholic),3.95
-2025-05-01,Pizza Express,Oat Milk Latte,0dcee4cfa40a,Drinks (non-alcoholic),3.95
-2025-08-01,Pizza Express,Oat Milk Latte,0dcee4cfa40a,Drinks (non-alcoholic),3.95
-2025-11-01,Pizza Express,Oat Milk Latte,0dcee4cfa40a,Drinks (non-alcoholic),3.95
-2026-04-01,Pizza Express,Oat Milk Latte,0dcee4cfa40a,Drinks (non-alcoholic),3.95
-2026-07-08,Pizza Express,Oat Milk Latte,0dcee4cfa40a,Drinks (non-alcoholic),3.95
-2024-02-01,Pizza Express,Oat Milk Macchiato,c67a60548e53,Drinks (non-alcoholic),3.65
-2025-03-01,Pizza Express,Oat Milk Macchiato,c67a60548e53,Drinks (non-alcoholic),3.95
-2025-05-01,Pizza Express,Oat Milk Macchiato,c67a60548e53,Drinks (non-alcoholic),3.95
-2025-08-01,Pizza Express,Oat Milk Macchiato,c67a60548e53,Drinks (non-alcoholic),3.95
-2025-11-01,Pizza Express,Oat Milk Macchiato,c67a60548e53,Drinks (non-alcoholic),3.95
-2026-04-01,Pizza Express,Oat Milk Macchiato,c67a60548e53,Drinks (non-alcoholic),3.95
-2026-07-08,Pizza Express,Oat Milk Macchiato,c67a60548e53,Drinks (non-alcoholic),3.95
-2024-02-01,Pizza Express,Oat Milk Mocha,a13e19f57128,Drinks (non-alcoholic),3.95
-2025-03-01,Pizza Express,Oat Milk Mocha,a13e19f57128,Drinks (non-alcoholic),4.25
-2025-05-01,Pizza Express,Oat Milk Mocha,a13e19f57128,Drinks (non-alcoholic),4.25
-2025-08-01,Pizza Express,Oat Milk Mocha,a13e19f57128,Drinks (non-alcoholic),4.25
-2025-11-01,Pizza Express,Oat Milk Mocha,a13e19f57128,Drinks (non-alcoholic),4.25
-2026-04-01,Pizza Express,Oat Milk Mocha,a13e19f57128,Drinks (non-alcoholic),4.25
-2026-07-08,Pizza Express,Oat Milk Mocha,a13e19f57128,Drinks (non-alcoholic),4.25
-2023-09-01,Pizza Express,One Living Ginger Kombucha,bb1476d25a91,Drinks (non-alcoholic),4.45
-2023-10-01,Pizza Express,One Living Ginger Kombucha,bb1476d25a91,Drinks (non-alcoholic),4.45
-2024-02-01,Pizza Express,One Living Ginger Kombucha,bb1476d25a91,Drinks (non-alcoholic),4.45
-2025-03-01,Pizza Express,One Living Ginger Kombucha,bb1476d25a91,Drinks (non-alcoholic),4.45
-2025-05-01,Pizza Express,One Living Ginger Kombucha,bb1476d25a91,Drinks (non-alcoholic),4.45
-2025-08-01,Pizza Express,One Living Ginger Kombucha,bb1476d25a91,Drinks (non-alcoholic),4.45
-2025-11-01,Pizza Express,One Living Ginger Kombucha,bb1476d25a91,Drinks (non-alcoholic),4.45
-2026-04-01,Pizza Express,One Living Ginger Kombucha,bb1476d25a91,Drinks (non-alcoholic),4.45
-2026-07-08,Pizza Express,One Living Ginger Kombucha,bb1476d25a91,Drinks (non-alcoholic),4.45
-2026-07-08,Pizza Express,Orange Juice,ae7b9dc262ef,Drinks (non-alcoholic),3.95
 2024-02-01,Pizza Express,Passion Fruit Martini,49fb9756522c,Drinks (alcoholic),8.45
 2025-03-01,Pizza Express,Passion Fruit Martini,49fb9756522c,Drinks (alcoholic),8.75
 2025-05-01,Pizza Express,Passion Fruit Martini,49fb9756522c,Drinks (alcoholic),8.75
@@ -2418,34 +2255,10 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Pizza Express,Passion Fruit Martini,49fb9756522c,Drinks (alcoholic),8.95
 2026-04-01,Pizza Express,Passion Fruit Martini,49fb9756522c,Drinks (alcoholic),8.95
 2026-07-08,Pizza Express,Passion Fruit Martini,49fb9756522c,Drinks (alcoholic),8.95
-2024-02-01,Pizza Express,Passion Fruit Still Lemonade,5da4d8037a52,Drinks (non-alcoholic),3.85
-2025-03-01,Pizza Express,Passion Fruit Still Lemonade,5da4d8037a52,Drinks (non-alcoholic),3.95
-2025-05-01,Pizza Express,Passion Fruit Still Lemonade,5da4d8037a52,Drinks (non-alcoholic),3.95
-2025-08-01,Pizza Express,Passion Fruit Still Lemonade,5da4d8037a52,Drinks (non-alcoholic),3.95
-2025-11-01,Pizza Express,Passion Fruit Still Lemonade,5da4d8037a52,Drinks (non-alcoholic),3.95
-2026-04-01,Pizza Express,Passion Fruit Still Lemonade,5da4d8037a52,Drinks (non-alcoholic),3.95
-2026-07-08,Pizza Express,Passion Fruit Still Lemonade,5da4d8037a52,Drinks (non-alcoholic),3.95
-2024-02-01,Pizza Express,Peach Sparkle,0e6c5a7d55ff,Drinks (non-alcoholic),4.45
-2025-03-01,Pizza Express,Peach Sparkle,0e6c5a7d55ff,Drinks (non-alcoholic),4.45
-2025-05-01,Pizza Express,Peach Sparkle,0e6c5a7d55ff,Drinks (non-alcoholic),4.45
-2025-08-01,Pizza Express,Peach Sparkle,0e6c5a7d55ff,Drinks (non-alcoholic),4.45
-2025-11-01,Pizza Express,Peach Sparkle,0e6c5a7d55ff,Drinks (non-alcoholic),4.45
-2026-04-01,Pizza Express,Peach Sparkle,0e6c5a7d55ff,Drinks (non-alcoholic),4.45
-2026-07-08,Pizza Express,Peach Sparkle,0e6c5a7d55ff,Drinks (non-alcoholic),4.45
 2025-03-01,Pizza Express,Peachcello Spritz,4a31db4106ee,Drinks (alcoholic),9.25
 2025-05-01,Pizza Express,Peachcello Spritz,4a31db4106ee,Drinks (alcoholic),9.25
 2025-08-01,Pizza Express,Peachcello Spritz,4a31db4106ee,Drinks (alcoholic),9.45
 2026-07-08,Pizza Express,Peachcello Spritz,4a31db4106ee,Drinks (alcoholic),9.45
-2026-07-08,Pizza Express,Peroni 0.0 Sicilian Lemon (ABV 0%) - 330ml,5f36560de886,Drinks (non-alcoholic),5.45
-2023-09-01,Pizza Express,Peroni Nastro Azzuro 0.0 (ABV 0%) - 330ml,ca3af37c25b3,Drinks (non-alcoholic),4.65
-2023-10-01,Pizza Express,Peroni Nastro Azzuro 0.0 (ABV 0%) - 330ml,ca3af37c25b3,Drinks (non-alcoholic),4.65
-2024-02-01,Pizza Express,Peroni Nastro Azzuro 0.0 (ABV 0%) - 330ml,ca3af37c25b3,Drinks (non-alcoholic),4.65
-2025-03-01,Pizza Express,Peroni Nastro Azzuro 0.0 (ABV 0%) - 330ml,ca3af37c25b3,Drinks (non-alcoholic),4.95
-2025-05-01,Pizza Express,Peroni Nastro Azzuro 0.0 (ABV 0%) - 330ml,ca3af37c25b3,Drinks (non-alcoholic),4.95
-2025-08-01,Pizza Express,Peroni Nastro Azzuro 0.0 (ABV 0%) - 330ml,ca3af37c25b3,Drinks (non-alcoholic),4.95
-2025-11-01,Pizza Express,Peroni Nastro Azzuro 0.0 (ABV 0%) - 330ml,ca3af37c25b3,Drinks (non-alcoholic),4.95
-2026-04-01,Pizza Express,Peroni Nastro Azzuro 0.0 (ABV 0%) - 330ml,ca3af37c25b3,Drinks (non-alcoholic),5.45
-2026-07-08,Pizza Express,Peroni Nastro Azzuro 0.0 (ABV 0%) - 330ml,ca3af37c25b3,Drinks (non-alcoholic),5.45
 2023-09-01,Pizza Express,Peroni Nastro Azzurro (ABV 5%) - 330ml,85821851a299,Drinks (alcoholic),5.25
 2023-10-01,Pizza Express,Peroni Nastro Azzurro (ABV 5%) - 330ml,85821851a299,Drinks (alcoholic),5.25
 2024-02-01,Pizza Express,Peroni Nastro Azzurro (ABV 5%) - 330ml,85821851a299,Drinks (alcoholic),5.45
@@ -2543,15 +2356,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Pizza Express,Raspberry Cosmo Spritz,50cc7d1b2695,Drinks (alcoholic),8.95
 2026-04-01,Pizza Express,Raspberry Cosmo Spritz,50cc7d1b2695,Drinks (alcoholic),8.95
 2026-07-08,Pizza Express,Raspberry Cosmo Spritz,50cc7d1b2695,Drinks (alcoholic),8.95
-2023-09-01,Pizza Express,Raspberry Sparkle,6fa48c85d25e,Drinks (non-alcoholic),3.75
-2023-10-01,Pizza Express,Raspberry Sparkle,6fa48c85d25e,Drinks (non-alcoholic),3.85
-2024-02-01,Pizza Express,Raspberry Sparkle,6fa48c85d25e,Drinks (non-alcoholic),3.85
-2025-03-01,Pizza Express,Raspberry Sparkle,6fa48c85d25e,Drinks (non-alcoholic),3.95
-2025-05-01,Pizza Express,Raspberry Sparkle,6fa48c85d25e,Drinks (non-alcoholic),3.95
-2025-08-01,Pizza Express,Raspberry Sparkle,6fa48c85d25e,Drinks (non-alcoholic),4.45
-2025-11-01,Pizza Express,Raspberry Sparkle,6fa48c85d25e,Drinks (non-alcoholic),4.45
-2026-04-01,Pizza Express,Raspberry Sparkle,6fa48c85d25e,Drinks (non-alcoholic),4.45
-2026-07-08,Pizza Express,Raspberry Sparkle,6fa48c85d25e,Drinks (non-alcoholic),4.45
 2023-09-01,Pizza Express,Rhubarb & Raspberry G&T,8e684ec77067,Drinks (alcoholic),7.95
 2023-10-01,Pizza Express,Rhubarb & Raspberry G&T,8e684ec77067,Drinks (alcoholic),7.95
 2024-02-01,Pizza Express,Rhubarb & Raspberry G&T,8e684ec77067,Drinks (alcoholic),7.95
@@ -2561,6 +2365,314 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Pizza Express,Rhubarb & Raspberry G&T,8e684ec77067,Drinks (alcoholic),8.65
 2026-04-01,Pizza Express,Rhubarb & Raspberry G&T,8e684ec77067,Drinks (alcoholic),8.65
 2026-07-08,Pizza Express,Rhubarb & Raspberry G&T,8e684ec77067,Drinks (alcoholic),8.65
+2022-10-01,Pizza Express,Sauvignon Blanc,e65b8275f83a,Drinks (alcoholic),6.85
+2022-12-01,Pizza Express,Sauvignon Blanc,e65b8275f83a,Drinks (alcoholic),6.85
+2023-05-01,Pizza Express,Sauvignon Blanc,e65b8275f83a,Drinks (alcoholic),6.85
+2023-09-01,Pizza Express,Sauvignon Blanc,e65b8275f83a,Drinks (alcoholic),6.85
+2023-10-01,Pizza Express,Sauvignon Blanc,e65b8275f83a,Drinks (alcoholic),7.75
+2024-02-01,Pizza Express,Sauvignon Blanc,e65b8275f83a,Drinks (alcoholic),7.75
+2025-03-01,Pizza Express,Sauvignon Blanc,e65b8275f83a,Drinks (alcoholic),8.45
+2025-05-01,Pizza Express,Sauvignon Blanc,e65b8275f83a,Drinks (alcoholic),8.45
+2025-08-01,Pizza Express,Sauvignon Blanc,e65b8275f83a,Drinks (alcoholic),8.65
+2025-11-01,Pizza Express,Sauvignon Blanc,e65b8275f83a,Drinks (alcoholic),8.95
+2026-04-01,Pizza Express,Sauvignon Blanc,e65b8275f83a,Drinks (alcoholic),8.95
+2026-07-08,Pizza Express,Sauvignon Blanc,e65b8275f83a,Drinks (alcoholic),8.95
+2022-10-01,Pizza Express,Soave D.O.C,853390b04c3e,Drinks (alcoholic),5.1
+2023-09-01,Pizza Express,Soave D.O.C,853390b04c3e,Drinks (alcoholic),5.1
+2023-10-01,Pizza Express,Soave D.O.C,853390b04c3e,Drinks (alcoholic),5.95
+2024-02-01,Pizza Express,Soave D.O.C,853390b04c3e,Drinks (alcoholic),5.95
+2025-03-01,Pizza Express,Soave D.O.C,853390b04c3e,Drinks (alcoholic),6.75
+2025-05-01,Pizza Express,Soave D.O.C,853390b04c3e,Drinks (alcoholic),6.75
+2025-08-01,Pizza Express,Soave D.O.C,853390b04c3e,Drinks (alcoholic),6.75
+2025-11-01,Pizza Express,Soave D.O.C,853390b04c3e,Drinks (alcoholic),7.25
+2026-04-01,Pizza Express,Soave D.O.C,853390b04c3e,Drinks (alcoholic),7.25
+2026-07-08,Pizza Express,Soave D.O.C,853390b04c3e,Drinks (alcoholic),7.25
+2025-03-01,Pizza Express,Soho Spritz,8a15dedb0120,Drinks (alcoholic),9.25
+2025-05-01,Pizza Express,Soho Spritz,8a15dedb0120,Drinks (alcoholic),9.25
+2025-08-01,Pizza Express,Soho Spritz,8a15dedb0120,Drinks (alcoholic),9.45
+2025-11-01,Pizza Express,Soho Spritz,8a15dedb0120,Drinks (alcoholic),9.45
+2026-04-01,Pizza Express,Soho Spritz,8a15dedb0120,Drinks (alcoholic),9.45
+2026-07-08,Pizza Express,Soho Spritz,8a15dedb0120,Drinks (alcoholic),9.45
+2025-03-01,Pizza Express,Strawberry Daiquiri,41710b9e4f00,Drinks (alcoholic),8.75
+2025-05-01,Pizza Express,Strawberry Daiquiri,41710b9e4f00,Drinks (alcoholic),8.75
+2025-08-01,Pizza Express,Strawberry Daiquiri,41710b9e4f00,Drinks (alcoholic),8.95
+2025-11-01,Pizza Express,Strawberry Daiquiri,41710b9e4f00,Drinks (alcoholic),8.95
+2026-04-01,Pizza Express,Strawberry Daiquiri,41710b9e4f00,Drinks (alcoholic),8.95
+2026-07-08,Pizza Express,Strawberry Daiquiri,41710b9e4f00,Drinks (alcoholic),8.95
+2022-02-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.83
+2022-08-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.2
+2022-10-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.4
+2022-12-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.75
+2023-05-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.75
+2023-09-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.75
+2023-10-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.75
+2024-02-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.75
+2025-03-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.75
+2025-05-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.75
+2025-08-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.75
+2025-11-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.75
+2026-04-01,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.75
+2026-07-08,Pizza Express,Acqua Panna Still Mineral Water,d65344248bf8,Drinks (non-alcoholic),3.75
+2023-09-01,Pizza Express,Americano,bacab709e147,Drinks (non-alcoholic),3.45
+2023-10-01,Pizza Express,Americano,bacab709e147,Drinks (non-alcoholic),3.65
+2024-02-01,Pizza Express,Americano,bacab709e147,Drinks (non-alcoholic),3.65
+2025-03-01,Pizza Express,Americano,bacab709e147,Drinks (non-alcoholic),3.95
+2025-05-01,Pizza Express,Americano,bacab709e147,Drinks (non-alcoholic),3.95
+2025-08-01,Pizza Express,Americano,bacab709e147,Drinks (non-alcoholic),3.95
+2025-11-01,Pizza Express,Americano,bacab709e147,Drinks (non-alcoholic),3.95
+2026-04-01,Pizza Express,Americano,bacab709e147,Drinks (non-alcoholic),3.95
+2026-07-08,Pizza Express,Americano,bacab709e147,Drinks (non-alcoholic),3.95
+2023-09-01,Pizza Express,Apple Juice,bfdf82500d8e,Drinks (non-alcoholic),3.75
+2023-10-01,Pizza Express,Apple Juice,bfdf82500d8e,Drinks (non-alcoholic),3.85
+2024-02-01,Pizza Express,Apple Juice,bfdf82500d8e,Drinks (non-alcoholic),3.85
+2025-03-01,Pizza Express,Apple Juice,bfdf82500d8e,Drinks (non-alcoholic),3.95
+2025-05-01,Pizza Express,Apple Juice,bfdf82500d8e,Drinks (non-alcoholic),3.95
+2025-08-01,Pizza Express,Apple Juice,bfdf82500d8e,Drinks (non-alcoholic),3.95
+2025-11-01,Pizza Express,Apple Juice,bfdf82500d8e,Drinks (non-alcoholic),3.95
+2026-04-01,Pizza Express,Apple Juice,bfdf82500d8e,Drinks (non-alcoholic),3.95
+2026-07-08,Pizza Express,Apple Juice,bfdf82500d8e,Drinks (non-alcoholic),3.95
+2022-02-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),2.8
+2022-08-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.15
+2022-10-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.15
+2022-12-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.45
+2023-05-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.45
+2023-09-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.45
+2023-10-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.55
+2024-02-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.55
+2025-03-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.75
+2025-05-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.75
+2025-08-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.85
+2025-11-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.85
+2026-04-01,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.85
+2026-07-08,Pizza Express,Appletiser,bfba787c8783,Drinks (non-alcoholic),3.85
+2023-09-01,Pizza Express,Cappuccino,7b88eacce1c6,Drinks (non-alcoholic),3.45
+2023-10-01,Pizza Express,Cappuccino,7b88eacce1c6,Drinks (non-alcoholic),3.65
+2024-02-01,Pizza Express,Cappuccino,7b88eacce1c6,Drinks (non-alcoholic),3.65
+2025-03-01,Pizza Express,Cappuccino,7b88eacce1c6,Drinks (non-alcoholic),3.95
+2025-05-01,Pizza Express,Cappuccino,7b88eacce1c6,Drinks (non-alcoholic),3.95
+2025-08-01,Pizza Express,Cappuccino,7b88eacce1c6,Drinks (non-alcoholic),3.95
+2025-11-01,Pizza Express,Cappuccino,7b88eacce1c6,Drinks (non-alcoholic),3.95
+2026-04-01,Pizza Express,Cappuccino,7b88eacce1c6,Drinks (non-alcoholic),3.95
+2026-07-08,Pizza Express,Cappuccino,7b88eacce1c6,Drinks (non-alcoholic),3.95
+2022-02-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),2.9
+2022-08-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.25
+2022-10-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.25
+2022-12-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.55
+2023-05-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.55
+2023-09-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.55
+2023-10-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.65
+2024-02-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.65
+2025-03-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.85
+2025-05-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.85
+2025-08-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.95
+2025-11-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.95
+2026-04-01,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.95
+2026-07-08,Pizza Express,Coca-Cola Classic,ed1d75e1f34e,Drinks (non-alcoholic),3.95
+2022-02-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),2.8
+2022-08-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.15
+2022-10-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.15
+2022-12-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.45
+2023-05-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.45
+2023-09-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.45
+2023-10-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.55
+2024-02-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.55
+2025-03-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.75
+2025-05-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.75
+2025-08-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.85
+2025-11-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.85
+2026-04-01,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.85
+2026-07-08,Pizza Express,Coca-Cola Zero Sugar,68fda90becce,Drinks (non-alcoholic),3.85
+2026-07-08,Pizza Express,Crodino Spritz,d9fb461c4666,Drinks (non-alcoholic),6.45
+2022-02-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),2.8
+2022-08-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.15
+2022-10-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.15
+2022-12-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.45
+2023-05-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.45
+2023-09-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.45
+2023-10-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.55
+2024-02-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.55
+2025-03-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.75
+2025-05-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.75
+2025-08-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.85
+2025-11-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.85
+2026-04-01,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.85
+2026-07-08,Pizza Express,Diet Coke,47fc03a1ce92,Drinks (non-alcoholic),3.85
+2023-09-01,Pizza Express,Elderflower & Mint Sparkle,194e517973bc,Drinks (non-alcoholic),3.75
+2023-10-01,Pizza Express,Elderflower & Mint Sparkle,194e517973bc,Drinks (non-alcoholic),3.85
+2024-02-01,Pizza Express,Elderflower & Mint Sparkle,194e517973bc,Drinks (non-alcoholic),3.85
+2025-03-01,Pizza Express,Elderflower & Mint Sparkle,194e517973bc,Drinks (non-alcoholic),3.95
+2025-05-01,Pizza Express,Elderflower & Mint Sparkle,194e517973bc,Drinks (non-alcoholic),3.95
+2025-08-01,Pizza Express,Elderflower & Mint Sparkle,194e517973bc,Drinks (non-alcoholic),4.45
+2025-11-01,Pizza Express,Elderflower & Mint Sparkle,194e517973bc,Drinks (non-alcoholic),4.45
+2026-04-01,Pizza Express,Elderflower & Mint Sparkle,194e517973bc,Drinks (non-alcoholic),4.45
+2026-07-08,Pizza Express,Elderflower & Mint Sparkle,194e517973bc,Drinks (non-alcoholic),4.45
+2023-09-01,Pizza Express,Espresso,32492caee70a,Drinks (non-alcoholic),2.95
+2023-10-01,Pizza Express,Espresso,32492caee70a,Drinks (non-alcoholic),2.95
+2024-02-01,Pizza Express,Espresso,32492caee70a,Drinks (non-alcoholic),2.95
+2025-03-01,Pizza Express,Espresso,32492caee70a,Drinks (non-alcoholic),2.95
+2025-05-01,Pizza Express,Espresso,32492caee70a,Drinks (non-alcoholic),2.95
+2025-08-01,Pizza Express,Espresso,32492caee70a,Drinks (non-alcoholic),2.95
+2025-11-01,Pizza Express,Espresso,32492caee70a,Drinks (non-alcoholic),2.95
+2026-04-01,Pizza Express,Espresso,32492caee70a,Drinks (non-alcoholic),2.95
+2026-07-08,Pizza Express,Espresso,32492caee70a,Drinks (non-alcoholic),2.95
+2022-02-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),2.8
+2022-08-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.15
+2022-10-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.15
+2022-12-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.45
+2023-05-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.45
+2023-09-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.45
+2023-10-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.55
+2024-02-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.55
+2025-03-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.75
+2025-05-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.75
+2025-08-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.85
+2025-11-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.85
+2026-04-01,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.85
+2026-07-08,Pizza Express,Fanta,169326f64e3a,Drinks (non-alcoholic),3.85
+2023-09-01,Pizza Express,Flat White,ee1caf97140d,Drinks (non-alcoholic),3.45
+2023-10-01,Pizza Express,Flat White,ee1caf97140d,Drinks (non-alcoholic),3.65
+2024-02-01,Pizza Express,Flat White,ee1caf97140d,Drinks (non-alcoholic),3.65
+2025-03-01,Pizza Express,Flat White,ee1caf97140d,Drinks (non-alcoholic),3.95
+2025-05-01,Pizza Express,Flat White,ee1caf97140d,Drinks (non-alcoholic),3.95
+2025-08-01,Pizza Express,Flat White,ee1caf97140d,Drinks (non-alcoholic),3.95
+2025-11-01,Pizza Express,Flat White,ee1caf97140d,Drinks (non-alcoholic),3.95
+2026-04-01,Pizza Express,Flat White,ee1caf97140d,Drinks (non-alcoholic),3.95
+2026-07-08,Pizza Express,Flat White,ee1caf97140d,Drinks (non-alcoholic),3.95
+2026-07-08,Pizza Express,Ginger & Lime Sparkle,ca02da2da65a,Drinks (non-alcoholic),4.45
+2023-09-01,Pizza Express,Hot Chocolate,696c4cbbf26b,Drinks (non-alcoholic),3.95
+2023-10-01,Pizza Express,Hot Chocolate,696c4cbbf26b,Drinks (non-alcoholic),3.95
+2024-02-01,Pizza Express,Hot Chocolate,696c4cbbf26b,Drinks (non-alcoholic),3.95
+2025-03-01,Pizza Express,Hot Chocolate,696c4cbbf26b,Drinks (non-alcoholic),4.25
+2025-05-01,Pizza Express,Hot Chocolate,696c4cbbf26b,Drinks (non-alcoholic),4.25
+2025-08-01,Pizza Express,Hot Chocolate,696c4cbbf26b,Drinks (non-alcoholic),4.25
+2025-11-01,Pizza Express,Hot Chocolate,696c4cbbf26b,Drinks (non-alcoholic),4.25
+2026-04-01,Pizza Express,Hot Chocolate,696c4cbbf26b,Drinks (non-alcoholic),4.25
+2026-07-08,Pizza Express,Hot Chocolate,696c4cbbf26b,Drinks (non-alcoholic),4.25
+2023-09-01,Pizza Express,Latte,d03a1529c750,Drinks (non-alcoholic),3.45
+2023-10-01,Pizza Express,Latte,d03a1529c750,Drinks (non-alcoholic),3.65
+2024-02-01,Pizza Express,Latte,d03a1529c750,Drinks (non-alcoholic),3.65
+2025-03-01,Pizza Express,Latte,d03a1529c750,Drinks (non-alcoholic),3.95
+2025-05-01,Pizza Express,Latte,d03a1529c750,Drinks (non-alcoholic),3.95
+2025-08-01,Pizza Express,Latte,d03a1529c750,Drinks (non-alcoholic),3.95
+2025-11-01,Pizza Express,Latte,d03a1529c750,Drinks (non-alcoholic),3.95
+2026-04-01,Pizza Express,Latte,d03a1529c750,Drinks (non-alcoholic),3.95
+2026-07-08,Pizza Express,Latte,d03a1529c750,Drinks (non-alcoholic),3.95
+2025-03-01,Pizza Express,Lipton Peach Ice Tea,43fdc917303c,Drinks (non-alcoholic),3.75
+2025-05-01,Pizza Express,Lipton Peach Ice Tea,43fdc917303c,Drinks (non-alcoholic),3.75
+2025-08-01,Pizza Express,Lipton Peach Ice Tea,43fdc917303c,Drinks (non-alcoholic),3.85
+2025-11-01,Pizza Express,Lipton Peach Ice Tea,43fdc917303c,Drinks (non-alcoholic),3.85
+2026-04-01,Pizza Express,Lipton Peach Ice Tea,43fdc917303c,Drinks (non-alcoholic),3.85
+2026-07-08,Pizza Express,Lipton Peach Ice Tea,43fdc917303c,Drinks (non-alcoholic),3.85
+2026-07-08,Pizza Express,Living Things Watermelon & Lime,0e17a9efe611,Drinks (non-alcoholic),4.45
+2023-09-01,Pizza Express,Macchiato,06a6a7f406a7,Drinks (non-alcoholic),3.45
+2023-10-01,Pizza Express,Macchiato,06a6a7f406a7,Drinks (non-alcoholic),3.95
+2024-02-01,Pizza Express,Macchiato,06a6a7f406a7,Drinks (non-alcoholic),3.65
+2025-03-01,Pizza Express,Macchiato,06a6a7f406a7,Drinks (non-alcoholic),3.95
+2025-05-01,Pizza Express,Macchiato,06a6a7f406a7,Drinks (non-alcoholic),3.95
+2025-08-01,Pizza Express,Macchiato,06a6a7f406a7,Drinks (non-alcoholic),3.95
+2025-11-01,Pizza Express,Macchiato,06a6a7f406a7,Drinks (non-alcoholic),3.95
+2026-04-01,Pizza Express,Macchiato,06a6a7f406a7,Drinks (non-alcoholic),3.95
+2026-07-08,Pizza Express,Macchiato,06a6a7f406a7,Drinks (non-alcoholic),3.95
+2023-09-01,Pizza Express,Mocha,8e75fee337c5,Drinks (non-alcoholic),3.95
+2023-10-01,Pizza Express,Mocha,8e75fee337c5,Drinks (non-alcoholic),3.95
+2024-02-01,Pizza Express,Mocha,8e75fee337c5,Drinks (non-alcoholic),3.95
+2025-03-01,Pizza Express,Mocha,8e75fee337c5,Drinks (non-alcoholic),4.25
+2025-05-01,Pizza Express,Mocha,8e75fee337c5,Drinks (non-alcoholic),4.25
+2025-08-01,Pizza Express,Mocha,8e75fee337c5,Drinks (non-alcoholic),4.25
+2025-11-01,Pizza Express,Mocha,8e75fee337c5,Drinks (non-alcoholic),4.25
+2026-04-01,Pizza Express,Mocha,8e75fee337c5,Drinks (non-alcoholic),4.25
+2026-07-08,Pizza Express,Mocha,8e75fee337c5,Drinks (non-alcoholic),4.25
+2025-03-01,Pizza Express,Oasis Summer Fruits,5933a444515b,Drinks (non-alcoholic),3.75
+2025-05-01,Pizza Express,Oasis Summer Fruits,5933a444515b,Drinks (non-alcoholic),3.75
+2025-08-01,Pizza Express,Oasis Summer Fruits,5933a444515b,Drinks (non-alcoholic),3.85
+2025-11-01,Pizza Express,Oasis Summer Fruits,5933a444515b,Drinks (non-alcoholic),3.85
+2026-04-01,Pizza Express,Oasis Summer Fruits,5933a444515b,Drinks (non-alcoholic),3.85
+2026-07-08,Pizza Express,Oasis Summer Fruits,5933a444515b,Drinks (non-alcoholic),3.85
+2024-02-01,Pizza Express,Oat Milk Cappuccino,dbfd15367288,Drinks (non-alcoholic),3.65
+2025-03-01,Pizza Express,Oat Milk Cappuccino,dbfd15367288,Drinks (non-alcoholic),3.95
+2025-05-01,Pizza Express,Oat Milk Cappuccino,dbfd15367288,Drinks (non-alcoholic),3.95
+2025-08-01,Pizza Express,Oat Milk Cappuccino,dbfd15367288,Drinks (non-alcoholic),3.95
+2025-11-01,Pizza Express,Oat Milk Cappuccino,dbfd15367288,Drinks (non-alcoholic),3.95
+2026-04-01,Pizza Express,Oat Milk Cappuccino,dbfd15367288,Drinks (non-alcoholic),3.95
+2026-07-08,Pizza Express,Oat Milk Cappuccino,dbfd15367288,Drinks (non-alcoholic),3.95
+2024-02-01,Pizza Express,Oat Milk Flat White,1c06b8957f0b,Drinks (non-alcoholic),3.65
+2025-03-01,Pizza Express,Oat Milk Flat White,1c06b8957f0b,Drinks (non-alcoholic),3.95
+2025-05-01,Pizza Express,Oat Milk Flat White,1c06b8957f0b,Drinks (non-alcoholic),3.95
+2025-08-01,Pizza Express,Oat Milk Flat White,1c06b8957f0b,Drinks (non-alcoholic),3.95
+2025-11-01,Pizza Express,Oat Milk Flat White,1c06b8957f0b,Drinks (non-alcoholic),3.95
+2026-04-01,Pizza Express,Oat Milk Flat White,1c06b8957f0b,Drinks (non-alcoholic),3.95
+2026-07-08,Pizza Express,Oat Milk Flat White,1c06b8957f0b,Drinks (non-alcoholic),3.95
+2024-02-01,Pizza Express,Oat Milk Hot Chocolate,ed2b3a0a5579,Drinks (non-alcoholic),3.95
+2025-03-01,Pizza Express,Oat Milk Hot Chocolate,ed2b3a0a5579,Drinks (non-alcoholic),4.25
+2025-05-01,Pizza Express,Oat Milk Hot Chocolate,ed2b3a0a5579,Drinks (non-alcoholic),4.25
+2025-08-01,Pizza Express,Oat Milk Hot Chocolate,ed2b3a0a5579,Drinks (non-alcoholic),4.25
+2025-11-01,Pizza Express,Oat Milk Hot Chocolate,ed2b3a0a5579,Drinks (non-alcoholic),4.25
+2026-04-01,Pizza Express,Oat Milk Hot Chocolate,ed2b3a0a5579,Drinks (non-alcoholic),4.25
+2026-07-08,Pizza Express,Oat Milk Hot Chocolate,ed2b3a0a5579,Drinks (non-alcoholic),4.25
+2024-02-01,Pizza Express,Oat Milk Latte,0dcee4cfa40a,Drinks (non-alcoholic),3.65
+2025-03-01,Pizza Express,Oat Milk Latte,0dcee4cfa40a,Drinks (non-alcoholic),3.95
+2025-05-01,Pizza Express,Oat Milk Latte,0dcee4cfa40a,Drinks (non-alcoholic),3.95
+2025-08-01,Pizza Express,Oat Milk Latte,0dcee4cfa40a,Drinks (non-alcoholic),3.95
+2025-11-01,Pizza Express,Oat Milk Latte,0dcee4cfa40a,Drinks (non-alcoholic),3.95
+2026-04-01,Pizza Express,Oat Milk Latte,0dcee4cfa40a,Drinks (non-alcoholic),3.95
+2026-07-08,Pizza Express,Oat Milk Latte,0dcee4cfa40a,Drinks (non-alcoholic),3.95
+2024-02-01,Pizza Express,Oat Milk Macchiato,c67a60548e53,Drinks (non-alcoholic),3.65
+2025-03-01,Pizza Express,Oat Milk Macchiato,c67a60548e53,Drinks (non-alcoholic),3.95
+2025-05-01,Pizza Express,Oat Milk Macchiato,c67a60548e53,Drinks (non-alcoholic),3.95
+2025-08-01,Pizza Express,Oat Milk Macchiato,c67a60548e53,Drinks (non-alcoholic),3.95
+2025-11-01,Pizza Express,Oat Milk Macchiato,c67a60548e53,Drinks (non-alcoholic),3.95
+2026-04-01,Pizza Express,Oat Milk Macchiato,c67a60548e53,Drinks (non-alcoholic),3.95
+2026-07-08,Pizza Express,Oat Milk Macchiato,c67a60548e53,Drinks (non-alcoholic),3.95
+2024-02-01,Pizza Express,Oat Milk Mocha,a13e19f57128,Drinks (non-alcoholic),3.95
+2025-03-01,Pizza Express,Oat Milk Mocha,a13e19f57128,Drinks (non-alcoholic),4.25
+2025-05-01,Pizza Express,Oat Milk Mocha,a13e19f57128,Drinks (non-alcoholic),4.25
+2025-08-01,Pizza Express,Oat Milk Mocha,a13e19f57128,Drinks (non-alcoholic),4.25
+2025-11-01,Pizza Express,Oat Milk Mocha,a13e19f57128,Drinks (non-alcoholic),4.25
+2026-04-01,Pizza Express,Oat Milk Mocha,a13e19f57128,Drinks (non-alcoholic),4.25
+2026-07-08,Pizza Express,Oat Milk Mocha,a13e19f57128,Drinks (non-alcoholic),4.25
+2023-09-01,Pizza Express,One Living Ginger Kombucha,bb1476d25a91,Drinks (non-alcoholic),4.45
+2023-10-01,Pizza Express,One Living Ginger Kombucha,bb1476d25a91,Drinks (non-alcoholic),4.45
+2024-02-01,Pizza Express,One Living Ginger Kombucha,bb1476d25a91,Drinks (non-alcoholic),4.45
+2025-03-01,Pizza Express,One Living Ginger Kombucha,bb1476d25a91,Drinks (non-alcoholic),4.45
+2025-05-01,Pizza Express,One Living Ginger Kombucha,bb1476d25a91,Drinks (non-alcoholic),4.45
+2025-08-01,Pizza Express,One Living Ginger Kombucha,bb1476d25a91,Drinks (non-alcoholic),4.45
+2025-11-01,Pizza Express,One Living Ginger Kombucha,bb1476d25a91,Drinks (non-alcoholic),4.45
+2026-04-01,Pizza Express,One Living Ginger Kombucha,bb1476d25a91,Drinks (non-alcoholic),4.45
+2026-07-08,Pizza Express,One Living Ginger Kombucha,bb1476d25a91,Drinks (non-alcoholic),4.45
+2026-07-08,Pizza Express,Orange Juice,ae7b9dc262ef,Drinks (non-alcoholic),3.95
+2024-02-01,Pizza Express,Passion Fruit Still Lemonade,5da4d8037a52,Drinks (non-alcoholic),3.85
+2025-03-01,Pizza Express,Passion Fruit Still Lemonade,5da4d8037a52,Drinks (non-alcoholic),3.95
+2025-05-01,Pizza Express,Passion Fruit Still Lemonade,5da4d8037a52,Drinks (non-alcoholic),3.95
+2025-08-01,Pizza Express,Passion Fruit Still Lemonade,5da4d8037a52,Drinks (non-alcoholic),3.95
+2025-11-01,Pizza Express,Passion Fruit Still Lemonade,5da4d8037a52,Drinks (non-alcoholic),3.95
+2026-04-01,Pizza Express,Passion Fruit Still Lemonade,5da4d8037a52,Drinks (non-alcoholic),3.95
+2026-07-08,Pizza Express,Passion Fruit Still Lemonade,5da4d8037a52,Drinks (non-alcoholic),3.95
+2024-02-01,Pizza Express,Peach Sparkle,0e6c5a7d55ff,Drinks (non-alcoholic),4.45
+2025-03-01,Pizza Express,Peach Sparkle,0e6c5a7d55ff,Drinks (non-alcoholic),4.45
+2025-05-01,Pizza Express,Peach Sparkle,0e6c5a7d55ff,Drinks (non-alcoholic),4.45
+2025-08-01,Pizza Express,Peach Sparkle,0e6c5a7d55ff,Drinks (non-alcoholic),4.45
+2025-11-01,Pizza Express,Peach Sparkle,0e6c5a7d55ff,Drinks (non-alcoholic),4.45
+2026-04-01,Pizza Express,Peach Sparkle,0e6c5a7d55ff,Drinks (non-alcoholic),4.45
+2026-07-08,Pizza Express,Peach Sparkle,0e6c5a7d55ff,Drinks (non-alcoholic),4.45
+2026-07-08,Pizza Express,Peroni 0.0 Sicilian Lemon (ABV 0%) - 330ml,5f36560de886,Drinks (non-alcoholic),5.45
+2023-09-01,Pizza Express,Peroni Nastro Azzuro 0.0 (ABV 0%) - 330ml,ca3af37c25b3,Drinks (non-alcoholic),4.65
+2023-10-01,Pizza Express,Peroni Nastro Azzuro 0.0 (ABV 0%) - 330ml,ca3af37c25b3,Drinks (non-alcoholic),4.65
+2024-02-01,Pizza Express,Peroni Nastro Azzuro 0.0 (ABV 0%) - 330ml,ca3af37c25b3,Drinks (non-alcoholic),4.65
+2025-03-01,Pizza Express,Peroni Nastro Azzuro 0.0 (ABV 0%) - 330ml,ca3af37c25b3,Drinks (non-alcoholic),4.95
+2025-05-01,Pizza Express,Peroni Nastro Azzuro 0.0 (ABV 0%) - 330ml,ca3af37c25b3,Drinks (non-alcoholic),4.95
+2025-08-01,Pizza Express,Peroni Nastro Azzuro 0.0 (ABV 0%) - 330ml,ca3af37c25b3,Drinks (non-alcoholic),4.95
+2025-11-01,Pizza Express,Peroni Nastro Azzuro 0.0 (ABV 0%) - 330ml,ca3af37c25b3,Drinks (non-alcoholic),4.95
+2026-04-01,Pizza Express,Peroni Nastro Azzuro 0.0 (ABV 0%) - 330ml,ca3af37c25b3,Drinks (non-alcoholic),5.45
+2026-07-08,Pizza Express,Peroni Nastro Azzuro 0.0 (ABV 0%) - 330ml,ca3af37c25b3,Drinks (non-alcoholic),5.45
+2023-09-01,Pizza Express,Raspberry Sparkle,6fa48c85d25e,Drinks (non-alcoholic),3.75
+2023-10-01,Pizza Express,Raspberry Sparkle,6fa48c85d25e,Drinks (non-alcoholic),3.85
+2024-02-01,Pizza Express,Raspberry Sparkle,6fa48c85d25e,Drinks (non-alcoholic),3.85
+2025-03-01,Pizza Express,Raspberry Sparkle,6fa48c85d25e,Drinks (non-alcoholic),3.95
+2025-05-01,Pizza Express,Raspberry Sparkle,6fa48c85d25e,Drinks (non-alcoholic),3.95
+2025-08-01,Pizza Express,Raspberry Sparkle,6fa48c85d25e,Drinks (non-alcoholic),4.45
+2025-11-01,Pizza Express,Raspberry Sparkle,6fa48c85d25e,Drinks (non-alcoholic),4.45
+2026-04-01,Pizza Express,Raspberry Sparkle,6fa48c85d25e,Drinks (non-alcoholic),4.45
+2026-07-08,Pizza Express,Raspberry Sparkle,6fa48c85d25e,Drinks (non-alcoholic),4.45
 2022-02-01,Pizza Express,San Pellegrino Aranciata Rossa,1ae02c277f66,Drinks (non-alcoholic),2.8
 2022-08-01,Pizza Express,San Pellegrino Aranciata Rossa,1ae02c277f66,Drinks (non-alcoholic),3.15
 2022-10-01,Pizza Express,San Pellegrino Aranciata Rossa,1ae02c277f66,Drinks (non-alcoholic),3.15
@@ -2603,18 +2715,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Pizza Express,San Pellegrino Sparkling Mineral Water,d94f5527c6ad,Drinks (non-alcoholic),3.75
 2026-04-01,Pizza Express,San Pellegrino Sparkling Mineral Water,d94f5527c6ad,Drinks (non-alcoholic),3.75
 2026-07-08,Pizza Express,San Pellegrino Sparkling Mineral Water,d94f5527c6ad,Drinks (non-alcoholic),3.75
-2022-10-01,Pizza Express,Sauvignon Blanc,e65b8275f83a,Drinks (alcoholic),6.85
-2022-12-01,Pizza Express,Sauvignon Blanc,e65b8275f83a,Drinks (alcoholic),6.85
-2023-05-01,Pizza Express,Sauvignon Blanc,e65b8275f83a,Drinks (alcoholic),6.85
-2023-09-01,Pizza Express,Sauvignon Blanc,e65b8275f83a,Drinks (alcoholic),6.85
-2023-10-01,Pizza Express,Sauvignon Blanc,e65b8275f83a,Drinks (alcoholic),7.75
-2024-02-01,Pizza Express,Sauvignon Blanc,e65b8275f83a,Drinks (alcoholic),7.75
-2025-03-01,Pizza Express,Sauvignon Blanc,e65b8275f83a,Drinks (alcoholic),8.45
-2025-05-01,Pizza Express,Sauvignon Blanc,e65b8275f83a,Drinks (alcoholic),8.45
-2025-08-01,Pizza Express,Sauvignon Blanc,e65b8275f83a,Drinks (alcoholic),8.65
-2025-11-01,Pizza Express,Sauvignon Blanc,e65b8275f83a,Drinks (alcoholic),8.95
-2026-04-01,Pizza Express,Sauvignon Blanc,e65b8275f83a,Drinks (alcoholic),8.95
-2026-07-08,Pizza Express,Sauvignon Blanc,e65b8275f83a,Drinks (alcoholic),8.95
 2024-02-01,Pizza Express,Sicilian Still Lemonade,0f0650eb18b0,Drinks (non-alcoholic),3.85
 2025-03-01,Pizza Express,Sicilian Still Lemonade,0f0650eb18b0,Drinks (non-alcoholic),3.95
 2025-05-01,Pizza Express,Sicilian Still Lemonade,0f0650eb18b0,Drinks (non-alcoholic),3.95
@@ -2622,22 +2722,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Pizza Express,Sicilian Still Lemonade,0f0650eb18b0,Drinks (non-alcoholic),3.95
 2026-04-01,Pizza Express,Sicilian Still Lemonade,0f0650eb18b0,Drinks (non-alcoholic),3.95
 2026-07-08,Pizza Express,Sicilian Still Lemonade,0f0650eb18b0,Drinks (non-alcoholic),3.95
-2022-10-01,Pizza Express,Soave D.O.C,853390b04c3e,Drinks (alcoholic),5.1
-2023-09-01,Pizza Express,Soave D.O.C,853390b04c3e,Drinks (alcoholic),5.1
-2023-10-01,Pizza Express,Soave D.O.C,853390b04c3e,Drinks (alcoholic),5.95
-2024-02-01,Pizza Express,Soave D.O.C,853390b04c3e,Drinks (alcoholic),5.95
-2025-03-01,Pizza Express,Soave D.O.C,853390b04c3e,Drinks (alcoholic),6.75
-2025-05-01,Pizza Express,Soave D.O.C,853390b04c3e,Drinks (alcoholic),6.75
-2025-08-01,Pizza Express,Soave D.O.C,853390b04c3e,Drinks (alcoholic),6.75
-2025-11-01,Pizza Express,Soave D.O.C,853390b04c3e,Drinks (alcoholic),7.25
-2026-04-01,Pizza Express,Soave D.O.C,853390b04c3e,Drinks (alcoholic),7.25
-2026-07-08,Pizza Express,Soave D.O.C,853390b04c3e,Drinks (alcoholic),7.25
-2025-03-01,Pizza Express,Soho Spritz,8a15dedb0120,Drinks (alcoholic),9.25
-2025-05-01,Pizza Express,Soho Spritz,8a15dedb0120,Drinks (alcoholic),9.25
-2025-08-01,Pizza Express,Soho Spritz,8a15dedb0120,Drinks (alcoholic),9.45
-2025-11-01,Pizza Express,Soho Spritz,8a15dedb0120,Drinks (alcoholic),9.45
-2026-04-01,Pizza Express,Soho Spritz,8a15dedb0120,Drinks (alcoholic),9.45
-2026-07-08,Pizza Express,Soho Spritz,8a15dedb0120,Drinks (alcoholic),9.45
 2022-02-01,Pizza Express,Sprite,f9b6498dcf44,Drinks (non-alcoholic),2.8
 2022-08-01,Pizza Express,Sprite,f9b6498dcf44,Drinks (non-alcoholic),3.15
 2022-10-01,Pizza Express,Sprite,f9b6498dcf44,Drinks (non-alcoholic),3.15
@@ -2651,12 +2735,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Pizza Express,Sprite,f9b6498dcf44,Drinks (non-alcoholic),3.85
 2026-04-01,Pizza Express,Sprite,f9b6498dcf44,Drinks (non-alcoholic),3.85
 2026-07-08,Pizza Express,Sprite,f9b6498dcf44,Drinks (non-alcoholic),3.85
-2025-03-01,Pizza Express,Strawberry Daiquiri,41710b9e4f00,Drinks (alcoholic),8.75
-2025-05-01,Pizza Express,Strawberry Daiquiri,41710b9e4f00,Drinks (alcoholic),8.75
-2025-08-01,Pizza Express,Strawberry Daiquiri,41710b9e4f00,Drinks (alcoholic),8.95
-2025-11-01,Pizza Express,Strawberry Daiquiri,41710b9e4f00,Drinks (alcoholic),8.95
-2026-04-01,Pizza Express,Strawberry Daiquiri,41710b9e4f00,Drinks (alcoholic),8.95
-2026-07-08,Pizza Express,Strawberry Daiquiri,41710b9e4f00,Drinks (alcoholic),8.95
 2025-03-01,Pizza Express,Strawberry Mimosa,02085a9553a4,Drinks (non-alcoholic),8.75
 2025-05-01,Pizza Express,Strawberry Mimosa,02085a9553a4,Drinks (non-alcoholic),8.75
 2025-08-01,Pizza Express,Strawberry Mimosa,02085a9553a4,Drinks (non-alcoholic),8.95
@@ -3086,17 +3164,43 @@ date,source,item,dish_id,bucket,price
 2026-07-08,Pizza Express,The Hat-Trick Sharer,5b7407960995,Starters,11.75
 2026-07-08,Pizza Express,Triple Chilli Chicken Wings,cdd9cdc16287,Starters,9.25
 2026-07-08,Pizza Express,Truffle Cacio e Pepe Bites,52e2ac19b66f,Starters,8.75
-2023-10-01,Prezzo,Affogato,700084022271,Mains,4.95
-2024-02-01,Prezzo,Affogato,700084022271,Mains,4.95
-2025-03-01,Prezzo,Affogato,700084022271,Mains,6.0
-2025-05-01,Prezzo,Affogato,700084022271,Mains,6.0
-2025-08-01,Prezzo,Affogato,700084022271,Mains,6.0
-2025-11-01,Prezzo,Affogato,700084022271,Mains,7.0
-2026-04-01,Prezzo,Affogato,700084022271,Mains,7.25
-2026-07-08,Prezzo,Affogato,700084022271,Mains,7.25
+2023-10-01,Prezzo,Affogato,700084022271,Desserts,4.95
+2024-02-01,Prezzo,Affogato,700084022271,Desserts,4.95
+2025-03-01,Prezzo,Affogato,700084022271,Desserts,6.0
+2025-05-01,Prezzo,Affogato,700084022271,Desserts,6.0
+2025-08-01,Prezzo,Affogato,700084022271,Desserts,6.0
+2025-11-01,Prezzo,Affogato,700084022271,Desserts,7.0
+2026-04-01,Prezzo,Affogato,700084022271,Desserts,7.25
+2026-07-08,Prezzo,Affogato,700084022271,Desserts,7.25
+2026-04-01,Prezzo,Billionaire Banoffee Sundae,8351e61d569e,Desserts,8.25
+2026-07-08,Prezzo,Billionaire Banoffee Sundae,8351e61d569e,Desserts,8.25
+2026-07-08,Prezzo,Chocolate Honeycomb Ice Cream,d076a639f495,Desserts,6.0
+2026-07-08,Prezzo,Chocolate Ice Cream,7db4efe1e8ed,Desserts,6.0
+2025-03-01,Prezzo,Hot Chocolate Fudge Cake,8a2f8de7bf6e,Desserts,8.25
+2025-05-01,Prezzo,Hot Chocolate Fudge Cake,8a2f8de7bf6e,Desserts,8.25
+2025-08-01,Prezzo,Hot Chocolate Fudge Cake,8a2f8de7bf6e,Desserts,8.25
+2025-11-01,Prezzo,Hot Chocolate Fudge Cake,8a2f8de7bf6e,Desserts,8.25
+2026-04-01,Prezzo,Hot Chocolate Fudge Cake,8a2f8de7bf6e,Desserts,8.5
+2026-07-08,Prezzo,Hot Chocolate Fudge Cake,8a2f8de7bf6e,Desserts,8.5
+2026-07-08,Prezzo,Lotus Biscoff Cheesecake,6a20cf224f79,Desserts,8.45
+2026-07-08,Prezzo,Strawberry Ice Cream,587d009100a2,Desserts,6.0
+2022-02-01,Prezzo,Tiramisu,6093c1255130,Desserts,5.95
+2022-08-01,Prezzo,Tiramisu,6093c1255130,Desserts,6.75
+2022-10-01,Prezzo,Tiramisu,6093c1255130,Desserts,6.95
+2022-12-01,Prezzo,Tiramisu,6093c1255130,Desserts,6.95
+2023-05-01,Prezzo,Tiramisu,6093c1255130,Desserts,7.25
+2023-09-01,Prezzo,Tiramisu,6093c1255130,Desserts,7.25
+2023-10-01,Prezzo,Tiramisu,6093c1255130,Desserts,7.95
+2024-02-01,Prezzo,Tiramisu,6093c1255130,Desserts,7.95
+2025-03-01,Prezzo,Tiramisu,6093c1255130,Desserts,8.25
+2025-05-01,Prezzo,Tiramisu,6093c1255130,Desserts,8.25
+2025-08-01,Prezzo,Tiramisu,6093c1255130,Desserts,8.25
+2025-11-01,Prezzo,Tiramisu,6093c1255130,Desserts,8.25
+2026-04-01,Prezzo,Tiramisu,6093c1255130,Desserts,8.25
+2026-07-08,Prezzo,Tiramisu,6093c1255130,Desserts,8.25
+2026-07-08,Prezzo,Tiramisu for 2,8dca5ac3f264,Desserts,2.0
+2026-07-08,Prezzo,Vanilla Ice Cream,dc2a0129aa9f,Desserts,6.0
 2026-07-08,Prezzo,Baby Caesar Salad,c55fe59c4289,Mains,4.5
-2026-04-01,Prezzo,Billionaire Banoffee Sundae,8351e61d569e,Mains,8.25
-2026-07-08,Prezzo,Billionaire Banoffee Sundae,8351e61d569e,Mains,8.25
 2025-03-01,Prezzo,Calabrese Calzone,93ebd2d50326,Mains,19.75
 2025-05-01,Prezzo,Calabrese Calzone,93ebd2d50326,Mains,19.75
 2025-08-01,Prezzo,Calabrese Calzone,93ebd2d50326,Mains,19.75
@@ -3176,14 +3280,6 @@ date,source,item,dish_id,bucket,price
 2026-04-01,Prezzo,"Chicken, Mushroom & Garlic Rigatoni",a434e21a9882,Mains,19.5
 2026-07-08,Prezzo,"Chicken, Mushroom & Garlic Rigatoni",a434e21a9882,Mains,19.5
 2026-07-08,Prezzo,Chilli & Garlic Mayo,a3761c17e34e,Mains,1.5
-2025-03-01,Prezzo,Chilli Garlic Cheese Fries,eeb4086c8cff,Mains,5.95
-2025-05-01,Prezzo,Chilli Garlic Cheese Fries,eeb4086c8cff,Mains,5.95
-2025-08-01,Prezzo,Chilli Garlic Cheese Fries,eeb4086c8cff,Mains,5.95
-2025-11-01,Prezzo,Chilli Garlic Cheese Fries,eeb4086c8cff,Mains,5.95
-2026-04-01,Prezzo,Chilli Garlic Cheese Fries,eeb4086c8cff,Mains,5.95
-2026-07-08,Prezzo,Chilli Garlic Cheese Fries,eeb4086c8cff,Mains,5.95
-2026-07-08,Prezzo,Chocolate Honeycomb Ice Cream,d076a639f495,Mains,6.0
-2026-07-08,Prezzo,Chocolate Ice Cream,7db4efe1e8ed,Mains,6.0
 2026-07-08,Prezzo,Crab & Lobster Ravioli,2560df379b87,Mains,20.95
 2025-03-01,Prezzo,Creamy King Prawn & Salmon Rigatoni,a64dab16b2f4,Mains,20.95
 2025-05-01,Prezzo,Creamy King Prawn & Salmon Rigatoni,a64dab16b2f4,Mains,20.95
@@ -3274,29 +3370,9 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Prezzo,Ham and Mozzarella Pastacini,4d029e448704,Mains,9.25
 2026-04-01,Prezzo,Ham and Mozzarella Pastacini,4d029e448704,Mains,9.5
 2026-07-08,Prezzo,Ham and Mozzarella Pastacini,4d029e448704,Mains,9.5
-2025-03-01,Prezzo,Hot Chocolate Fudge Cake,8a2f8de7bf6e,Mains,8.25
-2025-05-01,Prezzo,Hot Chocolate Fudge Cake,8a2f8de7bf6e,Mains,8.25
-2025-08-01,Prezzo,Hot Chocolate Fudge Cake,8a2f8de7bf6e,Mains,8.25
-2025-11-01,Prezzo,Hot Chocolate Fudge Cake,8a2f8de7bf6e,Mains,8.25
-2026-04-01,Prezzo,Hot Chocolate Fudge Cake,8a2f8de7bf6e,Mains,8.5
-2026-07-08,Prezzo,Hot Chocolate Fudge Cake,8a2f8de7bf6e,Mains,8.5
 2025-11-01,Prezzo,Hot Honey Glazed Giant Mozzarella Sticks,ebdde3f042d5,Mains,8.95
 2026-04-01,Prezzo,Hot Honey Glazed Giant Mozzarella Sticks,ebdde3f042d5,Mains,9.25
 2026-07-08,Prezzo,Hot Honey Glazed Giant Mozzarella Sticks,ebdde3f042d5,Mains,9.25
-2022-02-01,Prezzo,House Fries,e3bc1976f1b5,Mains,3.95
-2022-08-01,Prezzo,House Fries,e3bc1976f1b5,Mains,4.25
-2022-10-01,Prezzo,House Fries,e3bc1976f1b5,Mains,4.25
-2022-12-01,Prezzo,House Fries,e3bc1976f1b5,Mains,4.25
-2023-05-01,Prezzo,House Fries,e3bc1976f1b5,Mains,4.5
-2023-09-01,Prezzo,House Fries,e3bc1976f1b5,Mains,4.5
-2023-10-01,Prezzo,House Fries,e3bc1976f1b5,Mains,4.5
-2024-02-01,Prezzo,House Fries,e3bc1976f1b5,Mains,4.5
-2025-03-01,Prezzo,House Fries,e3bc1976f1b5,Mains,4.95
-2025-05-01,Prezzo,House Fries,e3bc1976f1b5,Mains,4.95
-2025-08-01,Prezzo,House Fries,e3bc1976f1b5,Mains,4.95
-2025-11-01,Prezzo,House Fries,e3bc1976f1b5,Mains,4.95
-2026-04-01,Prezzo,House Fries,e3bc1976f1b5,Mains,4.95
-2026-07-08,Prezzo,House Fries,e3bc1976f1b5,Mains,4.95
 2025-11-01,Prezzo,Hummus & Flatbread,c944b49f5fa6,Mains,8.5
 2026-07-08,Prezzo,Hummus & Flatbread,c944b49f5fa6,Mains,8.5
 2025-03-01,Prezzo,Italian Meatballs,a2533262c8ea,Mains,9.25
@@ -3319,7 +3395,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Prezzo,Lasagne,a5c53311688e,Mains,18.45
 2026-04-01,Prezzo,Lasagne,a5c53311688e,Mains,19.45
 2026-07-08,Prezzo,Lasagne,a5c53311688e,Mains,19.45
-2026-07-08,Prezzo,Lotus Biscoff Cheesecake,6a20cf224f79,Mains,8.45
 2026-07-08,Prezzo,Mango Sorbet,6a65819e5720,Mains,6.0
 2022-02-01,Prezzo,Margherita,be271a756745,Mains,10.25
 2022-08-01,Prezzo,Margherita,be271a756745,Mains,11.45
@@ -3476,7 +3551,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Prezzo,Sticky Toffee Pudding,bd7bbf207a37,Mains,8.25
 2026-04-01,Prezzo,Sticky Toffee Pudding,bd7bbf207a37,Mains,8.75
 2026-07-08,Prezzo,Sticky Toffee Pudding,bd7bbf207a37,Mains,8.75
-2026-07-08,Prezzo,Strawberry Ice Cream,587d009100a2,Mains,6.0
 2022-02-01,Prezzo,Tenderstem Broccoli,85a9aa1d5250,Mains,3.95
 2022-08-01,Prezzo,Tenderstem Broccoli,85a9aa1d5250,Mains,4.5
 2022-12-01,Prezzo,Tenderstem Broccoli,85a9aa1d5250,Mains,0.0
@@ -3503,21 +3577,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Prezzo,The Veggie One Pizza,b59620eff5c2,Mains,18.0
 2026-04-01,Prezzo,The Veggie One Pizza,b59620eff5c2,Mains,19.0
 2026-07-08,Prezzo,The Veggie One Pizza,b59620eff5c2,Mains,19.0
-2022-02-01,Prezzo,Tiramisu,6093c1255130,Mains,5.95
-2022-08-01,Prezzo,Tiramisu,6093c1255130,Mains,6.75
-2022-10-01,Prezzo,Tiramisu,6093c1255130,Mains,6.95
-2022-12-01,Prezzo,Tiramisu,6093c1255130,Mains,6.95
-2023-05-01,Prezzo,Tiramisu,6093c1255130,Mains,7.25
-2023-09-01,Prezzo,Tiramisu,6093c1255130,Mains,7.25
-2023-10-01,Prezzo,Tiramisu,6093c1255130,Mains,7.95
-2024-02-01,Prezzo,Tiramisu,6093c1255130,Mains,7.95
-2025-03-01,Prezzo,Tiramisu,6093c1255130,Mains,8.25
-2025-05-01,Prezzo,Tiramisu,6093c1255130,Mains,8.25
-2025-08-01,Prezzo,Tiramisu,6093c1255130,Mains,8.25
-2025-11-01,Prezzo,Tiramisu,6093c1255130,Mains,8.25
-2026-04-01,Prezzo,Tiramisu,6093c1255130,Mains,8.25
-2026-07-08,Prezzo,Tiramisu,6093c1255130,Mains,8.25
-2026-07-08,Prezzo,Tiramisu for 2,8dca5ac3f264,Mains,2.0
 2025-03-01,Prezzo,Tomato & Burrata Salad,72bffd9b3279,Mains,9.25
 2025-05-01,Prezzo,Tomato & Burrata Salad,72bffd9b3279,Mains,9.25
 2025-08-01,Prezzo,Tomato & Burrata Salad,72bffd9b3279,Mains,9.25
@@ -3538,20 +3597,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Prezzo,Tomato Bruschetta,12c58bb49237,Mains,8.25
 2026-04-01,Prezzo,Tomato Bruschetta,12c58bb49237,Mains,8.5
 2026-07-08,Prezzo,Tomato Bruschetta,12c58bb49237,Mains,8.5
-2022-02-01,Prezzo,Truffle Fries,6688b1d66a76,Mains,4.95
-2022-08-01,Prezzo,Truffle Fries,6688b1d66a76,Mains,5.25
-2022-10-01,Prezzo,Truffle Fries,6688b1d66a76,Mains,5.25
-2022-12-01,Prezzo,Truffle Fries,6688b1d66a76,Mains,5.25
-2023-05-01,Prezzo,Truffle Fries,6688b1d66a76,Mains,5.5
-2023-09-01,Prezzo,Truffle Fries,6688b1d66a76,Mains,5.5
-2023-10-01,Prezzo,Truffle Fries,6688b1d66a76,Mains,5.5
-2024-02-01,Prezzo,Truffle Fries,6688b1d66a76,Mains,5.5
-2025-03-01,Prezzo,Truffle Fries,6688b1d66a76,Mains,5.95
-2025-05-01,Prezzo,Truffle Fries,6688b1d66a76,Mains,5.95
-2025-08-01,Prezzo,Truffle Fries,6688b1d66a76,Mains,5.95
-2025-11-01,Prezzo,Truffle Fries,6688b1d66a76,Mains,5.95
-2026-04-01,Prezzo,Truffle Fries,6688b1d66a76,Mains,5.95
-2026-07-08,Prezzo,Truffle Fries,6688b1d66a76,Mains,5.95
 2026-07-08,Prezzo,Truffle Mayo,9383646fa0de,Mains,1.5
 2025-03-01,Prezzo,Tuscan BBQ Chicken,1a48dae1f799,Mains,18.0
 2025-05-01,Prezzo,Tuscan BBQ Chicken,1a48dae1f799,Mains,18.0
@@ -3565,7 +3610,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Prezzo,Tuscan Beef and Mash,b09a55c7bf5e,Mains,20.95
 2026-04-01,Prezzo,Tuscan Beef and Mash,b09a55c7bf5e,Mains,22.95
 2026-07-08,Prezzo,Tuscan Beef and Mash,b09a55c7bf5e,Mains,22.95
-2026-07-08,Prezzo,Vanilla Ice Cream,dc2a0129aa9f,Mains,6.0
 2026-07-08,Prezzo,Vegan Double Pepperoni,7f15dd04d5d7,Mains,19.25
 2026-07-08,Prezzo,Vegan Fusilli Bolognese Gluten Free,0013aaa18301,Mains,19.5
 2026-07-08,Prezzo,Vegan Lovers,30ae2cc7c4ac,Mains,20.0
@@ -3594,6 +3638,40 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Prezzo,Wild Mushroom Ravioli,e083171b8b53,Mains,18.75
 2026-04-01,Prezzo,Wild Mushroom Ravioli,e083171b8b53,Mains,19.75
 2026-07-08,Prezzo,Wild Mushroom Ravioli,e083171b8b53,Mains,19.75
+2025-03-01,Prezzo,Chilli Garlic Cheese Fries,eeb4086c8cff,Sides,5.95
+2025-05-01,Prezzo,Chilli Garlic Cheese Fries,eeb4086c8cff,Sides,5.95
+2025-08-01,Prezzo,Chilli Garlic Cheese Fries,eeb4086c8cff,Sides,5.95
+2025-11-01,Prezzo,Chilli Garlic Cheese Fries,eeb4086c8cff,Sides,5.95
+2026-04-01,Prezzo,Chilli Garlic Cheese Fries,eeb4086c8cff,Sides,5.95
+2026-07-08,Prezzo,Chilli Garlic Cheese Fries,eeb4086c8cff,Sides,5.95
+2022-02-01,Prezzo,House Fries,e3bc1976f1b5,Sides,3.95
+2022-08-01,Prezzo,House Fries,e3bc1976f1b5,Sides,4.25
+2022-10-01,Prezzo,House Fries,e3bc1976f1b5,Sides,4.25
+2022-12-01,Prezzo,House Fries,e3bc1976f1b5,Sides,4.25
+2023-05-01,Prezzo,House Fries,e3bc1976f1b5,Sides,4.5
+2023-09-01,Prezzo,House Fries,e3bc1976f1b5,Sides,4.5
+2023-10-01,Prezzo,House Fries,e3bc1976f1b5,Sides,4.5
+2024-02-01,Prezzo,House Fries,e3bc1976f1b5,Sides,4.5
+2025-03-01,Prezzo,House Fries,e3bc1976f1b5,Sides,4.95
+2025-05-01,Prezzo,House Fries,e3bc1976f1b5,Sides,4.95
+2025-08-01,Prezzo,House Fries,e3bc1976f1b5,Sides,4.95
+2025-11-01,Prezzo,House Fries,e3bc1976f1b5,Sides,4.95
+2026-04-01,Prezzo,House Fries,e3bc1976f1b5,Sides,4.95
+2026-07-08,Prezzo,House Fries,e3bc1976f1b5,Sides,4.95
+2022-02-01,Prezzo,Truffle Fries,6688b1d66a76,Sides,4.95
+2022-08-01,Prezzo,Truffle Fries,6688b1d66a76,Sides,5.25
+2022-10-01,Prezzo,Truffle Fries,6688b1d66a76,Sides,5.25
+2022-12-01,Prezzo,Truffle Fries,6688b1d66a76,Sides,5.25
+2023-05-01,Prezzo,Truffle Fries,6688b1d66a76,Sides,5.5
+2023-09-01,Prezzo,Truffle Fries,6688b1d66a76,Sides,5.5
+2023-10-01,Prezzo,Truffle Fries,6688b1d66a76,Sides,5.5
+2024-02-01,Prezzo,Truffle Fries,6688b1d66a76,Sides,5.5
+2025-03-01,Prezzo,Truffle Fries,6688b1d66a76,Sides,5.95
+2025-05-01,Prezzo,Truffle Fries,6688b1d66a76,Sides,5.95
+2025-08-01,Prezzo,Truffle Fries,6688b1d66a76,Sides,5.95
+2025-11-01,Prezzo,Truffle Fries,6688b1d66a76,Sides,5.95
+2026-04-01,Prezzo,Truffle Fries,6688b1d66a76,Sides,5.95
+2026-07-08,Prezzo,Truffle Fries,6688b1d66a76,Sides,5.95
 2026-10-18,Rosa's Thai,Beef,1cd64a77e82e,Mains,19.25
 2026-10-18,Rosa's Thai,Brown Rice,8fde28bb0519,Mains,4.5
 2026-10-18,Rosa's Thai,Chargrilled Pork Skewers,462b4abc1d4e,Mains,8.7
@@ -3701,6 +3779,7 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Wagamama,lemon yuzu muffin (v),c3b213b8b05b,Desserts,3.7
 2026-04-01,Wagamama,lemon yuzu muffin (v),c3b213b8b05b,Desserts,4.2
 2026-07-08,Wagamama,lemon yuzu muffin (v),c3b213b8b05b,Desserts,4.2
+2026-07-08,Wagamama,mini brownie bite (v),4045ac38fd3a,Desserts,2.7
 2025-05-01,Wagamama,miso caramel banana bread (v),390a1da1dd10,Desserts,6.0
 2025-08-01,Wagamama,miso caramel banana bread (v),390a1da1dd10,Desserts,6.5
 2025-11-01,Wagamama,miso caramel banana bread (v),390a1da1dd10,Desserts,5.7
@@ -3748,7 +3827,6 @@ date,source,item,dish_id,bucket,price
 2026-07-08,Wagamama,diet coke (vg),7235f70d7ada,Drinks (non-alcoholic),2.8
 2026-07-08,Wagamama,large cloudy lemonade (vg),65d0ef29a302,Drinks (non-alcoholic),4.9
 2026-07-08,Wagamama,large peach iced tea (vg),0456311be96b,Drinks (non-alcoholic),4.9
-2026-07-08,Wagamama,mini brownie bite (v),4045ac38fd3a,Desserts,2.7
 2026-07-08,Wagamama,new! ginger kombucha (vg),8ebd256d14d1,Drinks (non-alcoholic),5.0
 2026-07-08,Wagamama,new! matcha colada (large) (vg),f90d73abff3c,Drinks (non-alcoholic),7.1
 2026-07-08,Wagamama,new! matcha colada (regular) (vg),d69f21927e63,Drinks (non-alcoholic),6.3
@@ -4204,22 +4282,30 @@ date,source,item,dish_id,bucket,price
 2026-07-08,Zizzi,Tiramisu,343b4afef242,Desserts,7.95
 2026-04-01,Zizzi,Tropical Pina Colada Sundae,4a1476d93761,Desserts,7.95
 2026-07-08,Zizzi,Tropical Pina Colada Sundae,4a1476d93761,Desserts,7.95
-2025-03-01,Zizzi,Americano,bd6618320bd4,Drinks (non-alcoholic),3.65
-2025-05-01,Zizzi,Americano,bd6618320bd4,Drinks (non-alcoholic),3.65
-2025-08-01,Zizzi,Americano,bd6618320bd4,Drinks (non-alcoholic),3.65
-2025-11-01,Zizzi,Americano,bd6618320bd4,Drinks (non-alcoholic),3.65
-2026-04-01,Zizzi,Americano,bd6618320bd4,Drinks (non-alcoholic),3.65
-2026-07-08,Zizzi,Americano,bd6618320bd4,Drinks (non-alcoholic),3.65
+2025-11-01,Zizzi,Amaretto 25ML,44870bd34a95,Drinks (alcoholic),4.0
+2026-04-01,Zizzi,Amaretto 25ML,44870bd34a95,Drinks (alcoholic),4.0
+2026-07-08,Zizzi,Amaretto 25ML,44870bd34a95,Drinks (alcoholic),4.0
+2025-03-01,Zizzi,Amaretto 50ML,710f103d957c,Drinks (alcoholic),7.0
+2025-05-01,Zizzi,Amaretto 50ML,710f103d957c,Drinks (alcoholic),7.0
+2025-11-01,Zizzi,Amaretto 50ML,710f103d957c,Drinks (alcoholic),7.0
+2026-04-01,Zizzi,Amaretto 50ML,710f103d957c,Drinks (alcoholic),7.0
+2026-07-08,Zizzi,Amaretto 50ML,710f103d957c,Drinks (alcoholic),7.0
+2024-02-01,Zizzi,Aperol Spritz,0ff20718a48d,Drinks (alcoholic),9.95
+2025-03-01,Zizzi,Aperol Spritz,0ff20718a48d,Drinks (alcoholic),9.95
+2025-05-01,Zizzi,Aperol Spritz,0ff20718a48d,Drinks (alcoholic),9.95
+2025-08-01,Zizzi,Aperol Spritz,0ff20718a48d,Drinks (alcoholic),9.95
+2025-11-01,Zizzi,Aperol Spritz,0ff20718a48d,Drinks (alcoholic),10.15
+2026-04-01,Zizzi,Aperol Spritz,0ff20718a48d,Drinks (alcoholic),10.45
 2026-07-08,Zizzi,Aperol Spritz,0ff20718a48d,Drinks (alcoholic),10.45
-2026-07-08,Zizzi,Apple & Blackcurrant Squash,be5151a31281,Drinks (non-alcoholic),1.0
+2025-03-01,Zizzi,Baileys 100ML,0ad7f6e635b8,Drinks (alcoholic),7.0
+2025-11-01,Zizzi,Baileys 100ML,0ad7f6e635b8,Drinks (alcoholic),7.45
+2026-04-01,Zizzi,Baileys 100ML,0ad7f6e635b8,Drinks (alcoholic),7.45
+2026-07-08,Zizzi,Baileys 100ML,0ad7f6e635b8,Drinks (alcoholic),7.45
+2025-11-01,Zizzi,Baileys 50ML,804e0509a056,Drinks (alcoholic),5.45
+2026-04-01,Zizzi,Baileys 50ML,804e0509a056,Drinks (alcoholic),5.45
+2026-07-08,Zizzi,Baileys 50ML,804e0509a056,Drinks (alcoholic),5.45
 2026-07-08,Zizzi,Beyond Belief Brewing Pasta Beer IPA,891652166d68,Drinks (alcoholic),6.45
 2026-07-08,Zizzi,Beyond Belief Brewing Pasta Beer Pale Ale,f55630d394f7,Drinks (alcoholic),6.45
-2025-03-01,Zizzi,Cappuccino,a47cf622b7b8,Drinks (non-alcoholic),3.75
-2025-05-01,Zizzi,Cappuccino,a47cf622b7b8,Drinks (non-alcoholic),3.75
-2025-08-01,Zizzi,Cappuccino,a47cf622b7b8,Drinks (non-alcoholic),3.75
-2025-11-01,Zizzi,Cappuccino,a47cf622b7b8,Drinks (non-alcoholic),3.75
-2026-04-01,Zizzi,Cappuccino,a47cf622b7b8,Drinks (non-alcoholic),3.75
-2026-07-08,Zizzi,Cappuccino,a47cf622b7b8,Drinks (non-alcoholic),3.75
 2026-07-08,Zizzi,Catarratto Chardonnay 125ml,82dc1b08020a,Drinks (alcoholic),7.15
 2025-03-01,Zizzi,Catarratto Chardonnay 175ml,ed311dd287d4,Drinks (alcoholic),7.75
 2025-05-01,Zizzi,Catarratto Chardonnay 175ml,ed311dd287d4,Drinks (alcoholic),7.75
@@ -4256,78 +4342,62 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Zizzi,Cornish Orchards Raspberry & Elderflower Cider,ac941f034665,Drinks (alcoholic),6.95
 2026-04-01,Zizzi,Cornish Orchards Raspberry & Elderflower Cider,ac941f034665,Drinks (alcoholic),6.95
 2026-07-08,Zizzi,Cornish Orchards Raspberry & Elderflower Cider,ac941f034665,Drinks (alcoholic),6.95
-2025-03-01,Zizzi,Double Espresso,55ac9f76f266,Drinks (non-alcoholic),3.55
-2025-05-01,Zizzi,Double Espresso,55ac9f76f266,Drinks (non-alcoholic),3.55
-2025-08-01,Zizzi,Double Espresso,55ac9f76f266,Drinks (non-alcoholic),3.55
-2025-11-01,Zizzi,Double Espresso,55ac9f76f266,Drinks (non-alcoholic),3.55
-2026-04-01,Zizzi,Double Espresso,55ac9f76f266,Drinks (non-alcoholic),3.55
-2026-07-08,Zizzi,Double Espresso,55ac9f76f266,Drinks (non-alcoholic),3.55
 2025-11-01,Zizzi,Dragon Fruit Margarita,f09f3474165f,Drinks (alcoholic),12.45
 2026-07-08,Zizzi,Dragon Fruit Margarita,f09f3474165f,Drinks (alcoholic),12.95
-2025-03-01,Zizzi,Earl Grey,68e19c1042b2,Drinks (non-alcoholic),3.55
-2025-05-01,Zizzi,Earl Grey,68e19c1042b2,Drinks (non-alcoholic),3.55
-2025-08-01,Zizzi,Earl Grey,68e19c1042b2,Drinks (non-alcoholic),3.55
-2025-11-01,Zizzi,Earl Grey,68e19c1042b2,Drinks (non-alcoholic),3.55
-2026-04-01,Zizzi,Earl Grey,68e19c1042b2,Drinks (non-alcoholic),3.55
-2026-07-08,Zizzi,Earl Grey,68e19c1042b2,Drinks (non-alcoholic),3.55
 2026-04-01,Zizzi,Elderflower Spritz,4d4019600e02,Drinks (alcoholic),12.95
 2026-07-08,Zizzi,Elderflower Spritz,4d4019600e02,Drinks (alcoholic),12.95
-2025-03-01,Zizzi,English Breakfast,5fabcc0592ea,Drinks (non-alcoholic),3.55
-2025-05-01,Zizzi,English Breakfast,5fabcc0592ea,Drinks (non-alcoholic),3.55
-2025-08-01,Zizzi,English Breakfast,5fabcc0592ea,Drinks (non-alcoholic),3.55
-2025-11-01,Zizzi,English Breakfast,5fabcc0592ea,Drinks (non-alcoholic),3.55
-2026-04-01,Zizzi,English Breakfast,5fabcc0592ea,Drinks (non-alcoholic),3.55
-2026-07-08,Zizzi,English Breakfast,5fabcc0592ea,Drinks (non-alcoholic),3.55
-2025-03-01,Zizzi,Flat White,932fccf20029,Drinks (non-alcoholic),3.75
-2025-05-01,Zizzi,Flat White,932fccf20029,Drinks (non-alcoholic),3.75
-2025-08-01,Zizzi,Flat White,932fccf20029,Drinks (non-alcoholic),3.75
-2025-11-01,Zizzi,Flat White,932fccf20029,Drinks (non-alcoholic),3.75
-2026-04-01,Zizzi,Flat White,932fccf20029,Drinks (non-alcoholic),3.75
-2026-07-08,Zizzi,Flat White,932fccf20029,Drinks (non-alcoholic),3.75
-2026-07-08,Zizzi,Flawsome Apple & Blackcurrant,5c9626cd1c08,Drinks (non-alcoholic),2.5
-2026-07-08,Zizzi,Flawsome Sweet Apple,5ebba97223c7,Drinks (non-alcoholic),2.5
-2025-03-01,Zizzi,Fresh Mint Tea,52b17944056b,Drinks (non-alcoholic),3.35
-2025-05-01,Zizzi,Fresh Mint Tea,52b17944056b,Drinks (non-alcoholic),3.35
-2025-08-01,Zizzi,Fresh Mint Tea,52b17944056b,Drinks (non-alcoholic),3.35
-2025-11-01,Zizzi,Fresh Mint Tea,52b17944056b,Drinks (non-alcoholic),3.35
-2026-04-01,Zizzi,Fresh Mint Tea,52b17944056b,Drinks (non-alcoholic),3.55
-2026-07-08,Zizzi,Fresh Mint Tea,52b17944056b,Drinks (non-alcoholic),3.35
+2025-11-01,Zizzi,Fiorente Elderflower Liqueur 25ml,31caf4385498,Drinks (alcoholic),4.0
+2026-04-01,Zizzi,Fiorente Elderflower Liqueur 25ml,31caf4385498,Drinks (alcoholic),4.0
+2026-07-08,Zizzi,Fiorente Elderflower Liqueur 25ml,31caf4385498,Drinks (alcoholic),4.0
+2025-11-01,Zizzi,Fiorente Elderflower Liqueur 50ml,e260a589ef6d,Drinks (alcoholic),7.0
+2026-04-01,Zizzi,Fiorente Elderflower Liqueur 50ml,e260a589ef6d,Drinks (alcoholic),7.0
+2026-07-08,Zizzi,Fiorente Elderflower Liqueur 50ml,e260a589ef6d,Drinks (alcoholic),7.0
+2026-07-08,Zizzi,Frangelico 25ML,d1a64849588a,Drinks (alcoholic),4.0
+2026-07-08,Zizzi,Frangelico 50ML,db7d64381bc8,Drinks (alcoholic),7.0
 2025-03-01,Zizzi,Hophead,ec9498b5d3cb,Drinks (alcoholic),7.25
 2025-05-01,Zizzi,Hophead,ec9498b5d3cb,Drinks (alcoholic),7.25
 2025-08-01,Zizzi,Hophead,ec9498b5d3cb,Drinks (alcoholic),7.25
 2025-11-01,Zizzi,Hophead,ec9498b5d3cb,Drinks (alcoholic),7.25
 2026-04-01,Zizzi,Hophead,ec9498b5d3cb,Drinks (alcoholic),7.45
 2026-07-08,Zizzi,Hophead,ec9498b5d3cb,Drinks (alcoholic),7.45
-2025-03-01,Zizzi,Hot Chocolate,d755ed631ab1,Drinks (non-alcoholic),3.95
-2025-05-01,Zizzi,Hot Chocolate,d755ed631ab1,Drinks (non-alcoholic),3.95
-2025-08-01,Zizzi,Hot Chocolate,d755ed631ab1,Drinks (non-alcoholic),3.95
-2026-04-01,Zizzi,Hot Chocolate,d755ed631ab1,Drinks (non-alcoholic),4.25
-2026-07-08,Zizzi,Hot Chocolate,d755ed631ab1,Drinks (non-alcoholic),4.25
-2026-04-01,Zizzi,Ice Americano,86889ab4114c,Drinks (non-alcoholic),3.95
-2026-07-08,Zizzi,Ice Americano,86889ab4114c,Drinks (non-alcoholic),3.95
-2026-07-08,Zizzi,Iced Latte,2e2916ecf112,Drinks (non-alcoholic),4.25
-2026-07-08,Zizzi,Kids Apple Juice,04de82c8ab4f,Drinks (non-alcoholic),2.5
-2026-07-08,Zizzi,Kids Milk,2d60797470a5,Drinks (non-alcoholic),1.0
-2026-07-08,Zizzi,Kids Oat Milk,fc542696adc5,Drinks (non-alcoholic),1.0
-2026-07-08,Zizzi,Kids Orange Juice,37c11ed155f3,Drinks (non-alcoholic),2.5
-2025-03-01,Zizzi,Latte,7f065548f1f5,Drinks (non-alcoholic),3.75
-2025-05-01,Zizzi,Latte,7f065548f1f5,Drinks (non-alcoholic),3.75
-2025-08-01,Zizzi,Latte,7f065548f1f5,Drinks (non-alcoholic),3.75
-2025-11-01,Zizzi,Latte,7f065548f1f5,Drinks (non-alcoholic),3.75
-2026-04-01,Zizzi,Latte,7f065548f1f5,Drinks (non-alcoholic),3.75
-2026-07-08,Zizzi,Latte,7f065548f1f5,Drinks (non-alcoholic),3.75
+2025-03-01,Zizzi,House Prosecco 125ml,a67615687abe,Drinks (alcoholic),7.25
+2025-05-01,Zizzi,House Prosecco 125ml,a67615687abe,Drinks (alcoholic),7.25
+2026-04-01,Zizzi,House Prosecco 125ml,a67615687abe,Drinks (alcoholic),7.45
+2026-07-08,Zizzi,House Prosecco 125ml,a67615687abe,Drinks (alcoholic),7.45
+2026-07-08,Zizzi,House Prosecco Bottle,c8f284550b21,Drinks (alcoholic),28.95
+2026-07-08,Zizzi,House Prosecco Magnum Bottle,d53e480dd06d,Drinks (alcoholic),55.95
+2025-11-01,Zizzi,Jack Daniels 25ML,7d6b0d084d30,Drinks (alcoholic),4.0
+2026-04-01,Zizzi,Jack Daniels 25ML,7d6b0d084d30,Drinks (alcoholic),4.0
+2026-07-08,Zizzi,Jack Daniels 25ML,7d6b0d084d30,Drinks (alcoholic),4.0
+2025-03-01,Zizzi,Jack Daniels 50ML,0219f19d30d6,Drinks (alcoholic),7.0
+2025-05-01,Zizzi,Jack Daniels 50ML,0219f19d30d6,Drinks (alcoholic),7.0
+2025-08-01,Zizzi,Jack Daniels 50ML,0219f19d30d6,Drinks (alcoholic),6.6
+2025-11-01,Zizzi,Jack Daniels 50ML,0219f19d30d6,Drinks (alcoholic),7.0
+2026-04-01,Zizzi,Jack Daniels 50ML,0219f19d30d6,Drinks (alcoholic),7.0
+2026-07-08,Zizzi,Jack Daniels 50ML,0219f19d30d6,Drinks (alcoholic),7.0
+2025-11-01,Zizzi,Jamesons Irish Whiskey 25ml,d335d101be2e,Drinks (alcoholic),4.0
+2026-04-01,Zizzi,Jamesons Irish Whiskey 25ml,d335d101be2e,Drinks (alcoholic),4.0
+2026-07-08,Zizzi,Jamesons Irish Whiskey 25ml,d335d101be2e,Drinks (alcoholic),4.0
+2025-03-01,Zizzi,Jamesons Irish Whiskey 50ml,f18bddf46097,Drinks (alcoholic),7.0
+2025-05-01,Zizzi,Jamesons Irish Whiskey 50ml,f18bddf46097,Drinks (alcoholic),7.0
+2025-08-01,Zizzi,Jamesons Irish Whiskey 50ml,f18bddf46097,Drinks (alcoholic),6.6
+2025-11-01,Zizzi,Jamesons Irish Whiskey 50ml,f18bddf46097,Drinks (alcoholic),7.0
+2026-04-01,Zizzi,Jamesons Irish Whiskey 50ml,f18bddf46097,Drinks (alcoholic),7.0
+2026-07-08,Zizzi,Jamesons Irish Whiskey 50ml,f18bddf46097,Drinks (alcoholic),7.0
+2025-11-01,Zizzi,Limoncello 25ML,84ec1a5b2180,Drinks (alcoholic),4.0
+2026-04-01,Zizzi,Limoncello 25ML,84ec1a5b2180,Drinks (alcoholic),4.0
+2026-07-08,Zizzi,Limoncello 25ML,84ec1a5b2180,Drinks (alcoholic),4.0
+2025-03-01,Zizzi,Limoncello 50ML,f547397ce55c,Drinks (alcoholic),7.0
+2025-05-01,Zizzi,Limoncello 50ML,f547397ce55c,Drinks (alcoholic),7.0
+2025-11-01,Zizzi,Limoncello 50ML,f547397ce55c,Drinks (alcoholic),7.0
+2026-04-01,Zizzi,Limoncello 50ML,f547397ce55c,Drinks (alcoholic),7.0
+2026-07-08,Zizzi,Limoncello 50ML,f547397ce55c,Drinks (alcoholic),7.0
 2025-03-01,Zizzi,Limoncello Spritz,8d6aa3945493,Drinks (alcoholic),10.95
 2025-05-01,Zizzi,Limoncello Spritz,8d6aa3945493,Drinks (alcoholic),10.95
 2025-08-01,Zizzi,Limoncello Spritz,8d6aa3945493,Drinks (alcoholic),11.25
 2025-11-01,Zizzi,Limoncello Spritz,8d6aa3945493,Drinks (alcoholic),11.75
 2026-04-01,Zizzi,Limoncello Spritz,8d6aa3945493,Drinks (alcoholic),12.95
 2026-07-08,Zizzi,Limoncello Spritz,8d6aa3945493,Drinks (alcoholic),12.95
-2025-03-01,Zizzi,Macchiato,f9ba243930dc,Drinks (non-alcoholic),3.65
-2025-05-01,Zizzi,Macchiato,f9ba243930dc,Drinks (non-alcoholic),3.65
-2025-08-01,Zizzi,Macchiato,f9ba243930dc,Drinks (non-alcoholic),3.65
-2025-11-01,Zizzi,Macchiato,f9ba243930dc,Drinks (non-alcoholic),3.65
-2026-04-01,Zizzi,Macchiato,f9ba243930dc,Drinks (non-alcoholic),3.65
-2026-07-08,Zizzi,Macchiato,f9ba243930dc,Drinks (non-alcoholic),3.65
 2026-07-08,Zizzi,Malbec 125ml,53a5ff480216,Drinks (alcoholic),7.75
 2025-03-01,Zizzi,Malbec 175ml,d6b2888b7537,Drinks (alcoholic),8.25
 2025-05-01,Zizzi,Malbec 175ml,d6b2888b7537,Drinks (alcoholic),8.25
@@ -4370,14 +4440,9 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Zizzi,Merlot Bottle,636d8349af3d,Drinks (alcoholic),25.95
 2026-04-01,Zizzi,Merlot Bottle,636d8349af3d,Drinks (alcoholic),25.95
 2026-07-08,Zizzi,Merlot Bottle,636d8349af3d,Drinks (alcoholic),25.95
-2025-03-01,Zizzi,Mocha,e70e4382ca96,Drinks (non-alcoholic),3.75
-2025-05-01,Zizzi,Mocha,e70e4382ca96,Drinks (non-alcoholic),3.75
-2025-08-01,Zizzi,Mocha,e70e4382ca96,Drinks (non-alcoholic),3.75
-2025-11-01,Zizzi,Mocha,e70e4382ca96,Drinks (non-alcoholic),3.75
-2026-04-01,Zizzi,Mocha,e70e4382ca96,Drinks (non-alcoholic),3.75
-2026-07-08,Zizzi,Mocha,e70e4382ca96,Drinks (non-alcoholic),3.75
 2025-11-01,Zizzi,Mocha Martini,a00fcdf9c06d,Drinks (alcoholic),12.25
 2026-04-01,Zizzi,Mocha Martini,a00fcdf9c06d,Drinks (alcoholic),12.45
+2026-07-08,Zizzi,Mocha Martini,a00fcdf9c06d,Drinks (alcoholic),12.45
 2026-07-08,Zizzi,Montepulciano 125ml,0ceff40e8755,Drinks (alcoholic),6.35
 2025-03-01,Zizzi,Montepulciano 175ml,2d41c3bf0ed5,Drinks (alcoholic),6.95
 2025-05-01,Zizzi,Montepulciano 175ml,2d41c3bf0ed5,Drinks (alcoholic),6.95
@@ -4399,6 +4464,15 @@ date,source,item,dish_id,bucket,price
 2025-08-01,Zizzi,Morello Cherry Sour,98421c6ca457,Drinks (alcoholic),11.25
 2025-11-01,Zizzi,Morello Cherry Sour,98421c6ca457,Drinks (alcoholic),11.25
 2026-07-08,Zizzi,Morello Cherry Sour,98421c6ca457,Drinks (alcoholic),11.45
+2025-11-01,Zizzi,Mr Black Coffee Liquor 25ml,1ca504f6469e,Drinks (alcoholic),4.0
+2026-04-01,Zizzi,Mr Black Coffee Liquor 25ml,1ca504f6469e,Drinks (alcoholic),4.0
+2026-07-08,Zizzi,Mr Black Coffee Liquor 25ml,1ca504f6469e,Drinks (alcoholic),4.0
+2024-02-01,Zizzi,Mr Black Coffee Liquor 50ml,01d59cdcbb8b,Drinks (alcoholic),7.0
+2025-03-01,Zizzi,Mr Black Coffee Liquor 50ml,01d59cdcbb8b,Drinks (alcoholic),7.0
+2025-05-01,Zizzi,Mr Black Coffee Liquor 50ml,01d59cdcbb8b,Drinks (alcoholic),7.0
+2025-11-01,Zizzi,Mr Black Coffee Liquor 50ml,01d59cdcbb8b,Drinks (alcoholic),7.0
+2026-04-01,Zizzi,Mr Black Coffee Liquor 50ml,01d59cdcbb8b,Drinks (alcoholic),7.0
+2026-07-08,Zizzi,Mr Black Coffee Liquor 50ml,01d59cdcbb8b,Drinks (alcoholic),7.0
 2026-07-08,Zizzi,Nero D'Avola 125ml,5b1730a80ec4,Drinks (alcoholic),5.75
 2025-03-01,Zizzi,Nero D'Avola 175ml,7797a38c1e54,Drinks (alcoholic),6.5
 2025-05-01,Zizzi,Nero D'Avola 175ml,7797a38c1e54,Drinks (alcoholic),6.5
@@ -4417,47 +4491,22 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Zizzi,Nero D'Avola Bottle,0f26cb999a93,Drinks (alcoholic),22.95
 2026-04-01,Zizzi,Nero D'Avola Bottle,0f26cb999a93,Drinks (alcoholic),22.95
 2026-07-08,Zizzi,Nero D'Avola Bottle,0f26cb999a93,Drinks (alcoholic),22.95
-2025-11-01,Zizzi,Oat Americano,3179f45e8dc3,Drinks (non-alcoholic),3.75
-2026-04-01,Zizzi,Oat Americano,3179f45e8dc3,Drinks (non-alcoholic),3.75
-2026-07-08,Zizzi,Oat Americano,3179f45e8dc3,Drinks (non-alcoholic),3.75
-2025-11-01,Zizzi,Oat Cappuccino,3d3f0ac6be25,Drinks (non-alcoholic),3.85
-2026-04-01,Zizzi,Oat Cappuccino,3d3f0ac6be25,Drinks (non-alcoholic),3.85
-2026-07-08,Zizzi,Oat Cappuccino,3d3f0ac6be25,Drinks (non-alcoholic),3.85
-2025-11-01,Zizzi,Oat Flat White,9053ba2a5de0,Drinks (non-alcoholic),3.85
-2026-04-01,Zizzi,Oat Flat White,9053ba2a5de0,Drinks (non-alcoholic),3.85
-2026-07-08,Zizzi,Oat Flat White,9053ba2a5de0,Drinks (non-alcoholic),3.85
-2025-11-01,Zizzi,Oat Latte,ee0d08a6edee,Drinks (non-alcoholic),3.85
-2026-04-01,Zizzi,Oat Latte,ee0d08a6edee,Drinks (non-alcoholic),3.85
-2026-07-08,Zizzi,Oat Latte,ee0d08a6edee,Drinks (non-alcoholic),3.85
-2025-11-01,Zizzi,Oat Macchiato,39e54cf7b952,Drinks (non-alcoholic),3.75
-2026-04-01,Zizzi,Oat Macchiato,39e54cf7b952,Drinks (non-alcoholic),3.75
-2026-07-08,Zizzi,Oat Macchiato,39e54cf7b952,Drinks (non-alcoholic),3.75
-2025-11-01,Zizzi,Oat Mocha,e7ed4d48a220,Drinks (non-alcoholic),3.85
-2026-04-01,Zizzi,Oat Mocha,e7ed4d48a220,Drinks (non-alcoholic),3.85
-2026-07-08,Zizzi,Oat Mocha,e7ed4d48a220,Drinks (non-alcoholic),3.85
-2026-07-08,Zizzi,Orange Squash,cc6d8a8629e0,Drinks (non-alcoholic),1.0
 2024-02-01,Zizzi,Passion Fruitini,a7375d4d8510,Drinks (alcoholic),9.95
 2025-03-01,Zizzi,Passion Fruitini,a7375d4d8510,Drinks (alcoholic),9.95
 2025-11-01,Zizzi,Passion Fruitini,a7375d4d8510,Drinks (alcoholic),10.45
 2026-04-01,Zizzi,Passion Fruitini,a7375d4d8510,Drinks (alcoholic),10.75
 2026-07-08,Zizzi,Passion Fruitini,a7375d4d8510,Drinks (alcoholic),10.75
+2025-11-01,Zizzi,Peachello 25ml,2fe4f1f64f50,Drinks (alcoholic),4.0
+2026-04-01,Zizzi,Peachello 25ml,2fe4f1f64f50,Drinks (alcoholic),4.0
+2026-07-08,Zizzi,Peachello 25ml,2fe4f1f64f50,Drinks (alcoholic),4.0
+2025-11-01,Zizzi,Peachello 50ml,d45bfcdaa269,Drinks (alcoholic),7.0
+2026-04-01,Zizzi,Peachello 50ml,d45bfcdaa269,Drinks (alcoholic),7.0
+2026-07-08,Zizzi,Peachello 50ml,d45bfcdaa269,Drinks (alcoholic),7.0
 2025-03-01,Zizzi,Peachello Spritz,2b343331c4e2,Drinks (alcoholic),10.95
 2025-05-01,Zizzi,Peachello Spritz,2b343331c4e2,Drinks (alcoholic),10.95
 2025-11-01,Zizzi,Peachello Spritz,2b343331c4e2,Drinks (alcoholic),12.95
 2026-04-01,Zizzi,Peachello Spritz,2b343331c4e2,Drinks (alcoholic),12.95
 2026-07-08,Zizzi,Peachello Spritz,2b343331c4e2,Drinks (alcoholic),12.95
-2025-03-01,Zizzi,Peppermint,164273b706f3,Drinks (non-alcoholic),3.55
-2025-05-01,Zizzi,Peppermint,164273b706f3,Drinks (non-alcoholic),3.55
-2025-08-01,Zizzi,Peppermint,164273b706f3,Drinks (non-alcoholic),3.55
-2025-11-01,Zizzi,Peppermint,164273b706f3,Drinks (non-alcoholic),3.55
-2026-04-01,Zizzi,Peppermint,164273b706f3,Drinks (non-alcoholic),2.55
-2026-07-08,Zizzi,Peppermint,164273b706f3,Drinks (non-alcoholic),3.55
-2025-03-01,Zizzi,Peroni 0.0%,aacf13590c5d,Drinks (non-alcoholic),5.25
-2025-05-01,Zizzi,Peroni 0.0%,aacf13590c5d,Drinks (non-alcoholic),5.25
-2025-08-01,Zizzi,Peroni 0.0%,aacf13590c5d,Drinks (non-alcoholic),5.25
-2025-11-01,Zizzi,Peroni 0.0%,aacf13590c5d,Drinks (non-alcoholic),5.25
-2026-04-01,Zizzi,Peroni 0.0%,aacf13590c5d,Drinks (non-alcoholic),5.45
-2026-07-08,Zizzi,Peroni 0.0%,aacf13590c5d,Drinks (non-alcoholic),5.45
 2025-08-01,Zizzi,Peroni 330ml,ea1ebf6a09c5,Drinks (alcoholic),5.95
 2025-11-01,Zizzi,Peroni 330ml,ea1ebf6a09c5,Drinks (alcoholic),5.95
 2026-04-01,Zizzi,Peroni 330ml,ea1ebf6a09c5,Drinks (alcoholic),5.95
@@ -4479,6 +4528,16 @@ date,source,item,dish_id,bucket,price
 2026-07-08,Zizzi,Peroni Gran Riserva,4f11496d8932,Drinks (alcoholic),6.45
 2025-11-01,Zizzi,Pineapple Colada,0471a8fdfd7c,Drinks (alcoholic),12.75
 2026-07-08,Zizzi,Pineapple Colada,0471a8fdfd7c,Drinks (alcoholic),12.95
+2025-03-01,Zizzi,Pink Prosecco 125ml,496361d51190,Drinks (alcoholic),7.65
+2025-05-01,Zizzi,Pink Prosecco 125ml,496361d51190,Drinks (alcoholic),7.65
+2026-04-01,Zizzi,Pink Prosecco 125ml,496361d51190,Drinks (alcoholic),7.85
+2026-07-08,Zizzi,Pink Prosecco 125ml,496361d51190,Drinks (alcoholic),7.85
+2025-03-01,Zizzi,Pink Prosecco Bottle,0be8dfe3a29d,Drinks (alcoholic),29.25
+2025-05-01,Zizzi,Pink Prosecco Bottle,0be8dfe3a29d,Drinks (alcoholic),29.25
+2025-08-01,Zizzi,Pink Prosecco Bottle,0be8dfe3a29d,Drinks (alcoholic),29.95
+2025-11-01,Zizzi,Pink Prosecco Bottle,0be8dfe3a29d,Drinks (alcoholic),29.95
+2026-04-01,Zizzi,Pink Prosecco Bottle,0be8dfe3a29d,Drinks (alcoholic),29.95
+2026-07-08,Zizzi,Pink Prosecco Bottle,0be8dfe3a29d,Drinks (alcoholic),29.95
 2026-07-08,Zizzi,Pinot Grigio 125ml,6e4df9953b85,Drinks (alcoholic),6.95
 2025-03-01,Zizzi,Pinot Grigio 175ml,3cd639c06f80,Drinks (alcoholic),7.5
 2025-05-01,Zizzi,Pinot Grigio 175ml,3cd639c06f80,Drinks (alcoholic),7.5
@@ -4520,17 +4579,13 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Zizzi,Primitivo Bottle,1b2a83b7eef1,Drinks (alcoholic),28.95
 2026-04-01,Zizzi,Primitivo Bottle,1b2a83b7eef1,Drinks (alcoholic),28.95
 2026-07-08,Zizzi,Primitivo Bottle,1b2a83b7eef1,Drinks (alcoholic),28.95
-2025-03-01,Zizzi,Pure Green,ec18ec9ae7f7,Drinks (non-alcoholic),3.55
-2025-05-01,Zizzi,Pure Green,ec18ec9ae7f7,Drinks (non-alcoholic),3.55
-2025-08-01,Zizzi,Pure Green,ec18ec9ae7f7,Drinks (non-alcoholic),3.55
-2025-11-01,Zizzi,Pure Green,ec18ec9ae7f7,Drinks (non-alcoholic),3.55
-2026-04-01,Zizzi,Pure Green,ec18ec9ae7f7,Drinks (non-alcoholic),3.55
-2026-07-08,Zizzi,Pure Green,ec18ec9ae7f7,Drinks (non-alcoholic),3.55
 2024-02-01,Zizzi,Raspberry Mojito,900c8a0c92b0,Drinks (alcoholic),9.95
 2025-03-01,Zizzi,Raspberry Mojito,900c8a0c92b0,Drinks (alcoholic),9.95
 2025-11-01,Zizzi,Raspberry Mojito,900c8a0c92b0,Drinks (alcoholic),10.15
 2026-04-01,Zizzi,Raspberry Mojito,900c8a0c92b0,Drinks (alcoholic),10.45
 2026-07-08,Zizzi,Raspberry Mojito,900c8a0c92b0,Drinks (alcoholic),10.45
+2026-07-08,Zizzi,Respirited Vodka 25ml,7c6620fad2f1,Drinks (alcoholic),6.0
+2026-07-08,Zizzi,Respirited Vodka 50ml,e74b1f529730,Drinks (alcoholic),9.0
 2026-07-08,Zizzi,Sauvignon Blanc 125ml,7f0053a1009e,Drinks (alcoholic),7.3
 2025-03-01,Zizzi,Sauvignon Blanc 175ml,43549bf3ca77,Drinks (alcoholic),8.25
 2025-05-01,Zizzi,Sauvignon Blanc 175ml,43549bf3ca77,Drinks (alcoholic),8.25
@@ -4569,14 +4624,26 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Zizzi,"Sauvignon Blanc, St Clair Bottle",5ca727b5e0c6,Drinks (alcoholic),29.95
 2026-04-01,Zizzi,"Sauvignon Blanc, St Clair Bottle",5ca727b5e0c6,Drinks (alcoholic),29.95
 2026-07-08,Zizzi,"Sauvignon Blanc, St Clair Bottle",5ca727b5e0c6,Drinks (alcoholic),29.95
-2025-03-01,Zizzi,Single Espresso,82853e15adc3,Drinks (non-alcoholic),3.45
-2025-05-01,Zizzi,Single Espresso,82853e15adc3,Drinks (non-alcoholic),3.45
-2025-08-01,Zizzi,Single Espresso,82853e15adc3,Drinks (non-alcoholic),3.45
-2025-11-01,Zizzi,Single Espresso,82853e15adc3,Drinks (non-alcoholic),3.45
-2026-04-01,Zizzi,Single Espresso,82853e15adc3,Drinks (non-alcoholic),3.45
-2026-07-08,Zizzi,Single Espresso,82853e15adc3,Drinks (non-alcoholic),3.45
+2025-11-01,Zizzi,Sipsmith London Dry Gin 25ml,6c19765509f5,Drinks (alcoholic),6.0
+2026-04-01,Zizzi,Sipsmith London Dry Gin 25ml,6c19765509f5,Drinks (alcoholic),6.0
+2026-07-08,Zizzi,Sipsmith London Dry Gin 25ml,6c19765509f5,Drinks (alcoholic),6.0
+2024-02-01,Zizzi,Sipsmith London Dry Gin 50ml,6933ba6c8ed1,Drinks (alcoholic),9.0
+2025-03-01,Zizzi,Sipsmith London Dry Gin 50ml,6933ba6c8ed1,Drinks (alcoholic),9.0
+2025-05-01,Zizzi,Sipsmith London Dry Gin 50ml,6933ba6c8ed1,Drinks (alcoholic),9.0
+2025-08-01,Zizzi,Sipsmith London Dry Gin 50ml,6933ba6c8ed1,Drinks (alcoholic),8.6
+2025-11-01,Zizzi,Sipsmith London Dry Gin 50ml,6933ba6c8ed1,Drinks (alcoholic),9.0
+2026-04-01,Zizzi,Sipsmith London Dry Gin 50ml,6933ba6c8ed1,Drinks (alcoholic),9.0
+2026-07-08,Zizzi,Sipsmith London Dry Gin 50ml,6933ba6c8ed1,Drinks (alcoholic),9.0
 2026-07-08,Zizzi,Strawberry Cloud Daiquiri,10cb40418ba4,Drinks (alcoholic),10.95
 2026-07-08,Zizzi,Sunset Mango Margarita,42c72de24393,Drinks (alcoholic),9.45
+2025-11-01,Zizzi,Tequila 25 ml,ed97a089b31a,Drinks (alcoholic),4.0
+2026-04-01,Zizzi,Tequila 25 ml,ed97a089b31a,Drinks (alcoholic),4.0
+2026-07-08,Zizzi,Tequila 25 ml,ed97a089b31a,Drinks (alcoholic),4.0
+2025-03-01,Zizzi,Tequila 50 ml,0e23fa2ec188,Drinks (alcoholic),7.0
+2025-05-01,Zizzi,Tequila 50 ml,0e23fa2ec188,Drinks (alcoholic),7.0
+2025-11-01,Zizzi,Tequila 50 ml,0e23fa2ec188,Drinks (alcoholic),7.0
+2026-04-01,Zizzi,Tequila 50 ml,0e23fa2ec188,Drinks (alcoholic),7.0
+2026-07-08,Zizzi,Tequila 50 ml,0e23fa2ec188,Drinks (alcoholic),7.0
 2026-07-08,Zizzi,Trebbiano 125ml,c3c149652ba7,Drinks (alcoholic),6.15
 2025-03-01,Zizzi,Trebbiano 175ml,ce5b17f99df0,Drinks (alcoholic),6.5
 2025-05-01,Zizzi,Trebbiano 175ml,ce5b17f99df0,Drinks (alcoholic),6.5
@@ -4595,6 +4662,15 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Zizzi,Tuscan G&T,64c443564a13,Drinks (alcoholic),11.25
 2026-04-01,Zizzi,Tuscan G&T,64c443564a13,Drinks (alcoholic),10.75
 2026-07-08,Zizzi,Tuscan G&T,64c443564a13,Drinks (alcoholic),10.75
+2025-11-01,Zizzi,White Rum - Calados 25ML,bfe59640e6c1,Drinks (alcoholic),4.0
+2026-04-01,Zizzi,White Rum - Calados 25ML,bfe59640e6c1,Drinks (alcoholic),4.0
+2026-07-08,Zizzi,White Rum - Calados 25ML,bfe59640e6c1,Drinks (alcoholic),4.0
+2025-03-01,Zizzi,White Rum - Calados 50ML,83ddb1936010,Drinks (alcoholic),6.5
+2025-05-01,Zizzi,White Rum - Calados 50ML,83ddb1936010,Drinks (alcoholic),6.5
+2025-08-01,Zizzi,White Rum - Calados 50ML,83ddb1936010,Drinks (alcoholic),7.0
+2025-11-01,Zizzi,White Rum - Calados 50ML,83ddb1936010,Drinks (alcoholic),7.0
+2026-04-01,Zizzi,White Rum - Calados 50ML,83ddb1936010,Drinks (alcoholic),7.0
+2026-07-08,Zizzi,White Rum - Calados 50ML,83ddb1936010,Drinks (alcoholic),7.0
 2026-07-08,Zizzi,Zinfandel Blush 125ml,008925e29def,Drinks (alcoholic),6.65
 2025-03-01,Zizzi,Zinfandel Blush 175ml,e3d126748e06,Drinks (alcoholic),7.5
 2025-05-01,Zizzi,Zinfandel Blush 175ml,e3d126748e06,Drinks (alcoholic),7.5
@@ -4613,15 +4689,13 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Zizzi,Zinfandel Blush Bottle,8f9b10e992d0,Drinks (alcoholic),24.95
 2026-04-01,Zizzi,Zinfandel Blush Bottle,8f9b10e992d0,Drinks (alcoholic),24.95
 2026-07-08,Zizzi,Zinfandel Blush Bottle,8f9b10e992d0,Drinks (alcoholic),24.95
-2026-07-08,Zizzi,All Out Lasagne,bd08eabfc0a1,Mains,21.25
-2025-11-01,Zizzi,Amaretto 25ML,44870bd34a95,Drinks (alcoholic),4.0
-2026-04-01,Zizzi,Amaretto 25ML,44870bd34a95,Drinks (alcoholic),4.0
-2026-07-08,Zizzi,Amaretto 25ML,44870bd34a95,Drinks (alcoholic),4.0
-2025-03-01,Zizzi,Amaretto 50ML,710f103d957c,Drinks (alcoholic),7.0
-2025-05-01,Zizzi,Amaretto 50ML,710f103d957c,Drinks (alcoholic),7.0
-2025-11-01,Zizzi,Amaretto 50ML,710f103d957c,Drinks (alcoholic),7.0
-2026-04-01,Zizzi,Amaretto 50ML,710f103d957c,Drinks (alcoholic),7.0
-2026-07-08,Zizzi,Amaretto 50ML,710f103d957c,Drinks (alcoholic),7.0
+2025-03-01,Zizzi,Americano,bd6618320bd4,Drinks (non-alcoholic),3.65
+2025-05-01,Zizzi,Americano,bd6618320bd4,Drinks (non-alcoholic),3.65
+2025-08-01,Zizzi,Americano,bd6618320bd4,Drinks (non-alcoholic),3.65
+2025-11-01,Zizzi,Americano,bd6618320bd4,Drinks (non-alcoholic),3.65
+2026-04-01,Zizzi,Americano,bd6618320bd4,Drinks (non-alcoholic),3.65
+2026-07-08,Zizzi,Americano,bd6618320bd4,Drinks (non-alcoholic),3.65
+2026-07-08,Zizzi,Apple & Blackcurrant Squash,be5151a31281,Drinks (non-alcoholic),1.0
 2025-03-01,Zizzi,Apple Juice,5cc2b8816074,Drinks (non-alcoholic),4.25
 2025-05-01,Zizzi,Apple Juice,5cc2b8816074,Drinks (non-alcoholic),4.25
 2025-08-01,Zizzi,Apple Juice,5cc2b8816074,Drinks (non-alcoholic),4.25
@@ -4634,14 +4708,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Zizzi,Appletiser,32e9476824d5,Drinks (non-alcoholic),4.25
 2026-04-01,Zizzi,Appletiser,32e9476824d5,Drinks (non-alcoholic),4.25
 2026-07-08,Zizzi,Appletiser,32e9476824d5,Drinks (non-alcoholic),4.25
-2026-07-08,Zizzi,Aubergine Parmigiana,85611354f734,Mains,17.95
-2025-03-01,Zizzi,Baileys 100ML,0ad7f6e635b8,Drinks (alcoholic),7.0
-2025-11-01,Zizzi,Baileys 100ML,0ad7f6e635b8,Drinks (alcoholic),7.45
-2026-04-01,Zizzi,Baileys 100ML,0ad7f6e635b8,Drinks (alcoholic),7.45
-2026-07-08,Zizzi,Baileys 100ML,0ad7f6e635b8,Drinks (alcoholic),7.45
-2025-11-01,Zizzi,Baileys 50ML,804e0509a056,Drinks (alcoholic),5.45
-2026-04-01,Zizzi,Baileys 50ML,804e0509a056,Drinks (alcoholic),5.45
-2026-07-08,Zizzi,Baileys 50ML,804e0509a056,Drinks (alcoholic),5.45
 2025-08-01,Zizzi,Belu Sparkling Water Large,37ada3bd24f4,Drinks (non-alcoholic),4.95
 2025-11-01,Zizzi,Belu Sparkling Water Large,37ada3bd24f4,Drinks (non-alcoholic),4.95
 2026-04-01,Zizzi,Belu Sparkling Water Large,37ada3bd24f4,Drinks (non-alcoholic),4.95
@@ -4660,6 +4726,244 @@ date,source,item,dish_id,bucket,price
 2025-03-01,Zizzi,Blood Orange & Elderflower Tonic,17de53becc89,Drinks (non-alcoholic),2.8
 2025-08-01,Zizzi,Blood Orange & Elderflower Tonic,17de53becc89,Drinks (non-alcoholic),2.8
 2026-07-08,Zizzi,Blood Orange & Elderflower Tonic,17de53becc89,Drinks (non-alcoholic),2.8
+2025-03-01,Zizzi,Cappuccino,a47cf622b7b8,Drinks (non-alcoholic),3.75
+2025-05-01,Zizzi,Cappuccino,a47cf622b7b8,Drinks (non-alcoholic),3.75
+2025-08-01,Zizzi,Cappuccino,a47cf622b7b8,Drinks (non-alcoholic),3.75
+2025-11-01,Zizzi,Cappuccino,a47cf622b7b8,Drinks (non-alcoholic),3.75
+2026-04-01,Zizzi,Cappuccino,a47cf622b7b8,Drinks (non-alcoholic),3.75
+2026-07-08,Zizzi,Cappuccino,a47cf622b7b8,Drinks (non-alcoholic),3.75
+2025-11-01,Zizzi,Coke Large,fc28953898ad,Drinks (non-alcoholic),6.25
+2026-04-01,Zizzi,Coke Large,fc28953898ad,Drinks (non-alcoholic),6.25
+2026-07-08,Zizzi,Coke Large,fc28953898ad,Drinks (non-alcoholic),6.25
+2025-03-01,Zizzi,Coke Small,7a77e9f0f3af,Drinks (non-alcoholic),4.25
+2025-05-01,Zizzi,Coke Small,7a77e9f0f3af,Drinks (non-alcoholic),4.25
+2025-08-01,Zizzi,Coke Small,7a77e9f0f3af,Drinks (non-alcoholic),4.25
+2025-11-01,Zizzi,Coke Small,7a77e9f0f3af,Drinks (non-alcoholic),4.25
+2026-04-01,Zizzi,Coke Small,7a77e9f0f3af,Drinks (non-alcoholic),4.25
+2026-07-08,Zizzi,Coke Small,7a77e9f0f3af,Drinks (non-alcoholic),4.25
+2025-11-01,Zizzi,Coke Zero Large,8e83a9184ace,Drinks (non-alcoholic),6.25
+2026-04-01,Zizzi,Coke Zero Large,8e83a9184ace,Drinks (non-alcoholic),6.25
+2026-07-08,Zizzi,Coke Zero Large,8e83a9184ace,Drinks (non-alcoholic),6.25
+2025-03-01,Zizzi,Coke Zero Small,51fd364f3771,Drinks (non-alcoholic),4.25
+2025-05-01,Zizzi,Coke Zero Small,51fd364f3771,Drinks (non-alcoholic),4.25
+2025-08-01,Zizzi,Coke Zero Small,51fd364f3771,Drinks (non-alcoholic),4.25
+2025-11-01,Zizzi,Coke Zero Small,51fd364f3771,Drinks (non-alcoholic),4.25
+2026-04-01,Zizzi,Coke Zero Small,51fd364f3771,Drinks (non-alcoholic),4.25
+2026-07-08,Zizzi,Coke Zero Small,51fd364f3771,Drinks (non-alcoholic),4.25
+2025-11-01,Zizzi,Diet Coke Large,fb4d5fae67ad,Drinks (non-alcoholic),6.25
+2026-04-01,Zizzi,Diet Coke Large,fb4d5fae67ad,Drinks (non-alcoholic),6.25
+2026-07-08,Zizzi,Diet Coke Large,fb4d5fae67ad,Drinks (non-alcoholic),6.25
+2025-03-01,Zizzi,Diet Coke Small,c544b9b196a6,Drinks (non-alcoholic),4.25
+2025-05-01,Zizzi,Diet Coke Small,c544b9b196a6,Drinks (non-alcoholic),4.25
+2025-08-01,Zizzi,Diet Coke Small,c544b9b196a6,Drinks (non-alcoholic),4.25
+2025-11-01,Zizzi,Diet Coke Small,c544b9b196a6,Drinks (non-alcoholic),4.25
+2026-04-01,Zizzi,Diet Coke Small,c544b9b196a6,Drinks (non-alcoholic),4.25
+2026-07-08,Zizzi,Diet Coke Small,c544b9b196a6,Drinks (non-alcoholic),4.25
+2025-03-01,Zizzi,Double Espresso,55ac9f76f266,Drinks (non-alcoholic),3.55
+2025-05-01,Zizzi,Double Espresso,55ac9f76f266,Drinks (non-alcoholic),3.55
+2025-08-01,Zizzi,Double Espresso,55ac9f76f266,Drinks (non-alcoholic),3.55
+2025-11-01,Zizzi,Double Espresso,55ac9f76f266,Drinks (non-alcoholic),3.55
+2026-04-01,Zizzi,Double Espresso,55ac9f76f266,Drinks (non-alcoholic),3.55
+2026-07-08,Zizzi,Double Espresso,55ac9f76f266,Drinks (non-alcoholic),3.55
+2025-03-01,Zizzi,Earl Grey,68e19c1042b2,Drinks (non-alcoholic),3.55
+2025-05-01,Zizzi,Earl Grey,68e19c1042b2,Drinks (non-alcoholic),3.55
+2025-08-01,Zizzi,Earl Grey,68e19c1042b2,Drinks (non-alcoholic),3.55
+2025-11-01,Zizzi,Earl Grey,68e19c1042b2,Drinks (non-alcoholic),3.55
+2026-04-01,Zizzi,Earl Grey,68e19c1042b2,Drinks (non-alcoholic),3.55
+2026-07-08,Zizzi,Earl Grey,68e19c1042b2,Drinks (non-alcoholic),3.55
+2025-03-01,Zizzi,English Breakfast,5fabcc0592ea,Drinks (non-alcoholic),3.55
+2025-05-01,Zizzi,English Breakfast,5fabcc0592ea,Drinks (non-alcoholic),3.55
+2025-08-01,Zizzi,English Breakfast,5fabcc0592ea,Drinks (non-alcoholic),3.55
+2025-11-01,Zizzi,English Breakfast,5fabcc0592ea,Drinks (non-alcoholic),3.55
+2026-04-01,Zizzi,English Breakfast,5fabcc0592ea,Drinks (non-alcoholic),3.55
+2026-07-08,Zizzi,English Breakfast,5fabcc0592ea,Drinks (non-alcoholic),3.55
+2025-03-01,Zizzi,Flat White,932fccf20029,Drinks (non-alcoholic),3.75
+2025-05-01,Zizzi,Flat White,932fccf20029,Drinks (non-alcoholic),3.75
+2025-08-01,Zizzi,Flat White,932fccf20029,Drinks (non-alcoholic),3.75
+2025-11-01,Zizzi,Flat White,932fccf20029,Drinks (non-alcoholic),3.75
+2026-04-01,Zizzi,Flat White,932fccf20029,Drinks (non-alcoholic),3.75
+2026-07-08,Zizzi,Flat White,932fccf20029,Drinks (non-alcoholic),3.75
+2026-07-08,Zizzi,Flawsome Apple & Blackcurrant,5c9626cd1c08,Drinks (non-alcoholic),2.5
+2026-07-08,Zizzi,Flawsome Sweet Apple,5ebba97223c7,Drinks (non-alcoholic),2.5
+2025-03-01,Zizzi,Fresh Mint Tea,52b17944056b,Drinks (non-alcoholic),3.35
+2025-05-01,Zizzi,Fresh Mint Tea,52b17944056b,Drinks (non-alcoholic),3.35
+2025-08-01,Zizzi,Fresh Mint Tea,52b17944056b,Drinks (non-alcoholic),3.35
+2025-11-01,Zizzi,Fresh Mint Tea,52b17944056b,Drinks (non-alcoholic),3.35
+2026-04-01,Zizzi,Fresh Mint Tea,52b17944056b,Drinks (non-alcoholic),3.55
+2026-07-08,Zizzi,Fresh Mint Tea,52b17944056b,Drinks (non-alcoholic),3.35
+2024-02-01,Zizzi,Ginger Ale,096c41594481,Drinks (non-alcoholic),2.8
+2025-03-01,Zizzi,Ginger Ale,096c41594481,Drinks (non-alcoholic),2.8
+2026-04-01,Zizzi,Ginger Ale,096c41594481,Drinks (non-alcoholic),2.8
+2026-07-08,Zizzi,Ginger Ale,096c41594481,Drinks (non-alcoholic),2.8
+2025-11-01,Zizzi,Hip Pop Kombucha Blueberry & Ginger,85b04702d7b3,Drinks (non-alcoholic),4.45
+2026-04-01,Zizzi,Hip Pop Kombucha Blueberry & Ginger,85b04702d7b3,Drinks (non-alcoholic),4.45
+2026-07-08,Zizzi,Hip Pop Kombucha Blueberry & Ginger,85b04702d7b3,Drinks (non-alcoholic),4.45
+2025-08-01,Zizzi,Hip Pop Strawberry & Pineapple,2554e4c4887c,Drinks (non-alcoholic),4.25
+2025-11-01,Zizzi,Hip Pop Strawberry & Pineapple,2554e4c4887c,Drinks (non-alcoholic),4.45
+2026-04-01,Zizzi,Hip Pop Strawberry & Pineapple,2554e4c4887c,Drinks (non-alcoholic),4.45
+2026-07-08,Zizzi,Hip Pop Strawberry & Pineapple,2554e4c4887c,Drinks (non-alcoholic),4.45
+2025-03-01,Zizzi,Hot Chocolate,d755ed631ab1,Drinks (non-alcoholic),3.95
+2025-05-01,Zizzi,Hot Chocolate,d755ed631ab1,Drinks (non-alcoholic),3.95
+2025-08-01,Zizzi,Hot Chocolate,d755ed631ab1,Drinks (non-alcoholic),3.95
+2026-04-01,Zizzi,Hot Chocolate,d755ed631ab1,Drinks (non-alcoholic),4.25
+2026-07-08,Zizzi,Hot Chocolate,d755ed631ab1,Drinks (non-alcoholic),4.25
+2025-11-01,Zizzi,Hot Cioccolata,16e3aa93234e,Drinks (non-alcoholic),7.25
+2026-04-01,Zizzi,Hot Cioccolata,16e3aa93234e,Drinks (non-alcoholic),7.25
+2026-07-08,Zizzi,Hot Cioccolata,16e3aa93234e,Drinks (non-alcoholic),7.25
+2026-04-01,Zizzi,Ice Americano,86889ab4114c,Drinks (non-alcoholic),3.95
+2026-07-08,Zizzi,Ice Americano,86889ab4114c,Drinks (non-alcoholic),3.95
+2026-07-08,Zizzi,Iced Latte,2e2916ecf112,Drinks (non-alcoholic),4.25
+2026-07-08,Zizzi,Kids Apple Juice,04de82c8ab4f,Drinks (non-alcoholic),2.5
+2026-07-08,Zizzi,Kids Milk,2d60797470a5,Drinks (non-alcoholic),1.0
+2026-07-08,Zizzi,Kids Oat Milk,fc542696adc5,Drinks (non-alcoholic),1.0
+2026-07-08,Zizzi,Kids Orange Juice,37c11ed155f3,Drinks (non-alcoholic),2.5
+2025-03-01,Zizzi,Latte,7f065548f1f5,Drinks (non-alcoholic),3.75
+2025-05-01,Zizzi,Latte,7f065548f1f5,Drinks (non-alcoholic),3.75
+2025-08-01,Zizzi,Latte,7f065548f1f5,Drinks (non-alcoholic),3.75
+2025-11-01,Zizzi,Latte,7f065548f1f5,Drinks (non-alcoholic),3.75
+2026-04-01,Zizzi,Latte,7f065548f1f5,Drinks (non-alcoholic),3.75
+2026-07-08,Zizzi,Latte,7f065548f1f5,Drinks (non-alcoholic),3.75
+2025-03-01,Zizzi,Macchiato,f9ba243930dc,Drinks (non-alcoholic),3.65
+2025-05-01,Zizzi,Macchiato,f9ba243930dc,Drinks (non-alcoholic),3.65
+2025-08-01,Zizzi,Macchiato,f9ba243930dc,Drinks (non-alcoholic),3.65
+2025-11-01,Zizzi,Macchiato,f9ba243930dc,Drinks (non-alcoholic),3.65
+2026-04-01,Zizzi,Macchiato,f9ba243930dc,Drinks (non-alcoholic),3.65
+2026-07-08,Zizzi,Macchiato,f9ba243930dc,Drinks (non-alcoholic),3.65
+2026-04-01,Zizzi,Mango & Lime Cooler,a58dbf728c3b,Drinks (non-alcoholic),5.75
+2026-07-08,Zizzi,Mango & Lime Cooler,a58dbf728c3b,Drinks (non-alcoholic),5.75
+2025-03-01,Zizzi,Mocha,e70e4382ca96,Drinks (non-alcoholic),3.75
+2025-05-01,Zizzi,Mocha,e70e4382ca96,Drinks (non-alcoholic),3.75
+2025-08-01,Zizzi,Mocha,e70e4382ca96,Drinks (non-alcoholic),3.75
+2025-11-01,Zizzi,Mocha,e70e4382ca96,Drinks (non-alcoholic),3.75
+2026-04-01,Zizzi,Mocha,e70e4382ca96,Drinks (non-alcoholic),3.75
+2026-07-08,Zizzi,Mocha,e70e4382ca96,Drinks (non-alcoholic),3.75
+2025-03-01,Zizzi,Morello Cherry Refresher,1b531a0ae2bf,Drinks (non-alcoholic),5.75
+2025-05-01,Zizzi,Morello Cherry Refresher,1b531a0ae2bf,Drinks (non-alcoholic),5.95
+2025-08-01,Zizzi,Morello Cherry Refresher,1b531a0ae2bf,Drinks (non-alcoholic),5.95
+2025-11-01,Zizzi,Morello Cherry Refresher,1b531a0ae2bf,Drinks (non-alcoholic),5.95
+2026-04-01,Zizzi,Morello Cherry Refresher,1b531a0ae2bf,Drinks (non-alcoholic),5.95
+2026-07-08,Zizzi,Morello Cherry Refresher,1b531a0ae2bf,Drinks (non-alcoholic),5.95
+2025-11-01,Zizzi,Oat Americano,3179f45e8dc3,Drinks (non-alcoholic),3.75
+2026-04-01,Zizzi,Oat Americano,3179f45e8dc3,Drinks (non-alcoholic),3.75
+2026-07-08,Zizzi,Oat Americano,3179f45e8dc3,Drinks (non-alcoholic),3.75
+2025-11-01,Zizzi,Oat Cappuccino,3d3f0ac6be25,Drinks (non-alcoholic),3.85
+2026-04-01,Zizzi,Oat Cappuccino,3d3f0ac6be25,Drinks (non-alcoholic),3.85
+2026-07-08,Zizzi,Oat Cappuccino,3d3f0ac6be25,Drinks (non-alcoholic),3.85
+2025-11-01,Zizzi,Oat Flat White,9053ba2a5de0,Drinks (non-alcoholic),3.85
+2026-04-01,Zizzi,Oat Flat White,9053ba2a5de0,Drinks (non-alcoholic),3.85
+2026-07-08,Zizzi,Oat Flat White,9053ba2a5de0,Drinks (non-alcoholic),3.85
+2025-11-01,Zizzi,Oat Latte,ee0d08a6edee,Drinks (non-alcoholic),3.85
+2026-04-01,Zizzi,Oat Latte,ee0d08a6edee,Drinks (non-alcoholic),3.85
+2026-07-08,Zizzi,Oat Latte,ee0d08a6edee,Drinks (non-alcoholic),3.85
+2025-11-01,Zizzi,Oat Macchiato,39e54cf7b952,Drinks (non-alcoholic),3.75
+2026-04-01,Zizzi,Oat Macchiato,39e54cf7b952,Drinks (non-alcoholic),3.75
+2026-07-08,Zizzi,Oat Macchiato,39e54cf7b952,Drinks (non-alcoholic),3.75
+2025-11-01,Zizzi,Oat Mocha,e7ed4d48a220,Drinks (non-alcoholic),3.85
+2026-04-01,Zizzi,Oat Mocha,e7ed4d48a220,Drinks (non-alcoholic),3.85
+2026-07-08,Zizzi,Oat Mocha,e7ed4d48a220,Drinks (non-alcoholic),3.85
+2025-03-01,Zizzi,Orange Juice,e71faa4f5ae6,Drinks (non-alcoholic),4.25
+2025-05-01,Zizzi,Orange Juice,e71faa4f5ae6,Drinks (non-alcoholic),4.25
+2025-08-01,Zizzi,Orange Juice,e71faa4f5ae6,Drinks (non-alcoholic),4.25
+2025-11-01,Zizzi,Orange Juice,e71faa4f5ae6,Drinks (non-alcoholic),4.25
+2026-04-01,Zizzi,Orange Juice,e71faa4f5ae6,Drinks (non-alcoholic),4.25
+2026-07-08,Zizzi,Orange Juice,e71faa4f5ae6,Drinks (non-alcoholic),4.25
+2026-07-08,Zizzi,Orange Squash,cc6d8a8629e0,Drinks (non-alcoholic),1.0
+2025-03-01,Zizzi,Original Tonic,b4a83e8d1f7d,Drinks (non-alcoholic),2.8
+2025-05-01,Zizzi,Original Tonic,b4a83e8d1f7d,Drinks (non-alcoholic),2.5
+2025-08-01,Zizzi,Original Tonic,b4a83e8d1f7d,Drinks (non-alcoholic),2.8
+2026-04-01,Zizzi,Original Tonic,b4a83e8d1f7d,Drinks (non-alcoholic),2.8
+2026-07-08,Zizzi,Original Tonic,b4a83e8d1f7d,Drinks (non-alcoholic),2.8
+2024-02-01,Zizzi,Passion Fruit Sparkler,5dc5184c63e6,Drinks (non-alcoholic),5.75
+2025-03-01,Zizzi,Passion Fruit Sparkler,5dc5184c63e6,Drinks (non-alcoholic),5.75
+2025-05-01,Zizzi,Passion Fruit Sparkler,5dc5184c63e6,Drinks (non-alcoholic),5.95
+2025-08-01,Zizzi,Passion Fruit Sparkler,5dc5184c63e6,Drinks (non-alcoholic),5.95
+2025-11-01,Zizzi,Passion Fruit Sparkler,5dc5184c63e6,Drinks (non-alcoholic),5.95
+2026-04-01,Zizzi,Passion Fruit Sparkler,5dc5184c63e6,Drinks (non-alcoholic),5.95
+2026-07-08,Zizzi,Passion Fruit Sparkler,5dc5184c63e6,Drinks (non-alcoholic),5.95
+2025-03-01,Zizzi,Peppermint,164273b706f3,Drinks (non-alcoholic),3.55
+2025-05-01,Zizzi,Peppermint,164273b706f3,Drinks (non-alcoholic),3.55
+2025-08-01,Zizzi,Peppermint,164273b706f3,Drinks (non-alcoholic),3.55
+2025-11-01,Zizzi,Peppermint,164273b706f3,Drinks (non-alcoholic),3.55
+2026-04-01,Zizzi,Peppermint,164273b706f3,Drinks (non-alcoholic),2.55
+2026-07-08,Zizzi,Peppermint,164273b706f3,Drinks (non-alcoholic),3.55
+2025-03-01,Zizzi,Peroni 0.0%,aacf13590c5d,Drinks (non-alcoholic),5.25
+2025-05-01,Zizzi,Peroni 0.0%,aacf13590c5d,Drinks (non-alcoholic),5.25
+2025-08-01,Zizzi,Peroni 0.0%,aacf13590c5d,Drinks (non-alcoholic),5.25
+2025-11-01,Zizzi,Peroni 0.0%,aacf13590c5d,Drinks (non-alcoholic),5.25
+2026-04-01,Zizzi,Peroni 0.0%,aacf13590c5d,Drinks (non-alcoholic),5.45
+2026-07-08,Zizzi,Peroni 0.0%,aacf13590c5d,Drinks (non-alcoholic),5.45
+2025-03-01,Zizzi,Pineapple and Citrus Refresher,b4afc033ba8e,Drinks (non-alcoholic),5.75
+2025-05-01,Zizzi,Pineapple and Citrus Refresher,b4afc033ba8e,Drinks (non-alcoholic),5.95
+2025-08-01,Zizzi,Pineapple and Citrus Refresher,b4afc033ba8e,Drinks (non-alcoholic),5.95
+2025-11-01,Zizzi,Pineapple and Citrus Refresher,b4afc033ba8e,Drinks (non-alcoholic),5.95
+2026-04-01,Zizzi,Pineapple and Citrus Refresher,b4afc033ba8e,Drinks (non-alcoholic),5.95
+2026-07-08,Zizzi,Pineapple and Citrus Refresher,b4afc033ba8e,Drinks (non-alcoholic),5.95
+2024-02-01,Zizzi,Pink Grapefruit Soda,fac941f6e425,Drinks (non-alcoholic),2.8
+2026-04-01,Zizzi,Pink Grapefruit Soda,fac941f6e425,Drinks (non-alcoholic),2.8
+2026-07-08,Zizzi,Pink Grapefruit Soda,fac941f6e425,Drinks (non-alcoholic),2.8
+2025-03-01,Zizzi,Pure Green,ec18ec9ae7f7,Drinks (non-alcoholic),3.55
+2025-05-01,Zizzi,Pure Green,ec18ec9ae7f7,Drinks (non-alcoholic),3.55
+2025-08-01,Zizzi,Pure Green,ec18ec9ae7f7,Drinks (non-alcoholic),3.55
+2025-11-01,Zizzi,Pure Green,ec18ec9ae7f7,Drinks (non-alcoholic),3.55
+2026-04-01,Zizzi,Pure Green,ec18ec9ae7f7,Drinks (non-alcoholic),3.55
+2026-07-08,Zizzi,Pure Green,ec18ec9ae7f7,Drinks (non-alcoholic),3.55
+2024-02-01,Zizzi,Raspberry & Mint Cooler,bfb016836be9,Drinks (non-alcoholic),5.54
+2025-03-01,Zizzi,Raspberry & Mint Cooler,bfb016836be9,Drinks (non-alcoholic),5.75
+2025-05-01,Zizzi,Raspberry & Mint Cooler,bfb016836be9,Drinks (non-alcoholic),5.95
+2025-08-01,Zizzi,Raspberry & Mint Cooler,bfb016836be9,Drinks (non-alcoholic),5.95
+2025-11-01,Zizzi,Raspberry & Mint Cooler,bfb016836be9,Drinks (non-alcoholic),5.95
+2026-04-01,Zizzi,Raspberry & Mint Cooler,bfb016836be9,Drinks (non-alcoholic),5.95
+2026-07-08,Zizzi,Raspberry & Mint Cooler,bfb016836be9,Drinks (non-alcoholic),5.95
+2025-11-01,Zizzi,Raspberry & Rose Lemonade,44306f181cdb,Drinks (non-alcoholic),5.95
+2026-04-01,Zizzi,Raspberry & Rose Lemonade,44306f181cdb,Drinks (non-alcoholic),6.25
+2026-07-08,Zizzi,Raspberry & Rose Lemonade,44306f181cdb,Drinks (non-alcoholic),6.25
+2026-04-01,Zizzi,Raspberry & Rose Soda,9ced75c0962d,Drinks (non-alcoholic),2.8
+2026-07-08,Zizzi,Raspberry & Rose Soda,9ced75c0962d,Drinks (non-alcoholic),2.8
+2025-03-01,Zizzi,Roasted Pineapple Soda,9f7447639a37,Drinks (non-alcoholic),2.8
+2026-04-01,Zizzi,Roasted Pineapple Soda,9f7447639a37,Drinks (non-alcoholic),2.8
+2026-07-08,Zizzi,Roasted Pineapple Soda,9f7447639a37,Drinks (non-alcoholic),2.8
+2025-03-01,Zizzi,San Pellegrino Blood Orange,fc2db5becf5e,Drinks (non-alcoholic),4.25
+2025-05-01,Zizzi,San Pellegrino Blood Orange,fc2db5becf5e,Drinks (non-alcoholic),4.25
+2025-08-01,Zizzi,San Pellegrino Blood Orange,fc2db5becf5e,Drinks (non-alcoholic),4.25
+2025-11-01,Zizzi,San Pellegrino Blood Orange,fc2db5becf5e,Drinks (non-alcoholic),4.25
+2026-04-01,Zizzi,San Pellegrino Blood Orange,fc2db5becf5e,Drinks (non-alcoholic),4.25
+2026-07-08,Zizzi,San Pellegrino Blood Orange,fc2db5becf5e,Drinks (non-alcoholic),4.25
+2025-03-01,Zizzi,San Pellegrino Lemon,9470d193f1f5,Drinks (non-alcoholic),4.25
+2025-05-01,Zizzi,San Pellegrino Lemon,9470d193f1f5,Drinks (non-alcoholic),4.25
+2025-08-01,Zizzi,San Pellegrino Lemon,9470d193f1f5,Drinks (non-alcoholic),4.25
+2025-11-01,Zizzi,San Pellegrino Lemon,9470d193f1f5,Drinks (non-alcoholic),4.25
+2026-04-01,Zizzi,San Pellegrino Lemon,9470d193f1f5,Drinks (non-alcoholic),4.25
+2026-07-08,Zizzi,San Pellegrino Lemon,9470d193f1f5,Drinks (non-alcoholic),4.25
+2025-05-01,Zizzi,Sicilian Still Lemonade,458bea075f43,Drinks (non-alcoholic),4.25
+2025-08-01,Zizzi,Sicilian Still Lemonade,458bea075f43,Drinks (non-alcoholic),4.25
+2025-11-01,Zizzi,Sicilian Still Lemonade,458bea075f43,Drinks (non-alcoholic),4.25
+2026-04-01,Zizzi,Sicilian Still Lemonade,458bea075f43,Drinks (non-alcoholic),4.25
+2026-07-08,Zizzi,Sicilian Still Lemonade,458bea075f43,Drinks (non-alcoholic),4.25
+2025-03-01,Zizzi,Single Espresso,82853e15adc3,Drinks (non-alcoholic),3.45
+2025-05-01,Zizzi,Single Espresso,82853e15adc3,Drinks (non-alcoholic),3.45
+2025-08-01,Zizzi,Single Espresso,82853e15adc3,Drinks (non-alcoholic),3.45
+2025-11-01,Zizzi,Single Espresso,82853e15adc3,Drinks (non-alcoholic),3.45
+2026-04-01,Zizzi,Single Espresso,82853e15adc3,Drinks (non-alcoholic),3.45
+2026-07-08,Zizzi,Single Espresso,82853e15adc3,Drinks (non-alcoholic),3.45
+2025-11-01,Zizzi,Sprite Zero Large,d9e4cb0f8b2c,Drinks (non-alcoholic),6.25
+2026-04-01,Zizzi,Sprite Zero Large,d9e4cb0f8b2c,Drinks (non-alcoholic),6.25
+2026-07-08,Zizzi,Sprite Zero Large,d9e4cb0f8b2c,Drinks (non-alcoholic),6.25
+2025-03-01,Zizzi,Sprite Zero Small,2ff30e81e5b4,Drinks (non-alcoholic),4.25
+2025-05-01,Zizzi,Sprite Zero Small,2ff30e81e5b4,Drinks (non-alcoholic),4.25
+2025-08-01,Zizzi,Sprite Zero Small,2ff30e81e5b4,Drinks (non-alcoholic),4.25
+2025-11-01,Zizzi,Sprite Zero Small,2ff30e81e5b4,Drinks (non-alcoholic),4.25
+2026-04-01,Zizzi,Sprite Zero Small,2ff30e81e5b4,Drinks (non-alcoholic),4.25
+2026-07-08,Zizzi,Sprite Zero Small,2ff30e81e5b4,Drinks (non-alcoholic),4.25
+2026-07-08,Zizzi,Strawberry Sparkler,6727cff98c49,Drinks (non-alcoholic),5.95
+2025-11-01,Zizzi,Trip CBD Blend,19aed1d95203,Drinks (non-alcoholic),4.45
+2026-04-01,Zizzi,Trip CBD Blend,19aed1d95203,Drinks (non-alcoholic),4.45
+2026-07-08,Zizzi,Trip CBD Blend,19aed1d95203,Drinks (non-alcoholic),4.45
+2025-08-01,Zizzi,Trip Mindful Blend,a1fb87d42e55,Drinks (non-alcoholic),4.25
+2025-11-01,Zizzi,Trip Mindful Blend,a1fb87d42e55,Drinks (non-alcoholic),4.45
+2026-04-01,Zizzi,Trip Mindful Blend,a1fb87d42e55,Drinks (non-alcoholic),4.45
+2026-07-08,Zizzi,Trip Mindful Blend,a1fb87d42e55,Drinks (non-alcoholic),4.45
+2026-07-08,Zizzi,All Out Lasagne,bd08eabfc0a1,Mains,21.25
+2026-07-08,Zizzi,Aubergine Parmigiana,85611354f734,Mains,17.95
 2022-02-01,Zizzi,Bolognese Classico,95857886bbc6,Mains,10.75
 2022-08-01,Zizzi,Bolognese Classico,95857886bbc6,Mains,11.75
 2022-10-01,Zizzi,Bolognese Classico,95857886bbc6,Mains,11.95
@@ -4768,52 +5072,17 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Zizzi,Classico Pepperoni Campagna,fd811a109735,Mains,16.25
 2026-04-01,Zizzi,Classico Pepperoni Campagna,fd811a109735,Mains,16.75
 2026-07-08,Zizzi,Classico Pepperoni Campagna,fd811a109735,Mains,16.75
-2025-11-01,Zizzi,Coke Large,fc28953898ad,Drinks (non-alcoholic),6.25
-2026-04-01,Zizzi,Coke Large,fc28953898ad,Drinks (non-alcoholic),6.25
-2026-07-08,Zizzi,Coke Large,fc28953898ad,Drinks (non-alcoholic),6.25
-2025-03-01,Zizzi,Coke Small,7a77e9f0f3af,Drinks (non-alcoholic),4.25
-2025-05-01,Zizzi,Coke Small,7a77e9f0f3af,Drinks (non-alcoholic),4.25
-2025-08-01,Zizzi,Coke Small,7a77e9f0f3af,Drinks (non-alcoholic),4.25
-2025-11-01,Zizzi,Coke Small,7a77e9f0f3af,Drinks (non-alcoholic),4.25
-2026-04-01,Zizzi,Coke Small,7a77e9f0f3af,Drinks (non-alcoholic),4.25
-2026-07-08,Zizzi,Coke Small,7a77e9f0f3af,Drinks (non-alcoholic),4.25
-2025-11-01,Zizzi,Coke Zero Large,8e83a9184ace,Drinks (non-alcoholic),6.25
-2026-04-01,Zizzi,Coke Zero Large,8e83a9184ace,Drinks (non-alcoholic),6.25
-2026-07-08,Zizzi,Coke Zero Large,8e83a9184ace,Drinks (non-alcoholic),6.25
-2025-03-01,Zizzi,Coke Zero Small,51fd364f3771,Drinks (non-alcoholic),4.25
-2025-05-01,Zizzi,Coke Zero Small,51fd364f3771,Drinks (non-alcoholic),4.25
-2025-08-01,Zizzi,Coke Zero Small,51fd364f3771,Drinks (non-alcoholic),4.25
-2025-11-01,Zizzi,Coke Zero Small,51fd364f3771,Drinks (non-alcoholic),4.25
-2026-04-01,Zizzi,Coke Zero Small,51fd364f3771,Drinks (non-alcoholic),4.25
-2026-07-08,Zizzi,Coke Zero Small,51fd364f3771,Drinks (non-alcoholic),4.25
-2025-11-01,Zizzi,Diet Coke Large,fb4d5fae67ad,Drinks (non-alcoholic),6.25
-2026-04-01,Zizzi,Diet Coke Large,fb4d5fae67ad,Drinks (non-alcoholic),6.25
-2026-07-08,Zizzi,Diet Coke Large,fb4d5fae67ad,Drinks (non-alcoholic),6.25
-2025-03-01,Zizzi,Diet Coke Small,c544b9b196a6,Drinks (non-alcoholic),4.25
-2025-05-01,Zizzi,Diet Coke Small,c544b9b196a6,Drinks (non-alcoholic),4.25
-2025-08-01,Zizzi,Diet Coke Small,c544b9b196a6,Drinks (non-alcoholic),4.25
-2025-11-01,Zizzi,Diet Coke Small,c544b9b196a6,Drinks (non-alcoholic),4.25
-2026-04-01,Zizzi,Diet Coke Small,c544b9b196a6,Drinks (non-alcoholic),4.25
-2026-07-08,Zizzi,Diet Coke Small,c544b9b196a6,Drinks (non-alcoholic),4.25
 2025-03-01,Zizzi,Favourites Board,4b6c6e0c07f0,Mains,19.45
 2025-05-01,Zizzi,Favourites Board,4b6c6e0c07f0,Mains,19.45
 2025-08-01,Zizzi,Favourites Board,4b6c6e0c07f0,Mains,19.45
 2026-04-01,Zizzi,Favourites Board,4b6c6e0c07f0,Mains,19.75
 2026-07-08,Zizzi,Favourites Board,4b6c6e0c07f0,Mains,19.75
-2025-11-01,Zizzi,Fiorente Elderflower Liqueur 25ml,31caf4385498,Drinks (alcoholic),4.0
-2026-04-01,Zizzi,Fiorente Elderflower Liqueur 25ml,31caf4385498,Drinks (alcoholic),4.0
-2026-07-08,Zizzi,Fiorente Elderflower Liqueur 25ml,31caf4385498,Drinks (alcoholic),4.0
-2025-11-01,Zizzi,Fiorente Elderflower Liqueur 50ml,e260a589ef6d,Drinks (alcoholic),7.0
-2026-04-01,Zizzi,Fiorente Elderflower Liqueur 50ml,e260a589ef6d,Drinks (alcoholic),7.0
-2026-07-08,Zizzi,Fiorente Elderflower Liqueur 50ml,e260a589ef6d,Drinks (alcoholic),7.0
 2025-03-01,Zizzi,Fonduta Board,1b4af6016728,Mains,19.45
 2025-05-01,Zizzi,Fonduta Board,1b4af6016728,Mains,19.45
 2025-08-01,Zizzi,Fonduta Board,1b4af6016728,Mains,19.45
 2025-11-01,Zizzi,Fonduta Board,1b4af6016728,Mains,19.45
 2026-04-01,Zizzi,Fonduta Board,1b4af6016728,Mains,19.75
 2026-07-08,Zizzi,Fonduta Board,1b4af6016728,Mains,19.75
-2026-07-08,Zizzi,Frangelico 25ML,d1a64849588a,Drinks (alcoholic),4.0
-2026-07-08,Zizzi,Frangelico 50ML,db7d64381bc8,Drinks (alcoholic),7.0
 2023-05-01,Zizzi,Funghi Risotto,124c04d6fe9f,Mains,13.95
 2023-09-01,Zizzi,Funghi Risotto,124c04d6fe9f,Mains,14.25
 2023-10-01,Zizzi,Funghi Risotto,124c04d6fe9f,Mains,15.0
@@ -4824,10 +5093,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Zizzi,Funghi Risotto,124c04d6fe9f,Mains,16.95
 2026-04-01,Zizzi,Funghi Risotto,124c04d6fe9f,Mains,17.45
 2026-07-08,Zizzi,Funghi Risotto,124c04d6fe9f,Mains,17.45
-2024-02-01,Zizzi,Ginger Ale,096c41594481,Drinks (non-alcoholic),2.8
-2025-03-01,Zizzi,Ginger Ale,096c41594481,Drinks (non-alcoholic),2.8
-2026-04-01,Zizzi,Ginger Ale,096c41594481,Drinks (non-alcoholic),2.8
-2026-07-08,Zizzi,Ginger Ale,096c41594481,Drinks (non-alcoholic),2.8
 2023-10-01,Zizzi,Grande Antipasto,f7ec7c65258a,Mains,17.5
 2024-02-01,Zizzi,Grande Antipasto,f7ec7c65258a,Mains,18.5
 2025-03-01,Zizzi,Grande Antipasto,f7ec7c65258a,Mains,19.45
@@ -4836,53 +5101,9 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Zizzi,Grande Antipasto,f7ec7c65258a,Mains,19.45
 2026-04-01,Zizzi,Grande Antipasto,f7ec7c65258a,Mains,19.75
 2026-07-08,Zizzi,Grande Antipasto,f7ec7c65258a,Mains,19.75
-2025-11-01,Zizzi,Hip Pop Kombucha Blueberry & Ginger,85b04702d7b3,Drinks (non-alcoholic),4.45
-2026-04-01,Zizzi,Hip Pop Kombucha Blueberry & Ginger,85b04702d7b3,Drinks (non-alcoholic),4.45
-2026-07-08,Zizzi,Hip Pop Kombucha Blueberry & Ginger,85b04702d7b3,Drinks (non-alcoholic),4.45
-2025-08-01,Zizzi,Hip Pop Strawberry & Pineapple,2554e4c4887c,Drinks (non-alcoholic),4.25
-2025-11-01,Zizzi,Hip Pop Strawberry & Pineapple,2554e4c4887c,Drinks (non-alcoholic),4.45
-2026-04-01,Zizzi,Hip Pop Strawberry & Pineapple,2554e4c4887c,Drinks (non-alcoholic),4.45
-2026-07-08,Zizzi,Hip Pop Strawberry & Pineapple,2554e4c4887c,Drinks (non-alcoholic),4.45
-2025-11-01,Zizzi,Hot Cioccolata,16e3aa93234e,Drinks (non-alcoholic),7.25
-2026-04-01,Zizzi,Hot Cioccolata,16e3aa93234e,Drinks (non-alcoholic),7.25
-2026-07-08,Zizzi,Hot Cioccolata,16e3aa93234e,Drinks (non-alcoholic),7.25
 2025-11-01,Zizzi,Hot Honey Glazed Duck,483eb927f35b,Mains,20.25
 2026-04-01,Zizzi,Hot Honey Glazed Duck,483eb927f35b,Mains,21.25
 2026-07-08,Zizzi,Hot Honey Glazed Duck,483eb927f35b,Mains,21.25
-2025-03-01,Zizzi,House Prosecco 125ml,a67615687abe,Drinks (alcoholic),7.25
-2025-05-01,Zizzi,House Prosecco 125ml,a67615687abe,Drinks (alcoholic),7.25
-2026-04-01,Zizzi,House Prosecco 125ml,a67615687abe,Drinks (alcoholic),7.45
-2026-07-08,Zizzi,House Prosecco 125ml,a67615687abe,Drinks (alcoholic),7.45
-2026-07-08,Zizzi,House Prosecco Bottle,c8f284550b21,Drinks (alcoholic),28.95
-2026-07-08,Zizzi,House Prosecco Magnum Bottle,d53e480dd06d,Drinks (alcoholic),55.95
-2025-11-01,Zizzi,Jack Daniels 25ML,7d6b0d084d30,Drinks (alcoholic),4.0
-2026-04-01,Zizzi,Jack Daniels 25ML,7d6b0d084d30,Drinks (alcoholic),4.0
-2026-07-08,Zizzi,Jack Daniels 25ML,7d6b0d084d30,Drinks (alcoholic),4.0
-2025-03-01,Zizzi,Jack Daniels 50ML,0219f19d30d6,Drinks (alcoholic),7.0
-2025-05-01,Zizzi,Jack Daniels 50ML,0219f19d30d6,Drinks (alcoholic),7.0
-2025-08-01,Zizzi,Jack Daniels 50ML,0219f19d30d6,Drinks (alcoholic),6.6
-2025-11-01,Zizzi,Jack Daniels 50ML,0219f19d30d6,Drinks (alcoholic),7.0
-2026-04-01,Zizzi,Jack Daniels 50ML,0219f19d30d6,Drinks (alcoholic),7.0
-2026-07-08,Zizzi,Jack Daniels 50ML,0219f19d30d6,Drinks (alcoholic),7.0
-2025-11-01,Zizzi,Jamesons Irish Whiskey 25ml,d335d101be2e,Drinks (alcoholic),4.0
-2026-04-01,Zizzi,Jamesons Irish Whiskey 25ml,d335d101be2e,Drinks (alcoholic),4.0
-2026-07-08,Zizzi,Jamesons Irish Whiskey 25ml,d335d101be2e,Drinks (alcoholic),4.0
-2025-03-01,Zizzi,Jamesons Irish Whiskey 50ml,f18bddf46097,Drinks (alcoholic),7.0
-2025-05-01,Zizzi,Jamesons Irish Whiskey 50ml,f18bddf46097,Drinks (alcoholic),7.0
-2025-08-01,Zizzi,Jamesons Irish Whiskey 50ml,f18bddf46097,Drinks (alcoholic),6.6
-2025-11-01,Zizzi,Jamesons Irish Whiskey 50ml,f18bddf46097,Drinks (alcoholic),7.0
-2026-04-01,Zizzi,Jamesons Irish Whiskey 50ml,f18bddf46097,Drinks (alcoholic),7.0
-2026-07-08,Zizzi,Jamesons Irish Whiskey 50ml,f18bddf46097,Drinks (alcoholic),7.0
-2025-11-01,Zizzi,Limoncello 25ML,84ec1a5b2180,Drinks (alcoholic),4.0
-2026-04-01,Zizzi,Limoncello 25ML,84ec1a5b2180,Drinks (alcoholic),4.0
-2026-07-08,Zizzi,Limoncello 25ML,84ec1a5b2180,Drinks (alcoholic),4.0
-2025-03-01,Zizzi,Limoncello 50ML,f547397ce55c,Drinks (alcoholic),7.0
-2025-05-01,Zizzi,Limoncello 50ML,f547397ce55c,Drinks (alcoholic),7.0
-2025-11-01,Zizzi,Limoncello 50ML,f547397ce55c,Drinks (alcoholic),7.0
-2026-04-01,Zizzi,Limoncello 50ML,f547397ce55c,Drinks (alcoholic),7.0
-2026-07-08,Zizzi,Limoncello 50ML,f547397ce55c,Drinks (alcoholic),7.0
-2026-04-01,Zizzi,Mango & Lime Cooler,a58dbf728c3b,Drinks (non-alcoholic),5.75
-2026-07-08,Zizzi,Mango & Lime Cooler,a58dbf728c3b,Drinks (non-alcoholic),5.75
 2026-07-08,Zizzi,Margherita,671136c0d538,Mains,16.75
 2025-11-01,Zizzi,Meatballs Alla Vodka,43f98e41a6e4,Mains,20.25
 2026-04-01,Zizzi,Meatballs Alla Vodka,43f98e41a6e4,Mains,21.45
@@ -4895,22 +5116,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Zizzi,Mediterranean Sea Bass,707200f4a3e3,Mains,20.25
 2026-04-01,Zizzi,Mediterranean Sea Bass,707200f4a3e3,Mains,20.95
 2026-07-08,Zizzi,Mediterranean Sea Bass,707200f4a3e3,Mains,20.95
-2026-07-08,Zizzi,Mocha Martini,a00fcdf9c06d,Drinks (alcoholic),12.45
-2025-03-01,Zizzi,Morello Cherry Refresher,1b531a0ae2bf,Drinks (non-alcoholic),5.75
-2025-05-01,Zizzi,Morello Cherry Refresher,1b531a0ae2bf,Drinks (non-alcoholic),5.95
-2025-08-01,Zizzi,Morello Cherry Refresher,1b531a0ae2bf,Drinks (non-alcoholic),5.95
-2025-11-01,Zizzi,Morello Cherry Refresher,1b531a0ae2bf,Drinks (non-alcoholic),5.95
-2026-04-01,Zizzi,Morello Cherry Refresher,1b531a0ae2bf,Drinks (non-alcoholic),5.95
-2026-07-08,Zizzi,Morello Cherry Refresher,1b531a0ae2bf,Drinks (non-alcoholic),5.95
-2025-11-01,Zizzi,Mr Black Coffee Liquor 25ml,1ca504f6469e,Drinks (alcoholic),4.0
-2026-04-01,Zizzi,Mr Black Coffee Liquor 25ml,1ca504f6469e,Drinks (alcoholic),4.0
-2026-07-08,Zizzi,Mr Black Coffee Liquor 25ml,1ca504f6469e,Drinks (alcoholic),4.0
-2024-02-01,Zizzi,Mr Black Coffee Liquor 50ml,01d59cdcbb8b,Drinks (alcoholic),7.0
-2025-03-01,Zizzi,Mr Black Coffee Liquor 50ml,01d59cdcbb8b,Drinks (alcoholic),7.0
-2025-05-01,Zizzi,Mr Black Coffee Liquor 50ml,01d59cdcbb8b,Drinks (alcoholic),7.0
-2025-11-01,Zizzi,Mr Black Coffee Liquor 50ml,01d59cdcbb8b,Drinks (alcoholic),7.0
-2026-04-01,Zizzi,Mr Black Coffee Liquor 50ml,01d59cdcbb8b,Drinks (alcoholic),7.0
-2026-07-08,Zizzi,Mr Black Coffee Liquor 50ml,01d59cdcbb8b,Drinks (alcoholic),7.0
 2026-07-08,Zizzi,Non-Gluten Aubergine Parmigiana,7794bb17c594,Mains,17.95
 2026-07-08,Zizzi,Non-Gluten Carne Sofia,582b85b4a719,Mains,19.75
 2026-07-08,Zizzi,Non-Gluten Chicken & Fiery Roquito,3431df2e28b1,Mains,19.75
@@ -4939,30 +5144,6 @@ date,source,item,dish_id,bucket,price
 2026-07-08,Zizzi,Non-Gluten Venison Pepperoni,63e377b75242,Mains,20.25
 2026-07-08,Zizzi,Non-gluten Pasta Chorizo Carbonara,ce4859f3643a,Mains,18.75
 2026-07-08,Zizzi,Non-gluten Pasta Lentil Ragu,5eaa3c0fc059,Mains,17.25
-2025-03-01,Zizzi,Orange Juice,e71faa4f5ae6,Drinks (non-alcoholic),4.25
-2025-05-01,Zizzi,Orange Juice,e71faa4f5ae6,Drinks (non-alcoholic),4.25
-2025-08-01,Zizzi,Orange Juice,e71faa4f5ae6,Drinks (non-alcoholic),4.25
-2025-11-01,Zizzi,Orange Juice,e71faa4f5ae6,Drinks (non-alcoholic),4.25
-2026-04-01,Zizzi,Orange Juice,e71faa4f5ae6,Drinks (non-alcoholic),4.25
-2026-07-08,Zizzi,Orange Juice,e71faa4f5ae6,Drinks (non-alcoholic),4.25
-2025-03-01,Zizzi,Original Tonic,b4a83e8d1f7d,Drinks (non-alcoholic),2.8
-2025-05-01,Zizzi,Original Tonic,b4a83e8d1f7d,Drinks (non-alcoholic),2.5
-2025-08-01,Zizzi,Original Tonic,b4a83e8d1f7d,Drinks (non-alcoholic),2.8
-2026-04-01,Zizzi,Original Tonic,b4a83e8d1f7d,Drinks (non-alcoholic),2.8
-2026-07-08,Zizzi,Original Tonic,b4a83e8d1f7d,Drinks (non-alcoholic),2.8
-2024-02-01,Zizzi,Passion Fruit Sparkler,5dc5184c63e6,Drinks (non-alcoholic),5.75
-2025-03-01,Zizzi,Passion Fruit Sparkler,5dc5184c63e6,Drinks (non-alcoholic),5.75
-2025-05-01,Zizzi,Passion Fruit Sparkler,5dc5184c63e6,Drinks (non-alcoholic),5.95
-2025-08-01,Zizzi,Passion Fruit Sparkler,5dc5184c63e6,Drinks (non-alcoholic),5.95
-2025-11-01,Zizzi,Passion Fruit Sparkler,5dc5184c63e6,Drinks (non-alcoholic),5.95
-2026-04-01,Zizzi,Passion Fruit Sparkler,5dc5184c63e6,Drinks (non-alcoholic),5.95
-2026-07-08,Zizzi,Passion Fruit Sparkler,5dc5184c63e6,Drinks (non-alcoholic),5.95
-2025-11-01,Zizzi,Peachello 25ml,2fe4f1f64f50,Drinks (alcoholic),4.0
-2026-04-01,Zizzi,Peachello 25ml,2fe4f1f64f50,Drinks (alcoholic),4.0
-2026-07-08,Zizzi,Peachello 25ml,2fe4f1f64f50,Drinks (alcoholic),4.0
-2025-11-01,Zizzi,Peachello 50ml,d45bfcdaa269,Drinks (alcoholic),7.0
-2026-04-01,Zizzi,Peachello 50ml,d45bfcdaa269,Drinks (alcoholic),7.0
-2026-07-08,Zizzi,Peachello 50ml,d45bfcdaa269,Drinks (alcoholic),7.0
 2026-07-08,Zizzi,Pepperoni Campagna,a73bfd71ff19,Mains,18.75
 2026-07-08,Zizzi,Pepperoni Premio,79829db10e64,Mains,18.75
 2022-02-01,Zizzi,Pesto Rosso,43d61eb7b015,Mains,11.5
@@ -4979,25 +5160,6 @@ date,source,item,dish_id,bucket,price
 2026-04-01,Zizzi,Pesto Rosso,43d61eb7b015,Mains,17.75
 2026-07-08,Zizzi,Pesto Rosso,43d61eb7b015,Mains,17.75
 2026-07-08,Zizzi,Piccante,9debf9ba0bbb,Mains,19.75
-2025-03-01,Zizzi,Pineapple and Citrus Refresher,b4afc033ba8e,Drinks (non-alcoholic),5.75
-2025-05-01,Zizzi,Pineapple and Citrus Refresher,b4afc033ba8e,Drinks (non-alcoholic),5.95
-2025-08-01,Zizzi,Pineapple and Citrus Refresher,b4afc033ba8e,Drinks (non-alcoholic),5.95
-2025-11-01,Zizzi,Pineapple and Citrus Refresher,b4afc033ba8e,Drinks (non-alcoholic),5.95
-2026-04-01,Zizzi,Pineapple and Citrus Refresher,b4afc033ba8e,Drinks (non-alcoholic),5.95
-2026-07-08,Zizzi,Pineapple and Citrus Refresher,b4afc033ba8e,Drinks (non-alcoholic),5.95
-2024-02-01,Zizzi,Pink Grapefruit Soda,fac941f6e425,Drinks (non-alcoholic),2.8
-2026-04-01,Zizzi,Pink Grapefruit Soda,fac941f6e425,Drinks (non-alcoholic),2.8
-2026-07-08,Zizzi,Pink Grapefruit Soda,fac941f6e425,Drinks (non-alcoholic),2.8
-2025-03-01,Zizzi,Pink Prosecco 125ml,496361d51190,Drinks (alcoholic),7.65
-2025-05-01,Zizzi,Pink Prosecco 125ml,496361d51190,Drinks (alcoholic),7.65
-2026-04-01,Zizzi,Pink Prosecco 125ml,496361d51190,Drinks (alcoholic),7.85
-2026-07-08,Zizzi,Pink Prosecco 125ml,496361d51190,Drinks (alcoholic),7.85
-2025-03-01,Zizzi,Pink Prosecco Bottle,0be8dfe3a29d,Drinks (alcoholic),29.25
-2025-05-01,Zizzi,Pink Prosecco Bottle,0be8dfe3a29d,Drinks (alcoholic),29.25
-2025-08-01,Zizzi,Pink Prosecco Bottle,0be8dfe3a29d,Drinks (alcoholic),29.95
-2025-11-01,Zizzi,Pink Prosecco Bottle,0be8dfe3a29d,Drinks (alcoholic),29.95
-2026-04-01,Zizzi,Pink Prosecco Bottle,0be8dfe3a29d,Drinks (alcoholic),29.95
-2026-07-08,Zizzi,Pink Prosecco Bottle,0be8dfe3a29d,Drinks (alcoholic),29.95
 2026-07-08,Zizzi,Pinoli,16382e99cae9,Mains,18.45
 2026-07-08,Zizzi,Pollo & Pesto,5e17831aa902,Mains,16.75
 2022-02-01,Zizzi,Pollo Calabrese,19ade48be663,Mains,14.25
@@ -5047,18 +5209,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Zizzi,Primavera,edb421e44b9c,Mains,17.95
 2026-07-08,Zizzi,Primavera,edb421e44b9c,Mains,18.75
 2026-07-08,Zizzi,Quattro Pomodoro,87d37bf1f17e,Mains,17.95
-2024-02-01,Zizzi,Raspberry & Mint Cooler,bfb016836be9,Drinks (non-alcoholic),5.54
-2025-03-01,Zizzi,Raspberry & Mint Cooler,bfb016836be9,Drinks (non-alcoholic),5.75
-2025-05-01,Zizzi,Raspberry & Mint Cooler,bfb016836be9,Drinks (non-alcoholic),5.95
-2025-08-01,Zizzi,Raspberry & Mint Cooler,bfb016836be9,Drinks (non-alcoholic),5.95
-2025-11-01,Zizzi,Raspberry & Mint Cooler,bfb016836be9,Drinks (non-alcoholic),5.95
-2026-04-01,Zizzi,Raspberry & Mint Cooler,bfb016836be9,Drinks (non-alcoholic),5.95
-2026-07-08,Zizzi,Raspberry & Mint Cooler,bfb016836be9,Drinks (non-alcoholic),5.95
-2025-11-01,Zizzi,Raspberry & Rose Lemonade,44306f181cdb,Drinks (non-alcoholic),5.95
-2026-04-01,Zizzi,Raspberry & Rose Lemonade,44306f181cdb,Drinks (non-alcoholic),6.25
-2026-07-08,Zizzi,Raspberry & Rose Lemonade,44306f181cdb,Drinks (non-alcoholic),6.25
-2026-04-01,Zizzi,Raspberry & Rose Soda,9ced75c0962d,Drinks (non-alcoholic),2.8
-2026-07-08,Zizzi,Raspberry & Rose Soda,9ced75c0962d,Drinks (non-alcoholic),2.8
 2022-02-01,Zizzi,Ravioli Di Capra,268b53559b58,Mains,10.7
 2022-08-01,Zizzi,Ravioli Di Capra,268b53559b58,Mains,11.95
 2022-10-01,Zizzi,Ravioli Di Capra,268b53559b58,Mains,12.95
@@ -5073,11 +5223,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Zizzi,Ravioli Di Capra,268b53559b58,Mains,17.75
 2026-04-01,Zizzi,Ravioli Di Capra,268b53559b58,Mains,18.45
 2026-07-08,Zizzi,Ravioli Di Capra,268b53559b58,Mains,18.45
-2026-07-08,Zizzi,Respirited Vodka 25ml,7c6620fad2f1,Drinks (alcoholic),6.0
-2026-07-08,Zizzi,Respirited Vodka 50ml,e74b1f529730,Drinks (alcoholic),9.0
-2025-03-01,Zizzi,Roasted Pineapple Soda,9f7447639a37,Drinks (non-alcoholic),2.8
-2026-04-01,Zizzi,Roasted Pineapple Soda,9f7447639a37,Drinks (non-alcoholic),2.8
-2026-07-08,Zizzi,Roasted Pineapple Soda,9f7447639a37,Drinks (non-alcoholic),2.8
 2023-05-01,Zizzi,Salmon & Pesto Risotto,9331594ab504,Mains,15.95
 2023-09-01,Zizzi,Salmon & Pesto Risotto,9331594ab504,Mains,16.25
 2023-10-01,Zizzi,Salmon & Pesto Risotto,9331594ab504,Mains,17.25
@@ -5089,64 +5234,12 @@ date,source,item,dish_id,bucket,price
 2026-04-01,Zizzi,Salmon & Pesto Risotto,9331594ab504,Mains,19.95
 2026-07-08,Zizzi,Salmon & Pesto Risotto,9331594ab504,Mains,19.95
 2026-07-08,Zizzi,Salmon & Tomato Caesar Salad,49875754a56f,Mains,17.75
-2025-03-01,Zizzi,San Pellegrino Blood Orange,fc2db5becf5e,Drinks (non-alcoholic),4.25
-2025-05-01,Zizzi,San Pellegrino Blood Orange,fc2db5becf5e,Drinks (non-alcoholic),4.25
-2025-08-01,Zizzi,San Pellegrino Blood Orange,fc2db5becf5e,Drinks (non-alcoholic),4.25
-2025-11-01,Zizzi,San Pellegrino Blood Orange,fc2db5becf5e,Drinks (non-alcoholic),4.25
-2026-04-01,Zizzi,San Pellegrino Blood Orange,fc2db5becf5e,Drinks (non-alcoholic),4.25
-2026-07-08,Zizzi,San Pellegrino Blood Orange,fc2db5becf5e,Drinks (non-alcoholic),4.25
-2025-03-01,Zizzi,San Pellegrino Lemon,9470d193f1f5,Drinks (non-alcoholic),4.25
-2025-05-01,Zizzi,San Pellegrino Lemon,9470d193f1f5,Drinks (non-alcoholic),4.25
-2025-08-01,Zizzi,San Pellegrino Lemon,9470d193f1f5,Drinks (non-alcoholic),4.25
-2025-11-01,Zizzi,San Pellegrino Lemon,9470d193f1f5,Drinks (non-alcoholic),4.25
-2026-04-01,Zizzi,San Pellegrino Lemon,9470d193f1f5,Drinks (non-alcoholic),4.25
-2026-07-08,Zizzi,San Pellegrino Lemon,9470d193f1f5,Drinks (non-alcoholic),4.25
 2025-11-01,Zizzi,Seafood Vongole,bb1c7d268afc,Mains,20.25
 2026-04-01,Zizzi,Seafood Vongole,bb1c7d268afc,Mains,21.45
 2026-07-08,Zizzi,Seafood Vongole,bb1c7d268afc,Mains,21.45
-2025-05-01,Zizzi,Sicilian Still Lemonade,458bea075f43,Drinks (non-alcoholic),4.25
-2025-08-01,Zizzi,Sicilian Still Lemonade,458bea075f43,Drinks (non-alcoholic),4.25
-2025-11-01,Zizzi,Sicilian Still Lemonade,458bea075f43,Drinks (non-alcoholic),4.25
-2026-04-01,Zizzi,Sicilian Still Lemonade,458bea075f43,Drinks (non-alcoholic),4.25
-2026-07-08,Zizzi,Sicilian Still Lemonade,458bea075f43,Drinks (non-alcoholic),4.25
-2025-11-01,Zizzi,Sipsmith London Dry Gin 25ml,6c19765509f5,Drinks (alcoholic),6.0
-2026-04-01,Zizzi,Sipsmith London Dry Gin 25ml,6c19765509f5,Drinks (alcoholic),6.0
-2026-07-08,Zizzi,Sipsmith London Dry Gin 25ml,6c19765509f5,Drinks (alcoholic),6.0
-2024-02-01,Zizzi,Sipsmith London Dry Gin 50ml,6933ba6c8ed1,Drinks (alcoholic),9.0
-2025-03-01,Zizzi,Sipsmith London Dry Gin 50ml,6933ba6c8ed1,Drinks (alcoholic),9.0
-2025-05-01,Zizzi,Sipsmith London Dry Gin 50ml,6933ba6c8ed1,Drinks (alcoholic),9.0
-2025-08-01,Zizzi,Sipsmith London Dry Gin 50ml,6933ba6c8ed1,Drinks (alcoholic),8.6
-2025-11-01,Zizzi,Sipsmith London Dry Gin 50ml,6933ba6c8ed1,Drinks (alcoholic),9.0
-2026-04-01,Zizzi,Sipsmith London Dry Gin 50ml,6933ba6c8ed1,Drinks (alcoholic),9.0
-2026-07-08,Zizzi,Sipsmith London Dry Gin 50ml,6933ba6c8ed1,Drinks (alcoholic),9.0
 2026-07-08,Zizzi,Six Layer Lasagne,98251c4959df,Mains,18.75
-2025-11-01,Zizzi,Sprite Zero Large,d9e4cb0f8b2c,Drinks (non-alcoholic),6.25
-2026-04-01,Zizzi,Sprite Zero Large,d9e4cb0f8b2c,Drinks (non-alcoholic),6.25
-2026-07-08,Zizzi,Sprite Zero Large,d9e4cb0f8b2c,Drinks (non-alcoholic),6.25
-2025-03-01,Zizzi,Sprite Zero Small,2ff30e81e5b4,Drinks (non-alcoholic),4.25
-2025-05-01,Zizzi,Sprite Zero Small,2ff30e81e5b4,Drinks (non-alcoholic),4.25
-2025-08-01,Zizzi,Sprite Zero Small,2ff30e81e5b4,Drinks (non-alcoholic),4.25
-2025-11-01,Zizzi,Sprite Zero Small,2ff30e81e5b4,Drinks (non-alcoholic),4.25
-2026-04-01,Zizzi,Sprite Zero Small,2ff30e81e5b4,Drinks (non-alcoholic),4.25
-2026-07-08,Zizzi,Sprite Zero Small,2ff30e81e5b4,Drinks (non-alcoholic),4.25
 2026-07-08,Zizzi,Sticky Pig,15edd0983bbd,Mains,19.75
-2026-07-08,Zizzi,Strawberry Sparkler,6727cff98c49,Drinks (non-alcoholic),5.95
 2026-07-08,Zizzi,TWO DINE FOR £25,8f6b1a83692d,Mains,25.0
-2025-11-01,Zizzi,Tequila 25 ml,ed97a089b31a,Drinks (alcoholic),4.0
-2026-04-01,Zizzi,Tequila 25 ml,ed97a089b31a,Drinks (alcoholic),4.0
-2026-07-08,Zizzi,Tequila 25 ml,ed97a089b31a,Drinks (alcoholic),4.0
-2025-03-01,Zizzi,Tequila 50 ml,0e23fa2ec188,Drinks (alcoholic),7.0
-2025-05-01,Zizzi,Tequila 50 ml,0e23fa2ec188,Drinks (alcoholic),7.0
-2025-11-01,Zizzi,Tequila 50 ml,0e23fa2ec188,Drinks (alcoholic),7.0
-2026-04-01,Zizzi,Tequila 50 ml,0e23fa2ec188,Drinks (alcoholic),7.0
-2026-07-08,Zizzi,Tequila 50 ml,0e23fa2ec188,Drinks (alcoholic),7.0
-2025-11-01,Zizzi,Trip CBD Blend,19aed1d95203,Drinks (non-alcoholic),4.45
-2026-04-01,Zizzi,Trip CBD Blend,19aed1d95203,Drinks (non-alcoholic),4.45
-2026-07-08,Zizzi,Trip CBD Blend,19aed1d95203,Drinks (non-alcoholic),4.45
-2025-08-01,Zizzi,Trip Mindful Blend,a1fb87d42e55,Drinks (non-alcoholic),4.25
-2025-11-01,Zizzi,Trip Mindful Blend,a1fb87d42e55,Drinks (non-alcoholic),4.45
-2026-04-01,Zizzi,Trip Mindful Blend,a1fb87d42e55,Drinks (non-alcoholic),4.45
-2026-07-08,Zizzi,Trip Mindful Blend,a1fb87d42e55,Drinks (non-alcoholic),4.45
 2023-05-01,Zizzi,Truffle Carbonara,96cfe1527a7d,Mains,16.45
 2023-09-01,Zizzi,Truffle Carbonara,96cfe1527a7d,Mains,16.75
 2023-10-01,Zizzi,Truffle Carbonara,96cfe1527a7d,Mains,17.5
@@ -5170,15 +5263,6 @@ date,source,item,dish_id,bucket,price
 2026-04-01,Zizzi,Vegan Rainbow Lasagne,3c83ef34089d,Mains,17.95
 2026-07-08,Zizzi,Vegan Rainbow Lasagne,3c83ef34089d,Mains,17.95
 2026-07-08,Zizzi,Venison Pepperoni,ac51a68452b3,Mains,20.25
-2025-11-01,Zizzi,White Rum - Calados 25ML,bfe59640e6c1,Drinks (alcoholic),4.0
-2026-04-01,Zizzi,White Rum - Calados 25ML,bfe59640e6c1,Drinks (alcoholic),4.0
-2026-07-08,Zizzi,White Rum - Calados 25ML,bfe59640e6c1,Drinks (alcoholic),4.0
-2025-03-01,Zizzi,White Rum - Calados 50ML,83ddb1936010,Drinks (alcoholic),6.5
-2025-05-01,Zizzi,White Rum - Calados 50ML,83ddb1936010,Drinks (alcoholic),6.5
-2025-08-01,Zizzi,White Rum - Calados 50ML,83ddb1936010,Drinks (alcoholic),7.0
-2025-11-01,Zizzi,White Rum - Calados 50ML,83ddb1936010,Drinks (alcoholic),7.0
-2026-04-01,Zizzi,White Rum - Calados 50ML,83ddb1936010,Drinks (alcoholic),7.0
-2026-07-08,Zizzi,White Rum - Calados 50ML,83ddb1936010,Drinks (alcoholic),7.0
 2026-07-08,Zizzi,Cheesy Chilli Garlic Bread,df86e9d13d70,Sides,7.75
 2022-02-01,Zizzi,Chips,f50a038619c8,Sides,3.85
 2022-08-01,Zizzi,Chips,f50a038619c8,Sides,3.95
@@ -5240,12 +5324,6 @@ date,source,item,dish_id,bucket,price
 2025-11-01,Zizzi,Sweet Potato Fries,6c36a2b433f1,Sides,5.25
 2026-04-01,Zizzi,Sweet Potato Fries,6c36a2b433f1,Sides,5.25
 2026-07-08,Zizzi,Sweet Potato Fries,6c36a2b433f1,Sides,5.25
-2024-02-01,Zizzi,Aperol Spritz,0ff20718a48d,Drinks (alcoholic),9.95
-2025-03-01,Zizzi,Aperol Spritz,0ff20718a48d,Drinks (alcoholic),9.95
-2025-05-01,Zizzi,Aperol Spritz,0ff20718a48d,Drinks (alcoholic),9.95
-2025-08-01,Zizzi,Aperol Spritz,0ff20718a48d,Drinks (alcoholic),9.95
-2025-11-01,Zizzi,Aperol Spritz,0ff20718a48d,Drinks (alcoholic),10.15
-2026-04-01,Zizzi,Aperol Spritz,0ff20718a48d,Drinks (alcoholic),10.45
 2025-08-01,Zizzi,Aubergine Fritti,38313fbda951,Starters,5.75
 2025-11-01,Zizzi,Aubergine Fritti,38313fbda951,Starters,8.45
 2026-04-01,Zizzi,Aubergine Fritti,38313fbda951,Starters,8.95
