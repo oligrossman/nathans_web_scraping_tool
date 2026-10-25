@@ -50,6 +50,7 @@ SURFACE_GREY = "#F5F5F5"
 
 APP_TITLE = "Wagamama Market Analysis"
 DATA_PAGE_TITLE = "Data"
+CONTENTS_PAGE_TITLE = "Contents"
 CONFIG_PAGE_TITLE = "Comparison Configuration"
 APP_TAGLINE = (
     "Competitive menu pricing intelligence — scrape live competitor menus, "

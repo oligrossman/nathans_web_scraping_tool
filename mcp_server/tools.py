@@ -293,10 +293,12 @@ def delivery_markup(
 ) -> dict[str, Any]:
     """Restaurant vs Deliveroo markup: company summary → bucket → items."""
     comparison = delivery_compare.build_comparison()
+    smell_note = delivery_compare.assessment_note(comparison)
+    note = f"{SNAPSHOT_CAVEAT} {smell_note}".strip() if smell_note else SNAPSHOT_CAVEAT
     if comparison.empty:
         return {
             "error": "No matched restaurant-vs-delivery items on this host.",
-            "note": SNAPSHOT_CAVEAT,
+            "note": note,
         }
 
     companies = sorted(comparison["company"].unique())
@@ -304,7 +306,7 @@ def delivery_markup(
         return {
             "error": f"Unknown company {company!r} in delivery comparison.",
             "valid_companies": companies,
-            "note": SNAPSHOT_CAVEAT,
+            "note": note,
         }
 
     if company is None:
@@ -332,7 +334,7 @@ def delivery_markup(
         "rows": records,
         "row_count": len(records),
         "truncated": len(frame) > clamp_limit(limit),
-        "note": SNAPSHOT_CAVEAT,
+        "note": note,
     }
 
 

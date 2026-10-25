@@ -187,7 +187,9 @@ st.markdown(
     "1. **Scrape sites** above — each scrape is saved to "
     "`data/scrapes/<date>/` (re-scraping the same day replaces that file).\n"
     "2. **Run enrichment** — classifies dishes in `all_company_prices.csv` that are "
-    "not yet in `menu_mappings.db`.\n"
+    "not yet in `menu_mappings.db`. **Assess delivery checks** sends cheaper "
+    "delivery pairs to the same classifier, which decides whether the gap is a "
+    "fair comparison (a can against a bottle) or a mismatched specification.\n"
     "3. **Update price history** — matches the pricing-tracker workbook onto each "
     "scraped menu, then stacks that history with every dated archive into "
     "`all_company_prices.csv` (the dashboard's source of truth).\n"
@@ -272,6 +274,61 @@ with enrich_col:
         st.caption(
             "Set `OPENAI_API_KEY` (env var or `st.secrets`) to enable this, or run "
             "`python -m scripts.enrich_menus` locally. Uses the OpenAI API (has a cost)."
+        )
+
+    from scripts.assess_channel_smells import assess_smells, count_pending_smells
+
+    _smell_counts = count_pending_smells(db_path=DEFAULT_DB_PATH)
+    _smell_pending = _smell_counts["pending"]
+    if st.button(
+        "Assess delivery checks",
+        disabled=not _has_openai_key() or _smell_pending == 0,
+        key="assess_delivery_checks",
+    ):
+        progress = st.progress(0.0, text="Assessing cheaper delivery pairs...")
+
+        def _on_smell(done: int, total: int, result) -> None:
+            label = result.case.item if result.case is not None else "pair"
+            progress.progress(
+                done / total,
+                text=f"Assessing cheaper delivery pairs... {done}/{total} ({label})",
+            )
+
+        with st.spinner(
+            f"Asking the classifier about {_smell_pending} cheaper delivery pair(s)..."
+        ):
+            smell_summary = assess_smells(
+                db_path=DEFAULT_DB_PATH,
+                on_progress=_on_smell,
+            )
+            publish("Save delivery smell checks")
+        progress.empty()
+        st.cache_data.clear()
+        if smell_summary["status"] == "empty":
+            st.warning("No delivery prices are below the matched restaurant price.")
+        elif smell_summary["status"] == "up_to_date":
+            st.success(
+                f"All {smell_summary['total']} cheaper delivery pairs are already assessed."
+            )
+        else:
+            st.success(
+                f"Assessed {smell_summary['succeeded']}/{smell_summary['total']} "
+                f"cheaper delivery pairs ({smell_summary['failed']} failed). "
+                "Mismatched specifications are left out of the delivery charts."
+            )
+        st.rerun()
+
+    if _smell_counts["total"] == 0:
+        st.caption("No matched delivery price is below its restaurant price.")
+    elif _smell_pending == 0:
+        st.caption(
+            f"All {_smell_counts['total']} cheaper delivery pairs have a stored verdict."
+        )
+    else:
+        st.caption(
+            f"{_smell_pending} of {_smell_counts['total']} cheaper delivery pairs "
+            "have not been assessed. A lower price stays in the charts until the "
+            "classifier calls it a mismatched specification."
         )
 
 with history_col:

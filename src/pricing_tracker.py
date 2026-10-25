@@ -135,6 +135,19 @@ TRACKER_SHEETS: dict[str, str] = {
     "Zizzi": "Zizzi London",
 }
 
+# What the registry CSV cannot say by itself. Location and platform stay in
+# data/restaurants.csv; these lines explain the workbook alignment only.
+TRACKER_NOTES: dict[str, str] = {
+    "Five Guys": "The national sheet is used, not the one-date London sheet.",
+    "Prezzo": "The national sheet is used, not the one-date London sheet.",
+    "Zizzi": "Matched to the Zizzi London sheet.",
+    "Rosa's Thai": "The workbook sheet is Rosas, and column A on that sheet says Rosas.",
+    "Pho": (
+        "Not imported from the pricing tracker. The restaurant menu was not a "
+        "usable match for a tracker sheet, so Pho prices are the scrapes only."
+    ),
+}
+
 # Column A on the Rosa's sheet says "Rosas", not the brand the app stores.
 _TRACKER_ROW_BRAND: dict[str, str] = {
     "Rosa's Thai": "Rosas",

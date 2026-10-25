@@ -9,6 +9,7 @@ from src.branding import (
     ANALYTICS_TITLE,
     APP_TITLE,
     CONFIG_PAGE_TITLE,
+    CONTENTS_PAGE_TITLE,
     DATA_PAGE_TITLE,
 )
 
@@ -18,6 +19,11 @@ st.set_page_config(page_title=APP_TITLE, page_icon="🍜", layout="wide")
 # dispatched through ``pg.run()`` below, so one check here protects the whole app.
 auth.require_login()
 
+contents_page = st.Page(
+    "pages/contents.py",
+    title=CONTENTS_PAGE_TITLE,
+    icon="📖",
+)
 data_page = st.Page("pages/data.py", title=DATA_PAGE_TITLE, default=True, icon="🗂️")
 analytics_page = st.Page(
     "pages/1_Price_Analytics.py",
@@ -30,7 +36,7 @@ config_page = st.Page(
     icon="⚙️",
 )
 
-pg = st.navigation([data_page, analytics_page, config_page])
+pg = st.navigation([contents_page, data_page, analytics_page, config_page])
 pg.run()
 # Rendered after the page body so it sits at the very bottom of the sidebar,
 # beneath any per-page sidebar content (branding, headline metrics, footer logo).

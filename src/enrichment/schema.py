@@ -45,6 +45,14 @@ class DishType(str, Enum):
     OTHER = "Other"
 
 
+class ChannelVerdict(str, Enum):
+    """Whether a cheaper delivery price is a fair comparison of the joined dish."""
+
+    MISHAP = "mishap"
+    JUSTIFIED = "justified"
+    UNCERTAIN = "uncertain"
+
+
 class GroupingDimension(str, Enum):
     """Analytics grouping axis selectable in the UI."""
 
@@ -160,5 +168,26 @@ OPENAI_RESPONSE_FORMAT: dict[str, Any] = {
         "name": "dish_classification",
         "strict": True,
         "schema": DISH_CLASSIFICATION_SCHEMA,
+    },
+}
+
+
+CHANNEL_CHECK_SCHEMA: dict[str, Any] = {
+    "type": "object",
+    "properties": {
+        "verdict": {"type": "string", "enum": _enum_values(ChannelVerdict)},
+        "reason": {"type": "string"},
+    },
+    "required": ["verdict", "reason"],
+    "additionalProperties": False,
+}
+
+
+OPENAI_CHANNEL_FORMAT: dict[str, Any] = {
+    "type": "json_schema",
+    "json_schema": {
+        "name": "channel_smell_check",
+        "strict": True,
+        "schema": CHANNEL_CHECK_SCHEMA,
     },
 }

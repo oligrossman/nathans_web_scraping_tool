@@ -91,6 +91,44 @@ def test_price_curve_aligns_menus_of_different_lengths() -> None:
     assert fig.layout.xaxis.title.text == "Percentile"
 
 
+def test_price_curve_plots_dishes_without_replacing_the_percentile_line() -> None:
+    """A course drill adds one dot per dish. The twenty-step line stays put.
+
+    Only the cheapest and the dearest dish are named. Hover still carries
+    every dish name.
+    """
+    prices = list(range(1, 21))
+    frame = pd.DataFrame(
+        {
+            "item": [f"Dish {price}" for price in prices],
+            "price": [float(price) for price in prices],
+            "series": ["Competitors"] * len(prices),
+            "company": ["Nando's"] * len(prices),
+        }
+    )
+
+    fig = price_curve(
+        frame,
+        series_col="series",
+        detail_col="company",
+        title="Percentiles",
+        show_items=True,
+    )
+
+    lines = [trace for trace in fig.data if trace.mode == "lines+markers"]
+    dishes = [trace for trace in fig.data if trace.showlegend is False]
+    assert len(lines) == 1
+    assert list(lines[0].x) == list(range(5, 101, 5))
+    assert len(dishes) == 1
+    assert len(list(dishes[0].x)) == 20
+    named = [text for text in dishes[0].text if text]
+    assert named == ["Dish 1", "Dish 20"]
+    names = [row[0] for row in dishes[0].customdata]
+    assert "Dish 10" in names
+    dearest = names.index("Dish 20")
+    assert float(list(dishes[0].x)[dearest]) == 100.0
+
+
 def test_long_heading_soft_wraps_on_word_boundaries() -> None:
     """A heading breaks at a space. It does not cut a word, and a short one stays one line."""
     short = "Latest price by course (bucket)"

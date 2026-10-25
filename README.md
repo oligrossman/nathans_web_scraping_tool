@@ -119,8 +119,9 @@ series (equal-weighted mean across buckets). The page shows five views:
   menu. The left chart compares restaurants. Choosing a bucket keeps that
   comparison and lists the dishes on the right.
 - **High vs low** — lowest, average and highest price on each restaurant's
-  latest menu (not an average over the price history), with the same
-  left-hand restaurant comparison.
+  latest menu (not an average over the price history). The left chart
+  compares restaurants. The right chart is the percentile curve; choosing a
+  bucket plots each dish on that curve.
 
 The **Comparison Configuration** page holds the settings that shape the
 analytics charts: LLM-generated dish attributes (cuisine, dish type such as

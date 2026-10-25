@@ -14,6 +14,7 @@ from src.menu_buckets import BUCKETS
 
 from .schema import (
     UNMAPPED_LABEL,
+    ChannelVerdict,
     Cuisine,
     DishMapping,
     DishType,
@@ -102,6 +103,32 @@ _TABLE_SCHEMAS: dict[str, tuple[str, tuple[str, ...]]] = {
         )
         """,
         ("name", "definition_json", "created_at"),
+    ),
+    "channel_checks": (
+        """
+        CREATE TABLE channel_checks (
+            check_id TEXT PRIMARY KEY,
+            company TEXT NOT NULL,
+            item TEXT NOT NULL,
+            restaurant REAL NOT NULL,
+            delivery REAL NOT NULL,
+            verdict TEXT NOT NULL,
+            reason TEXT NOT NULL,
+            model TEXT NOT NULL,
+            created_at TEXT NOT NULL
+        )
+        """,
+        (
+            "check_id",
+            "company",
+            "item",
+            "restaurant",
+            "delivery",
+            "verdict",
+            "reason",
+            "model",
+            "created_at",
+        ),
     ),
 }
 
@@ -354,6 +381,88 @@ def delete_market(name: str, db_path: Path | str = DEFAULT_DB_PATH) -> None:
     init_db(db_path)
     with _connect(db_path) as conn:
         conn.execute("DELETE FROM markets WHERE name = ?", (name,))
+
+
+_CHANNEL_CHECK_COLUMNS = ["check_id", "verdict", "reason"]
+
+
+def load_channel_checks(db_path: Path | str = DEFAULT_DB_PATH) -> pd.DataFrame:
+    """Stored smell-check verdicts, or an empty frame when none have been run.
+
+    Reading does not create the database or the table. Chart code can call this
+    on every page load without writing.
+    """
+    empty = pd.DataFrame(columns=_CHANNEL_CHECK_COLUMNS)
+    path = Path(db_path)
+    if not path.exists():
+        return empty
+    with _connect(path) as conn:
+        if not _table_exists(conn, "channel_checks"):
+            return empty
+        rows = conn.execute(
+            "SELECT check_id, verdict, reason FROM channel_checks"
+        ).fetchall()
+    if not rows:
+        return empty
+    return pd.DataFrame([dict(row) for row in rows])
+
+
+def load_channel_check_ids(db_path: Path | str = DEFAULT_DB_PATH) -> set[str]:
+    checks = load_channel_checks(db_path)
+    if checks.empty:
+        return set()
+    return set(checks["check_id"].astype(str))
+
+
+def upsert_channel_check(
+    *,
+    check_id: str,
+    company: str,
+    item: str,
+    restaurant: float,
+    delivery: float,
+    verdict: str,
+    reason: str,
+    model: str,
+    db_path: Path | str = DEFAULT_DB_PATH,
+) -> None:
+    """Insert or replace one classifier verdict for a cheaper delivery pair."""
+    allowed = {member.value for member in ChannelVerdict}
+    if verdict not in allowed:
+        raise ValueError(
+            f"Unknown channel verdict {verdict!r}. "
+            f"Expected one of {sorted(allowed)}."
+        )
+    init_db(db_path)
+    with _connect(db_path) as conn:
+        conn.execute(
+            """
+            INSERT INTO channel_checks (
+                check_id, company, item, restaurant, delivery,
+                verdict, reason, model, created_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(check_id) DO UPDATE SET
+                company = excluded.company,
+                item = excluded.item,
+                restaurant = excluded.restaurant,
+                delivery = excluded.delivery,
+                verdict = excluded.verdict,
+                reason = excluded.reason,
+                model = excluded.model,
+                created_at = excluded.created_at
+            """,
+            (
+                check_id,
+                company,
+                item,
+                restaurant,
+                delivery,
+                verdict,
+                reason,
+                model,
+                _utc_now(),
+            ),
+        )
 
 
 def enum_options() -> dict[str, list[str]]:

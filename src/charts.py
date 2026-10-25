@@ -764,6 +764,86 @@ def _add_benchmark_fit(fig: go.Figure, benchmark, *, x_max: float) -> None:
     )
 
 
+def _item_percentile_rank(prices: pd.Series) -> pd.Series:
+    """Where each dish sits in its own menu, from 0 to 100.
+
+    The dearest dish is 100. Ties share a rank. The percentile line is the
+    same idea smoothed to twenty steps, so a dot lands on that line.
+    """
+    if prices.empty:
+        return prices
+    return (prices.rank(method="average", pct=True) * 100).round(1)
+
+
+def _series_item_trace(
+    group: pd.DataFrame,
+    price_col: str,
+    label_col: str,
+    detail_col: str | None,
+    *,
+    name: str,
+    color: str,
+) -> go.Scatter | None:
+    """One dot per dish, on the percentile axis of :func:`price_curve`.
+
+    Every dish is hoverable. Only the cheapest and the dearest are named:
+    those are the dishes pulling the ends, and naming more than that stacks
+    the words on top of each other at the left of the axis. Own-brand names
+    sit above the line and the other series sits below, so the two do not
+    collide. The trace stays out of the legend so the percentile lines remain
+    the chart you already know.
+    """
+    plot = group.dropna(subset=[price_col]).copy()
+    if plot.empty or label_col not in plot.columns:
+        return None
+    plot["_pct"] = _item_percentile_rank(plot[price_col])
+    names = plot[label_col].astype(str)
+    order = plot[price_col].sort_values()
+    cheap_idx = order.index[0]
+    dear_idx = order.index[-1]
+    show = pd.Series("", index=plot.index)
+    show.loc[cheap_idx] = names.loc[cheap_idx]
+    show.loc[dear_idx] = names.loc[dear_idx]
+    # Own brand above the line, everyone else below. The dearest name is pulled
+    # left so it does not run into the legend.
+    above = name == OWN_BRAND
+    cheap_pos = "top right" if above else "bottom right"
+    dear_pos = "top left" if above else "bottom left"
+    positions = [
+        cheap_pos if idx == cheap_idx else dear_pos for idx in plot.index
+    ]
+    text = [
+        _fit_axis_label(value, width=28) if value else None for value in show
+    ]
+    cols = [label_col] + ([detail_col] if detail_col and detail_col in plot.columns else [])
+    detail = len(cols) > 1
+    hover = (
+        f"<b>%{{customdata[0]}}</b><br>{name}"
+        + (" · %{customdata[1]}" if detail else "")
+        + "<br>Percentile %{x:.0f}<br>£%{y:.2f}<extra></extra>"
+    )
+    return go.Scatter(
+        x=plot["_pct"],
+        y=plot[price_col],
+        mode="markers+text",
+        name=f"{name} dishes",
+        text=text,
+        textposition=positions,
+        textfont=dict(size=10, color=color),
+        # Open ring, so a dish reads separately from the filled percentile knots.
+        marker=dict(
+            color="white",
+            size=9,
+            symbol="circle",
+            line=dict(width=2, color=color),
+        ),
+        customdata=plot[cols].to_numpy(),
+        hovertemplate=hover,
+        showlegend=False,
+        cliponaxis=False,
+    )
+
+
 def _percentile_curve_trace(frame, price_col, *, name, color):
     """One percentile line for :func:`price_curve`."""
     curve = percentile_prices(frame[price_col])
@@ -817,6 +897,7 @@ def price_curve(
     detail_col: str | None = None,
     series_col: str | None = None,
     subtitle: str | None = None,
+    show_items: bool = False,
 ) -> go.Figure:
     """Price distribution, low to high.
 
@@ -824,6 +905,10 @@ def price_curve(
     …, 100th — twenty points). Item rank would stretch a long menu further along
     the x-axis than a short one, so the lines would not be comparable. The
     own-brand series is brand red.
+
+    ``show_items`` adds every dish as a dot on that same percentile axis. The
+    line stays the comparison. The dots are the dishes, so the cheap and dear
+    ends have names.
 
     Without ``series_col`` each item is one point, sorted cheap to dear, with a
     dashed average.
@@ -843,8 +928,26 @@ def price_curve(
             )
             if trace is not None:
                 fig.add_trace(trace)
+            if show_items:
+                dishes = _series_item_trace(
+                    group,
+                    price_col,
+                    label_col,
+                    detail_col,
+                    name=str(name),
+                    color=color,
+                )
+                if dishes is not None:
+                    fig.add_trace(dishes)
         fig.update_layout(legend_title_text="")
         fig.update_xaxes(range=[0, 105], dtick=10)
+        if show_items and price_col in frame.columns and not frame.empty:
+            # Room above the dearest dish so its name is not clipped by the axis.
+            y_min = float(frame[price_col].min())
+            y_max = float(frame[price_col].max())
+            pad = max((y_max - y_min) * 0.14, 0.6)
+            # Space under the cheapest dish, so its name is not cut by the axis.
+            fig.update_yaxes(range=[y_min - pad * 0.55, y_max + pad])
     else:
         fig.add_trace(
             _price_curve_trace(
@@ -866,7 +969,7 @@ def price_curve(
         xaxis_title=xaxis_title,
         yaxis_title="Price (GBP)",
         yaxis_tickprefix="£",
-        height=420,
+        height=460 if show_items else 420,
     )
     _set_heading(fig, title, subtitle=subtitle)
     return fig
