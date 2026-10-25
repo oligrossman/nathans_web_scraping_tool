@@ -179,6 +179,24 @@ def test_saved_dish_id_survives_a_rewritten_item_name(tmp_path: Path) -> None:
     assert saved["cuisine"] == "PanAsian"
 
 
+def test_excel_scientific_notation_restores_the_stored_id(tmp_path: Path) -> None:
+    db_path = tmp_path / "mappings.db"
+    init_db(db_path)
+    mapping = _mapping("Rosa's Thai", "Steamed Chicken", cuisine="Thai")
+    assert mapping.dish_id == "6411988093e7"
+    upsert_llm_mapping(mapping, model="test-model", db_path=db_path)
+    text = (
+        "dish_id,source,name,bucket,cuisine,dish_type,is_vegetarian,is_vegan\n"
+        "6.411988093E+16,Rosa's Thai,Steamed Chicken,Mains,Thai,Noodles,false,false\n"
+    )
+
+    plan = plan_dishes(text, str(db_path))
+
+    assert plan.issues == []
+    assert plan.removed_count == 0
+    assert plan.added == 0
+
+
 def test_export_writes_dish_id_as_spreadsheet_text(tmp_path: Path) -> None:
     db_path = tmp_path / "mappings.db"
     mapping = _seed(db_path)

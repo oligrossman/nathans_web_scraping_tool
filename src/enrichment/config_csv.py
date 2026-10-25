@@ -18,6 +18,7 @@ from __future__ import annotations
 import io
 import re
 from dataclasses import dataclass, field
+from decimal import Decimal, InvalidOperation
 
 import pandas as pd
 
@@ -191,7 +192,8 @@ def plan_dishes(payload: str | bytes, db_path: str) -> DishPlan:
     # match the restaurant and item, otherwise the row is a different dish.
     checked: list[dict[str, object]] = []
     for record in accepted:
-        dish_id = str(record["dish_id"])
+        dish_id = _restore_excel_dish_id(str(record["dish_id"]), by_id)
+        record["dish_id"] = dish_id
         hashed = make_dish_id(str(record["source"]), str(record["name"]))
         if dish_id != hashed and dish_id not in by_id:
             issues.append(
@@ -575,15 +577,52 @@ def _enum_values(enum_cls: type) -> tuple[str, ...]:
 
 def _unwrap_dish_id(value: str) -> str:
     """Undo the text markers a spreadsheet adds around a dish id."""
-    text = value.strip()
+    text = value.strip().lstrip("\ufeff\u200b")
     if text.startswith(("'", "\t")):
         text = text[1:].strip()
     wrapped = _EXCEL_TEXT.fullmatch(text)
     if wrapped:
-        text = wrapped.group(1).strip()
+        text = wrapped.group(1).strip().lstrip("\ufeff\u200b")
     if text.endswith(".0") and text[:-2].isdigit():
         text = text[:-2]
     return text
+
+
+_EXCEL_NUMBER = re.compile(r"[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?")
+_MANGLEABLE_ID = re.compile(r"[0-9]+[eE][0-9]+|[0-9]{8,}")
+
+
+def _restore_excel_dish_id(uploaded: str, known: dict[str, object]) -> str:
+    """Turn Excel's scientific notation back into the stored dish id.
+
+    ``6411988093e7`` is the id for Rosa's Thai / Steamed Chicken. Excel reads
+    the ``e7`` as × 10^7 and writes ``6.411988093E+16``. The digits still
+    identify that one dish.
+    """
+    if uploaded in known:
+        return uploaded
+    text = uploaded.strip()
+    if not _EXCEL_NUMBER.fullmatch(text):
+        return uploaded
+    try:
+        number = Decimal(text)
+    except InvalidOperation:
+        return uploaded
+    matches = [
+        dish_id
+        for dish_id in known
+        if _MANGLEABLE_ID.fullmatch(dish_id) and _same_number(dish_id, number)
+    ]
+    if len(matches) == 1:
+        return matches[0]
+    return uploaded
+
+
+def _same_number(dish_id: str, number: Decimal) -> bool:
+    try:
+        return Decimal(dish_id) == number
+    except InvalidOperation:
+        return False
 
 
 def _export_bool(value: object) -> str:
